@@ -1,0 +1,921 @@
+/* ==== GLOBAL CSS CUSTOM PROPERTIES ==== */
+
+:root {
+    --color-background-primary: #fff;
+    --color-background-secondary: #393e41;
+    --color-background-secondary-hover: #575f63;
+    --color-background-comments: #f4f3f2;
+    --color-font-primary: #393e41;
+    --color-font-secondary: #fff;
+    --color-decorative: #a2a79e;
+    --color-feedback-positive: #69b587;
+    --color-feedback-neutral: #aaa7a5;
+    --color-feedback-negative: #db5753;
+    --poll-table-gutters: 2px;
+    --border-radius-big: 6px;
+    --border-radius-small: 3px;
+    --animation-duration: .1s;
+}
+
+
+/* ==== FONTS ==== */
+
+@font-face {
+    font-family: 'Quicksand';
+    src: url('../font/Quicksand-Regular.ttf') format('truetype');
+}
+
+
+/* ==== GENERAL ==== */
+
+* {
+    -webkit-transition: background-color var(--animation-duration);
+    -ms-transition: background-color var(--animation-duration);
+    transition: background-color var(--animation-duration);
+    font-family: 'Quicksand', sans-serif;
+}
+
+.schedule td {
+    -webkit-transition: var(--animation-duration);
+    -ms-transition: var(--animation-duration);
+    transition: var(--animation-duration);
+    min-width: 36px;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background-primary);
+    color: var(--color-font-primary);
+    font-size: 100%;
+    font-family: 'Quicksand', sans-serif;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 1.4rem;
+    margin: 1.5rem 0;
+}
+
+h2 {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+}
+
+a:link {
+    color: var(--color-decorative);
+    text-decoration: none;
+}
+
+a:visited {
+    color: var(--color-decorative);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-decorative);
+    text-decoration: none;
+}
+
+a:active {
+    color: var(--color-decorative);
+    text-decoration: none;
+    outline: none;
+}
+
+a:focus {
+    color: var(--color-decorative);
+    text-decoration: none;
+    outline: none;
+}
+
+button::-moz-focus-inner {
+    border: 0;
+}
+
+em {
+    font-weight: bold;
+}
+
+.pale {
+    opacity: 0.6;
+}
+
+
+/* DATEPICKER COLORS */
+
+.datepicker-container * {
+    font-size: 16px;
+}
+
+.datepicker-top-left,
+.datepicker-top-right {
+    border-top-color: var(--color-decorative) !important;
+}
+
+.datepicker-top-left::before,
+.datepicker-top-right::before {
+    border-bottom-color: var(--color-decorative) !important;
+}
+
+.datepicker-panel > ul > li:hover {
+    background-color: #bbb !important;
+}
+
+.datepicker-panel > ul > li.picked,
+.datepicker-panel > ul > li.picked:hover {
+    color: var(--color-decorative) !important;
+}
+
+.datepicker-panel > ul > li.highlighted,
+.datepicker-panel > ul > li.highlighted:hover {
+    background-color: var(--color-decorative) !important;
+    color: var(--color-font-secondary) !important;
+}
+
+
+/* ==== TO BE CATEGORIZED AND SORTED ==== */
+
+.poll-url-container {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+.poll-url-container span {
+    min-width: 100px;
+    font-size: 80%;
+}
+
+.poll-url-container input {
+    margin-right: 4px;
+    height: 24px;
+    width: 256px;
+    max-width: 50%;
+    color: var(--color-font-secondary);
+    background-color: var(--color-background-secondary-hover);
+    border: unset !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.poll-url-container button {
+    margin-left: 10px;
+    line-height: .5;
+    height: 24px;
+    background-color: var(--color-background-secondary);
+    background-image: url('../img/icon-copy.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 16px;
+}
+
+.poll-url-container button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+.poll-url-container button.copy-success,
+.poll-url-container button.copy-success:hover {
+    background-color: var(--color-feedback-positive);
+}
+
+.poll-url-container button.copy-fail,
+.poll-url-container button.copy-fail:hover {
+    background-color: var(--color-feedback-negative);
+}
+
+.poll-url-container img {
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+textarea {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 80%;
+}
+
+#noscript {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background-color: var(--color-background-secondary);
+    color: var(--color-font-secondary);
+    font-size: 150%;
+}
+
+#noscript img {
+    height: 60px;
+    margin-right: 2rem;
+}
+
+#header {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--color-background-secondary);
+    color: var(--color-font-secondary);
+    overflow: hidden;
+    border-bottom: 6px solid var(--color-decorative);
+}
+
+#header h1 {
+    font-size: 1.4rem;
+    margin: 0;
+    margin-bottom: .5rem;
+}
+
+#logo {
+    margin-right: 20px;
+    margin-left: auto;
+    opacity: 0.15;
+    transition: opacity var(--animation-duration);
+}
+
+#logo:hover {
+    opacity: 0.4;
+}
+
+#logo img {
+    height: 100%;
+    max-height: 64px;
+}
+
+p.details {
+    font-size: 90%;
+    white-space: pre-line;
+    word-wrap: break-word;
+    max-width: 768px;
+    line-height: 1.5;
+}
+
+#admin-url {
+    color: var(--color-feedback-negative);
+    font-size: 80%;
+    font-weight: bold;
+}
+
+#btnCopy {
+    cursor: pointer;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+#footer {
+    background: transparent;
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 80%;
+    color: var(--color-font-primary);
+    opacity: 0.5;
+    transition: opacity var(--animation-duration);
+}
+
+#footer:hover {
+    opacity: 1;
+}
+
+#footer img {
+    vertical-align: middle;
+}
+
+#poll-controls {
+    margin-bottom: .5rem;
+    text-align: right;
+    border-top: 1.2rem solid var(--color-background-comments);
+}
+
+#poll-controls > div {
+    display: inline-block;
+    padding: 0 1.2rem 1.2rem 1.2rem;
+    border-bottom-left-radius: var(--border-radius-big);
+    background-color: var(--color-background-comments);
+}
+
+#poll-controls button {
+    margin: 0 .5rem;
+    cursor: pointer;
+    background-color: var(--color-background-secondary);
+    background-repeat: no-repeat;
+    background-position: 10px 45%;
+    padding-left: 36px;
+}
+
+#poll-controls button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+#poll-controls button#ctrl-delete-poll {
+    background-image: url('../img/icon-delete.png');
+}
+
+#poll-controls button#ctrl-lock-poll {
+    background-image: url('../img/icon-lock.png');
+}
+
+#poll-controls button#ctrl-edit-poll {
+    background-image: url('../img/icon-pen.png');
+}
+
+#poll-controls button#ctrl-mini-view {
+    background-image: url('../img/icon-eye.png');
+}
+
+#poll-container {
+    overflow-x: auto;
+}
+
+#form-new-poll button {
+    height: 28px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+#form-new-poll button#btnMore {
+    background-color: var(--color-feedback-positive);
+    background-image: url('../img/icon-plus.png');
+}
+
+#form-new-poll button#btnLess {
+    background-color: var(--color-feedback-negative);
+    background-image: url('../img/icon-minus.png');
+}
+
+table.schedule {
+    border-collapse: separate;
+    border: none;
+    margin-bottom: 1.5rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+table.schedule button {
+    padding: 0 10px !important;
+}
+
+table.schedule.mini {
+    font-size: 80%;
+}
+
+table.schedule.mini input {
+    font-weight: bold;
+}
+
+table.schedule.mini tr {
+    height: 8px;
+}
+
+table.schedule td {
+    border: var(--poll-table-gutters) solid var(--color-background-primary);
+    padding: 4px;
+    line-height: 0;
+    color: var(--color-font-secondary);
+    min-width: 24px;
+}
+
+table.schedule.mini td {
+    padding: 0px;
+    min-width: 16px;
+}
+
+tr.valign-middle td {
+    vertical-align: middle;
+}
+
+
+/* POLL HEADER (DATES, OPTIONS, ...) */
+
+td.schedule-header {
+    background-color: var(--color-background-secondary);
+    width: 24px;
+    vertical-align: bottom;
+    text-align: center;
+    border-top-left-radius: var(--border-radius-big);
+    border-top-right-radius: var(--border-radius-big);
+}
+
+table.schedule.mini td.schedule-header {
+    width: 16px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+td.schedule-header > div {
+    display: inline-block;
+    overflow: hidden;
+    width: 1.4rem;
+    text-align: center;
+    margin: 5px 0;
+}
+
+td.schedule-header .date-delete {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-delete.png) no-repeat;
+    background-position: center center;
+}
+
+table.schedule.mini td.schedule-header > div {
+    width: 1.1rem;
+}
+
+td.schedule-header > div > div {
+    display: inline-block;
+    white-space: nowrap;
+    /* this is for shity "non IE" browsers
+       that dosn't support writing-mode */
+    -webkit-transform: translate(0.75em,0) rotate(90deg);
+       -moz-transform: translate(0.75em,0) rotate(90deg);
+         -o-transform: translate(0.75em,0) rotate(90deg);
+            transform: translate(0.75em,0) rotate(90deg);
+    -webkit-transform-origin: 0 0;
+       -moz-transform-origin: 0 0;
+         -o-transform-origin: 0 0;
+            transform-origin: 0 0;
+   /* IE9+ */
+   -ms-transform: none;
+   -ms-transform-origin: none;
+   /* IE8+ */
+   -ms-writing-mode: tb-rl;
+   /* IE7 and below */
+   *writing-mode: tb-rl;
+    text-align: center;
+}
+
+td.schedule-header > div > div:before {
+    content: "";
+    float: left;
+    margin-top: 100%;
+}
+
+
+/* POLL ENTRY NAMES */
+
+td.schedule-names {
+    text-align: right;
+    padding: 4px 6px !important;
+    background-color: var(--color-background-secondary);
+    border-top-left-radius: var(--border-radius-big);
+    border-bottom-left-radius: var(--border-radius-big);
+}
+
+table.schedule.mini td.schedule-names {
+    padding: 4px 4px;
+}
+
+td.schedule-name-input {
+    background-color: var(--color-background-secondary);
+    border-top-left-radius: var(--border-radius-big);
+    border-bottom-left-radius: var(--border-radius-big);
+}
+
+table.schedule.mini tr.schedule-results {
+    font-size: 100%;
+}
+
+tr.schedule-results td.top {
+    background-color: var(--color-feedback-positive);
+}
+
+button.schedule-delete {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-delete.png) no-repeat;
+    background-position: center center;
+    border-top-right-radius: var(--border-radius-big);
+    border-bottom-right-radius: var(--border-radius-big);
+}
+
+table.schedule.mini td.schedule-delete {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    background-size: 12px;
+}
+
+td.schedule-delete:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+td.schedule-submit:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+td.schedule-entry {
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+}
+
+table.schedule.mini td.schedule-entry {
+    width: 16px;
+    height: 16px;
+    background-image: none !important;
+}
+
+td.schedule-entry-yes {
+    background: var(--color-feedback-positive) url(../img/icon-yes.png) no-repeat center center;
+}
+
+td.schedule-entry-no {
+    background: var(--color-feedback-negative) url(../img/icon-no.png) no-repeat center center;
+}
+
+td.schedule-entry-maybe {
+    background: var(--color-feedback-neutral) url(../img/icon-maybe.png) no-repeat center center;
+}
+
+td.schedule-blank {
+    background-color: var(--color-background-primary);
+}
+
+.schedule input[type=checkbox] {
+    margin-left: 3px;
+}
+
+td.schedule-submit {
+    background-color: var(--color-background-secondary);
+    height: 24px;
+    border-top-right-radius: var(--border-radius-big);
+    border-bottom-right-radius: var(--border-radius-big);
+}
+
+.schedule.mini td.schedule-submit {
+    height: 16px;
+}
+
+.schedule input[type=submit].save {
+    font-size: inherit;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    height: 100%;
+    line-height: .5;
+    border-top-right-radius: var(--border-radius-big);
+    border-bottom-right-radius: var(--border-radius-big);
+}
+
+.schedule input[type=submit].delete {
+    background:url(../img/icon-delete.png) no-repeat;
+    background-position: center center;
+    background-origin: content-box;
+    cursor:pointer;
+    width: 24px;
+    height: 24px;
+}
+
+.schedule input[type=text] {
+    font-size: inherit;
+    max-width: 200px;
+    min-width: 100px;
+    height: 24px;
+    margin: 0;
+    text-align: right;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+ input#choice[type=text] {
+    text-align: left;
+}
+
+.schedule.mini input[type=text] {
+    height: 16px;
+    max-width: 100px;
+    min-width: 50px;
+}
+
+.schedule input[type=submit], .schedule button {
+    padding: 0 10px;
+}
+
+.center-box {
+    width: 90%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 1rem 0;
+}
+
+.content-right {
+    text-align: right;
+}
+
+.content-centered {
+    text-align: center;
+}
+
+.btnFormDate {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+#btnDate {
+    margin-left: 16px;
+}
+
+.success {
+    color: var(--color-feedback-positive) !important;
+}
+
+.fail {
+    color: var(--color-feedback-negative) !important;
+}
+
+.results-cell {
+    padding: 0;
+}
+
+.r {
+    font-size: 110%;
+    height: 24px;
+    text-align: center;
+    color: var(--color-font-secondary);
+}
+
+.schedule.mini .r {
+    font-size: 110%;
+    height: 16px;
+    font-weight: bold;
+}
+
+.r-legend {
+    text-align: right;
+    font-weight: bold;
+}
+
+.r-yes {
+    color: var(--color-feedback-positive);
+}
+
+.r-maybe {
+    color: var(--color-feedback-neutral);
+}
+
+.r-no {
+    color: var(--color-feedback-negative);
+}
+
+.r-total {
+    background: transparent url(../img/icon-star.png) no-repeat center center;
+}
+
+#comments-wrapper {
+    margin-top: 2rem;
+    padding-bottom: 1rem;
+    background-color: var(--color-background-comments);
+}
+
+.comment-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: var(--color-font-primary);
+    font-size: 90%;
+    border-bottom: dotted 1px #ccc;
+}
+
+.comment-name {
+    font-weight: bold;
+}
+
+.comment-date {
+    float: right;
+    color: #666;
+}
+
+.comment-delete{
+    background:url(../img/icon-delete.png) no-repeat;
+    background-position: center center;
+    background-origin: content-box;
+    cursor:pointer;
+    margin-top: 0.2em;
+    margin-bottom: -1.00em;
+    height: 24px;
+    width: 24px;
+}
+
+.comment-text {
+    margin-top: 8px;
+    line-height: 110%;
+}
+
+tr.schedule-new td.new-entry-choice {
+    cursor:pointer;
+}
+
+table.schedule.mini tr.schedule-new > td.new-entry-choice {
+    width: 16px;
+    height: 16px;
+    background-image: none !important;
+}
+
+tr.schedule-new td.new-entry-choice-yes {
+    background: var(--color-feedback-positive) url(../img/icon-yes.png) no-repeat center center;
+}
+
+tr.schedule-new td.new-entry-choice-maybe {
+    background: var(--color-feedback-neutral) url(../img/icon-maybe.png) no-repeat center center;
+}
+
+tr.schedule-new td.new-entry-choice-no {
+    background: var(--color-feedback-negative) url(../img/icon-no.png) no-repeat center center;
+}
+
+tr.table-spacer-row > td {
+    padding: 0;
+    margin: 0;
+    border: 8px solid var(--color-background-primary);
+}
+
+tr.table-spacer-row-big > td {
+    border: 16px solid var(--color-background-primary);
+}
+
+table.schedule.mini tr.table-spacer-row > td {
+    border: 4px solid var(--color-background-primary);
+}
+
+table.schedule.mini tr.table-spacer-row-big > td {
+    border: 8px solid var(--color-background-primary);
+}
+
+
+/* ==== FORM CSS ==== */
+
+.form {
+    margin: 0px auto;
+    width: 400px;
+    max-width: 100%;
+}
+
+.form input[type=checkbox] {
+    vertical-align: middle;
+}
+
+li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+
+label {
+    margin:10px 0 3px 0;
+    padding:0px;
+    display:block;
+}
+
+input[type=text],
+input[type=date],
+input[type=datetime],
+input[type=number],
+input[type=search],
+input[type=time],
+input[type=url],
+input[type=email],
+input[type=password],
+textarea,
+select {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    border:1px solid #bebebe;
+    padding: 7px;
+    margin:0px;
+    border-radius: var(--border-radius-small);
+    outline: none;
+}
+
+input[type=email] {
+    margin-bottom: 9px !important;
+}
+input[type=password] {
+    margin-bottom: 9px !important;
+}
+
+.field-divided {
+    width: 49%;
+}
+
+.field-long {
+    width: 100%;
+}
+
+.field-select {
+    width: 100%;
+}
+
+.field-textarea {
+    height: 100px;
+}
+
+input[type=submit],
+input[type=button],
+button[type=submit],
+button[type=button] {
+    background-color: var(--color-background-secondary);
+    padding: 8px 15px 8px 15px;
+    border: none;
+    color: var(--color-font-secondary);
+    cursor: pointer;
+    border-radius: var(--border-radius-small);
+}
+
+input[type=submit]:hover,
+input[type=button]:hover,
+button[type=submit]:hover,
+button[type=button]:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+input[type=submit]:disabled,
+input[type=button]:disabled,
+button[type=submit]:disabled,
+button[type=button]:disabled {
+    background-color: #ccc !important;
+}
+
+
+/* ==== Admin page ==== */
+
+#admin-page {
+    padding: 2rem;
+}
+#admin-page table {
+    margin: 0 auto;;
+}
+#admin-page td {
+    padding: 4px 4px;
+}
+
+.collapsible {
+    width: 100%;
+    text-align: left;
+    outline: none;
+}
+
+.active, .collapsible:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+.collapsible:after {
+    content: "+";
+    color: #ffffff;
+    float: right;
+    margin-left: 5px;
+}
+  
+.active:after {
+    content: "-";
+}
+
+.collapscontent {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.collapscontent li {
+    margin: 8px 0;
+}
+
+
+/* ==== Flash messages ==== */
+
+.message {
+    padding: 1rem;
+
+    background: #eff8ff;
+    color: #2779bd;
+
+    border-color: #6cb2eb;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    margin-bottom: 2rem;
+}
+
+.message.hidden {
+    display: none;
+}
+
+.message.success {
+    background: #e3fcec;
+    color: #1f9d55;
+    border-color: #51d88a;
+}
+
+.message.error {
+    background: #fcebea;
+    color: #cc1f1a;
+    border-color: #ef5753;
+}

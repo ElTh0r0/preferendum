@@ -1,0 +1,437 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2020-09-10 12:46+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/AdminController.php:86
+msgid "Unable to add/update the user - password / confirmation not correct."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/AdminController.php:91
+msgid "The user has been created/updated."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/AdminController.php:94
+msgid "Unable to add the user."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/AdminController.php:114
+msgid "User has been deleted."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/AdminController.php:119
+msgid "User {0} has NOT been deleted!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/AdminController.php:146
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/AdminController.php:151
+msgid "Invalid user or password"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/ChoicesController.php:79
+msgid "Option has been added."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/ChoicesController.php:86
+msgid "Option has NOT been added!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/ChoicesController.php:112
+msgid "Option has been deleted."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/ChoicesController.php:118
+msgid "Option has NOT been deleted!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/CommentsController.php:36
+msgid "Unable to save your comment."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/CommentsController.php:57
+msgid "Comment has been deleted."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/CommentsController.php:62
+msgid "Comment {0} has NOT been deleted!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/EntriesController.php:82
+msgid "Unable to save your entry."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/EntriesController.php:108
+msgid "Entry has been deleted."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/EntriesController.php:114
+msgid "Entry has NOT been deleted!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:56
+msgid "Your poll has been saved."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:63
+msgid "Unable to add your poll."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:96
+msgid "This poll is locked - it is not possible to insert new entries or comments!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:129
+msgid "Your poll has been updated."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:132
+msgid "Unable to update your poll."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:141
+msgid "This poll is locked!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:168
+msgid "Poll has been unlocked"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:174
+msgid "Poll lock has NOT been changed!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:191
+msgid "Poll {0} has been deleted."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Controller/PollsController.php:196
+msgid "Poll {0} has NOT been deleted!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:15
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/login.php:15
+#: /srv/http/sprudel-ng/sprudel-ng/element/admin/ctrl-logout.php:23
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:25
+msgid "Poll administration"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:29
+msgid "Available polls"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:43
+msgid "View"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:50
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/ctrl.php:24
+msgid "Edit"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:57
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:38
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/ctrl-edit.php:40
+msgid "Delete"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:59
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/ctrl-edit.php:44
+msgid "Are you sure to delete this poll?"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:64
+msgid "Last change"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:72
+msgid "User contact infos"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/index.php:90
+msgid "No polls found in database!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:28
+msgid "Available users"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:40
+msgid "Are you sure to delete this user?"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:54
+msgid "Create user / change password"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:56
+msgid "Change password"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:67
+#: /srv/http/sprudel-ng/sprudel-ng/element/admin/ctrl-login.php:23
+msgid "Name"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:77
+#: /srv/http/sprudel-ng/sprudel-ng/element/admin/ctrl-login.php:28
+msgid "Password"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:83
+msgid "Confirm password"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Admin/usermanagement.php:87
+msgid "Submit"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Error/error400.php:37
+#: /srv/http/sprudel-ng/sprudel-ng/Error/error500.php:41
+msgid "Error"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Error/error400.php:38
+msgid "The requested address {0} was not found on this server."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Error/error400.php:40
+#: /srv/http/sprudel-ng/sprudel-ng/Error/error500.php:44
+msgid "Back"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Error/error500.php:39
+msgid "An internal error has occurred"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:15
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:158
+msgid "Create poll"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:29
+msgid "Monday"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:30
+msgid "Tuesday"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:31
+msgid "Wednesday"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:32
+msgid "Thursday"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:33
+msgid "Friday"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:34
+msgid "Saturday"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:35
+msgid "Sunday"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:44
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:58
+msgid "Create a new poll ..."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:58
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/edit-head.php:28
+msgid "Title"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:59
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/edit-head.php:29
+msgid "What about a title for your poll?"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:66
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/edit-head.php:36
+msgid "Description"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:67
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/edit-head.php:37
+msgid "Your participants may also like a short description of what this poll is all about, right?"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:77
+msgid "Options"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:78
+msgid "Type whatever you want or pick a date!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:109
+msgid "Deleting poll/entries only with admin link"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:120
+msgid "Collect user contact information"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/add.php:165
+msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/edit.php:15
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/edit-head.php:17
+msgid "Edit poll"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/edit.php:45
+msgid "Edit entries"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/view.php:15
+msgid "Poll"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/view.php:25
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/ctrl.php:18
+msgid "Mini View"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/Polls/view.php:26
+msgid "Normal View"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/admin/ctrl-login.php:32
+msgid "Login"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/admin/ctrl-logout.php:32
+msgid "User management"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/admin/ctrl-logout.php:41
+msgid "Logout"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/comment/delete.php:17
+msgid "Delete comments"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/comment/delete.php:31
+msgid "Are you sure to delete this comment?"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/comment/delete.php:38
+#: /srv/http/sprudel-ng/sprudel-ng/element/comment/list.php:33
+msgid "No comments, yet."
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/comment/list.php:17
+msgid "Comments"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/comment/new.php:36
+msgid "Your name"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/comment/new.php:46
+msgid "Your comment"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/comment/new.php:50
+#: /srv/http/sprudel-ng/sprudel-ng/element/entry/new.php:59
+msgid "Save"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/entry/edit.php:33
+msgid "Are you sure to delete this option?"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/entry/edit.php:84
+msgid "Are you sure to delete this entry?"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/entry/new.php:34
+msgid "Your name?"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/entry/new.php:68
+msgid "Optional: Contact info"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:28
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:31
+#: /srv/http/sprudel-ng/sprudel-ng/layout/sprudel-ng.php:22
+msgid "sprudel-ng"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:29
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:32
+msgid "scheduling polls"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:39
+msgid "Public link"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:40
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:42
+msgid "Give this public link to the participants of your poll!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:41
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:48
+msgid "Copy link to clipboard!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:46
+msgid "Admin link"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:47
+#: /srv/http/sprudel-ng/sprudel-ng/element/header.php:49
+msgid "Save this admin link, you need it to manage your poll!"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/ctrl-edit.php:19
+msgid "View Poll"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/ctrl-edit.php:29
+msgid "Un-/Lock"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/edit-head.php:49
+msgid "Save changes"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/result-simple.php:18
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/result-trend.php:18
+msgid "Yes"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/result-trend.php:19
+msgid "Maybe"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/element/poll/result-trend.php:20
+msgid "No"
+msgstr ""
+
+#: /srv/http/sprudel-ng/sprudel-ng/layout/sprudel-ng.php:39
+msgid "Please enable JavaScript in your browser and reload this page."
+msgstr ""
+

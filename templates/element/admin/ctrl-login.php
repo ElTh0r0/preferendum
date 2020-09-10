@@ -1,0 +1,34 @@
+<?php
+/**
+ * Sprudel-ng (https://github.com/ElTh0r0/sprudel-ng)
+ * Copyright (c) github.com/ElTh0r0
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright 2020 github.com/ElTh0r0
+ * @license   MIT License (https://opensource.org/licenses/mit-license.php)
+ * @link      https://github.com/ElTh0r0/sprudel-ng
+ * @since     0.1.0
+ */
+?>
+
+<div>
+    <?php echo $this->Flash->render() ?>
+    <?php echo $this->Form->create() ?>
+    <fieldset>
+        <?php echo $this->Form->control(
+            'name', [
+            'required' => true,
+            'label' => __('Name')]
+        ) ?>
+        <?php echo $this->Form->control(
+            'info', [
+            'required' => true,
+            'label' => __('Password'),
+            'type' => 'password']
+        ) ?>
+    </fieldset>
+    <?php echo $this->Form->submit(__('Login')); ?>
+    <?php echo $this->Form->end() ?>
+</div>
