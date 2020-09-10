@@ -28,11 +28,16 @@
 
 ## Installation
 - Create an empty MySql database on your server, note down the DB host address, user name and password
-- Download the latest Sprudel-ng tag as `.zip` archive from this repository
-- Extract the contents of the archive into a new directory (e.g. `sprudel-ng` on your computer)
-- Copy `config/app_local.example.php` and rename it to `config/app_local.php`. Change the following entries:
+- Recommended:
+  - Clone this repository and run `composer install`. The install command will download all needed dependencies.
+- Second possibility:
+  - Download the latest Sprudel-ng tag as `.zip` archive from [releases](https://github.com/ElTh0r0/sprudel-ng/releases)
+  - Extract the contents of the archive into a new directory (e.g. `sprudel-ng` on your computer)
+  - Take care of proper folder permissions, see [CakePHP permissions](https://book.cakephp.org/4/en/installation.html#permissions)
+  - Copy `config/app_local.example.php` and rename it to `config/app_local.php`.
+- In `config/app_local.php` change the following entries:
   - Datasources\Default: Set host, username, password, database according to your environment.
-  - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string.
+  - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).
 - Upload the `sprudel-ng` directory to your web server (root-directory or somewhere else)
 - Access `<your installation folder>/installdb` through your browser (e.g. `yourdomain.com/sprudel-ng/installdb`)
 -  Delete `src/Controller/InstalldbController.php` from your server
