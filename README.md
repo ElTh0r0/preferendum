@@ -29,7 +29,7 @@
 ## Installation
 - Create an empty MySql database on your server, note down the DB host address, user name and password
 - Recommended:
-  - Clone this repository and run `composer install`. The install command will download all needed dependencies.
+  - Clone this repository and run `composer install --no-dev`. The install command will download all needed dependencies.
 - Second possibility:
   - Download the latest Sprudel-ng tag as `.zip` archive from [releases](https://github.com/ElTh0r0/sprudel-ng/releases)
   - Extract the contents of the archive into a new directory (e.g. `sprudel-ng` on your computer)
@@ -66,6 +66,8 @@ The cleanup script will then delete all inactive polls that became too old.
 
 ## Contribution
 This is my first project using [CakePHP](https://cakephp.org), so there might exist many code sections, which could be implemented much more elegant with the build-in CakePHP features. I'm open for any optimization! Same for suggestions for additional features or if you are running into problems setting up Sprudel-ng, **write an issue**! Additional translations are highly welcome as well or if you feel like improving the code of this app, send a (well documented) **pull request**! If you just like Sprudel-ng as it is, let me know by donating this repo a star.
+
+If you want to work on the code, clone the repositiory and run `composer install`. This will download CakePHP library and dependencies.
 
 ## Attribution of used third-party software/media
 Sprudel-ng makes use of the following software/media and says **Thank you!** to:
