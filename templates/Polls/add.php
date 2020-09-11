@@ -56,7 +56,7 @@ $this->Html->scriptEnd();
         'class' => 'field-long',
         'required' => true,
         'label' => __('Title') . ' *',
-        'placeholder' => __('What about a title for your poll?'),
+        'placeholder' => __('Title for your poll'),
         ]
     );
     echo $this->Form->control(
@@ -64,7 +64,7 @@ $this->Html->scriptEnd();
         'rows' => '5',
         'class' => 'field-long field-textarea',
         'label' => __('Description'),
-        'placeholder' => __('Your participants may also like a short description of what this poll is all about, right?'),
+        'placeholder' => __('Short description of what this poll is all about'),
         ]
     );
 
@@ -106,7 +106,7 @@ $this->Html->scriptEnd();
             'checked',
             ]
         );
-        echo '<span style="font-size: 90%;">' . __('Deleting poll/entries only with admin link') . '</span>';
+        echo '<span style="font-size: 90%;">' . __('Edit/deleting poll/entries only with admin link') . '</span>';
         echo '</li>';
     }
     
@@ -121,38 +121,48 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
 
-    /*
     echo '<li>';
     echo $this->Form->checkbox(
-    'emailentry', [
+        'emailentry', [
         'value' => 'true',
         'id' => 'emailentryInput',
-    ]
+        'onchange' => 'toggleEmailInput()',
+        'hidden' => !(\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail')),
+        ]
     );
-    echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
+    if (\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail')) {
+        echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
+    }
     echo '</li>';
-        
+    
     echo '<li>';
     echo $this->Form->checkbox(
-    'emailcomment', [
-    'value' => 'true',
+        'emailcomment', [
+        'value' => 'true',
         'id' => 'emailcommentInput',
-    ]
+        'onchange' => 'toggleEmailInput()',
+        'hidden' => !(\Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')),
+        ]
     );
-    echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
+    if (\Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')) {
+        echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
+    }
     echo '</li>';
-    */
     echo '</ul>';
 
-    /*
-    echo $this->Form->control(
-    'email', [
-        'class' => 'field-long',
-        'id' => 'emailInput',
-        'label' => __('Email'),
-    ]
-    );
-    */
+    if (\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail') 
+        || \Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')
+    ) {
+        echo $this->Form->control(
+            'email', [
+            'class' => 'field-long',
+            'id' => 'emailInput',
+            'label' => __('Email'),
+            'disabled',
+            'placeholder' => __('Email for receiving new entry/comment'),
+            ]
+        );
+    }
 
     echo '<div class="content-right">';
     echo $this->Form->button(__('Create poll'));

@@ -14,6 +14,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Mailer\Mailer;
 
 class EntriesController extends AppController
 {
@@ -32,9 +33,16 @@ class EntriesController extends AppController
             $number = $query->count();
 
             $this->loadModel('Polls');
-            $db = $this->Polls->findByPollid($pollid)->select(['locked', 'userinfo'])->firstOrFail();
+            $db = $this->Polls->findByPollid($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
+            $dbtitle = $db['title'];
             $dblocked = $db['locked'];
             $dbuserinfo = $db['userinfo'];
+            $dbemail = $db['email'];
+            $dbemailentry = $db['emailentry'];
+            $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
+            \Cake\Core\Configure::load('app_local');
+            $from = \Cake\Core\Configure::read('Email.default.from');
+            $entryarray = array();
 
             if ($number == 0 && $dblocked == 0) {
                 $success = true;
@@ -52,9 +60,28 @@ class EntriesController extends AppController
                         $success = false;
                         break;
                     }
+                    $entryarray[trim($data['choices'][$i])] = trim($data['values'][$i]);
                 }
                 
                 if ($success) {
+                    if ($dbemailentry && !empty($dbemail)) {
+                        $mailer = new Mailer('default');
+                        $mailer->viewBuilder()->setTemplate('new_entry')->setLayout('default');
+                        $mailer->setFrom($from)
+                            ->setTo($dbemail)
+                            ->setEmailFormat('text')
+                            ->setSubject(__('New entry in poll "{0}"', h($dbtitle)))
+                            ->setViewVars(
+                                [
+                                'title' => $dbtitle,
+                                'link' => $link,
+                                'name' => trim($data['name']),
+                                'entries' => $entryarray,
+                                ]
+                            )
+                            ->deliver();
+                    }
+
                     if ($dbuserinfo == 1) {
                         $userinfo = trim($data['userdetails']);
                         if (!empty($userinfo)) {

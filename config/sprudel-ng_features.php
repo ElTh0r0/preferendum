@@ -30,11 +30,18 @@ return [
         // Define which users have extended user management access (create/delete user, reset password)
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
         'extendedUsermanagementAccess' => [1, ],
+        // Turn on(true)/off(false) admin link functionality (recommended)
+        'adminLinks' => true,
+        
         // Add (optional) field to store user contact information together with entry
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
         'collectUserinfo' => false,
-        // Turn on(true)/off(false) admin link functionality (recommended)
-        'adminLinks' => true,
+        // Add (optional) checkbox for sending email after new entry
+        // (EmailTransport has to be configured in app_local.php !)
+        'sendEntryEmail' => false,
+        // Add (optional) checkbox for sending email after new comment
+        // (EmailTransport has to be configured in app_local.php !)
+        'sendCommentEmail' => false,
 
         // Header Logo (set to true if you want to show header logo, false otherwise)
         'headerLogo' => true,

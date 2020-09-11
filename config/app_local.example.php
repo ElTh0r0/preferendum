@@ -93,15 +93,25 @@ return [
      * Host and credential configuration in case you are using SmtpTransport
      *
      * See app.php for more configuration options.
+     * See https://book.cakephp.org/4/en/core-libraries/email.html#configuring-transports
      */
     'EmailTransport' => [
         'default' => [
+            // Use 'Smtp' (together with host, username, password) or 'Mail' (using PHP mail() function)
+            'className' => 'Smtp',
             'host' => 'localhost',
             'port' => 25,
             'username' => null,
             'password' => null,
             'client' => null,
+            'tls' => true,
             'url' => env('EMAIL_TRANSPORT_DEFAULT_URL', null),
+        ],
+    ],
+
+    'Email' => [
+        'default' => [
+            'from' => 'you@localhost',
         ],
     ],
 ];

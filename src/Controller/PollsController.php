@@ -127,7 +127,7 @@ class PollsController extends AppController
                 $this->Polls->patchEntity($poll, $this->request->getData());
                 if ($this->Polls->save($poll)) {
                     $this->Flash->success(__('Your poll has been updated.'));
-                    return $this->redirect(['action' => 'view', $poll->pollid, $adminid]);
+                    return $this->redirect(['action' => 'edit', $poll->pollid, $adminid]);
                 }
                 $this->Flash->error(__('Unable to update your poll.'));
             }

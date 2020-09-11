@@ -51,6 +51,10 @@ $routes->scope('/', function (RouteBuilder $builder) {
     if ((\Cake\Core\Configure::read('Sprudel-ng.deleteInactivePollsAfter') == 0)) {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
     }
+    $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
+    $builder->connect('/polls/lock/*', ['controller' => 'Polls', 'action' => 'lock']);
+    $builder->connect('/polls/delete/*', ['controller' => 'Polls', 'action' => 'delete']);
+    $builder->connect('/polls/*', ['controller' => 'Polls', 'action' => 'View']);
 
     if (\Cake\Core\Configure::read('Sprudel-ng.adminInterface') != true) {
         $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);

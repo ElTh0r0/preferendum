@@ -16,6 +16,19 @@
 
 <?php $this->Html->script('poll_view.js', ['block' => 'scriptBottom']); ?>
 <?php $this->Html->script('clipboard.min.js', ['block' => true]); ?>
+<?php $this->Html->scriptBlock(
+    'function toggleEmailInput() {
+    document.getElementById("emailInput").disabled =
+        !document.getElementById("emailentryInput").checked &&
+        !document.getElementById("emailcommentInput").checked;
+
+    if (document.getElementById("emailInput").disabled) {
+        document.getElementById("emailInput").required = false;
+    } else {
+        document.getElementById("emailInput").required
+    }
+}', ['block' => true]
+); ?>
 
 <?php
 $this->Html->scriptStart(['block' => true]);

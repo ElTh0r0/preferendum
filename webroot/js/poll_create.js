@@ -46,3 +46,17 @@ $(document).ready(function() {
     });
 
 });
+
+//enable/disable email input depending on checkboxes
+function toggleEmailInput() {
+    document.getElementById("emailInput").disabled =
+        !document.getElementById("emailentryInput").checked &&
+        !document.getElementById("emailcommentInput").checked;
+
+    if (document.getElementById("emailInput").disabled) {
+        document.getElementById("emailInput").value = "";
+        document.getElementById("emailInput").required = false;
+    } else {
+        document.getElementById("emailInput").required
+    }
+}

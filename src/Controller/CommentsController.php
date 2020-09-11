@@ -14,6 +14,7 @@
 declare(strict_types=1);
 
 namespace App\Controller;
+use Cake\Mailer\Mailer;
 
 class CommentsController extends AppController
 {
@@ -24,11 +25,34 @@ class CommentsController extends AppController
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
             $pollid = $this->request->getData()['pollid'];
             $this->loadModel('Polls');
-            $db = $this->Polls->findByPollid($pollid)->select('locked')->firstOrFail();
+            $db = $this->Polls->findByPollid($pollid)->select(['title', 'locked', 'email', 'emailcomment'])->firstOrFail();
+            $dbtitle = $db['title'];
             $dblocked = $db['locked'];
-            
+            $dbemail = $db['email'];
+            $dbemailcomment = $db['emailcomment'];
+            $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
+            \Cake\Core\Configure::load('app_local');
+            $from = \Cake\Core\Configure::read('Email.default.from');
+
             if ($dblocked == 0) {
                 if ($this->Comments->save($comment)) {
+                    if ($dbemailcomment && !empty($dbemail)) {
+                        $mailer = new Mailer('default');
+                        $mailer->viewBuilder()->setTemplate('new_comment')->setLayout('default');
+                        $mailer->setFrom($from)
+                            ->setTo($dbemail)
+                            ->setEmailFormat('text')
+                            ->setSubject(__('New comment in poll "{0}"', h($dbtitle)))
+                            ->setViewVars(
+                                [
+                                'title' => $dbtitle,
+                                'link' => $link,
+                                'comment' => $comment,
+                                ]
+                            )
+                            ->deliver();
+                    }
+
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
                 }
             }
