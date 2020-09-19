@@ -16,6 +16,7 @@
 - optional collect user contact information with a poll entry
 - optional poll **administration interface** for managing all the polls on the server
 - optional very simple user administration for admin interface
+- optional receive email after new entry and/or comment
 
 ## Requirements
 - PHP 7.2 or higher (including intl and mbstring extension)
@@ -41,7 +42,7 @@
 - Upload the `sprudel-ng` directory to your web server (root-directory or somewhere else)
 - Access `<your installation folder>/installdb` through your browser (e.g. `yourdomain.com/sprudel-ng/installdb`)
 -  Delete `src/Controller/InstalldbController.php` from your server
--  Enjoy! :ok_hand:
+-  Enjoy!
 
 ## Configuration and customization
 ### Features configuration
@@ -61,7 +62,9 @@ If you are enabling this feature, please change the password after the installat
 
 ### Automatic deletion of inactive polls (needs cronjob!)
 You can set up a certain number of days in the `config/sprudel-ng_features.php` to mark the maximum age of an **inactive** poll ( *inactive* as in: no new answers and comments). Sprudel-ng comes with a cleanup function that you can set up to be executed periodically via a cronjob, e.g.
+
 `0 0 1 * * /usr/bin/php /var/www/html/sprudel-ng/polls/cleanup`
+
 The cleanup script will then delete all inactive polls that became too old.
 
 ## Contribution
