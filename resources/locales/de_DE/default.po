@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-09-11 19:38+0000\n"
-"PO-Revision-Date: 2020-09-11 21:38+0200\n"
+"POT-Creation-Date: 2020-10-04 15:54+0000\n"
+"PO-Revision-Date: 2020-10-04 17:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -15,481 +15,481 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: /srv/http/sprudel-ng/main/Controller/AdminController.php:86
+#: /srv/http/preferendum/main/Controller/AdminController.php:86
 msgid "Unable to add/update the user - password / confirmation not correct."
 msgstr ""
 "Benutzer konnte nicht erstellt/aktualisiert werden - Passwort / Bestätigung "
 "nicht korrekt."
 
-#: /srv/http/sprudel-ng/main/Controller/AdminController.php:91
+#: /srv/http/preferendum/main/Controller/AdminController.php:91
 msgid "The user has been created/updated."
 msgstr "Der Benutzer wurde erstellt/aktualisiert."
 
-#: /srv/http/sprudel-ng/main/Controller/AdminController.php:94
+#: /srv/http/preferendum/main/Controller/AdminController.php:94
 msgid "Unable to add the user."
 msgstr "Benutzer konnte nicht erstellt werden."
 
-#: /srv/http/sprudel-ng/main/Controller/AdminController.php:114
+#: /srv/http/preferendum/main/Controller/AdminController.php:114
 msgid "User has been deleted."
 msgstr "Benutzer wurde gelöscht."
 
-#: /srv/http/sprudel-ng/main/Controller/AdminController.php:119
+#: /srv/http/preferendum/main/Controller/AdminController.php:119
 msgid "User {0} has NOT been deleted!"
 msgstr "Benutzer {0} konnte NICHT gelöscht werden!"
 
-#: /srv/http/sprudel-ng/main/Controller/AdminController.php:146
-#: /srv/http/sprudel-ng/main/Controller/AdminController.php:151
+#: /srv/http/preferendum/main/Controller/AdminController.php:146
+#: /srv/http/preferendum/main/Controller/AdminController.php:151
 msgid "Invalid user or password"
 msgstr "Ungültiger Benutzer oder Passwort"
 
-#: /srv/http/sprudel-ng/main/Controller/ChoicesController.php:79
+#: /srv/http/preferendum/main/Controller/ChoicesController.php:79
 msgid "Option has been added."
 msgstr "Option wurde hinzugefügt."
 
-#: /srv/http/sprudel-ng/main/Controller/ChoicesController.php:86
+#: /srv/http/preferendum/main/Controller/ChoicesController.php:86
 msgid "Option has NOT been added!"
 msgstr "Option konnte NICHT hinzugefügt werden!"
 
-#: /srv/http/sprudel-ng/main/Controller/ChoicesController.php:112
+#: /srv/http/preferendum/main/Controller/ChoicesController.php:112
 msgid "Option has been deleted."
 msgstr "Option wurde gelöscht."
 
-#: /srv/http/sprudel-ng/main/Controller/ChoicesController.php:118
+#: /srv/http/preferendum/main/Controller/ChoicesController.php:118
 msgid "Option has NOT been deleted!"
 msgstr "Option konnte NICHT gelöscht werden!"
 
-#: /srv/http/sprudel-ng/main/Controller/CommentsController.php:45
-#: /srv/http/sprudel-ng/main/email/text/new_comment.php:15
+#: /srv/http/preferendum/main/Controller/CommentsController.php:45
+#: /srv/http/preferendum/main/email/text/new_comment.php:15
 msgid "New comment in poll \"{0}\""
 msgstr "Neuer Kommentar in Umfrage \"{0}\""
 
-#: /srv/http/sprudel-ng/main/Controller/CommentsController.php:58
+#: /srv/http/preferendum/main/Controller/CommentsController.php:60
 msgid "Unable to save your comment."
 msgstr "Kommentar konnte nicht gespeichert werden."
 
-#: /srv/http/sprudel-ng/main/Controller/CommentsController.php:79
+#: /srv/http/preferendum/main/Controller/CommentsController.php:81
 msgid "Comment has been deleted."
 msgstr "Kommentar wurde gelöscht."
 
-#: /srv/http/sprudel-ng/main/Controller/CommentsController.php:84
+#: /srv/http/preferendum/main/Controller/CommentsController.php:86
 msgid "Comment {0} has NOT been deleted!"
 msgstr "Kommentar {0} konnte NICHT gelöscht werden!"
 
-#: /srv/http/sprudel-ng/main/Controller/EntriesController.php:73
-#: /srv/http/sprudel-ng/main/email/text/new_entry.php:15
+#: /srv/http/preferendum/main/Controller/EntriesController.php:73
+#: /srv/http/preferendum/main/email/text/new_entry.php:15
 msgid "New entry in poll \"{0}\""
 msgstr "Neuer Eintrag in Umfrage \"{0}\""
 
-#: /srv/http/sprudel-ng/main/Controller/EntriesController.php:107
+#: /srv/http/preferendum/main/Controller/EntriesController.php:109
 msgid "Unable to save your entry."
 msgstr "Eintrag konnte nicht gespeichert werden."
 
-#: /srv/http/sprudel-ng/main/Controller/EntriesController.php:133
+#: /srv/http/preferendum/main/Controller/EntriesController.php:135
 msgid "Entry has been deleted."
 msgstr "Eintrag wurde gelöscht."
 
-#: /srv/http/sprudel-ng/main/Controller/EntriesController.php:139
+#: /srv/http/preferendum/main/Controller/EntriesController.php:141
 msgid "Entry has NOT been deleted!"
 msgstr "Eintrag konnte NICHT gelöscht werden!"
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:56
+#: /srv/http/preferendum/main/Controller/PollsController.php:56
 msgid "Your poll has been saved."
 msgstr "Dein Umfrage wurde gespeichert."
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:63
+#: /srv/http/preferendum/main/Controller/PollsController.php:63
 msgid "Unable to add your poll."
 msgstr "Umfrage konnte nicht gespeichert werden."
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:96
+#: /srv/http/preferendum/main/Controller/PollsController.php:96
 msgid ""
 "This poll is locked - it is not possible to insert new entries or comments!"
 msgstr ""
 "Diese Umfrage ist gesperrt - es können keine neuen Einträge oder Kommentare "
 "erstellt werden!"
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:129
+#: /srv/http/preferendum/main/Controller/PollsController.php:129
 msgid "Your poll has been updated."
 msgstr "Deine Umfrage wurde aktualisiert."
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:132
+#: /srv/http/preferendum/main/Controller/PollsController.php:132
 msgid "Unable to update your poll."
 msgstr "Die Umfrage konnte nicht aktualisiert werden."
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:141
+#: /srv/http/preferendum/main/Controller/PollsController.php:141
 msgid "This poll is locked!"
 msgstr "Diese Umfrage ist gesperrt!"
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:168
+#: /srv/http/preferendum/main/Controller/PollsController.php:168
 msgid "Poll has been unlocked"
 msgstr "Die Umfrage wurde entsperrt"
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:174
+#: /srv/http/preferendum/main/Controller/PollsController.php:174
 msgid "Poll lock has NOT been changed!"
 msgstr "Sperrung der Umfrage konnte nicht geändert werden!"
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:191
+#: /srv/http/preferendum/main/Controller/PollsController.php:191
 msgid "Poll {0} has been deleted."
 msgstr "Umfrage {0} wurde gelöscht."
 
-#: /srv/http/sprudel-ng/main/Controller/PollsController.php:196
+#: /srv/http/preferendum/main/Controller/PollsController.php:196
 msgid "Poll {0} has NOT been deleted!"
 msgstr "Umfrage {0} konnte NICHT gelöscht werden!"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:15
-#: /srv/http/sprudel-ng/main/Admin/login.php:15
-#: /srv/http/sprudel-ng/main/element/admin/ctrl-logout.php:23
-#: /srv/http/sprudel-ng/main/element/header.php:25
+#: /srv/http/preferendum/main/Admin/index.php:15
+#: /srv/http/preferendum/main/Admin/login.php:15
+#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:23
+#: /srv/http/preferendum/main/element/header.php:25
 msgid "Poll administration"
 msgstr "Umfrage-Verwaltung"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:29
+#: /srv/http/preferendum/main/Admin/index.php:29
 msgid "Available polls"
 msgstr "Vorhandene Umfragen"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:43
+#: /srv/http/preferendum/main/Admin/index.php:43
 msgid "View"
 msgstr "Anzeigen"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:50
-#: /srv/http/sprudel-ng/main/element/poll/ctrl.php:24
+#: /srv/http/preferendum/main/Admin/index.php:50
+#: /srv/http/preferendum/main/element/poll/ctrl.php:24
 msgid "Edit"
 msgstr "Ändern"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:57
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:38
-#: /srv/http/sprudel-ng/main/element/poll/ctrl-edit.php:40
+#: /srv/http/preferendum/main/Admin/index.php:57
+#: /srv/http/preferendum/main/Admin/usermanagement.php:38
+#: /srv/http/preferendum/main/element/poll/ctrl-edit.php:40
 msgid "Delete"
 msgstr "Löschen"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:59
-#: /srv/http/sprudel-ng/main/element/poll/ctrl-edit.php:44
+#: /srv/http/preferendum/main/Admin/index.php:59
+#: /srv/http/preferendum/main/element/poll/ctrl-edit.php:44
 msgid "Are you sure to delete this poll?"
 msgstr "Soll diese Umfrage wirklich gelöscht werden?"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:64
+#: /srv/http/preferendum/main/Admin/index.php:64
 msgid "Last change"
 msgstr "Letzte Änderung"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:72
+#: /srv/http/preferendum/main/Admin/index.php:72
 msgid "User contact infos"
 msgstr "Teilnehmer-Kontaktinformationen"
 
-#: /srv/http/sprudel-ng/main/Admin/index.php:90
+#: /srv/http/preferendum/main/Admin/index.php:90
 msgid "No polls found in database!"
 msgstr "Keine Umfragen in der Datenbank gefunden!"
 
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:28
+#: /srv/http/preferendum/main/Admin/usermanagement.php:28
 msgid "Available users"
 msgstr "Vorhandene Benutzer"
 
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:40
+#: /srv/http/preferendum/main/Admin/usermanagement.php:40
 msgid "Are you sure to delete this user?"
 msgstr "Soll dieser Benutzer wirklich gelöscht werden?"
 
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:54
+#: /srv/http/preferendum/main/Admin/usermanagement.php:54
 msgid "Create user / change password"
 msgstr "Benutzer erstellten / Passwort ändern"
 
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:56
+#: /srv/http/preferendum/main/Admin/usermanagement.php:56
 msgid "Change password"
 msgstr "Passwort ändern"
 
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:67
-#: /srv/http/sprudel-ng/main/element/admin/ctrl-login.php:23
+#: /srv/http/preferendum/main/Admin/usermanagement.php:67
+#: /srv/http/preferendum/main/element/admin/ctrl-login.php:23
 msgid "Name"
 msgstr "Name"
 
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:77
-#: /srv/http/sprudel-ng/main/element/admin/ctrl-login.php:28
+#: /srv/http/preferendum/main/Admin/usermanagement.php:77
+#: /srv/http/preferendum/main/element/admin/ctrl-login.php:28
 msgid "Password"
 msgstr "Passwort"
 
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:83
+#: /srv/http/preferendum/main/Admin/usermanagement.php:83
 msgid "Confirm password"
 msgstr "Passwort bestätigen"
 
-#: /srv/http/sprudel-ng/main/Admin/usermanagement.php:87
+#: /srv/http/preferendum/main/Admin/usermanagement.php:87
 msgid "Submit"
 msgstr "Abschicken"
 
-#: /srv/http/sprudel-ng/main/Error/error400.php:37
-#: /srv/http/sprudel-ng/main/Error/error500.php:41
+#: /srv/http/preferendum/main/Error/error400.php:37
+#: /srv/http/preferendum/main/Error/error500.php:41
 msgid "Error"
 msgstr "Fehler"
 
-#: /srv/http/sprudel-ng/main/Error/error400.php:38
+#: /srv/http/preferendum/main/Error/error400.php:38
 msgid "The requested address {0} was not found on this server."
 msgstr "Die angeforderte Adresse {0} wurde auf diesem Server nicht gefunden."
 
-#: /srv/http/sprudel-ng/main/Error/error400.php:40
-#: /srv/http/sprudel-ng/main/Error/error500.php:44
+#: /srv/http/preferendum/main/Error/error400.php:40
+#: /srv/http/preferendum/main/Error/error500.php:44
 msgid "Back"
 msgstr "Zurück"
 
-#: /srv/http/sprudel-ng/main/Error/error500.php:39
+#: /srv/http/preferendum/main/Error/error500.php:39
 msgid "An internal error has occurred"
 msgstr "Ein interner Fehler ist aufgetreten"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:15
-#: /srv/http/sprudel-ng/main/Polls/add.php:167
+#: /srv/http/preferendum/main/Polls/add.php:15
+#: /srv/http/preferendum/main/Polls/add.php:168
 msgid "Create poll"
 msgstr "Umfrage erstellen"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:29
+#: /srv/http/preferendum/main/Polls/add.php:29
 msgid "Monday"
 msgstr "Montag"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:30
+#: /srv/http/preferendum/main/Polls/add.php:30
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:31
+#: /srv/http/preferendum/main/Polls/add.php:31
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:32
+#: /srv/http/preferendum/main/Polls/add.php:32
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:33
+#: /srv/http/preferendum/main/Polls/add.php:33
 msgid "Friday"
 msgstr "Freitag"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:34
+#: /srv/http/preferendum/main/Polls/add.php:34
 msgid "Saturday"
 msgstr "Samstag"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:35
+#: /srv/http/preferendum/main/Polls/add.php:35
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:44
-#: /srv/http/sprudel-ng/main/element/header.php:58
+#: /srv/http/preferendum/main/Polls/add.php:44
+#: /srv/http/preferendum/main/element/header.php:58
 msgid "Create a new poll ..."
 msgstr "Erstelle eine neue Umfrage ..."
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:58
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:28
+#: /srv/http/preferendum/main/Polls/add.php:58
+#: /srv/http/preferendum/main/element/poll/edit-head.php:28
 msgid "Title"
 msgstr "Titel"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:59
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:29
+#: /srv/http/preferendum/main/Polls/add.php:59
+#: /srv/http/preferendum/main/element/poll/edit-head.php:29
 msgid "Title for your poll"
 msgstr "Titel für Deine Umfrage"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:66
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:36
+#: /srv/http/preferendum/main/Polls/add.php:66
+#: /srv/http/preferendum/main/element/poll/edit-head.php:36
 msgid "Description"
 msgstr "Beschreibung"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:67
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:37
+#: /srv/http/preferendum/main/Polls/add.php:67
+#: /srv/http/preferendum/main/element/poll/edit-head.php:37
 msgid "Short description of what this poll is all about"
 msgstr "Kurze Beschreibung um was es in der Umfrage geht"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:77
+#: /srv/http/preferendum/main/Polls/add.php:77
 msgid "Options"
 msgstr "Optionen"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:78
+#: /srv/http/preferendum/main/Polls/add.php:78
 msgid "Type whatever you want or pick a date!"
 msgstr "Wähle ein Datum oder beliebiger Text!"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:109
+#: /srv/http/preferendum/main/Polls/add.php:109
 msgid "Edit/deleting poll/entries only with admin link"
 msgstr "Ändern/löschen von Umfragen/Einträgen nur mit Admin-Link"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:120
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:50
+#: /srv/http/preferendum/main/Polls/add.php:120
+#: /srv/http/preferendum/main/element/poll/edit-head.php:50
 msgid "Collect user contact information"
 msgstr "Sammle Teilnehmer-Kontaktinformationen"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:134
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:65
+#: /srv/http/preferendum/main/Polls/add.php:134
+#: /srv/http/preferendum/main/element/poll/edit-head.php:65
 msgid "Receive email after new entry"
 msgstr "Erhalte eine Email nach einem neuen Eintrag"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:148
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:80
+#: /srv/http/preferendum/main/Polls/add.php:148
+#: /srv/http/preferendum/main/element/poll/edit-head.php:80
 msgid "Receive email after new comment"
 msgstr "Erhalte eine Email nach einem neuen Kommentar"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:159
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:91
+#: /srv/http/preferendum/main/Polls/add.php:160
+#: /srv/http/preferendum/main/element/poll/edit-head.php:92
 msgid "Email"
 msgstr "Email"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:161
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:93
+#: /srv/http/preferendum/main/Polls/add.php:162
+#: /srv/http/preferendum/main/element/poll/edit-head.php:94
 msgid "Email for receiving new entry/comment"
 msgstr "Email um neue Einträge/Kommentare zu erhalten"
 
-#: /srv/http/sprudel-ng/main/Polls/add.php:174
+#: /srv/http/preferendum/main/Polls/add.php:175
 msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
 msgstr "Achtung! Inaktive Umfragen werden nach {0} Tagen automatisch gelöscht!"
 
-#: /srv/http/sprudel-ng/main/Polls/edit.php:15
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:17
+#: /srv/http/preferendum/main/Polls/edit.php:15
+#: /srv/http/preferendum/main/element/poll/edit-head.php:17
 msgid "Edit poll"
 msgstr "Umfrage ändern"
 
-#: /srv/http/sprudel-ng/main/Polls/edit.php:56
+#: /srv/http/preferendum/main/Polls/edit.php:58
 msgid "Edit entries"
 msgstr "Einträge ändern"
 
-#: /srv/http/sprudel-ng/main/Polls/view.php:15
+#: /srv/http/preferendum/main/Polls/view.php:15
 msgid "Poll"
 msgstr "Umfrage"
 
-#: /srv/http/sprudel-ng/main/Polls/view.php:25
-#: /srv/http/sprudel-ng/main/element/poll/ctrl.php:18
+#: /srv/http/preferendum/main/Polls/view.php:25
+#: /srv/http/preferendum/main/element/poll/ctrl.php:18
 msgid "Mini View"
 msgstr "Mini Ansicht"
 
-#: /srv/http/sprudel-ng/main/Polls/view.php:26
+#: /srv/http/preferendum/main/Polls/view.php:26
 msgid "Normal View"
 msgstr "Normale Ansicht"
 
-#: /srv/http/sprudel-ng/main/element/admin/ctrl-login.php:32
+#: /srv/http/preferendum/main/element/admin/ctrl-login.php:32
 msgid "Login"
 msgstr "Einloggen"
 
-#: /srv/http/sprudel-ng/main/element/admin/ctrl-logout.php:32
+#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:32
 msgid "User management"
 msgstr "Benutzerverwaltung"
 
-#: /srv/http/sprudel-ng/main/element/admin/ctrl-logout.php:41
+#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:41
 msgid "Logout"
 msgstr "Ausloggen"
 
-#: /srv/http/sprudel-ng/main/element/comment/delete.php:17
+#: /srv/http/preferendum/main/element/comment/delete.php:17
 msgid "Delete comments"
 msgstr "Kommentare löschen"
 
-#: /srv/http/sprudel-ng/main/element/comment/delete.php:31
+#: /srv/http/preferendum/main/element/comment/delete.php:31
 msgid "Are you sure to delete this comment?"
 msgstr "Soll dieser Kommentar wirklich gelöscht werden?"
 
-#: /srv/http/sprudel-ng/main/element/comment/delete.php:38
-#: /srv/http/sprudel-ng/main/element/comment/list.php:33
+#: /srv/http/preferendum/main/element/comment/delete.php:38
+#: /srv/http/preferendum/main/element/comment/list.php:33
 msgid "No comments, yet."
 msgstr "Bisher keine Kommentare vorhanden."
 
-#: /srv/http/sprudel-ng/main/element/comment/list.php:17
+#: /srv/http/preferendum/main/element/comment/list.php:17
 msgid "Comments"
 msgstr "Kommentare"
 
-#: /srv/http/sprudel-ng/main/element/comment/new.php:36
+#: /srv/http/preferendum/main/element/comment/new.php:36
 msgid "Your name"
 msgstr "Dein Name"
 
-#: /srv/http/sprudel-ng/main/element/comment/new.php:46
+#: /srv/http/preferendum/main/element/comment/new.php:46
 msgid "Your comment"
 msgstr "Dein Kommentar"
 
-#: /srv/http/sprudel-ng/main/element/comment/new.php:50
-#: /srv/http/sprudel-ng/main/element/entry/new.php:59
+#: /srv/http/preferendum/main/element/comment/new.php:50
+#: /srv/http/preferendum/main/element/entry/new.php:59
 msgid "Save"
 msgstr "Speichern"
 
-#: /srv/http/sprudel-ng/main/element/entry/edit.php:33
+#: /srv/http/preferendum/main/element/entry/edit.php:33
 msgid "Are you sure to delete this option?"
 msgstr "Soll diese Option wirklich gelöscht werden?"
 
-#: /srv/http/sprudel-ng/main/element/entry/edit.php:84
+#: /srv/http/preferendum/main/element/entry/edit.php:84
 msgid "Are you sure to delete this entry?"
 msgstr "Soll dieser Eintrag wirklich gelöscht werden?"
 
-#: /srv/http/sprudel-ng/main/element/entry/new.php:34
+#: /srv/http/preferendum/main/element/entry/new.php:34
 msgid "Your name?"
 msgstr "Dein Name?"
 
-#: /srv/http/sprudel-ng/main/element/entry/new.php:68
+#: /srv/http/preferendum/main/element/entry/new.php:68
 msgid "Optional: Contact info"
 msgstr "Optional: Kontaktinformationen"
 
-#: /srv/http/sprudel-ng/main/element/header.php:28
-#: /srv/http/sprudel-ng/main/element/header.php:31
-#: /srv/http/sprudel-ng/main/layout/sprudel-ng.php:22
-msgid "sprudel-ng"
-msgstr "sprudel-ng"
+#: /srv/http/preferendum/main/element/header.php:28
+#: /srv/http/preferendum/main/element/header.php:31
+#: /srv/http/preferendum/main/layout/preferendum.php:22
+msgid "PREFERendum"
+msgstr "PREFERendum"
 
-#: /srv/http/sprudel-ng/main/element/header.php:29
-#: /srv/http/sprudel-ng/main/element/header.php:32
+#: /srv/http/preferendum/main/element/header.php:29
+#: /srv/http/preferendum/main/element/header.php:32
 msgid "scheduling polls"
 msgstr "Umfragen erstellen"
 
-#: /srv/http/sprudel-ng/main/element/header.php:39
+#: /srv/http/preferendum/main/element/header.php:39
 msgid "Public link"
 msgstr "Öffentlicher Link"
 
-#: /srv/http/sprudel-ng/main/element/header.php:40
-#: /srv/http/sprudel-ng/main/element/header.php:42
+#: /srv/http/preferendum/main/element/header.php:40
+#: /srv/http/preferendum/main/element/header.php:42
 msgid "Give this public link to the participants of your poll!"
 msgstr "Gib diesen öffentlichen Link an die Teilnehmer der Umfrage weiter!"
 
-#: /srv/http/sprudel-ng/main/element/header.php:41
-#: /srv/http/sprudel-ng/main/element/header.php:48
+#: /srv/http/preferendum/main/element/header.php:41
+#: /srv/http/preferendum/main/element/header.php:48
 msgid "Copy link to clipboard!"
 msgstr "Kopiere den Link in die Zwischenablage!"
 
-#: /srv/http/sprudel-ng/main/element/header.php:46
+#: /srv/http/preferendum/main/element/header.php:46
 msgid "Admin link"
 msgstr "Admin-Link"
 
-#: /srv/http/sprudel-ng/main/element/header.php:47
-#: /srv/http/sprudel-ng/main/element/header.php:49
+#: /srv/http/preferendum/main/element/header.php:47
+#: /srv/http/preferendum/main/element/header.php:49
 msgid "Save this admin link, you need it to manage your poll!"
 msgstr ""
 "Speicher diesen Admin-Link, Du brauchst ihn zur Verwaltung der Umfrage!"
 
-#: /srv/http/sprudel-ng/main/element/poll/ctrl-edit.php:19
+#: /srv/http/preferendum/main/element/poll/ctrl-edit.php:19
 msgid "View Poll"
 msgstr "Umfrage anzeigen"
 
-#: /srv/http/sprudel-ng/main/element/poll/ctrl-edit.php:29
+#: /srv/http/preferendum/main/element/poll/ctrl-edit.php:29
 msgid "Un-/Lock"
 msgstr "Ent-/Sperren"
 
-#: /srv/http/sprudel-ng/main/element/poll/edit-head.php:99
+#: /srv/http/preferendum/main/element/poll/edit-head.php:100
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
-#: /srv/http/sprudel-ng/main/element/poll/result-simple.php:18
-#: /srv/http/sprudel-ng/main/element/poll/result-trend.php:18
-#: /srv/http/sprudel-ng/main/email/text/new_entry.php:23
+#: /srv/http/preferendum/main/element/poll/result-simple.php:18
+#: /srv/http/preferendum/main/element/poll/result-trend.php:18
+#: /srv/http/preferendum/main/email/text/new_entry.php:23
 msgid "Yes"
 msgstr "Ja"
 
-#: /srv/http/sprudel-ng/main/element/poll/result-trend.php:19
+#: /srv/http/preferendum/main/element/poll/result-trend.php:19
 msgid "Maybe"
 msgstr "Vielleicht"
 
-#: /srv/http/sprudel-ng/main/element/poll/result-trend.php:20
-#: /srv/http/sprudel-ng/main/email/text/new_entry.php:21
+#: /srv/http/preferendum/main/element/poll/result-trend.php:20
+#: /srv/http/preferendum/main/email/text/new_entry.php:21
 msgid "No"
 msgstr "Nein"
 
-#: /srv/http/sprudel-ng/main/email/text/new_comment.php:16
-#: /srv/http/sprudel-ng/main/email/text/new_entry.php:16
+#: /srv/http/preferendum/main/email/text/new_comment.php:16
+#: /srv/http/preferendum/main/email/text/new_entry.php:16
 msgid "From:"
 msgstr "Von:"
 
-#: /srv/http/sprudel-ng/main/email/text/new_comment.php:17
+#: /srv/http/preferendum/main/email/text/new_comment.php:17
 msgid "Text:"
 msgstr "Text:"
 
-#: /srv/http/sprudel-ng/main/email/text/new_comment.php:19
-#: /srv/http/sprudel-ng/main/email/text/new_entry.php:28
+#: /srv/http/preferendum/main/email/text/new_comment.php:19
+#: /srv/http/preferendum/main/email/text/new_entry.php:28
 msgid "Link:"
 msgstr "Link:"
 
-#: /srv/http/sprudel-ng/main/email/text/new_entry.php:17
+#: /srv/http/preferendum/main/email/text/new_entry.php:17
 msgid "Options:"
 msgstr "Optionen:"
 
-#: /srv/http/sprudel-ng/main/layout/sprudel-ng.php:39
+#: /srv/http/preferendum/main/layout/preferendum.php:39
 msgid "Please enable JavaScript in your browser and reload this page."
 msgstr ""
 "Bitte aktivieren Sie JavaScript in Ihrem Browser und laden Sie diese Seite "

@@ -48,7 +48,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/', ['controller' => 'Polls', 'action' => 'add']);
     $builder->connect('/polls', ['controller' => 'Polls', 'action' => 'add']);
 
-    if ((\Cake\Core\Configure::read('Sprudel-ng.deleteInactivePollsAfter') == 0)) {
+    if ((\Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter') == 0)) {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
     }
     $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
@@ -56,7 +56,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/polls/delete/*', ['controller' => 'Polls', 'action' => 'delete']);
     $builder->connect('/polls/*', ['controller' => 'Polls', 'action' => 'View']);
 
-    if (\Cake\Core\Configure::read('Sprudel-ng.adminInterface') != true) {
+    if (\Cake\Core\Configure::read('preferendum.adminInterface') != true) {
         $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);
     }
 

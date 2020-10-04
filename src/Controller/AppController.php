@@ -44,7 +44,7 @@ class AppController extends Controller
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
         
-        $this->viewBuilder()->setLayout('sprudel-ng');
+        $this->viewBuilder()->setLayout('preferendum');
 
         /*
          * Enable the following component for recommended CakePHP form protection settings.

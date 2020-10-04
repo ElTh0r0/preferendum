@@ -1,6 +1,6 @@
 <?php
 /**
- * Sprudel-ng (https://github.com/ElTh0r0/sprudel-ng)
+ * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
  *
  * Licensed under The MIT License
@@ -8,8 +8,8 @@
  *
  * @copyright 2019-2020 github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/sprudel-ng
- * @since     0.1.0
+ * @link      https://github.com/ElTh0r0/preferendum
+ * @since     0.3.0
  */
 ?>
 <?php $this->assign('title', __('Create poll')); ?>
@@ -24,7 +24,7 @@ $this->Html->scriptStart(['block' => true]);
 // Datepicker localizations
 echo 'var jslocale = ' . json_encode(I18n::getLocale()) . ';';
 echo 'var jsdateformat = ' . json_encode(
-    \Cake\Core\Configure::read('Sprudel-ng.datepickerFormat')
+    \Cake\Core\Configure::read('preferendum.datepickerFormat')
 ) . ';';
 echo 'var jsmonday = ' . json_encode(__('Monday')) . ';';
 echo 'var jstuesday = ' . json_encode(__('Tuesday')) . ';';
@@ -35,7 +35,7 @@ echo 'var jssaturday = ' . json_encode(__('Saturday')) . ';';
 echo 'var jssunday = ' . json_encode(__('Sunday')) . ';';
 // Maximum number of options
 echo 'var jsmaxoptions = ' . json_encode(
-    \Cake\Core\Configure::read('Sprudel-ng.maxPollOptions')
+    \Cake\Core\Configure::read('preferendum.maxPollOptions')
 ) . ';';
 $this->Html->scriptEnd();
 ?>
@@ -97,7 +97,7 @@ $this->Html->scriptEnd();
     echo '</div>';
 
     echo '<ul>';
-    if (\Cake\Core\Configure::read('Sprudel-ng.adminLinks')) {
+    if (\Cake\Core\Configure::read('preferendum.adminLinks')) {
         echo '<li>';
         echo $this->Form->checkbox(
             'adminLink', [
@@ -110,7 +110,7 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
     
-    if (\Cake\Core\Configure::read('Sprudel-ng.collectUserinfo') && \Cake\Core\Configure::read('Sprudel-ng.adminInterface')) {
+    if (\Cake\Core\Configure::read('preferendum.collectUserinfo') && \Cake\Core\Configure::read('preferendum.adminInterface')) {
         echo '<li>';
         echo $this->Form->checkbox(
             'userinfo', [
@@ -127,10 +127,10 @@ $this->Html->scriptEnd();
         'value' => 'true',
         'id' => 'emailentryInput',
         'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail')),
+        'hidden' => !(\Cake\Core\Configure::read('preferendum.sendEntryEmail')),
         ]
     );
-    if (\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail')) {
+    if (\Cake\Core\Configure::read('preferendum.sendEntryEmail')) {
         echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
     }
     echo '</li>';
@@ -141,17 +141,17 @@ $this->Html->scriptEnd();
         'value' => 'true',
         'id' => 'emailcommentInput',
         'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')),
+        'hidden' => !(\Cake\Core\Configure::read('preferendum.sendCommentEmail')),
         ]
     );
-    if (\Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')) {
+    if (\Cake\Core\Configure::read('preferendum.sendCommentEmail')) {
         echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
     }
     echo '</li>';
     echo '</ul>';
 
-    if (\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail') 
-        || \Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')
+    if (\Cake\Core\Configure::read('preferendum.sendEntryEmail') 
+        || \Cake\Core\Configure::read('preferendum.sendCommentEmail')
     ) {
         echo $this->Form->control(
             'email', [
@@ -169,7 +169,7 @@ $this->Html->scriptEnd();
     echo '</div>';
     echo $this->Form->end();
 
-    $deleteInactive = \Cake\Core\Configure::read('Sprudel-ng.deleteInactivePollsAfter');
+    $deleteInactive = \Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter');
     if ($deleteInactive > 0) {
         echo '<p><br /><span class="pale">';
         echo __('Attention! Inactive polls will be deleted automatically after {0} days!', $deleteInactive);

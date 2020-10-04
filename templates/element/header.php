@@ -1,6 +1,6 @@
 <?php
 /**
- * Sprudel-ng (https://github.com/ElTh0r0/sprudel-ng)
+ * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
  *
  * Licensed under The MIT License
@@ -8,8 +8,8 @@
  *
  * @copyright 2019-2020 github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/sprudel-ng
- * @since     0.1.0
+ * @link      https://github.com/ElTh0r0/preferendum
+ * @since     0.3.0
  */
 ?>
 
@@ -25,10 +25,10 @@
             <h1><?php echo __('Poll administration') ?></h1>
             <p class="details"></p>
         <?php } elseif (!isset($poll)) { ?>
-            <h1><?php echo __('sprudel-ng') ?></h1>
+            <h1><?php echo __('PREFERendum') ?></h1>
             <p class="details"><?php echo __('scheduling polls') ?></p>
         <?php } elseif ($poll->isNew()) { ?>
-            <h1><?php echo __('sprudel-ng') ?></h1>
+            <h1><?php echo __('PREFERendum') ?></h1>
             <p class="details"><?php echo __('scheduling polls') ?></p>
         <!-- HEADER IS USED IN POLL VIEW -->
         <?php } else { ?>
@@ -53,7 +53,7 @@
 
     </div>
 
-    <?php if (\Cake\Core\Configure::read('Sprudel-ng.headerLogo')) { ?>
+    <?php if (\Cake\Core\Configure::read('preferendum.headerLogo')) { ?>
     <div id="logo">
         <a href="<?php echo $this->request->getAttributes()['webroot'] ?>" title="<?php echo __('Create a new poll ...') ?>">
             <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/logo.png' ?> alt=""/>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Sprudel-ng (https://github.com/ElTh0r0/sprudel-ng)
+ * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
  *
  * Licensed under The MIT License
@@ -8,8 +8,8 @@
  *
  * @copyright 2020 github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/sprudel-ng
- * @since     0.1.0
+ * @link      https://github.com/ElTh0r0/preferendum
+ * @since     0.3.0
  */
 declare(strict_types=1);
 
@@ -206,16 +206,16 @@ class PollsController extends AppController
             exit();
         }
 
-        $deleteAfter = \Cake\Core\Configure::read('Sprudel-ng.deleteInactivePollsAfter');
+        $deleteAfter = \Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter');
         //minimum last changed date
         $minDate = date("Y-m-d H:i:s", strtotime("-" . $deleteAfter . " days", time()));
         
         echo PHP_EOL;
-        echo "Sprudel cleanup routine" . PHP_EOL;
+        echo "PREFERendum cleanup routine" . PHP_EOL;
         echo "***********************" . PHP_EOL;
         echo PHP_EOL;
         echo "This will delete every poll that was inactive" . PHP_EOL . "since " . $minDate . " (for at least " . $deleteAfter . " days)." . PHP_EOL;
-        echo "You may change this value in 'config/sprudel-ng_features.php'" . PHP_EOL;
+        echo "You may change this value in 'config/preferendum_features.php'" . PHP_EOL;
         echo PHP_EOL;
         
         //get IDs of polls to delete

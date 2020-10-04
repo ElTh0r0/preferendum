@@ -1,6 +1,6 @@
 <?php
 /**
- * Sprudel-ng (https://github.com/ElTh0r0/sprudel-ng)
+ * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
  *
  * Licensed under The MIT License
@@ -8,15 +8,15 @@
  *
  * @copyright 2019-2020 github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/sprudel-ng
- * @since     0.1.0
+ * @link      https://github.com/ElTh0r0/preferendum
+ * @since     0.3.0
  */
 ?>
 
-<?php if (\Cake\Core\Configure::read('Sprudel-ng.footerLink')) { ?>
+<?php if (\Cake\Core\Configure::read('preferendum.footerLink')) { ?>
 <div id="footer">
-    <em>sprudel-ng</em> open source scheduling polls.
-    <a href="https://github.com/ElTh0r0/sprudel-ng" target="_blank">
+    <em>PREFERendum</em> open source scheduling polls.
+    <a href="https://github.com/ElTh0r0/preferendum" target="_blank">
     <em>Visit on GitHub</em>
     <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/icon-github.png' ?> alt=""/>
     </a>

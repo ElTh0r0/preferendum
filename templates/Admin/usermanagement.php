@@ -1,6 +1,6 @@
 <?php
 /**
- * Sprudel-ng (https://github.com/ElTh0r0/sprudel-ng)
+ * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
  *
  * Licensed under The MIT License
@@ -8,8 +8,8 @@
  *
  * @copyright 2020 github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/sprudel-ng
- * @since     0.1.0
+ * @link      https://github.com/ElTh0r0/preferendum
+ * @since     0.3.0
  */
 ?>
 
@@ -23,7 +23,7 @@
 <div style="padding: 2rem;">
     <?php echo $this->Flash->render() ?>
     <?php
-    $extUser = \Cake\Core\Configure::read('Sprudel-ng.extendedUsermanagementAccess');
+    $extUser = \Cake\Core\Configure::read('preferendum.extendedUsermanagementAccess');
     if (in_array($currentUserId, $extUser)) { ?>
         <h1><?php echo __('Available users') ?></h1>
         <table>

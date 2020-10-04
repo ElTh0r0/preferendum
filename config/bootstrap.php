@@ -77,7 +77,7 @@ use Cake\Utility\Security;
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
-    Configure::load('sprudel-ng_features', 'default');
+    Configure::load('preferendum_features', 'default');
 } catch (\Exception $e) {
     exit($e->getMessage() . "\n");
 }

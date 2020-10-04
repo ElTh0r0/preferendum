@@ -1,6 +1,6 @@
 <?php
 /**
- * Sprudel-ng (https://github.com/ElTh0r0/sprudel-ng)
+ * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
  *
  * Licensed under The MIT License
@@ -8,8 +8,8 @@
  *
  * @copyright 2019-2020 github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/sprudel-ng
- * @since     0.1.0
+ * @link      https://github.com/ElTh0r0/preferendum
+ * @since     0.3.0
  */
 ?>
 
@@ -39,7 +39,7 @@
     );
     
     echo '<ul>';
-    if (\Cake\Core\Configure::read('Sprudel-ng.collectUserinfo') && \Cake\Core\Configure::read('Sprudel-ng.adminInterface')) {
+    if (\Cake\Core\Configure::read('preferendum.collectUserinfo') && \Cake\Core\Configure::read('preferendum.adminInterface')) {
         echo '<li>';
         echo $this->Form->checkbox(
             'userinfo', [
@@ -58,10 +58,10 @@
         'id' => 'emailentryInput',
         'checked' => $poll->emailentry,
         'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail')),
+        'hidden' => !(\Cake\Core\Configure::read('preferendum.sendEntryEmail')),
         ]
     );
-    if (\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail')) {
+    if (\Cake\Core\Configure::read('preferendum.sendEntryEmail')) {
         echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
     }
     echo '</li>';
@@ -73,17 +73,17 @@
         'id' => 'emailcommentInput',
         'checked' => $poll->emailcomment,
         'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')),
+        'hidden' => !(\Cake\Core\Configure::read('preferendum.sendCommentEmail')),
         ]
     );
-    if (\Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')) {
+    if (\Cake\Core\Configure::read('preferendum.sendCommentEmail')) {
         echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
     }
     echo '</li>';
     echo '</ul>';
 
-    if (\Cake\Core\Configure::read('Sprudel-ng.sendEntryEmail') 
-        || \Cake\Core\Configure::read('Sprudel-ng.sendCommentEmail')
+    if (\Cake\Core\Configure::read('preferendum.sendEntryEmail') 
+        || \Cake\Core\Configure::read('preferendum.sendCommentEmail')
     ) {
         echo $this->Form->control(
             'email', [

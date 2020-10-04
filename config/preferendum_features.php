@@ -1,6 +1,6 @@
 <?php
 /**
- * Sprudel-ng (https://github.com/ElTh0r0/sprudel-ng)
+ * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
  *
  * Licensed under The MIT License
@@ -8,12 +8,12 @@
  *
  * @copyright 2019-2020 github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/sprudel-ng
- * @since     0.1.0
+ * @link      https://github.com/ElTh0r0/preferendum
+ * @since     0.3.0
  */
 
 /*
- * Configure sprudel-ng and dis-/enable features.
+ * Configure PREFERendum and dis-/enable features.
  */
 
 return [
@@ -24,7 +24,7 @@ return [
         'defaultTimezone' => 'UTC',
     ],
 
-    'Sprudel-ng' => [
+    'preferendum' => [
         // Turn on(true)/off(false) admin interface
         'adminInterface' => true,
         // Define which users have extended user management access (create/delete user, reset password)

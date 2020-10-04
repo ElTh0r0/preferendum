@@ -55,7 +55,7 @@ class ErrorController extends AppController
     {
         parent::beforeRender($event);
 
-        $this->viewBuilder()->setLayout('sprudel-ng');
+        $this->viewBuilder()->setLayout('preferendum');
         $this->viewBuilder()->setTemplatePath('Error');
     }
 
