@@ -9,7 +9,7 @@
  * @copyright 2020 github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @since     0.3.0
+ * @version   0.4.0
  */
 declare(strict_types=1);
 
@@ -19,6 +19,7 @@ use Cake\Auth\DefaultPasswordHasher;
 class AdminController extends AppController
 {
     const POLLADMINID = 9999;
+    const DEMOMODE = false;
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
@@ -68,6 +69,11 @@ class AdminController extends AppController
 
         $user = $this->Users->newEmptyEntity();
         if ($this->request->is('post', 'put')) {
+            if (self::DEMOMODE) {
+                $this->Flash->error(__('DEMO MODE enabled! User creation / password change is not possible!'));
+                return $this->redirect(['action' => 'usermanagement']);
+            }
+
             $this->Users->patchEntity($user, $this->request->getData());
             $user['name'] = trim($user['name']);
             

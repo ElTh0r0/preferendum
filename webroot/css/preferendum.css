@@ -856,6 +856,19 @@ button[type=button]:disabled {
     padding: 4px 4px;
 }
 
+#poll-controls button#ctrl-usermanagement {
+    background-image: url('../img/icon-user.png');
+}
+
+#poll-controls button#ctrl-logout {
+    background-image: url('../img/icon-logout.png');
+}
+
+#poll-controls button#ctrl-polls {
+    background-image: url('../img/icon-chart.png');
+}
+
+
 .collapsible {
     width: 100%;
     text-align: left;

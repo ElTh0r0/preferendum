@@ -29,13 +29,13 @@
 
 ## Installation
 - Create an empty MySql database on your server, note down the DB host address, user name and password
-- Recommended:
-  - Clone this repository and run `composer install --no-dev`. The install command will download all needed dependencies.
-- Second possibility:
-  - Download the latest PREFERendum tag as `.zip` archive from [releases](https://github.com/ElTh0r0/preferendum/releases)
+- Install option #1:
+  - Download the latest PREFERendum release archive `preferendum_vX.X.X.zip` from [releases](https://github.com/ElTh0r0/preferendum/releases)
   - Extract the contents of the archive into a new directory (e.g. `preferendum` on your computer)
   - Take care of proper folder permissions, see [CakePHP permissions](https://book.cakephp.org/4/en/installation.html#permissions)
   - Copy `config/app_local.example.php` and rename it to `config/app_local.php`.
+- Install option #2:
+  - Download **source code** from latest release and run `composer install --no-dev`. The install command will download all needed dependencies.
 - In `config/app_local.php` change the following entries:
   - Datasources\Default: Set host, username, password, database according to your environment.
   - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).

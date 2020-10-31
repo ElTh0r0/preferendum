@@ -9,7 +9,7 @@
  * @copyright 2020 github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @since     0.3.0
+ * @version   0.4.0
  */
 
 echo __('New comment in poll "{0}"', h($title)) . "\r\n\r\n";

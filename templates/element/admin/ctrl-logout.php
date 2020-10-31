@@ -9,7 +9,7 @@
  * @copyright 2020 github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @since     0.3.0
+ * @version   0.4.0
  */
 ?>
 
@@ -21,7 +21,8 @@
         echo $this->Html->link(
             $this->Form->button(
                 __('Poll administration'), [
-                'type' => 'button',]
+                'type' => 'button',
+                'id' => 'ctrl-polls',]
             ),
             ['action' => 'index'],
             ['escape' => false]
@@ -30,7 +31,8 @@
         echo $this->Html->link(
             $this->Form->button(
                 __('User management'), [
-                'type' => 'button',]
+                'type' => 'button',
+                'id' => 'ctrl-usermanagement',]
             ),
             ['action' => 'usermanagement'],
             ['escape' => false]
@@ -39,7 +41,8 @@
     echo $this->Form->postLink(
         $this->Form->button(
             __('Logout'), [
-            'type' => 'button',]
+            'type' => 'button',
+            'id' => 'ctrl-logout',]
         ),
         ['action' => 'logout'],
         ['escape' => false]
