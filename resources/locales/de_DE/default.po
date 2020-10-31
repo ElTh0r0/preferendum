@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-04 15:54+0000\n"
-"PO-Revision-Date: 2020-10-04 17:55+0200\n"
+"POT-Creation-Date: 2020-10-31 16:26+0000\n"
+"PO-Revision-Date: 2020-10-31 17:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "Language: de_DE\n"
@@ -15,30 +15,36 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:86
+#: /srv/http/preferendum/main/Controller/AdminController.php:73
+msgid "DEMO MODE enabled! User creation / password change is not possible!"
+msgstr ""
+"DEMO MODUS aktiviert! Benutzererstellung / Passwortänderung ist nicht "
+"möglich!"
+
+#: /srv/http/preferendum/main/Controller/AdminController.php:92
 msgid "Unable to add/update the user - password / confirmation not correct."
 msgstr ""
 "Benutzer konnte nicht erstellt/aktualisiert werden - Passwort / Bestätigung "
 "nicht korrekt."
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:91
+#: /srv/http/preferendum/main/Controller/AdminController.php:97
 msgid "The user has been created/updated."
 msgstr "Der Benutzer wurde erstellt/aktualisiert."
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:94
+#: /srv/http/preferendum/main/Controller/AdminController.php:100
 msgid "Unable to add the user."
 msgstr "Benutzer konnte nicht erstellt werden."
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:114
+#: /srv/http/preferendum/main/Controller/AdminController.php:120
 msgid "User has been deleted."
 msgstr "Benutzer wurde gelöscht."
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:119
+#: /srv/http/preferendum/main/Controller/AdminController.php:125
 msgid "User {0} has NOT been deleted!"
 msgstr "Benutzer {0} konnte NICHT gelöscht werden!"
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:146
-#: /srv/http/preferendum/main/Controller/AdminController.php:151
+#: /srv/http/preferendum/main/Controller/AdminController.php:152
+#: /srv/http/preferendum/main/Controller/AdminController.php:157
 msgid "Invalid user or password"
 msgstr "Ungültiger Benutzer oder Passwort"
 
@@ -355,11 +361,11 @@ msgstr "Normale Ansicht"
 msgid "Login"
 msgstr "Einloggen"
 
-#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:32
+#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:33
 msgid "User management"
 msgstr "Benutzerverwaltung"
 
-#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:41
+#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:43
 msgid "Logout"
 msgstr "Ausloggen"
 
