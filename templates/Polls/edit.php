@@ -58,7 +58,14 @@ $this->Html->scriptEnd();
         <h1><?php echo __('Edit entries') ?></h1>
     </div>
     <table class="schedule">
-        <?php echo $this->element('entry/edit'); ?>
+        <?php echo $this->element('entry/edit'); 
+        echo '<tr class="table-spacer-row table-spacer-row-big"><td></td></tr>';
+        
+        if (\Cake\Core\Configure::read('preferendum.trendResult')) {
+            echo $this->element('poll/result-trend');
+        } else {
+            echo $this->element('poll/result-simple');
+        } ?>
     </table>
 </div>
 

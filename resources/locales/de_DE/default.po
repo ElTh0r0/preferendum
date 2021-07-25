@@ -1,22 +1,23 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
-# 
+#
 # Translators:
 # El Thoro, 2021
-# 
-#, fuzzy
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-31 16:26+0000\n"
-"PO-Revision-Date: 2021-06-13 12:05+0000\n"
+"POT-Creation-Date: 2021-07-25 12:27+0000\n"
+"PO-Revision-Date: 2021-07-25 14:31+0200\n"
 "Last-Translator: El Thoro, 2021\n"
-"Language-Team: German (Germany) (https://www.transifex.com/elth0r0/teams/121734/de_DE/)\n"
+"Language-Team: German (Germany) (https://www.transifex.com/elth0r0/"
+"teams/121734/de_DE/)\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
 
 #: /srv/http/preferendum/main/Controller/AdminController.php:73
 msgid "DEMO MODE enabled! User creation / password change is not possible!"
@@ -116,31 +117,35 @@ msgstr ""
 "Diese Umfrage ist gesperrt - es können keine neuen Einträge oder Kommentare "
 "erstellt werden!"
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:129
+#: /srv/http/preferendum/main/Controller/PollsController.php:101
+msgid "Only poll admin can see results and comments!"
+msgstr "Nur Umfrageersteller kann das Resultat und Kommentare sehen!"
+
+#: /srv/http/preferendum/main/Controller/PollsController.php:134
 msgid "Your poll has been updated."
 msgstr "Deine Umfrage wurde aktualisiert."
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:132
+#: /srv/http/preferendum/main/Controller/PollsController.php:137
 msgid "Unable to update your poll."
 msgstr "Die Umfrage konnte nicht aktualisiert werden."
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:141
+#: /srv/http/preferendum/main/Controller/PollsController.php:146
 msgid "This poll is locked!"
 msgstr "Diese Umfrage ist gesperrt!"
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:168
+#: /srv/http/preferendum/main/Controller/PollsController.php:173
 msgid "Poll has been unlocked"
 msgstr "Die Umfrage wurde entsperrt"
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:174
+#: /srv/http/preferendum/main/Controller/PollsController.php:179
 msgid "Poll lock has NOT been changed!"
 msgstr "Sperrung der Umfrage konnte nicht geändert werden!"
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:191
+#: /srv/http/preferendum/main/Controller/PollsController.php:196
 msgid "Poll {0} has been deleted."
 msgstr "Umfrage {0} wurde gelöscht."
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:196
+#: /srv/http/preferendum/main/Controller/PollsController.php:201
 msgid "Poll {0} has NOT been deleted!"
 msgstr "Umfrage {0} konnte NICHT gelöscht werden!"
 
@@ -240,7 +245,7 @@ msgid "An internal error has occurred"
 msgstr "Ein interner Fehler ist aufgetreten"
 
 #: /srv/http/preferendum/main/Polls/add.php:15
-#: /srv/http/preferendum/main/Polls/add.php:168
+#: /srv/http/preferendum/main/Polls/add.php:182
 msgid "Create poll"
 msgstr "Umfrage erstellen"
 
@@ -305,40 +310,44 @@ msgstr "Optionen"
 msgid "Type whatever you want or pick a date!"
 msgstr "Wähle ein Datum oder beliebiger Text!"
 
-#: /srv/http/preferendum/main/Polls/add.php:109
+#: /srv/http/preferendum/main/Polls/add.php:110
 msgid "Edit/deleting poll/entries only with admin link"
 msgstr "Ändern/löschen von Umfragen/Einträgen nur mit Admin-Link"
 
-#: /srv/http/preferendum/main/Polls/add.php:120
+#: /srv/http/preferendum/main/Polls/add.php:123
+msgid "Hide poll results for users (only admin can see the votes)"
+msgstr ""
+"Umfrageergebnis für Teilnehmer ausblenden (nur Ersteller kann das Ergebnis "
+"sehen)"
+
+#: /srv/http/preferendum/main/Polls/add.php:134
 #: /srv/http/preferendum/main/element/poll/edit-head.php:50
 msgid "Collect user contact information"
 msgstr "Sammle Teilnehmer-Kontaktinformationen"
 
-#: /srv/http/preferendum/main/Polls/add.php:134
+#: /srv/http/preferendum/main/Polls/add.php:148
 #: /srv/http/preferendum/main/element/poll/edit-head.php:65
 msgid "Receive email after new entry"
 msgstr "Erhalte eine Email nach einem neuen Eintrag"
 
-#: /srv/http/preferendum/main/Polls/add.php:148
+#: /srv/http/preferendum/main/Polls/add.php:162
 #: /srv/http/preferendum/main/element/poll/edit-head.php:80
 msgid "Receive email after new comment"
 msgstr "Erhalte eine Email nach einem neuen Kommentar"
 
-#: /srv/http/preferendum/main/Polls/add.php:160
+#: /srv/http/preferendum/main/Polls/add.php:174
 #: /srv/http/preferendum/main/element/poll/edit-head.php:92
 msgid "Email"
 msgstr "Email"
 
-#: /srv/http/preferendum/main/Polls/add.php:162
+#: /srv/http/preferendum/main/Polls/add.php:176
 #: /srv/http/preferendum/main/element/poll/edit-head.php:94
 msgid "Email for receiving new entry/comment"
 msgstr "Email um neue Einträge/Kommentare zu erhalten"
 
-#: /srv/http/preferendum/main/Polls/add.php:175
-msgid ""
-"Attention! Inactive polls will be deleted automatically after {0} days!"
-msgstr ""
-"Achtung! Inaktive Umfragen werden nach {0} Tagen automatisch gelöscht!"
+#: /srv/http/preferendum/main/Polls/add.php:189
+msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
+msgstr "Achtung! Inaktive Umfragen werden nach {0} Tagen automatisch gelöscht!"
 
 #: /srv/http/preferendum/main/Polls/edit.php:15
 #: /srv/http/preferendum/main/element/poll/edit-head.php:17

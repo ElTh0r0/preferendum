@@ -60,3 +60,13 @@ function toggleEmailInput() {
         document.getElementById("emailInput").required
     }
 }
+
+//enable/disable email input depending on checkboxes
+function toggleHideResultInput() {
+    document.getElementById("hideresultInput").disabled =
+        !document.getElementById("adminInput").checked;
+
+    if (document.getElementById("hideresultInput").disabled) {
+        document.getElementById("hideresultInput").checked = false;
+    }
+}
