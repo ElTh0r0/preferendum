@@ -18,6 +18,8 @@
 - optional very simple user administration for admin interface
 - optional receive email after new entry and/or comment
 
+![screenshot](https://user-images.githubusercontent.com/26674558/121807573-faaea200-cc54-11eb-838f-4d31639b0915.png)
+
 ## Requirements
 - PHP 7.2 or higher (including intl and mbstring extension)
 - One of the following databases:
@@ -49,6 +51,10 @@
 You can turn on/off and configure all the available features (like admin interface) in `config/preferendum_features.php`.
 ### Texts and labels
 By default English and German translations are included and one can switch between the available languages in `config/preferendum_features.php`. PREFERendum uses **gettext** for translation and based on the English strings in `resources/locales/default.pot` one can create further translations, which have to be put into a separate sub folder (using ISO code as folder name).
+
+#### Help translating
+New translations and corrections are highly welcome! You can either fork the source code from GitHub, make your changes and create a pull request or you can participate on Transifex: https://www.transifex.com/elth0r0/preferendum/
+
 ### Colors
 At the top of the CSS stylesheet (`css/preferendum.css`), you'll find a list of [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) you can change to customize colors and some other layout/design related things.
 

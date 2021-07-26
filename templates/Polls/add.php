@@ -103,6 +103,7 @@ $this->Html->scriptEnd();
             'adminLink', [
             'value' => 'true',
             'id' => 'adminInput',
+            'onchange' => 'toggleHideResultInput()',
             'checked',
             ]
         );
@@ -110,6 +111,19 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
     
+    echo '<li>';
+    echo $this->Form->checkbox(
+        'hideresult', [
+        'value' => 'true',
+        'id' => 'hideresultInput',
+        'hidden' => !(\Cake\Core\Configure::read('preferendum.hidePollResult') && \Cake\Core\Configure::read('preferendum.adminLinks')),
+        ]
+    );
+    if (\Cake\Core\Configure::read('preferendum.hidePollResult') && \Cake\Core\Configure::read('preferendum.adminLinks')) {
+        echo '<span style="font-size: 90%;">' . __('Hide poll results for users (only admin can see the votes)') . '</span>';
+    }
+    echo '</li>';
+
     if (\Cake\Core\Configure::read('preferendum.collectUserinfo') && \Cake\Core\Configure::read('preferendum.adminInterface')) {
         echo '<li>';
         echo $this->Form->checkbox(

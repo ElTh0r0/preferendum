@@ -14,17 +14,15 @@
     --poll-table-gutters: 2px;
     --border-radius-big: 6px;
     --border-radius-small: 3px;
-    --animation-duration: .1s;
+    --animation-duration: 0.1s;
 }
-
 
 /* ==== FONTS ==== */
 
 @font-face {
-    font-family: 'Quicksand';
-    src: url('../font/Quicksand-Regular.ttf') format('truetype');
+    font-family: "Quicksand";
+    src: url("../font/Quicksand-Regular.ttf") format("truetype");
 }
-
 
 /* ==== GENERAL ==== */
 
@@ -32,7 +30,7 @@
     -webkit-transition: background-color var(--animation-duration);
     -ms-transition: background-color var(--animation-duration);
     transition: background-color var(--animation-duration);
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
 }
 
 .schedule td {
@@ -42,13 +40,14 @@
     min-width: 36px;
 }
 
-html, body {
+html,
+body {
     width: 100%;
     height: 100%;
     background-color: var(--color-background-primary);
     color: var(--color-font-primary);
     font-size: 100%;
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
     box-sizing: border-box;
 }
 
@@ -101,7 +100,6 @@ em {
     opacity: 0.6;
 }
 
-
 /* DATEPICKER COLORS */
 
 .datepicker-container * {
@@ -133,7 +131,6 @@ em {
     color: var(--color-font-secondary) !important;
 }
 
-
 /* ==== TO BE CATEGORIZED AND SORTED ==== */
 
 .poll-url-container {
@@ -162,10 +159,10 @@ em {
 
 .poll-url-container button {
     margin-left: 10px;
-    line-height: .5;
+    line-height: 0.5;
     height: 24px;
     background-color: var(--color-background-secondary);
-    background-image: url('../img/icon-copy.png');
+    background-image: url("../img/icon-copy.png");
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 16px;
@@ -191,7 +188,7 @@ em {
 }
 
 textarea {
-    font-family: 'Quicksand', sans-serif;
+    font-family: "Quicksand", sans-serif;
     font-size: 80%;
 }
 
@@ -229,7 +226,7 @@ textarea {
 #header h1 {
     font-size: 1.4rem;
     margin: 0;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
 }
 
 #logo {
@@ -287,7 +284,7 @@ p.details {
 }
 
 #poll-controls {
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
     text-align: right;
     border-top: 1.2rem solid var(--color-background-comments);
 }
@@ -300,7 +297,7 @@ p.details {
 }
 
 #poll-controls button {
-    margin: 0 .5rem;
+    margin: 0 0.5rem;
     cursor: pointer;
     background-color: var(--color-background-secondary);
     background-repeat: no-repeat;
@@ -313,19 +310,19 @@ p.details {
 }
 
 #poll-controls button#ctrl-delete-poll {
-    background-image: url('../img/icon-delete.png');
+    background-image: url("../img/icon-delete.png");
 }
 
 #poll-controls button#ctrl-lock-poll {
-    background-image: url('../img/icon-lock.png');
+    background-image: url("../img/icon-lock.png");
 }
 
 #poll-controls button#ctrl-edit-poll {
-    background-image: url('../img/icon-pen.png');
+    background-image: url("../img/icon-pen.png");
 }
 
 #poll-controls button#ctrl-mini-view {
-    background-image: url('../img/icon-eye.png');
+    background-image: url("../img/icon-eye.png");
 }
 
 #poll-container {
@@ -341,12 +338,12 @@ p.details {
 
 #form-new-poll button#btnMore {
     background-color: var(--color-feedback-positive);
-    background-image: url('../img/icon-plus.png');
+    background-image: url("../img/icon-plus.png");
 }
 
 #form-new-poll button#btnLess {
     background-color: var(--color-feedback-negative);
-    background-image: url('../img/icon-minus.png');
+    background-image: url("../img/icon-minus.png");
 }
 
 table.schedule {
@@ -389,7 +386,6 @@ tr.valign-middle td {
     vertical-align: middle;
 }
 
-
 /* POLL HEADER (DATES, OPTIONS, ...) */
 
 td.schedule-header {
@@ -419,7 +415,8 @@ td.schedule-header .date-delete {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-delete.png) no-repeat;
+    background: var(--color-background-secondary) url(../img/icon-delete.png)
+        no-repeat;
     background-position: center center;
 }
 
@@ -432,21 +429,21 @@ td.schedule-header > div > div {
     white-space: nowrap;
     /* this is for shity "non IE" browsers
        that dosn't support writing-mode */
-    -webkit-transform: translate(0.75em,0) rotate(90deg);
-       -moz-transform: translate(0.75em,0) rotate(90deg);
-         -o-transform: translate(0.75em,0) rotate(90deg);
-            transform: translate(0.75em,0) rotate(90deg);
+    -webkit-transform: translate(0.75em, 0) rotate(90deg);
+    -moz-transform: translate(0.75em, 0) rotate(90deg);
+    -o-transform: translate(0.75em, 0) rotate(90deg);
+    transform: translate(0.75em, 0) rotate(90deg);
     -webkit-transform-origin: 0 0;
-       -moz-transform-origin: 0 0;
-         -o-transform-origin: 0 0;
-            transform-origin: 0 0;
-   /* IE9+ */
-   -ms-transform: none;
-   -ms-transform-origin: none;
-   /* IE8+ */
-   -ms-writing-mode: tb-rl;
-   /* IE7 and below */
-   *writing-mode: tb-rl;
+    -moz-transform-origin: 0 0;
+    -o-transform-origin: 0 0;
+    transform-origin: 0 0;
+    /* IE9+ */
+    -ms-transform: none;
+    -ms-transform-origin: none;
+    /* IE8+ */
+    -ms-writing-mode: tb-rl;
+    /* IE7 and below */
+    *writing-mode: tb-rl;
     text-align: center;
 }
 
@@ -455,7 +452,6 @@ td.schedule-header > div > div:before {
     float: left;
     margin-top: 100%;
 }
-
 
 /* POLL ENTRY NAMES */
 
@@ -489,7 +485,8 @@ button.schedule-delete {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-delete.png) no-repeat;
+    background: var(--color-background-secondary) url(../img/icon-delete.png)
+        no-repeat;
     background-position: center center;
     border-top-right-radius: var(--border-radius-big);
     border-bottom-right-radius: var(--border-radius-big);
@@ -523,22 +520,25 @@ table.schedule.mini td.schedule-entry {
 }
 
 td.schedule-entry-yes {
-    background: var(--color-feedback-positive) url(../img/icon-yes.png) no-repeat center center;
+    background: var(--color-feedback-positive) url(../img/icon-yes.png)
+        no-repeat center center;
 }
 
 td.schedule-entry-no {
-    background: var(--color-feedback-negative) url(../img/icon-no.png) no-repeat center center;
+    background: var(--color-feedback-negative) url(../img/icon-no.png) no-repeat
+        center center;
 }
 
 td.schedule-entry-maybe {
-    background: var(--color-feedback-neutral) url(../img/icon-maybe.png) no-repeat center center;
+    background: var(--color-feedback-neutral) url(../img/icon-maybe.png)
+        no-repeat center center;
 }
 
 td.schedule-blank {
     background-color: var(--color-background-primary);
 }
 
-.schedule input[type=checkbox] {
+.schedule input[type="checkbox"] {
     margin-left: 3px;
 }
 
@@ -553,28 +553,28 @@ td.schedule-submit {
     height: 16px;
 }
 
-.schedule input[type=submit].save {
+.schedule input[type="submit"].save {
     font-size: inherit;
     background-color: transparent;
     border: none;
     cursor: pointer;
     width: auto;
     height: 100%;
-    line-height: .5;
+    line-height: 0.5;
     border-top-right-radius: var(--border-radius-big);
     border-bottom-right-radius: var(--border-radius-big);
 }
 
-.schedule input[type=submit].delete {
-    background:url(../img/icon-delete.png) no-repeat;
+.schedule input[type="submit"].delete {
+    background: url(../img/icon-delete.png) no-repeat;
     background-position: center center;
     background-origin: content-box;
-    cursor:pointer;
+    cursor: pointer;
     width: 24px;
     height: 24px;
 }
 
-.schedule input[type=text] {
+.schedule input[type="text"] {
     font-size: inherit;
     max-width: 200px;
     min-width: 100px;
@@ -584,17 +584,18 @@ td.schedule-submit {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
- input#choice[type=text] {
+input#choice[type="text"] {
     text-align: left;
 }
 
-.schedule.mini input[type=text] {
+.schedule.mini input[type="text"] {
     height: 16px;
     max-width: 100px;
     min-width: 50px;
 }
 
-.schedule input[type=submit], .schedule button {
+.schedule input[type="submit"],
+.schedule button {
     padding: 0 10px;
 }
 
@@ -691,13 +692,13 @@ td.schedule-submit {
     color: #666;
 }
 
-.comment-delete{
-    background:url(../img/icon-delete.png) no-repeat;
+.comment-delete {
+    background: url(../img/icon-delete.png) no-repeat;
     background-position: center center;
     background-origin: content-box;
-    cursor:pointer;
+    cursor: pointer;
     margin-top: 0.2em;
-    margin-bottom: -1.00em;
+    margin-bottom: -1em;
     height: 24px;
     width: 24px;
 }
@@ -708,7 +709,7 @@ td.schedule-submit {
 }
 
 tr.schedule-new td.new-entry-choice {
-    cursor:pointer;
+    cursor: pointer;
 }
 
 table.schedule.mini tr.schedule-new > td.new-entry-choice {
@@ -718,15 +719,18 @@ table.schedule.mini tr.schedule-new > td.new-entry-choice {
 }
 
 tr.schedule-new td.new-entry-choice-yes {
-    background: var(--color-feedback-positive) url(../img/icon-yes.png) no-repeat center center;
+    background: var(--color-feedback-positive) url(../img/icon-yes.png)
+        no-repeat center center;
 }
 
 tr.schedule-new td.new-entry-choice-maybe {
-    background: var(--color-feedback-neutral) url(../img/icon-maybe.png) no-repeat center center;
+    background: var(--color-feedback-neutral) url(../img/icon-maybe.png)
+        no-repeat center center;
 }
 
 tr.schedule-new td.new-entry-choice-no {
-    background: var(--color-feedback-negative) url(../img/icon-no.png) no-repeat center center;
+    background: var(--color-feedback-negative) url(../img/icon-no.png) no-repeat
+        center center;
 }
 
 tr.table-spacer-row > td {
@@ -747,7 +751,6 @@ table.schedule.mini tr.table-spacer-row-big > td {
     border: 8px solid var(--color-background-primary);
 }
 
-
 /* ==== FORM CSS ==== */
 
 .form {
@@ -756,7 +759,7 @@ table.schedule.mini tr.table-spacer-row-big > td {
     max-width: 100%;
 }
 
-.form input[type=checkbox] {
+.form input[type="checkbox"] {
     vertical-align: middle;
 }
 
@@ -768,36 +771,36 @@ li {
 }
 
 label {
-    margin:10px 0 3px 0;
-    padding:0px;
-    display:block;
+    margin: 10px 0 3px 0;
+    padding: 0px;
+    display: block;
 }
 
-input[type=text],
-input[type=date],
-input[type=datetime],
-input[type=number],
-input[type=search],
-input[type=time],
-input[type=url],
-input[type=email],
-input[type=password],
+input[type="text"],
+input[type="date"],
+input[type="datetime"],
+input[type="number"],
+input[type="search"],
+input[type="time"],
+input[type="url"],
+input[type="email"],
+input[type="password"],
 textarea,
 select {
     box-sizing: border-box;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
-    border:1px solid #bebebe;
+    border: 1px solid #bebebe;
     padding: 7px;
-    margin:0px;
+    margin: 0px;
     border-radius: var(--border-radius-small);
     outline: none;
 }
 
-input[type=email] {
+input[type="email"] {
     margin-bottom: 9px !important;
 }
-input[type=password] {
+input[type="password"] {
     margin-bottom: 9px !important;
 }
 
@@ -817,10 +820,10 @@ input[type=password] {
     height: 100px;
 }
 
-input[type=submit],
-input[type=button],
-button[type=submit],
-button[type=button] {
+input[type="submit"],
+input[type="button"],
+button[type="submit"],
+button[type="button"] {
     background-color: var(--color-background-secondary);
     padding: 8px 15px 8px 15px;
     border: none;
@@ -829,20 +832,19 @@ button[type=button] {
     border-radius: var(--border-radius-small);
 }
 
-input[type=submit]:hover,
-input[type=button]:hover,
-button[type=submit]:hover,
-button[type=button]:hover {
+input[type="submit"]:hover,
+input[type="button"]:hover,
+button[type="submit"]:hover,
+button[type="button"]:hover {
     background-color: var(--color-background-secondary-hover);
 }
 
-input[type=submit]:disabled,
-input[type=button]:disabled,
-button[type=submit]:disabled,
-button[type=button]:disabled {
+input[type="submit"]:disabled,
+input[type="button"]:disabled,
+button[type="submit"]:disabled,
+button[type="button"]:disabled {
     background-color: #ccc !important;
 }
-
 
 /* ==== Admin page ==== */
 
@@ -850,22 +852,22 @@ button[type=button]:disabled {
     padding: 2rem;
 }
 #admin-page table {
-    margin: 0 auto;;
+    margin: 0 auto;
 }
 #admin-page td {
     padding: 4px 4px;
 }
 
 #poll-controls button#ctrl-usermanagement {
-    background-image: url('../img/icon-user.png');
+    background-image: url("../img/icon-user.png");
 }
 
 #poll-controls button#ctrl-logout {
-    background-image: url('../img/icon-logout.png');
+    background-image: url("../img/icon-logout.png");
 }
 
 #poll-controls button#ctrl-polls {
-    background-image: url('../img/icon-chart.png');
+    background-image: url("../img/icon-chart.png");
 }
 
 .collapsible {
@@ -874,7 +876,8 @@ button[type=button]:disabled {
     outline: none;
 }
 
-.active, .collapsible:hover {
+.active,
+.collapsible:hover {
     background-color: var(--color-background-secondary-hover);
 }
 
@@ -884,7 +887,7 @@ button[type=button]:disabled {
     float: right;
     margin-left: 5px;
 }
-  
+
 .active:after {
     content: "-";
 }
@@ -899,7 +902,6 @@ button[type=button]:disabled {
 .collapscontent li {
     margin: 8px 0;
 }
-
 
 /* ==== Flash messages ==== */
 

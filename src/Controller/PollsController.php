@@ -95,6 +95,11 @@ class PollsController extends AppController
         if ($locked != 0) {
             $this->Flash->error(__('This poll is locked - it is not possible to insert new entries or comments!'));
         }
+        $hiddenresult = $this->Polls->findByPollid($pollid)->select('hideresult')->firstOrFail();
+        $hiddenresult = $hiddenresult['hideresult'];
+        if ($hiddenresult != 0) {
+            $this->Flash->default(__('Only poll admin can see results and comments!'));
+        }
 
         $this->set(compact('poll', 'adminid', 'pollentries', 'entry', 'comment'));
     }

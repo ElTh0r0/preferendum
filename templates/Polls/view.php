@@ -55,21 +55,22 @@ $this->Html->scriptEnd();
         } ?>
 
         <!-- RESULTS -->
-        <?php if (\Cake\Core\Configure::read('preferendum.trendResult')) {
-            echo $this->element('poll/result-trend');
-        } else {
-            echo $this->element('poll/result-simple');
+        <?php if ($poll->hideresult == 0) {
+            if (\Cake\Core\Configure::read('preferendum.trendResult')) {
+                echo $this->element('poll/result-trend');
+            } else {
+                echo $this->element('poll/result-simple');
+            }
         } ?>
     </table>
 </div>
 
 <!-- COMMENTS VIEW -->
 <div id="comments-wrapper">
-    <!-- COMMENTS LIST -->
-    <?php echo $this->element('comment/list'); ?>
-
-    <!-- COMMENTS FORM -->
-    <?php if ($poll->locked == 0) {
+    <?php if ($poll->hideresult == 0) {
+        echo $this->element('comment/list');
+    }
+    if ($poll->locked == 0) {
         echo $this->element('comment/new');
     } ?>
 </div>

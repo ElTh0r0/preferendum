@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2020-10-31 16:26+0000\n"
+"POT-Creation-Date: 2021-07-25 12:27+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -105,31 +105,35 @@ msgstr ""
 msgid "This poll is locked - it is not possible to insert new entries or comments!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:129
+#: /srv/http/preferendum/main/Controller/PollsController.php:101
+msgid "Only poll admin can see results and comments!"
+msgstr ""
+
+#: /srv/http/preferendum/main/Controller/PollsController.php:134
 msgid "Your poll has been updated."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:132
+#: /srv/http/preferendum/main/Controller/PollsController.php:137
 msgid "Unable to update your poll."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:141
+#: /srv/http/preferendum/main/Controller/PollsController.php:146
 msgid "This poll is locked!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:168
+#: /srv/http/preferendum/main/Controller/PollsController.php:173
 msgid "Poll has been unlocked"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:174
+#: /srv/http/preferendum/main/Controller/PollsController.php:179
 msgid "Poll lock has NOT been changed!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:191
+#: /srv/http/preferendum/main/Controller/PollsController.php:196
 msgid "Poll {0} has been deleted."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:196
+#: /srv/http/preferendum/main/Controller/PollsController.php:201
 msgid "Poll {0} has NOT been deleted!"
 msgstr ""
 
@@ -229,7 +233,7 @@ msgid "An internal error has occurred"
 msgstr ""
 
 #: /srv/http/preferendum/main/Polls/add.php:15
-#: /srv/http/preferendum/main/Polls/add.php:168
+#: /srv/http/preferendum/main/Polls/add.php:182
 msgid "Create poll"
 msgstr ""
 
@@ -294,36 +298,40 @@ msgstr ""
 msgid "Type whatever you want or pick a date!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:109
+#: /srv/http/preferendum/main/Polls/add.php:110
 msgid "Edit/deleting poll/entries only with admin link"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:120
+#: /srv/http/preferendum/main/Polls/add.php:123
+msgid "Hide poll results for users (only admin can see the votes)"
+msgstr ""
+
+#: /srv/http/preferendum/main/Polls/add.php:134
 #: /srv/http/preferendum/main/element/poll/edit-head.php:50
 msgid "Collect user contact information"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:134
+#: /srv/http/preferendum/main/Polls/add.php:148
 #: /srv/http/preferendum/main/element/poll/edit-head.php:65
 msgid "Receive email after new entry"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:148
+#: /srv/http/preferendum/main/Polls/add.php:162
 #: /srv/http/preferendum/main/element/poll/edit-head.php:80
 msgid "Receive email after new comment"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:160
+#: /srv/http/preferendum/main/Polls/add.php:174
 #: /srv/http/preferendum/main/element/poll/edit-head.php:92
 msgid "Email"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:162
+#: /srv/http/preferendum/main/Polls/add.php:176
 #: /srv/http/preferendum/main/element/poll/edit-head.php:94
 msgid "Email for receiving new entry/comment"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:175
+#: /srv/http/preferendum/main/Polls/add.php:189
 msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
 msgstr ""
 

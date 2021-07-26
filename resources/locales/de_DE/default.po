@@ -1,22 +1,23 @@
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
-# 
+#
 # Translators:
 # El Thoro, 2021
-# 
-#, fuzzy
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2021-07-25 12:27+0000\n"
-"PO-Revision-Date: 2021-06-13 12:05+0000\n"
+"PO-Revision-Date: 2021-07-25 14:31+0200\n"
 "Last-Translator: El Thoro, 2021\n"
-"Language-Team: German (Germany) (https://www.transifex.com/elth0r0/teams/121734/de_DE/)\n"
+"Language-Team: German (Germany) (https://www.transifex.com/elth0r0/"
+"teams/121734/de_DE/)\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0\n"
 
 #: /srv/http/preferendum/main/Controller/AdminController.php:73
 msgid "DEMO MODE enabled! User creation / password change is not possible!"
@@ -345,10 +346,8 @@ msgid "Email for receiving new entry/comment"
 msgstr "Email um neue Einträge/Kommentare zu erhalten"
 
 #: /srv/http/preferendum/main/Polls/add.php:189
-msgid ""
-"Attention! Inactive polls will be deleted automatically after {0} days!"
-msgstr ""
-"Achtung! Inaktive Umfragen werden nach {0} Tagen automatisch gelöscht!"
+msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
+msgstr "Achtung! Inaktive Umfragen werden nach {0} Tagen automatisch gelöscht!"
 
 #: /srv/http/preferendum/main/Polls/edit.php:15
 #: /srv/http/preferendum/main/element/poll/edit-head.php:17

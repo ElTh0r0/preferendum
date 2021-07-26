@@ -32,7 +32,10 @@ return [
         'extendedUsermanagementAccess' => [1, ],
         // Turn on(true)/off(false) admin link functionality (recommended)
         'adminLinks' => true,
-        
+
+        // Add (optional) field to make result only visible for admin
+        // (This feature can only be used, if 'adminLinks' is enabled and used, too.)
+        'hidePollResult' => false,
         // Add (optional) field to store user contact information together with entry
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
         'collectUserinfo' => false,
