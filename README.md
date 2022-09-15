@@ -21,7 +21,7 @@
 ![screenshot](https://user-images.githubusercontent.com/26674558/121807573-faaea200-cc54-11eb-838f-4d31639b0915.png)
 
 ## Requirements
-- PHP 7.2 or higher (including intl and mbstring extension)
+- PHP 7.4 or higher (including intl and mbstring extension)
 - One of the following databases:
   - MySql (5.6 or higher)
   - MariaDB (5.6 or higher)

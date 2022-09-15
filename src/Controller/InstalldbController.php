@@ -28,10 +28,10 @@ class InstalldbController extends AppController
 
         echo '<h4>Environment</h4>';
         echo '<ul>';
-        if (version_compare(PHP_VERSION, '7.2.0', '>=')) {
-            echo '<li>Your version of PHP is 7.2.0 or higher (detected ' . PHP_VERSION . ').</li>';
+        if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
+            echo '<li>Your version of PHP is 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
         } else {
-            echo '<li><strong>Problem:</strong> Your version of PHP is too low. You need PHP 7.2.0 or higher (detected ' . PHP_VERSION . ').</li>';
+            echo '<li><strong>Problem:</strong> Your version of PHP is too low. You need PHP 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
             die;
         }
 
@@ -175,7 +175,7 @@ class InstalldbController extends AppController
         echo '</ul><p>DONE!</p>';
         echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';
         echo '</body></html>';
-        
+
         $this->autoRender = false;
     }
 }
