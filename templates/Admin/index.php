@@ -36,26 +36,26 @@
                 <td>
                     <em><?php echo h($poll->title) ?></em><br>
                 </td>
-                <td><?php echo h($poll->pollid) ?></td>
+                <td><?php echo h($poll->id) ?></td>
                 <td>
                     <!-- BTN: VIEW -->
                     <?php echo $this->Html->link(
                         $this->Form->button(__('View'), ['type' => 'button']),
-                        ['controller' => 'Polls', 'action' => 'view', $poll->pollid],
+                        ['controller' => 'Polls', 'action' => 'view', $poll->id],
                         ['target' => '_blank', 'escape' => false]
                     ); ?>
                 </td>
                 <td>
                     <?php echo $this->Html->link(
                         $this->Form->button(__('Edit'), ['type' => 'button']),
-                        ['controller' => 'Polls', 'action' => 'edit', $poll->pollid, $poll->adminid],
+                        ['controller' => 'Polls', 'action' => 'edit', $poll->id, $poll->adminid],
                         ['target' => '_blank', 'escape' => false]
                     ); ?>
                 </td>
                 <td>
                     <?php echo $this->Form->postLink(
                         $this->Form->button(__('Delete'), ['type' => 'button']),
-                        ['controller' => 'Polls', 'action' => 'delete', $poll->pollid, $poll->adminid],
+                        ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
                         ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
                     ); ?>
                 </td>

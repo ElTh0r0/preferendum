@@ -27,7 +27,7 @@
             <div class="content-right">
                 <?php echo $this->Form->postLink(
                     $this->Form->button('', ['type' => 'button', 'class' => 'comment-delete']),
-                    ['controller' => 'Comments', 'action' => 'delete', $poll->pollid, $adminid, $com->id],
+                    ['controller' => 'Comments', 'action' => 'delete', $poll->id, $adminid, $com->id],
                     ['escape' => false, 'confirm' => __('Are you sure to delete this comment?')]
                 ); ?>
             </div>

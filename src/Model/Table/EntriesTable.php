@@ -21,7 +21,7 @@ class EntriesTable extends Table
 {
     public function initialize(array $config): void
     {
-        $this->belongsTo('Polls')->setForeignKey('pollid');
+        $this->belongsTo('Polls');
     }
 
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
@@ -37,7 +37,7 @@ class EntriesTable extends Table
     public function afterSave(EventInterface $event, $entity, $options)
     {
         // Update timestamp in polls table
-        $updatePollTimestamp = $this->Polls->get($entity->pollid);
+        $updatePollTimestamp = $this->Polls->get($entity->poll_id);
         $this->Polls->touch($updatePollTimestamp);
         $this->Polls->save($updatePollTimestamp);
     }
@@ -45,7 +45,7 @@ class EntriesTable extends Table
     public function afterDelete(EventInterface $event, $entity, $options)
     {
         // Update timestamp in polls table
-        $updatePollTimestamp = $this->Polls->get($entity->pollid);
+        $updatePollTimestamp = $this->Polls->get($entity->poll_id);
         $this->Polls->touch($updatePollTimestamp);
         $this->Polls->save($updatePollTimestamp);
     }

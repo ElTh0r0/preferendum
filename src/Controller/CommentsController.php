@@ -23,9 +23,9 @@ class CommentsController extends AppController
         if ($this->request->is('post')) {
             $comment = $this->Comments->newEmptyEntity();
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
-            $pollid = $this->request->getData()['pollid'];
+            $pollid = $this->request->getData()['poll_id'];
             $this->loadModel('Polls');
-            $db = $this->Polls->findByPollid($pollid)->select(['title', 'locked', 'email', 'emailcomment'])->firstOrFail();
+            $db = $this->Polls->findById($pollid)->select(['title', 'locked', 'email', 'emailcomment'])->firstOrFail();
             $dbtitle = $db['title'];
             $dblocked = $db['locked'];
             $dbemail = $db['email'];
@@ -72,7 +72,7 @@ class CommentsController extends AppController
             && isset($comid) && !empty($comid)
         ) {
             $this->loadModel('Polls');
-            $db = $this->Polls->findByPollid($pollid)->select('adminid')->firstOrFail();
+            $db = $this->Polls->findById($pollid)->select('adminid')->firstOrFail();
             $dbadminid = $db['adminid'];
 
             $dbcomment = $this->Comments->findById($comid)->firstOrFail();

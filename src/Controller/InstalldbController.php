@@ -110,7 +110,7 @@ class InstalldbController extends AppController
         echo '<li>Creating "comments" table</li>';
         $connection->execute('CREATE TABLE `comments` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `pollid` varchar(32) NOT NULL,
+            `poll_id` varchar(32) NOT NULL,
             `text` varchar(512) NOT NULL,
             `name` varchar(32) NOT NULL,
             `created` DATETIME NOT NULL
@@ -119,7 +119,7 @@ class InstalldbController extends AppController
         echo '<li>Creating "choices" table</li>';
         $connection->execute('CREATE TABLE `choices` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `pollid` varchar(32) NOT NULL,
+            `poll_id` varchar(32) NOT NULL,
             `option` varchar(32) NOT NULL,
             `sort` tinyint(4) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
@@ -127,7 +127,7 @@ class InstalldbController extends AppController
         echo '<li>Creating "entries" table</li>';
         $connection->execute('CREATE TABLE `entries` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `pollid` varchar(32) NOT NULL,
+            `poll_id` varchar(32) NOT NULL,
             `option` varchar(32) NOT NULL,
             `name` varchar(32) NOT NULL,
             `value` tinyint(4) NOT NULL
@@ -136,18 +136,18 @@ class InstalldbController extends AppController
         echo '<li>Creating "users" table</li>';
         $connection->execute('CREATE TABLE `users` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `pollid` varchar(32) NOT NULL,
+            `poll_id` varchar(32) NOT NULL,
             `name` varchar(32) NOT NULL,
             `info` varchar(255) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
         echo '<ul><li>Creating default admin user</li></ul>';
-        $connection->execute('INSERT INTO `users` (`pollid`, `name`, `info`) VALUES
+        $connection->execute('INSERT INTO `users` (`poll_id`, `name`, `info`) VALUES
         (9999, "admin", "$2y$10$YW0XBpcu4RoiUR5tW/rImuChkO1h8LDyecm6F1/Cty5QhJrwP958e");');
 
         echo '<li>Creating "polls" table</li>';
         $connection->execute('CREATE TABLE `polls` (
-            `pollid` varchar(32) NOT NULL,
+            `id` varchar(32) NOT NULL,
             `adminid` varchar(32) NOT NULL,
             `title` varchar(256) NOT NULL,
             `details` varchar(512) NOT NULL,
@@ -162,15 +162,15 @@ class InstalldbController extends AppController
 
         echo '<li>Creating primary keys and keys</li>';
         $connection->execute('ALTER TABLE `comments`
-            ADD KEY `pollid` (`pollid`);');
+            ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `choices`
-            ADD KEY `pollid` (`pollid`);');
+            ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `users`
-            ADD KEY `pollid` (`pollid`);');
+            ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `entries`
-            ADD KEY `pollid` (`pollid`);');
+            ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `polls`
-            ADD PRIMARY KEY (`pollid`);');
+            ADD PRIMARY KEY (`id`);');
 
         echo '</ul><p>DONE!</p>';
         echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';

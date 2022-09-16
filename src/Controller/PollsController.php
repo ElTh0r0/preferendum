@@ -42,7 +42,7 @@ class PollsController extends AppController
                     $dbchoice = $this->Choices->newEmptyEntity();
                     $dbchoice = $this->Choices->newEntity(
                         [
-                        'pollid' => $poll->pollid,
+                        'poll_id' => $poll->id,
                         'option' => trim($choices[$i]),
                         'sort' => $i+1
                         ]
@@ -55,9 +55,9 @@ class PollsController extends AppController
                 if ($success) {
                     $this->Flash->success(__('Your poll has been saved.'));
                     if ($poll->adminLink == true) {
-                        return $this->redirect(['action' => 'view', $poll->pollid, $poll->adminid]);
+                        return $this->redirect(['action' => 'view', $poll->id, $poll->adminid]);
                     }
-                    return $this->redirect(['action' => 'view', $poll->pollid]);
+                    return $this->redirect(['action' => 'view', $poll->id]);
                 }
             }
             $this->Flash->error(__('Unable to add your poll.'));
@@ -71,12 +71,12 @@ class PollsController extends AppController
     public function view($pollid = null, $adminid = 'NA')
     {
         $poll = $this->Polls->find()
-            ->where(['pollid' => $pollid])
+            ->where(['id' => $pollid])
             ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
             ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
             ->firstOrFail();
         
-        $dbentries = $this->Polls->Entries->findAllByPollid($pollid);
+        $dbentries = $this->Polls->Entries->findAllByPollId($pollid);
         $pollentries = array();
         foreach ($dbentries as $entry) {
             if (!isset($entry['name'])) {
@@ -90,12 +90,12 @@ class PollsController extends AppController
         $this->loadModel('Comments');
         $comment = $this->Comments->newEmptyEntity();
         
-        $locked = $this->Polls->findByPollid($pollid)->select('locked')->firstOrFail();
+        $locked = $this->Polls->findById($pollid)->select('locked')->firstOrFail();
         $locked = $locked['locked'];
         if ($locked != 0) {
             $this->Flash->error(__('This poll is locked - it is not possible to insert new entries or comments!'));
         }
-        $hiddenresult = $this->Polls->findByPollid($pollid)->select('hideresult')->firstOrFail();
+        $hiddenresult = $this->Polls->findById($pollid)->select('hideresult')->firstOrFail();
         $hiddenresult = $hiddenresult['hideresult'];
         if ($hiddenresult != 0) {
             $this->Flash->default(__('Only poll admin can see results and comments!'));
@@ -109,12 +109,12 @@ class PollsController extends AppController
     public function edit($pollid = null, $adminid = 'NA')
     {
         $poll = $this->Polls->find()
-            ->where(['pollid' => $pollid])
+            ->where(['id' => $pollid])
             ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
             ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
             ->firstOrFail();
         
-        $dbentries = $this->Polls->Entries->findAllByPollid($pollid);
+        $dbentries = $this->Polls->Entries->findAllByPollId($pollid);
         $pollentries = array();
         foreach ($dbentries as $entry) {
             if (!isset($entry['name'])) {
@@ -132,7 +132,7 @@ class PollsController extends AppController
                 $this->Polls->patchEntity($poll, $this->request->getData());
                 if ($this->Polls->save($poll)) {
                     $this->Flash->success(__('Your poll has been updated.'));
-                    return $this->redirect(['action' => 'edit', $poll->pollid, $adminid]);
+                    return $this->redirect(['action' => 'edit', $poll->id, $adminid]);
                 }
                 $this->Flash->error(__('Unable to update your poll.'));
             }
@@ -140,7 +140,7 @@ class PollsController extends AppController
             $this->redirect(['action' => 'index']);
         }
 
-        $locked = $this->Polls->findByPollid($pollid)->select('locked')->firstOrFail();
+        $locked = $this->Polls->findById($pollid)->select('locked')->firstOrFail();
         $locked = $locked['locked'];
         if ($locked != 0) {
             $this->Flash->error(__('This poll is locked!'));
@@ -158,7 +158,7 @@ class PollsController extends AppController
         if (isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
         ) {
-            $poll = $this->Polls->findByPollid($pollid)->firstOrFail();
+            $poll = $this->Polls->findById($pollid)->firstOrFail();
             $dbadminid = $poll->adminid;
             
             if (strcmp($dbadminid, $adminid) == 0) {
@@ -189,7 +189,7 @@ class PollsController extends AppController
         if (isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
         ) {
-            $poll = $this->Polls->findByPollid($pollid)->firstOrFail();
+            $poll = $this->Polls->findById($pollid)->firstOrFail();
             $dbadminid = $poll->adminid;
             if (strcmp($dbadminid, $adminid) == 0) {
                 if ($this->Polls->delete($poll)) {
@@ -230,9 +230,9 @@ class PollsController extends AppController
         //remove old polls
         if (sizeof($trash) > 0) {
             foreach ($trash as $poll) {
-                echo "Deleting poll: " . $poll['pollid'] . " ..." . PHP_EOL;
+                echo "Deleting poll: " . $poll['id'] . " ..." . PHP_EOL;
                 if (!$this->Polls->delete($poll)) {
-                    echo "ERROR while deleting: " . $poll['pollid'] . PHP_EOL;
+                    echo "ERROR while deleting: " . $poll['id'] . PHP_EOL;
                 }
             }
         } else {

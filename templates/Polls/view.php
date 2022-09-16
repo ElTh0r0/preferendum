@@ -20,7 +20,7 @@
 <?php
 $this->Html->scriptStart(['block' => true]);
 echo 'var jswebroot = ' . json_encode($this->request->getAttributes()['webroot']) . ';';
-echo 'var jspollid = ' . json_encode($poll->pollid) . ';';
+echo 'var jspollid = ' . json_encode($poll->id) . ';';
 echo 'var jsadminid = ' . json_encode($adminid) . ';';
 echo 'var jsMini = ' . json_encode(__('Mini View')) . ';';
 echo 'var jsNormal = ' . json_encode(__('Normal View')) . ';';

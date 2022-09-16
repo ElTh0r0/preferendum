@@ -48,7 +48,7 @@ class AdminController extends AppController
         $polls = $this->Paginator->paginate(
             $this->Polls->find('all', ['order' => ['modified' => 'DESC']])
                 ->contain(['Users'])
-                ->where(['pollid IS NOT' => self::POLLADMINID])
+                ->where(['id IS NOT' => self::POLLADMINID])
         );
 
         $this->set(compact('polls'));
@@ -64,7 +64,7 @@ class AdminController extends AppController
         $currentUserName = $identity->getOriginalData()['name'];
 
         $this->loadModel('Users');
-        $admins = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name'])->where(['pollid' => self::POLLADMINID]);
+        $admins = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name'])->where(['poll_id' => self::POLLADMINID]);
         $admins = $admins->all()->toArray();
 
         $user = $this->Users->newEmptyEntity();
@@ -79,7 +79,7 @@ class AdminController extends AppController
             
             $dbuser = $this->Users
                 ->find()
-                ->where(['pollid' => self::POLLADMINID, 'name' => $user['name']])
+                ->where(['poll_id' => self::POLLADMINID, 'name' => $user['name']])
                 ->select('id')
                 ->first();
             if ($dbuser != null) {  // User already exists
@@ -133,18 +133,18 @@ class AdminController extends AppController
         $this->loadModel('Users');
         $admins = $this->Users->find()
             ->select(['name', 'info'])
-            ->where(['pollid' => self::POLLADMINID]);
+            ->where(['poll_id' => self::POLLADMINID]);
 
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
         
         // debug($result);
-        // debug($result->getData()['pollid']);
+        // debug($result->getData()['poll_id']);
         // die;
         
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            if ($result->getData()['pollid'] == self::POLLADMINID) {
+            if ($result->getData()['poll_id'] == self::POLLADMINID) {
                 // redirect after login success
                 $target = $this->Authentication->getLoginRedirect() ?? '/admin';
                 return $this->redirect($target);

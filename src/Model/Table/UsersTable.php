@@ -21,7 +21,7 @@ class UsersTable extends Table
 {
     public function initialize(array $config): void
     {
-        $this->belongsTo('Polls')->setForeignKey('pollid');
+        $this->belongsTo('Polls');
     }
 
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)

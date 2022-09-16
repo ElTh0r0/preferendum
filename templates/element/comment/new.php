@@ -22,8 +22,8 @@
             ]
         );
         echo $this->Form->hidden(
-            'pollid', [
-            'value' => $poll->pollid,
+            'poll_id', [
+            'value' => $poll->id,
             ]
         );
         echo $this->Form->control(

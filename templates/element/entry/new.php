@@ -17,12 +17,12 @@
     echo $this->Form->create(
         $entry, [
         'type' => 'post',
-        'url' => ['controller' => 'Entries', 'action' => 'new', $poll->pollid]
+        'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id]
         ]
     );
     echo $this->Form->hidden(
-        'pollid', [
-        'value' => $poll->pollid,
+        'poll_id', [
+        'value' => $poll->id,
         ]
     );
     echo '<td class="schedule-name-input">';

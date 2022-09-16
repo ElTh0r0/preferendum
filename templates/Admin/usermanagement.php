@@ -70,7 +70,7 @@
             echo $this->Form->hidden('name', ['value' => $currentUserName]);    
         }
         ?>
-        <?php echo $this->Form->hidden('pollid', ['value' => $polladmid]) ?>
+        <?php echo $this->Form->hidden('poll_id', ['value' => $polladmid]) ?>
         <?php echo $this->Form->control(
             'info', [
             'required' => true,

@@ -31,7 +31,7 @@ class CommentsTable extends Table
             ]
         );
 
-        $this->belongsTo('Polls')->setForeignKey('pollid');
+        $this->belongsTo('Polls');
     }
 
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
@@ -47,7 +47,7 @@ class CommentsTable extends Table
     public function afterSave(EventInterface $event, $entity, $options)
     {
         // Update timestamp in polls table
-        $updatePollTimestamp = $this->Polls->get($entity->pollid);
+        $updatePollTimestamp = $this->Polls->get($entity->poll_id);
         $this->Polls->touch($updatePollTimestamp);
         $this->Polls->save($updatePollTimestamp);
     }
@@ -55,7 +55,7 @@ class CommentsTable extends Table
     public function afterDelete(EventInterface $event, $entity, $options)
     {
         // Update timestamp in polls table
-        $updatePollTimestamp = $this->Polls->get($entity->pollid);
+        $updatePollTimestamp = $this->Polls->get($entity->poll_id);
         $this->Polls->touch($updatePollTimestamp);
         $this->Polls->save($updatePollTimestamp);
     }

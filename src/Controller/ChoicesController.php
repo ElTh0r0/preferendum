@@ -29,14 +29,14 @@ class ChoicesController extends AppController
             ) {
                 $this->loadModel('Polls');
                 $poll = $this->Polls->find()
-                    ->where(['pollid' => $pollid])
+                    ->where(['id' => $pollid])
                     ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
                     ->firstOrFail();
                 $dbadminid = $poll->adminid;
 
                 $query = $this->Choices->find(
                     'all', [
-                    'conditions' => ['pollid' => $pollid, 'option' => $data]
+                    'conditions' => ['poll_id' => $pollid, 'option' => $data]
                     ]
                 );
                 $number = $query->count();
@@ -45,7 +45,7 @@ class ChoicesController extends AppController
                     $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
                     $dbchoice = $this->Choices->newEntity(
                         [
-                        'pollid' => $poll->pollid,
+                        'poll_id' => $poll->id,
                         'option' => trim($data),
                         'sort' => $nextsort
                         ]
@@ -56,7 +56,7 @@ class ChoicesController extends AppController
                         $this->loadModel('Entries');
                         $dbentries = $this->Polls->Entries->find()
                             ->select(['name'])
-                            ->where(['pollid' => $pollid])
+                            ->where(['poll_id' => $pollid])
                             ->group(['name']);
                             $dbentries = $dbentries->all();
 
@@ -64,7 +64,7 @@ class ChoicesController extends AppController
                             $dbentry = $this->Entries->newEmptyEntity();
                             $dbentry = $this->Entries->newEntity(
                                 [
-                                'pollid' => $pollid,
+                                'poll_id' => $pollid,
                                 'option' => trim($data),
                                 'name' => trim($entry['name']),
                                 'value' => 2
@@ -98,16 +98,16 @@ class ChoicesController extends AppController
             && isset($option) && !empty($option)
         ) {
             $this->loadModel('Polls');
-            $db = $this->Polls->findByPollid($pollid)->select('adminid')->firstOrFail();
+            $db = $this->Polls->findById($pollid)->select('adminid')->firstOrFail();
             $dbadminid = $db['adminid'];
             
             $this->loadModel('Entries');
             $dbentries = $this->Entries->find()
-                ->where(['pollid' => $pollid, 'option' => $option]);
+                ->where(['poll_id' => $pollid, 'option' => $option]);
             if (strcmp($dbadminid, $adminid) == 0) {
                 if ($this->Entries->deleteMany($dbentries)) {
                     $dbentries = $this->Choices->find()
-                        ->where(['pollid' => $pollid, 'option' => $option]);
+                        ->where(['poll_id' => $pollid, 'option' => $option]);
                     if ($this->Choices->deleteMany($dbentries)) {
                         $this->Flash->success(__('Option has been deleted.'));
                         return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);

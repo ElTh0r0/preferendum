@@ -22,7 +22,7 @@
 if (strcmp($poll->adminid, $adminid) == 0) {
     echo $this->Html->link(
         $this->Form->button(__('Edit'), ['type' => 'button', 'id' => 'ctrl-edit-poll']),
-        ['action' => 'edit', $poll->pollid, $adminid],
+        ['action' => 'edit', $poll->id, $adminid],
         ['escape' => false]
     );
 }

@@ -33,7 +33,7 @@
 <?php
 $this->Html->scriptStart(['block' => true]);
 echo 'var jswebroot = ' . json_encode($this->request->getAttributes()['webroot']) . ';';
-echo 'var jspollid = ' . json_encode($poll->pollid) . ';';
+echo 'var jspollid = ' . json_encode($poll->id) . ';';
 echo 'var jsadminid = ' . json_encode($adminid) . ';';
 $this->Html->scriptEnd();
 ?>

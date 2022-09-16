@@ -27,13 +27,13 @@ class EntriesController extends AppController
 
             $query = $this->Entries->find(
                 'all', [
-                'conditions' => ['pollid' => $pollid, 'name' => trim($data['name'])]
+                'conditions' => ['poll_id' => $pollid, 'name' => trim($data['name'])]
                 ]
             );
             $number = $query->count();
 
             $this->loadModel('Polls');
-            $db = $this->Polls->findByPollid($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
+            $db = $this->Polls->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
             $dbtitle = $db['title'];
             $dblocked = $db['locked'];
             $dbuserinfo = $db['userinfo'];
@@ -50,7 +50,7 @@ class EntriesController extends AppController
                     $dbentry = $this->Entries->newEmptyEntity();
                     $dbentry = $this->Entries->newEntity(
                         [
-                        'pollid' => $pollid,
+                        'poll_id' => $pollid,
                         'option' => trim($data['choices'][$i]),
                         'name' => trim($data['name']),
                         'value' => trim($data['values'][$i])
@@ -89,7 +89,7 @@ class EntriesController extends AppController
                             $dbentry = $this->Users->newEmptyEntity();
                             $dbentry = $this->Users->newEntity(
                                 [
-                                'pollid' => $pollid,
+                                'poll_id' => $pollid,
                                 'name' => trim($data['name']),
                                 'info' => trim($data['userdetails'])
                                 ]
@@ -121,16 +121,16 @@ class EntriesController extends AppController
             && isset($name) && !empty($name)
         ) {
             $this->loadModel('Polls');
-            $db = $this->Polls->findByPollid($pollid)->select('adminid')->firstOrFail();
+            $db = $this->Polls->findById($pollid)->select('adminid')->firstOrFail();
             $dbadminid = $db['adminid'];
             
             $dbentries = $this->Entries->find()
-                ->where(['pollid' => $pollid, 'name' => $name]);
+                ->where(['poll_id' => $pollid, 'name' => $name]);
             if (strcmp($dbadminid, $adminid) == 0) {
                 if ($this->Entries->deleteMany($dbentries)) {
                     $this->loadModel('Users');
                     $dbentries = $this->Users->find()
-                        ->where(['pollid' => $pollid, 'name' => $name]);
+                        ->where(['poll_id' => $pollid, 'name' => $name]);
                     if ($this->Users->deleteMany($dbentries)) {
                         $this->Flash->success(__('Entry has been deleted.'));
                         return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);

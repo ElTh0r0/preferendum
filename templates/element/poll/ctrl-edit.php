@@ -19,7 +19,7 @@
         __('View Poll'), [
         'type' => 'button', 'id' => 'ctrl-mini-view']
     ),
-    ['action' => 'view', $poll->pollid, $adminid],
+    ['action' => 'view', $poll->id, $adminid],
     ['escape' => false]
 ); ?>
 
@@ -29,7 +29,7 @@
         __('Un-/Lock'), [
         'type' => 'button', 'id' => 'ctrl-lock-poll']
     ),
-    ['action' => 'lock', $poll->pollid, $adminid],
+    ['action' => 'lock', $poll->id, $adminid],
     ['escape' => false]
 );
 ?>
@@ -40,7 +40,7 @@
         __('Delete'), [
         'type' => 'button', 'id' => 'ctrl-delete-poll']
     ),
-    ['action' => 'delete', $poll->pollid, $adminid],
+    ['action' => 'delete', $poll->id, $adminid],
     ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
 );
 ?>

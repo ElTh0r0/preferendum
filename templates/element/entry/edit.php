@@ -29,7 +29,7 @@
                         '', [
                         'type' => 'button', 'class' => 'date-delete']
                     ),
-                    ['controller' => 'Choices', 'action' => 'delete', $poll->pollid, $adminid, $choice->option],
+                    ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->option],
                     ['escape' => false, 'confirm' => __('Are you sure to delete this option?')]
                 );
             } ?>
@@ -39,7 +39,7 @@
         echo $this->Form->create(
             $option, [
             'type' => 'post',
-            'url' => ['controller' => 'Choices', 'action' => 'add', $poll->pollid, $adminid]
+            'url' => ['controller' => 'Choices', 'action' => 'add', $poll->id, $adminid]
             ]
         );
         echo $this->Form->control(
@@ -80,7 +80,7 @@ foreach ($pollentries as $name => $entry) {
             '', [
                 'type' => 'button', 'class' => 'schedule-delete']
         ),
-        ['controller' => 'Entries', 'action' => 'delete', $poll->pollid, $adminid, $name],
+        ['controller' => 'Entries', 'action' => 'delete', $poll->id, $adminid, $name],
         ['escape' => false, 'confirm' => __('Are you sure to delete this entry?')]
     );
     echo '</td>';

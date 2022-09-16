@@ -32,10 +32,10 @@ class PollsTable extends Table
             ]
         );
         
-        $this->hasMany('Choices')->setForeignKey('pollid')->setDependent(true);
-        $this->hasMany('Entries')->setForeignKey('pollid')->setDependent(true);
-        $this->hasMany('Comments')->setForeignKey('pollid')->setDependent(true);
-        $this->hasMany('Users')->setForeignKey('pollid')->setDependent(true);
+        $this->hasMany('Choices')->setDependent(true);
+        $this->hasMany('Entries')->setDependent(true);
+        $this->hasMany('Comments')->setDependent(true);
+        $this->hasMany('Users')->setDependent(true);
     }
 
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
@@ -50,8 +50,8 @@ class PollsTable extends Table
 
     public function beforeSave(EventInterface $event, $entity, $options)
     {
-        if ($entity->isNew() && !$entity->pollid) {
-            $entity->pollid = hash("crc32", time() . $entity->title);
+        if ($entity->isNew() && !$entity->id) {
+            $entity->id = hash("crc32", time() . $entity->title);
             if ($entity->adminLink != true) {
                 $entity->adminid = "NA";
             } else {
