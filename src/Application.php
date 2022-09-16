@@ -17,12 +17,14 @@ declare(strict_types=1);
 namespace App;
 
 use Cake\Core\Configure;
-use Cake\Core\Exception\MissingPluginException;
+use Cake\Core\ContainerInterface;
+use Cake\Datasource\FactoryLocator;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
 use Cake\Http\MiddlewareQueue;
+use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 
@@ -55,6 +57,11 @@ class Application extends BaseApplication
 
         if (PHP_SAPI === 'cli') {
             $this->bootstrapCli();
+        } else {
+            FactoryLocator::add(
+                'Table',
+                (new TableLocator())->allowFallbackClass(false)
+            );
         }
 
         /*
@@ -89,10 +96,8 @@ class Application extends BaseApplication
 
             // Add routing middleware.
             // If you have a large number of routes connected, turning on routes
-            // caching in production could improve performance. For that when
-            // creating the middleware instance specify the cache config name by
-            // using it's second constructor argument:
-            // `new RoutingMiddleware($this, '_cake_routes_')`
+            // caching in production could improve performance.
+            // See https://github.com/CakeDC/cakephp-cached-routing
             ->add(new RoutingMiddleware($this))
 
             // add Authentication after RoutingMiddleware
@@ -104,7 +109,7 @@ class Application extends BaseApplication
             ->add(new BodyParserMiddleware())
 
             // Cross Site Request Forgery (CSRF) Protection Middleware
-            // https://book.cakephp.org/4/en/controllers/middleware.html#cross-site-request-forgery-csrf-middleware
+            // https://book.cakephp.org/4/en/security/csrf.html#cross-site-request-forgery-csrf-middleware
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
             ]));
@@ -113,7 +118,18 @@ class Application extends BaseApplication
     }
 
     /**
-     * Bootrapping for CLI application.
+     * Register application container services.
+     *
+     * @param \Cake\Core\ContainerInterface $container The Container to update.
+     * @return void
+     * @link https://book.cakephp.org/4/en/development/dependency-injection.html#dependency-injection
+     */
+    public function services(ContainerInterface $container): void
+    {
+    }
+
+    /**
+     * Bootstrapping for CLI application.
      *
      * That is when running commands.
      *
@@ -121,11 +137,8 @@ class Application extends BaseApplication
      */
     protected function bootstrapCli(): void
     {
-        try {
-            $this->addPlugin('Bake');
-        } catch (MissingPluginException $e) {
-            // Do not halt if the plugin is missing
-        }
+        $this->addOptionalPlugin('Cake/Repl');
+        $this->addOptionalPlugin('Bake');
 
         $this->addPlugin('Migrations');
 
