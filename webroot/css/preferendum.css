@@ -903,6 +903,36 @@ button[type="button"]:disabled {
     margin: 8px 0;
 }
 
+/* ==== Pagination ==== */
+
+.pagination li {
+    display: inline;
+    margin: 0;
+    padding: 0 3px;
+    list-style-type: none;
+}
+
+.pagination li.disabled {
+    display: none;
+}
+
+.pagination li a {
+    text-decoration: underline;
+}
+
+.pagination li.active {
+    background-color: transparent;
+    font-weight: bold;
+}
+
+.pagination li.active a {
+    text-decoration: none;
+}
+
+.pagination li.active:after {
+    content: "";
+}
+
 /* ==== Flash messages ==== */
 
 .message {

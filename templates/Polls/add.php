@@ -91,7 +91,7 @@ $this->Html->scriptEnd();
         '', [
         'type' => 'button',
         'id' => 'btnLess',
-        'disabled',
+        'disabled' => true,
         ]
     );
     echo '</div>';
@@ -104,7 +104,7 @@ $this->Html->scriptEnd();
             'value' => 'true',
             'id' => 'adminInput',
             'onchange' => 'toggleHideResultInput()',
-            'checked',
+            'checked' => true,
             ]
         );
         echo '<span style="font-size: 90%;">' . __('Edit/deleting poll/entries only with admin link') . '</span>';
@@ -172,7 +172,7 @@ $this->Html->scriptEnd();
             'class' => 'field-long',
             'id' => 'emailInput',
             'label' => __('Email'),
-            'disabled',
+            'disabled' => true,
             'placeholder' => __('Email for receiving new entry/comment'),
             ]
         );

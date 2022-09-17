@@ -44,11 +44,12 @@ class AdminController extends AppController
     public function index()
     {
         $this->loadModel('Polls');
-        $this->loadComponent('Paginator');
-        $polls = $this->Paginator->paginate(
-            $this->Polls->find('all', ['order' => ['modified' => 'DESC']])
+        $polls = $this->paginate(
+            $this->Polls->find('all')
                 ->contain(['Users'])
-                ->where(['id IS NOT' => self::POLLADMINID])
+                ->where(['id IS NOT' => self::POLLADMINID]), [
+                    'limit' => 20,
+                ]
         );
 
         $this->set(compact('polls'));

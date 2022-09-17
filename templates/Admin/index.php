@@ -26,10 +26,20 @@
 <div id="admin-page">
     <!-- POLLS OVERVIEW TABLE -->
     <table>
-        <tr><td colspan="6"><h1 class="fail"><?php echo __('Available polls') . ': ' . sizeof($polls) ?></h1></td></tr>
+        <tr><td colspan="6"><h1 class="fail"><?php echo __('Available polls') . ': ' . $this->Paginator->param('count'); ?></h1></td></tr>
         <!-- EXISTING POLLS -->
         <?php
         if (sizeof($polls) > 0) {
+            $curSortDir = ($this->Paginator->sortDir() == 'asc') ? "&uarr;" : "&darr;";
+            $sTitle = __('Title');
+            $sModi = __('Last change');
+            if ($this->Paginator->sortKey() == 'title') {
+                $sTitle = '<em>' . $sTitle . ' ' . $curSortDir . '</em>';
+            } else if ($this->Paginator->sortKey() == 'modified') {
+                $sModi = '<em>' . $sModi . ' ' . $curSortDir . '</em>';
+            }
+            echo '<tr><td colspan="5">' . __('Sort by') . ': '. $this->Paginator->sort('title', $sTitle, ['escape' => false]) . '</td>';
+            echo '<td>' . $this->Paginator->sort('modified', $sModi, ['escape' => false]) . '</td></tr>';
             foreach ($polls as $poll) {
                 ?>
             <tr>
@@ -61,7 +71,7 @@
                 </td>
                 <td>
                     <!-- Info -->
-                    <span style="font-size:0.8em;"><?php echo __('Last change') . ': ' . $poll->modified->format('Y-m-d') ?></span>
+                    <span style="font-size:0.8em;"><?php echo $poll->modified->format('Y-m-d') ?></span>
                 </td>
             </tr>
                   <?php
@@ -84,6 +94,7 @@
                     ?>
                 <?php
             }
+            echo '<tr><td colspan="6" class="pagination" style="text-align:center">' . $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() . $this->Paginator->next('>'). $this->Paginator->last('>>') . '<td></tr>';
         } else {
             ?>
                 <tr>
