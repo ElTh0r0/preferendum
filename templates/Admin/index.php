@@ -24,6 +24,8 @@
 </div>
 
 <div id="admin-page">
+    <?php echo $this->Flash->render() ?>
+    
     <!-- POLLS OVERVIEW TABLE -->
     <table>
         <tr><td colspan="6"><h1 class="fail"><?php echo __('Available polls') . ': ' . $this->Paginator->param('count'); ?></h1></td></tr>
