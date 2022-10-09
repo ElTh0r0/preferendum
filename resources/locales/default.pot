@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2021-07-25 12:27+0000\n"
+"POT-Creation-Date: 2022-10-09 17:23+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,487 +14,500 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:73
+#: ./src/Controller/AdminController.php:82
 msgid "DEMO MODE enabled! User creation / password change is not possible!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:92
+#: ./src/Controller/AdminController.php:106
+msgid "User not updated - at least one administrator required!"
+msgstr ""
+
+#: ./src/Controller/AdminController.php:114
 msgid "Unable to add/update the user - password / confirmation not correct."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:97
+#: ./src/Controller/AdminController.php:119
 msgid "The user has been created/updated."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:100
+#: ./src/Controller/AdminController.php:122
 msgid "Unable to add the user."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:120
+#: ./src/Controller/AdminController.php:141
 msgid "User has been deleted."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:125
+#: ./src/Controller/AdminController.php:146
 msgid "User {0} has NOT been deleted!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/AdminController.php:152
-#: /srv/http/preferendum/main/Controller/AdminController.php:157
+#: ./src/Controller/AdminController.php:168
+#: ./src/Controller/AdminController.php:173
 msgid "Invalid user or password"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/ChoicesController.php:79
+#: ./src/Controller/ChoicesController.php:79
 msgid "Option has been added."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/ChoicesController.php:86
+#: ./src/Controller/ChoicesController.php:86
 msgid "Option has NOT been added!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/ChoicesController.php:112
+#: ./src/Controller/ChoicesController.php:112
 msgid "Option has been deleted."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/ChoicesController.php:118
+#: ./src/Controller/ChoicesController.php:118
 msgid "Option has NOT been deleted!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/CommentsController.php:45
-#: /srv/http/preferendum/main/email/text/new_comment.php:15
+#: ./src/Controller/CommentsController.php:45
+#: ./templates/email/text/new_comment.php:15
 msgid "New comment in poll \"{0}\""
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/CommentsController.php:60
+#: ./src/Controller/CommentsController.php:60
 msgid "Unable to save your comment."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/CommentsController.php:81
+#: ./src/Controller/CommentsController.php:81
 msgid "Comment has been deleted."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/CommentsController.php:86
+#: ./src/Controller/CommentsController.php:86
 msgid "Comment {0} has NOT been deleted!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/EntriesController.php:73
-#: /srv/http/preferendum/main/email/text/new_entry.php:15
+#: ./src/Controller/EntriesController.php:73
+#: ./templates/email/text/new_entry.php:15
 msgid "New entry in poll \"{0}\""
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/EntriesController.php:109
+#: ./src/Controller/EntriesController.php:109
 msgid "Unable to save your entry."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/EntriesController.php:135
+#: ./src/Controller/EntriesController.php:135
 msgid "Entry has been deleted."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/EntriesController.php:141
+#: ./src/Controller/EntriesController.php:141
 msgid "Entry has NOT been deleted!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:56
+#: ./src/Controller/PollsController.php:56
 msgid "Your poll has been saved."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:63
+#: ./src/Controller/PollsController.php:63
 msgid "Unable to add your poll."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:96
+#: ./src/Controller/PollsController.php:96
 msgid "This poll is locked - it is not possible to insert new entries or comments!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:101
+#: ./src/Controller/PollsController.php:101
 msgid "Only poll admin can see results and comments!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:134
+#: ./src/Controller/PollsController.php:134
 msgid "Your poll has been updated."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:137
+#: ./src/Controller/PollsController.php:137
 msgid "Unable to update your poll."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:146
+#: ./src/Controller/PollsController.php:146
 msgid "This poll is locked!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:173
+#: ./src/Controller/PollsController.php:173
 msgid "Poll has been unlocked"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:179
+#: ./src/Controller/PollsController.php:179
 msgid "Poll lock has NOT been changed!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:196
+#: ./src/Controller/PollsController.php:196
 msgid "Poll {0} has been deleted."
 msgstr ""
 
-#: /srv/http/preferendum/main/Controller/PollsController.php:201
+#: ./src/Controller/PollsController.php:205
 msgid "Poll {0} has NOT been deleted!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Admin/index.php:15
-#: /srv/http/preferendum/main/Admin/login.php:15
-#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:23
-#: /srv/http/preferendum/main/element/header.php:25
+#: ./templates/Admin/index.php:15
+#: ./templates/Admin/login.php:15
+#: ./templates/element/admin/ctrl-logout.php:23
+#: ./templates/element/header.php:25
 msgid "Poll administration"
 msgstr ""
 
-#: /srv/http/preferendum/main/Admin/index.php:29
+#: ./templates/Admin/index.php:31
 msgid "Available polls"
 msgstr ""
 
-#: /srv/http/preferendum/main/Admin/index.php:43
-msgid "View"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/index.php:50
-#: /srv/http/preferendum/main/element/poll/ctrl.php:24
-msgid "Edit"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/index.php:57
-#: /srv/http/preferendum/main/Admin/usermanagement.php:38
-#: /srv/http/preferendum/main/element/poll/ctrl-edit.php:40
-msgid "Delete"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/index.php:59
-#: /srv/http/preferendum/main/element/poll/ctrl-edit.php:44
-msgid "Are you sure to delete this poll?"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/index.php:64
-msgid "Last change"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/index.php:72
-msgid "User contact infos"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/index.php:90
-msgid "No polls found in database!"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/usermanagement.php:28
-msgid "Available users"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/usermanagement.php:40
-msgid "Are you sure to delete this user?"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/usermanagement.php:54
-msgid "Create user / change password"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/usermanagement.php:56
-msgid "Change password"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/usermanagement.php:67
-#: /srv/http/preferendum/main/element/admin/ctrl-login.php:23
-msgid "Name"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/usermanagement.php:77
-#: /srv/http/preferendum/main/element/admin/ctrl-login.php:28
-msgid "Password"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/usermanagement.php:83
-msgid "Confirm password"
-msgstr ""
-
-#: /srv/http/preferendum/main/Admin/usermanagement.php:87
-msgid "Submit"
-msgstr ""
-
-#: /srv/http/preferendum/main/Error/error400.php:37
-#: /srv/http/preferendum/main/Error/error500.php:41
-msgid "Error"
-msgstr ""
-
-#: /srv/http/preferendum/main/Error/error400.php:38
-msgid "The requested address {0} was not found on this server."
-msgstr ""
-
-#: /srv/http/preferendum/main/Error/error400.php:40
-#: /srv/http/preferendum/main/Error/error500.php:44
-msgid "Back"
-msgstr ""
-
-#: /srv/http/preferendum/main/Error/error500.php:39
-msgid "An internal error has occurred"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:15
-#: /srv/http/preferendum/main/Polls/add.php:182
-msgid "Create poll"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:29
-msgid "Monday"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:30
-msgid "Tuesday"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:31
-msgid "Wednesday"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:32
-msgid "Thursday"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:33
-msgid "Friday"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:34
-msgid "Saturday"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:35
-msgid "Sunday"
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:44
-#: /srv/http/preferendum/main/element/header.php:58
-msgid "Create a new poll ..."
-msgstr ""
-
-#: /srv/http/preferendum/main/Polls/add.php:58
-#: /srv/http/preferendum/main/element/poll/edit-head.php:28
+#: ./templates/Admin/index.php:36
+#: ./templates/Polls/add.php:58
+#: ./templates/element/poll/edit-head.php:28
 msgid "Title"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:59
-#: /srv/http/preferendum/main/element/poll/edit-head.php:29
+#: ./templates/Admin/index.php:37
+msgid "Last change"
+msgstr ""
+
+#: ./templates/Admin/index.php:43
+msgid "Sort by"
+msgstr ""
+
+#: ./templates/Admin/index.php:55
+msgid "View"
+msgstr ""
+
+#: ./templates/Admin/index.php:64
+#: ./templates/element/poll/ctrl.php:24
+msgid "Edit"
+msgstr ""
+
+#: ./templates/Admin/index.php:74
+#: ./templates/Admin/usermanagement.php:44
+#: ./templates/element/poll/ctrl-edit.php:40
+msgid "Delete"
+msgstr ""
+
+#: ./templates/Admin/index.php:76
+#: ./templates/element/poll/ctrl-edit.php:44
+msgid "Are you sure to delete this poll?"
+msgstr ""
+
+#: ./templates/Admin/index.php:90
+msgid "User contact infos"
+msgstr ""
+
+#: ./templates/Admin/index.php:109
+msgid "No polls found in database!"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:27
+msgid "Available users"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:46
+msgid "Are you sure to delete this user?"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:60
+msgid "Create user / change password"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:62
+msgid "Change password"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:73
+#: ./templates/element/admin/ctrl-login.php:23
+msgid "Name"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:76
+msgid "Role"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:87
+#: ./templates/element/admin/ctrl-login.php:28
+msgid "Password"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:93
+msgid "Confirm password"
+msgstr ""
+
+#: ./templates/Admin/usermanagement.php:97
+msgid "Submit"
+msgstr ""
+
+#: ./templates/Error/error400.php:40
+#: ./templates/Error/error500.php:44
+msgid "Error"
+msgstr ""
+
+#: ./templates/Error/error400.php:41
+msgid "The requested address {0} was not found on this server."
+msgstr ""
+
+#: ./templates/Error/error400.php:43
+#: ./templates/Error/error500.php:47
+msgid "Back"
+msgstr ""
+
+#: ./templates/Error/error500.php:42
+msgid "An internal error has occurred"
+msgstr ""
+
+#: ./templates/Polls/add.php:15
+#: ./templates/Polls/add.php:182
+msgid "Create poll"
+msgstr ""
+
+#: ./templates/Polls/add.php:29
+msgid "Monday"
+msgstr ""
+
+#: ./templates/Polls/add.php:30
+msgid "Tuesday"
+msgstr ""
+
+#: ./templates/Polls/add.php:31
+msgid "Wednesday"
+msgstr ""
+
+#: ./templates/Polls/add.php:32
+msgid "Thursday"
+msgstr ""
+
+#: ./templates/Polls/add.php:33
+msgid "Friday"
+msgstr ""
+
+#: ./templates/Polls/add.php:34
+msgid "Saturday"
+msgstr ""
+
+#: ./templates/Polls/add.php:35
+msgid "Sunday"
+msgstr ""
+
+#: ./templates/Polls/add.php:44
+#: ./templates/element/header.php:58
+msgid "Create a new poll ..."
+msgstr ""
+
+#: ./templates/Polls/add.php:59
+#: ./templates/element/poll/edit-head.php:29
 msgid "Title for your poll"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:66
-#: /srv/http/preferendum/main/element/poll/edit-head.php:36
+#: ./templates/Polls/add.php:66
+#: ./templates/element/poll/edit-head.php:36
 msgid "Description"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:67
-#: /srv/http/preferendum/main/element/poll/edit-head.php:37
+#: ./templates/Polls/add.php:67
+#: ./templates/element/poll/edit-head.php:37
 msgid "Short description of what this poll is all about"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:77
+#: ./templates/Polls/add.php:77
 msgid "Options"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:78
+#: ./templates/Polls/add.php:78
 msgid "Type whatever you want or pick a date!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:110
+#: ./templates/Polls/add.php:110
 msgid "Edit/deleting poll/entries only with admin link"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:123
+#: ./templates/Polls/add.php:123
 msgid "Hide poll results for users (only admin can see the votes)"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:134
-#: /srv/http/preferendum/main/element/poll/edit-head.php:50
+#: ./templates/Polls/add.php:134
+#: ./templates/element/poll/edit-head.php:50
 msgid "Collect user contact information"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:148
-#: /srv/http/preferendum/main/element/poll/edit-head.php:65
+#: ./templates/Polls/add.php:148
+#: ./templates/element/poll/edit-head.php:65
 msgid "Receive email after new entry"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:162
-#: /srv/http/preferendum/main/element/poll/edit-head.php:80
+#: ./templates/Polls/add.php:162
+#: ./templates/element/poll/edit-head.php:80
 msgid "Receive email after new comment"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:174
-#: /srv/http/preferendum/main/element/poll/edit-head.php:92
+#: ./templates/Polls/add.php:174
+#: ./templates/element/poll/edit-head.php:92
 msgid "Email"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:176
-#: /srv/http/preferendum/main/element/poll/edit-head.php:94
+#: ./templates/Polls/add.php:176
+#: ./templates/element/poll/edit-head.php:94
 msgid "Email for receiving new entry/comment"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/add.php:189
+#: ./templates/Polls/add.php:189
 msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/edit.php:15
-#: /srv/http/preferendum/main/element/poll/edit-head.php:17
+#: ./templates/Polls/edit.php:15
+#: ./templates/element/poll/edit-head.php:17
 msgid "Edit poll"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/edit.php:58
+#: ./templates/Polls/edit.php:58
 msgid "Edit entries"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/view.php:15
+#: ./templates/Polls/view.php:15
 msgid "Poll"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/view.php:25
-#: /srv/http/preferendum/main/element/poll/ctrl.php:18
+#: ./templates/Polls/view.php:25
+#: ./templates/element/poll/ctrl.php:18
 msgid "Mini View"
 msgstr ""
 
-#: /srv/http/preferendum/main/Polls/view.php:26
+#: ./templates/Polls/view.php:26
 msgid "Normal View"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/admin/ctrl-login.php:32
+#: ./templates/element/admin/ctrl-login.php:32
 msgid "Login"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:33
+#: ./templates/element/admin/ctrl-logout.php:33
 msgid "User management"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/admin/ctrl-logout.php:43
+#: ./templates/element/admin/ctrl-logout.php:43
 msgid "Logout"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/comment/delete.php:17
+#: ./templates/element/comment/delete.php:17
 msgid "Delete comments"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/comment/delete.php:31
+#: ./templates/element/comment/delete.php:31
 msgid "Are you sure to delete this comment?"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/comment/delete.php:38
-#: /srv/http/preferendum/main/element/comment/list.php:33
+#: ./templates/element/comment/delete.php:38
+#: ./templates/element/comment/list.php:33
 msgid "No comments, yet."
 msgstr ""
 
-#: /srv/http/preferendum/main/element/comment/list.php:17
+#: ./templates/element/comment/list.php:17
 msgid "Comments"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/comment/new.php:36
+#: ./templates/element/comment/new.php:36
 msgid "Your name"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/comment/new.php:46
+#: ./templates/element/comment/new.php:46
 msgid "Your comment"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/comment/new.php:50
-#: /srv/http/preferendum/main/element/entry/new.php:59
+#: ./templates/element/comment/new.php:50
+#: ./templates/element/entry/new.php:59
 msgid "Save"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/entry/edit.php:33
+#: ./templates/element/entry/edit.php:33
 msgid "Are you sure to delete this option?"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/entry/edit.php:84
+#: ./templates/element/entry/edit.php:84
 msgid "Are you sure to delete this entry?"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/entry/new.php:34
+#: ./templates/element/entry/new.php:34
 msgid "Your name?"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/entry/new.php:68
+#: ./templates/element/entry/new.php:68
 msgid "Optional: Contact info"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/header.php:28
-#: /srv/http/preferendum/main/element/header.php:31
-#: /srv/http/preferendum/main/layout/preferendum.php:22
+#: ./templates/element/header.php:28
+#: ./templates/element/header.php:31
+#: ./templates/layout/preferendum.php:22
 msgid "PREFERendum"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/header.php:29
-#: /srv/http/preferendum/main/element/header.php:32
+#: ./templates/element/header.php:29
+#: ./templates/element/header.php:32
 msgid "scheduling polls"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/header.php:39
+#: ./templates/element/header.php:39
 msgid "Public link"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/header.php:40
-#: /srv/http/preferendum/main/element/header.php:42
+#: ./templates/element/header.php:40
+#: ./templates/element/header.php:42
 msgid "Give this public link to the participants of your poll!"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/header.php:41
-#: /srv/http/preferendum/main/element/header.php:48
+#: ./templates/element/header.php:41
+#: ./templates/element/header.php:48
 msgid "Copy link to clipboard!"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/header.php:46
+#: ./templates/element/header.php:46
 msgid "Admin link"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/header.php:47
-#: /srv/http/preferendum/main/element/header.php:49
+#: ./templates/element/header.php:47
+#: ./templates/element/header.php:49
 msgid "Save this admin link, you need it to manage your poll!"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/poll/ctrl-edit.php:19
+#: ./templates/element/poll/ctrl-edit.php:19
 msgid "View Poll"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/poll/ctrl-edit.php:29
+#: ./templates/element/poll/ctrl-edit.php:29
 msgid "Un-/Lock"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/poll/edit-head.php:100
+#: ./templates/element/poll/edit-head.php:100
 msgid "Save changes"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/poll/result-simple.php:18
-#: /srv/http/preferendum/main/element/poll/result-trend.php:18
-#: /srv/http/preferendum/main/email/text/new_entry.php:23
+#: ./templates/element/poll/result-simple.php:18
+#: ./templates/element/poll/result-trend.php:18
+#: ./templates/email/text/new_entry.php:23
 msgid "Yes"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/poll/result-trend.php:19
+#: ./templates/element/poll/result-trend.php:19
 msgid "Maybe"
 msgstr ""
 
-#: /srv/http/preferendum/main/element/poll/result-trend.php:20
-#: /srv/http/preferendum/main/email/text/new_entry.php:21
+#: ./templates/element/poll/result-trend.php:20
+#: ./templates/email/text/new_entry.php:21
 msgid "No"
 msgstr ""
 
-#: /srv/http/preferendum/main/email/text/new_comment.php:16
-#: /srv/http/preferendum/main/email/text/new_entry.php:16
+#: ./templates/email/text/new_comment.php:16
+#: ./templates/email/text/new_entry.php:16
 msgid "From:"
 msgstr ""
 
-#: /srv/http/preferendum/main/email/text/new_comment.php:17
+#: ./templates/email/text/new_comment.php:17
 msgid "Text:"
 msgstr ""
 
-#: /srv/http/preferendum/main/email/text/new_comment.php:19
-#: /srv/http/preferendum/main/email/text/new_entry.php:28
+#: ./templates/email/text/new_comment.php:19
+#: ./templates/email/text/new_entry.php:28
 msgid "Link:"
 msgstr ""
 
-#: /srv/http/preferendum/main/email/text/new_entry.php:17
+#: ./templates/email/text/new_entry.php:17
 msgid "Options:"
 msgstr ""
 
-#: /srv/http/preferendum/main/layout/preferendum.php:39
+#: ./templates/layout/preferendum.php:39
 msgid "Please enable JavaScript in your browser and reload this page."
 msgstr ""
 
