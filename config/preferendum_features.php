@@ -27,9 +27,6 @@ return [
     'preferendum' => [
         // Turn on(true)/off(false) admin interface
         'adminInterface' => false,
-        // Define which users have extended user management access (create/delete user, reset password)
-        // (This feature can only be used, if 'adminInterface' is enabled, too.)
-        'extendedUsermanagementAccess' => [1, ],
         // Turn on(true)/off(false) admin link functionality (recommended)
         'adminLinks' => true,
 

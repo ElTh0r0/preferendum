@@ -33,4 +33,14 @@ class UsersTable extends Table
             }
         }
     }
+
+    public function findFilteredBackendUsers(\Cake\ORM\Query $query)
+    {
+        // Pre-filter users at login and remove users without role (= poll users)
+        // Otherwise there might be collisions with poll users with same name as backend user
+        // See Application.php: 'finder' => 'filteredBackendUsers'
+        return $query->find('all')
+            ->select(['id', 'name', 'role', 'password'])
+            ->where(['role <>' => '']);
+    }
 }

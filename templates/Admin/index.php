@@ -58,18 +58,24 @@
                     ); ?>
                 </td>
                 <td>
-                    <?php echo $this->Html->link(
-                        $this->Form->button(__('Edit'), ['type' => 'button']),
-                        ['controller' => 'Polls', 'action' => 'edit', $poll->id, $poll->adminid],
-                        ['target' => '_blank', 'escape' => false]
-                    ); ?>
+                    <?php
+                    if (strcmp($currentUserRole, $viewerRole) != 0) {
+                        echo $this->Html->link(
+                            $this->Form->button(__('Edit'), ['type' => 'button']),
+                            ['controller' => 'Polls', 'action' => 'edit', $poll->id, $poll->adminid],
+                            ['target' => '_blank', 'escape' => false]
+                        );
+                    } ?>
                 </td>
                 <td>
-                    <?php echo $this->Form->postLink(
-                        $this->Form->button(__('Delete'), ['type' => 'button']),
-                        ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
-                        ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
-                    ); ?>
+                    <?php
+                    if (strcmp($currentUserRole, $viewerRole) != 0) {
+                        echo $this->Form->postLink(
+                            $this->Form->button(__('Delete'), ['type' => 'button']),
+                            ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
+                            ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
+                        );
+                    } ?>
                 </td>
                 <td>
                     <!-- Info -->

@@ -23,7 +23,7 @@
             'label' => __('Name')]
         ) ?>
         <?php echo $this->Form->control(
-            'info', [
+            'password', [
             'required' => true,
             'label' => __('Password'),
             'type' => 'password']

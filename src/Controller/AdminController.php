@@ -18,8 +18,13 @@ use Cake\Auth\DefaultPasswordHasher;
 
 class AdminController extends AppController
 {
-    const POLLADMINID = 9999;
     const DEMOMODE = false;
+
+    const ROLES = [
+        "admin",
+        "polladmin",
+        "viewer",
+    ];
 
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
@@ -34,7 +39,7 @@ class AdminController extends AppController
     public function initialize(): void
     {
         parent::initialize();
-        
+
         // Add this line to check authentication result and lock your site
         $this->loadComponent('Authentication.Authentication');
     }
@@ -43,77 +48,92 @@ class AdminController extends AppController
 
     public function index()
     {
+        $viewerRole = SELF::ROLES[2];
+        $identity = $this->Authentication->getIdentity();
+        $currentUserRole = $identity->getOriginalData()['role'];
+
         $this->loadModel('Polls');
         $polls = $this->paginate(
             $this->Polls->find('all')
-                ->contain(['Users'])
-                ->where(['id IS NOT' => self::POLLADMINID]), [
+                ->contain(['Users']), [
                     'limit' => 20,
                 ]
         );
 
-        $this->set(compact('polls'));
+        $this->set(compact('polls', 'currentUserRole', 'viewerRole'));
     }
 
     //------------------------------------------------------------------------
 
     public function usermanagement()
     {
-        $polladmid = self::POLLADMINID;
+        $allroles = self::ROLES;
         $identity = $this->Authentication->getIdentity();
-        $currentUserId = $identity->getOriginalData()['id'];
+        $currentUserRole = $identity->getOriginalData()['role'];
         $currentUserName = $identity->getOriginalData()['name'];
 
         $this->loadModel('Users');
-        $admins = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name'])->where(['poll_id' => self::POLLADMINID]);
-        $admins = $admins->all()->toArray();
+        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role'])->where(['role IN' => self::ROLES]);
+        $backendusers = $backendusers->all()->toArray();
 
-        $user = $this->Users->newEmptyEntity();
+        $newOrUpdateUser = $this->Users->newEmptyEntity();
         if ($this->request->is('post', 'put')) {
             if (self::DEMOMODE) {
                 $this->Flash->error(__('DEMO MODE enabled! User creation / password change is not possible!'));
                 return $this->redirect(['action' => 'usermanagement']);
             }
 
-            $this->Users->patchEntity($user, $this->request->getData());
-            $user['name'] = trim($user['name']);
-            
+            $this->Users->patchEntity($newOrUpdateUser, $this->request->getData());
+            $newOrUpdateUser['name'] = trim($newOrUpdateUser['name']);
+            $newOrUpdateUser['role'] = self::ROLES[$newOrUpdateUser['role']];
+
             $dbuser = $this->Users
                 ->find()
-                ->where(['poll_id' => self::POLLADMINID, 'name' => $user['name']])
+                ->where(['role IN' => self::ROLES, 'name' => $newOrUpdateUser['name']])
                 ->select('id')
                 ->first();
-            if ($dbuser != null) {  // User already exists
-                $user['id'] = $dbuser['id'];
+            if ($dbuser != null) {  // User already exists (-> update user)
+                $newOrUpdateUser['id'] = $dbuser['id'];
             }
 
-            if (strlen(trim($user['info'])) > 0 && strcmp(trim($user['info']), trim($user['confirminfo'])) == 0) {
-                $user['info'] = (new DefaultPasswordHasher)->hash(trim($user['info']));
+            // Check if current user is the only admin and user tries to remove his own admin role
+            if (strcmp($currentUserName, trim($newOrUpdateUser['name'])) == 0 &&
+            strcmp($currentUserRole, self::ROLES[0]) == 0 &&
+            strcmp($newOrUpdateUser['role'], self::ROLES[0]) != 0) {
+                $cntAdmins = $this->Users->find('all')->where(['role' => self::ROLES[0]]);
+                $cntAdmins = $cntAdmins->count();
+                if ($cntAdmins == 1) {
+                    $this->Flash->error(__('User not updated - at least one administrator required!'));
+                    return $this->redirect(['action' => 'usermanagement']);
+                }
+            }
+
+            if (strlen(trim($newOrUpdateUser['password'])) > 0 && strcmp(trim($newOrUpdateUser['password']), trim($newOrUpdateUser['confirmpassword'])) == 0) {
+                $newOrUpdateUser['password'] = (new DefaultPasswordHasher)->hash(trim($newOrUpdateUser['password']));
             } else {
                 $this->Flash->error(__('Unable to add/update the user - password / confirmation not correct.'));
                 return $this->redirect(['action' => 'usermanagement']);
             }
 
-            if ($this->Users->save($user)) {
+            if ($this->Users->save($newOrUpdateUser)) {
                 $this->Flash->success(__('The user has been created/updated.'));
                 return $this->redirect(['action' => 'usermanagement']);
             }
             $this->Flash->error(__('Unable to add the user.'));
             return $this->redirect(['action' => 'usermanagement']);
         }
-        $this->set(compact('admins', 'polladmid', 'currentUserName', 'currentUserId', 'user'));
+        $this->set(compact('backendusers', 'allroles', 'currentUserName', 'currentUserRole', 'newOrUpdateUser'));
     }
 
     //------------------------------------------------------------------------
 
-    public function deleteAdmin($userid = null)
+    public function deleteBackendUser($userid = null)
     {
-        $this->request->allowMethod(['post', 'deleteAdmin']);
+        $this->request->allowMethod(['post', 'deleteBackendUser']);
 
-        $currentUserId = $this->Authentication->getIdentity();
-        $currentUserId = $currentUserId->getOriginalData()['id'];
-        $extUser = \Cake\Core\Configure::read('preferendum.extendedUsermanagementAccess');
-        if (in_array($currentUserId, $extUser)) {
+        $currentUserRole = $this->Authentication->getIdentity();
+        $currentUserRole = $currentUserRole->getOriginalData()['role'];
+        if (strcmp($currentUserRole, self::ROLES[0]) == 0) {
             if (isset($userid) && !empty($userid)) {
                 $this->loadModel('Users');
                 $dbuser = $this->Users->findById($userid)->firstOrFail();
@@ -128,24 +148,19 @@ class AdminController extends AppController
     }
 
     //------------------------------------------------------------------------
-    
+
     public function login()
     {
-        $this->loadModel('Users');
-        $admins = $this->Users->find()
-            ->select(['name', 'info'])
-            ->where(['poll_id' => self::POLLADMINID]);
-
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
-        
+
         // debug($result);
-        // debug($result->getData()['poll_id']);
+        // debug($result->getData()['role']);
         // die;
-        
+
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            if ($result->getData()['poll_id'] == self::POLLADMINID) {
+            if (in_array($result->getData()['role'], self::ROLES)) {
                 // redirect after login success
                 $target = $this->Authentication->getLoginRedirect() ?? '/admin';
                 return $this->redirect($target);

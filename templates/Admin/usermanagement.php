@@ -23,20 +23,26 @@
 <div style="padding: 2rem;">
     <?php echo $this->Flash->render() ?>
     <?php
-    $extUser = \Cake\Core\Configure::read('preferendum.extendedUsermanagementAccess');
-    if (in_array($currentUserId, $extUser)) { ?>
+    if (strcmp($currentUserRole, $allroles[0]) == 0) { ?>
         <h1><?php echo __('Available users') ?></h1>
         <table>
             <?php
-            foreach ($admins as $adm) {
+            $cntAdmins = 0;
+            foreach ($backendusers as $backuser) {
+                if (strcmp($backuser['role'], $allroles[0]) == 0) {
+                    $cntAdmins = $cntAdmins + 1;
+                }
+            }
+            echo '<tr><th><em>Name</em></th><th><em>&nbsp;&nbsp;Role</em></th><th></th></tr>';
+            foreach ($backendusers as $backuser) {
                 echo '<tr>';
-                echo '<td>' . $adm['name'] . '</td>';
-                echo '<td>&nbsp;&nbsp;<span style="font-size: 0.8em;">ID: ' . $adm['id'] . '</span></td>';
-                if (sizeof($admins) > 1) {
+                echo '<td>' . $backuser['name'] . '</td>';
+                echo '<td>&nbsp;&nbsp;' . $backuser['role'] . '</td>';
+                if ($cntAdmins > 1 || strcmp($backuser['role'], $allroles[0]) != 0) {
                     echo '<td>&nbsp;&nbsp;<span style="font-size: 0.8em;">';
                     echo $this->Form->postLink(
                         __('Delete'),
-                        ['action' => 'deleteAdmin', $adm['id']],
+                        ['action' => 'deleteBackendUser', $backuser['id']],
                         ['escape' => false, 'confirm' => __('Are you sure to delete this user?')]
                     );
                     echo '</span></td>';
@@ -50,35 +56,39 @@
     <?php } ?>
 
     <?php
-    if (in_array($currentUserId, $extUser)) {
+    if (strcmp($currentUserRole, $allroles[0]) == 0) {
         echo '<h1>' . __('Create user / change password') . '</h1>';
     } else {
         echo '<h1>' . __('Change password') . '</h1>';
     }
     ?>
     
-    <?php echo $this->Form->create($user) ?>
+    <?php echo $this->Form->create($newOrUpdateUser) ?>
     <fieldset>
         <?php
-        if (in_array($currentUserId, $extUser)) {
+        if (strcmp($currentUserRole, $allroles[0]) == 0) {
             echo $this->Form->control(
                 'name', [
                 'required' => true,
                 'label' => __('Name')]
             );
+
+            echo $this->Form->label('role', __('Role'));
+            echo $this->Form->select('role', $allroles, ['val' => $allroles[0]]);
         } else {
-            echo $this->Form->hidden('name', ['value' => $currentUserName]);    
+            echo $this->Form->hidden('name', ['value' => $currentUserName]);
+            echo $this->Form->hidden('role', ['value' => array_search($currentUserRole, $allroles)]);
         }
         ?>
-        <?php echo $this->Form->hidden('poll_id', ['value' => $polladmid]) ?>
+        <?php echo $this->Form->hidden('poll_id', ['value' => '9999']) ?>
         <?php echo $this->Form->control(
-            'info', [
+            'password', [
             'required' => true,
             'label' => __('Password'),
             'type' => 'password']
         ) ?>
         <?php echo $this->Form->control(
-            'confirminfo', [
+            'confirmpassword', [
             'required' => true,
             'label' => __('Confirm password'),
             'type' => 'password']

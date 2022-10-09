@@ -136,22 +136,24 @@ class InstalldbController extends AppController
         echo '<li>Creating "users" table</li>';
         $connection->execute('CREATE TABLE `users` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `poll_id` varchar(32) NOT NULL,
             `name` varchar(32) NOT NULL,
-            `info` varchar(255) NOT NULL
+            `role` varchar(16) DEFAULT "",
+            `poll_id` varchar(32) NOT NULL,
+            `password` varchar(255) DEFAULT "",
+            `info` varchar(255) DEFAULT ""
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
         echo '<ul><li>Creating default admin user</li></ul>';
-        $connection->execute('INSERT INTO `users` (`poll_id`, `name`, `info`) VALUES
-        (9999, "admin", "$2y$10$YW0XBpcu4RoiUR5tW/rImuChkO1h8LDyecm6F1/Cty5QhJrwP958e");');
+        $connection->execute('INSERT INTO `users` (`name`, `role`, `poll_id`, `password`) VALUES
+        ("admin", "admin", 9999, "$2y$10$YW0XBpcu4RoiUR5tW/rImuChkO1h8LDyecm6F1/Cty5QhJrwP958e");');
 
         echo '<li>Creating "polls" table</li>';
         $connection->execute('CREATE TABLE `polls` (
-            `id` varchar(32) NOT NULL,
+            `id` varchar(32) PRIMARY KEY,
             `adminid` varchar(32) NOT NULL,
             `title` varchar(256) NOT NULL,
-            `details` varchar(512) NOT NULL,
-            `email` varchar(32) NOT NULL DEFAULT "",
+            `details` varchar(512) DEFAULT "",
+            `email` varchar(32) DEFAULT "",
             `emailentry` tinyint(1) NOT NULL DEFAULT 0,
             `emailcomment` tinyint(1) NOT NULL DEFAULT 0,
             `userinfo` tinyint(1) NOT NULL DEFAULT 0,
@@ -160,7 +162,7 @@ class InstalldbController extends AppController
             `modified` DATETIME NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
-        echo '<li>Creating primary keys and keys</li>';
+        echo '<li>Creating keys</li>';
         $connection->execute('ALTER TABLE `comments`
             ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `choices`
@@ -169,8 +171,6 @@ class InstalldbController extends AppController
             ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `entries`
             ADD KEY `poll_id` (`poll_id`);');
-        $connection->execute('ALTER TABLE `polls`
-            ADD PRIMARY KEY (`id`);');
 
         echo '</ul><p>DONE!</p>';
         echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';
