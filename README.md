@@ -1,22 +1,23 @@
 # PREFERendum
 ## A flexible, self-hosted webapp for scheduling and polls
 
-- based on [sprudel](https://github.com/bkis/sprudel) and ported to [CakePHP](https://github.com/cakephp/cakephp)
-- clean, intuitive interface
+- Based on [sprudel](https://github.com/bkis/sprudel) and ported to [CakePHP](https://github.com/cakephp/cakephp)
+- Clean, intuitive interface
 - `yes`/`no`/`maybe` options
-- answer trend **visualization**
-- free entry of arbitrary **answer options or dates** (using the built-in date picker)
-- unique public links for sharing a poll
-- optional **poll admin links** to restrict poll management to author
-- one-click **clipboard copy** of the poll URL
-- **comments** section in every poll
+- Answer trend **visualization**
+- Free entry of arbitrary **answer options or dates** (using the built-in date picker)
+- Unique public links for sharing a poll
+- One-click **clipboard copy** of the poll URL
+- **Comments** section in every poll
 - **Mini View** feature (for very big poll tables)
-- **customizable labels**: all the labels and texts can be set to custom strings, so you can even translate the interface to a language of your choice
-- **customizable colors**: all the interface colors can easily be set to your preference (system-wide, that is, not for individual polls)
-- optional collect user contact information with a poll entry
-- optional poll **administration interface** for managing all the polls on the server
-- optional very simple user administration for admin interface
-- optional receive email after new entry and/or comment
+- **Customizable labels**: All the labels and texts can be set to custom strings, so you can even translate the interface to a language of your choice
+- **Customizable colors**: All the interface colors can easily be set to your preference (system-wide, that is, not for individual polls)
+- Optional:
+  - **Poll admin links** to restrict poll management to author
+  - Receive email after new entry and/or comment
+  - Collect user contact information with a poll entry
+  - Poll **administration interface** for managing all the polls on the server
+  - Simple user administration for admin interface
 
 ![screenshot](https://user-images.githubusercontent.com/26674558/121807573-faaea200-cc54-11eb-838f-4d31639b0915.png)
 
@@ -41,6 +42,7 @@
 - In `config/app_local.php` change the following entries:
   - Datasources\Default: Set host, username, password, database according to your environment.
   - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).
+- In `config/preferendum_features.php` configure the features as needed.
 - Upload the `preferendum` directory to your web server (root-directory or somewhere else)
 - Access `<your installation folder>/installdb` through your browser (e.g. `yourdomain.com/preferendum/installdb`)
 -  Delete `src/Controller/InstalldbController.php` from your server
@@ -67,7 +69,7 @@ Default credentials: admin/admin
 If you are enabling this feature, please change the password after the installation!
 
 ### Automatic deletion of inactive polls (needs cronjob!)
-You can set up a certain number of days in the `config/preferendum_features.php` to mark the maximum age of an **inactive** poll ( *inactive* as in: no new answers and comments). PREFERendum comes with a cleanup function that you can set up to be executed periodically via a cronjob, e.g.
+You can set up a certain number of days in the `config/preferendum_features.php` to mark the maximum age of an **inactive** poll (*inactive* as in: no new answers and comments). PREFERendum comes with a cleanup function that you can set up to be executed periodically via a cronjob, e.g.
 
 `0 0 1 * * /usr/bin/php /var/www/html/preferendum/polls/cleanup`
 

@@ -33,14 +33,14 @@ return [
         // Add (optional) field to make result only visible for admin
         // (This feature can only be used, if 'adminLinks' is enabled and used, too.)
         'hidePollResult' => false,
-        // Add (optional) field to store user contact information together with entry
+        // Add (optional) field to store user contact information together with entry. Only admin can see the user info.
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
         'collectUserinfo' => false,
-        // Add (optional) checkbox for sending email after new entry
-        // (EmailTransport has to be configured in app_local.php !)
+
+        // Send an email after new poll entry or comment
+        // After enabling this feature, it can be dis-/enabled for each poll separately and receiver can be defined.
+        // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
         'sendEntryEmail' => false,
-        // Add (optional) checkbox for sending email after new comment
-        // (EmailTransport has to be configured in app_local.php !)
         'sendCommentEmail' => false,
 
         // Header Logo (set to true if you want to show header logo, false otherwise)
