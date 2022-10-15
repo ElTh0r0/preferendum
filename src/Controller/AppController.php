@@ -28,6 +28,12 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    public const ROLES = [
+        "admin",
+        "polladmin",
+        "viewer",
+    ];
+
     /**
      * Initialization hook method.
      *

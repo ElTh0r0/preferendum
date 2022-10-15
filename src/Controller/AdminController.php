@@ -18,14 +18,6 @@ use Cake\Auth\DefaultPasswordHasher;
 
 class AdminController extends AppController
 {
-    const DEMOMODE = false;
-
-    const ROLES = [
-        "admin",
-        "polladmin",
-        "viewer",
-    ];
-
     public function beforeFilter(\Cake\Event\EventInterface $event)
     {
         parent::beforeFilter($event);
@@ -61,90 +53,6 @@ class AdminController extends AppController
         );
 
         $this->set(compact('polls', 'currentUserRole', 'viewerRole'));
-    }
-
-    //------------------------------------------------------------------------
-
-    public function usermanagement()
-    {
-        $allroles = self::ROLES;
-        $identity = $this->Authentication->getIdentity();
-        $currentUserRole = $identity->getOriginalData()['role'];
-        $currentUserName = $identity->getOriginalData()['name'];
-
-        $this->loadModel('Users');
-        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role'])->where(['role IN' => self::ROLES]);
-        $backendusers = $backendusers->all()->toArray();
-
-        $newOrUpdateUser = $this->Users->newEmptyEntity();
-        if ($this->request->is('post', 'put')) {
-            if (self::DEMOMODE) {
-                $this->Flash->error(__('DEMO MODE enabled! User creation / password change is not possible!'));
-                return $this->redirect(['action' => 'usermanagement']);
-            }
-
-            $this->Users->patchEntity($newOrUpdateUser, $this->request->getData());
-            $newOrUpdateUser['name'] = trim($newOrUpdateUser['name']);
-            $newOrUpdateUser['role'] = self::ROLES[$newOrUpdateUser['role']];
-
-            $dbuser = $this->Users
-                ->find()
-                ->where(['role IN' => self::ROLES, 'name' => $newOrUpdateUser['name']])
-                ->select('id')
-                ->first();
-            if ($dbuser != null) {  // User already exists (-> update user)
-                $newOrUpdateUser['id'] = $dbuser['id'];
-            }
-
-            // Check if current user is the only admin and user tries to remove his own admin role
-            if (strcmp($currentUserName, trim($newOrUpdateUser['name'])) == 0 &&
-            strcmp($currentUserRole, self::ROLES[0]) == 0 &&
-            strcmp($newOrUpdateUser['role'], self::ROLES[0]) != 0) {
-                $cntAdmins = $this->Users->find('all')->where(['role' => self::ROLES[0]]);
-                $cntAdmins = $cntAdmins->count();
-                if ($cntAdmins == 1) {
-                    $this->Flash->error(__('User not updated - at least one administrator required!'));
-                    return $this->redirect(['action' => 'usermanagement']);
-                }
-            }
-
-            if (strlen(trim($newOrUpdateUser['password'])) > 0 && strcmp(trim($newOrUpdateUser['password']), trim($newOrUpdateUser['confirmpassword'])) == 0) {
-                $newOrUpdateUser['password'] = (new DefaultPasswordHasher)->hash(trim($newOrUpdateUser['password']));
-            } else {
-                $this->Flash->error(__('Unable to add/update the user - password / confirmation not correct.'));
-                return $this->redirect(['action' => 'usermanagement']);
-            }
-
-            if ($this->Users->save($newOrUpdateUser)) {
-                $this->Flash->success(__('The user has been created/updated.'));
-                return $this->redirect(['action' => 'usermanagement']);
-            }
-            $this->Flash->error(__('Unable to add the user.'));
-            return $this->redirect(['action' => 'usermanagement']);
-        }
-        $this->set(compact('backendusers', 'allroles', 'currentUserName', 'currentUserRole', 'newOrUpdateUser'));
-    }
-
-    //------------------------------------------------------------------------
-
-    public function deleteBackendUser($userid = null)
-    {
-        $this->request->allowMethod(['post', 'deleteBackendUser']);
-
-        $currentUserRole = $this->Authentication->getIdentity();
-        $currentUserRole = $currentUserRole->getOriginalData()['role'];
-        if (strcmp($currentUserRole, self::ROLES[0]) == 0) {
-            if (isset($userid) && !empty($userid)) {
-                $this->loadModel('Users');
-                $dbuser = $this->Users->findById($userid)->firstOrFail();
-                if ($this->Users->delete($dbuser)) {
-                    $this->Flash->success(__('User has been deleted.'));
-                    return $this->redirect(['action' => 'usermanagement']);
-                }
-            }
-        }
-        $this->Flash->error(__('User {0} has NOT been deleted!', $userid));
-        return $this->redirect(['action' => 'usermanagement']);
     }
 
     //------------------------------------------------------------------------

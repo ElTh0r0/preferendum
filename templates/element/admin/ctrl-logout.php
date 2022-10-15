@@ -17,14 +17,14 @@
     <?php
     $base = $this->request->getUri()->getPath();
     $base = basename($base);
-    if (strcmp($base, 'usermanagement') == 0) {
+    if (strcmp($base, 'users') == 0) {
         echo $this->Html->link(
             $this->Form->button(
                 __('Poll administration'), [
                 'type' => 'button',
                 'id' => 'ctrl-polls',]
             ),
-            ['action' => 'index'],
+            ['controller' => 'Admin', 'action' => 'index'],
             ['escape' => false]
         );
     } else {
@@ -34,7 +34,7 @@
                 'type' => 'button',
                 'id' => 'ctrl-usermanagement',]
             ),
-            ['action' => 'usermanagement'],
+            ['controller' => 'Users', 'action' => 'index'],
             ['escape' => false]
         );
     }
@@ -44,7 +44,7 @@
             'type' => 'button',
             'id' => 'ctrl-logout',]
         ),
-        ['action' => 'logout'],
+        ['controller' => 'Admin', 'action' => 'logout'],
         ['escape' => false]
     ); ?>
 </div>

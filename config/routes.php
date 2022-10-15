@@ -58,6 +58,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     if (\Cake\Core\Configure::read('preferendum.adminInterface') != true) {
         $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);
+        $builder->connect('/users/*', ['controller' => 'Polls', 'action' => 'add']);
     }
 
     /*

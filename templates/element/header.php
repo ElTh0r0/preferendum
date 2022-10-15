@@ -21,8 +21,8 @@
         <?php
         $base = $this->request->getUri()->getPath();
         $base = basename($base);
-        if (strcmp($base, 'admin') == 0 || strcmp($base, 'login') == 0 || strcmp($base, 'usermanagement') == 0) { ?>
-            <h1><?php echo __('Poll administration') ?></h1>
+        if (strcmp($base, 'admin') == 0 || strcmp($base, 'login') == 0 || strcmp($base, 'users') == 0) { ?>
+            <h1><?php echo __('Administration') ?></h1>
             <p class="details"></p>
         <?php } elseif (!isset($poll)) { ?>
             <h1><?php echo __('PREFERendum') ?></h1>
