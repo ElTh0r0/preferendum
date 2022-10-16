@@ -44,9 +44,8 @@ class AdminController extends AppController
         $identity = $this->Authentication->getIdentity();
         $currentUserRole = $identity->getOriginalData()['role'];
 
-        $this->loadModel('Polls');
         $polls = $this->paginate(
-            $this->Polls->find('all')
+            $this->fetchTable('Polls')->find('all')
                 ->contain(['Users']), [
                     'limit' => 20,
                 ]

@@ -15,6 +15,11 @@
 
 <div class="center-box">
     <?php
+        if ($poll->hideresult == 1) {
+            echo '<h1>' . __('Comments') . '</h1>';
+            echo __('Comments will only be visible for the poll admin!') . '<br>&nbsp;';
+        }
+        
         echo $this->Form->create(
             $comment, [
             'type' => 'post',
