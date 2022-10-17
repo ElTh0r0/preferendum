@@ -23,7 +23,7 @@
         echo $this->Form->create(
             $comment, [
             'type' => 'post',
-            'url' => ['controller' => 'Comments','action' => 'new']
+            'url' => ['controller' => 'Comments','action' => 'add']
             ]
         );
         echo $this->Form->hidden(

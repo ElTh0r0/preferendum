@@ -18,18 +18,22 @@ use Cake\Mailer\Mailer;
 
 class CommentsController extends AppController
 {
-    public function new()
+    public function add()
     {
         if ($this->request->is('post')) {
             $comment = $this->Comments->newEmptyEntity();
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
             $pollid = $this->request->getData()['poll_id'];
-            $this->loadModel('Polls');
-            $db = $this->Polls->findById($pollid)->select(['title', 'locked', 'email', 'emailcomment'])->firstOrFail();
-            $dbtitle = $db['title'];
-            $dblocked = $db['locked'];
-            $dbemail = $db['email'];
-            $dbemailcomment = $db['emailcomment'];
+
+            $poll = $this->fetchTable('Polls')
+                ->findById($pollid)
+                ->select(['title', 'locked', 'email', 'emailcomment'])
+                ->firstOrFail();
+            $dbtitle = $poll['title'];
+            $dblocked = $poll['locked'];
+            $dbemail = $poll['email'];
+            $dbemailcomment = $poll['emailcomment'];
+            
             $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
             \Cake\Core\Configure::load('app_local');
             $from = \Cake\Core\Configure::read('Email.default.from');
@@ -53,6 +57,7 @@ class CommentsController extends AppController
                             ->deliver();
                     }
 
+                    $this->Flash->success(__('The comment has been saved.'));
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
                 }
             }
@@ -71,13 +76,11 @@ class CommentsController extends AppController
             && isset($adminid) && !empty($adminid)
             && isset($comid) && !empty($comid)
         ) {
-            $this->loadModel('Polls');
-            $db = $this->Polls->findById($pollid)->select('adminid')->firstOrFail();
-            $dbadminid = $db['adminid'];
+            $poll = $this->fetchTable('Polls')->findById($pollid)->select('adminid')->firstOrFail();
+            $comment = $this->Comments->get($comid);
 
-            $dbcomment = $this->Comments->findById($comid)->firstOrFail();
-            if (strcmp($dbadminid, $adminid) == 0) {
-                if ($this->Comments->delete($dbcomment)) {
+            if (strcmp($poll['adminid'], $adminid) == 0) {
+                if ($this->Comments->delete($comment)) {
                     $this->Flash->success(__('Comment has been deleted.'));
                     return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
                 }

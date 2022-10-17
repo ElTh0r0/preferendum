@@ -34,8 +34,10 @@ class PollsTable extends Table
         
         $this->hasMany('Choices')->setDependent(true);
         $this->hasMany('Entries')->setDependent(true);
-        $this->hasMany('Comments')->setDependent(true);
         $this->hasMany('Users')->setDependent(true);
+        $this->hasMany('Comments', [
+            'foreignKey' => 'poll_id',
+        ])->setDependent(true);
     }
 
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
