@@ -23,6 +23,13 @@ class PollsController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+
+        // Show warning on main page if InstallDb script still exists
+        $base = $this->request->getUri()->getPath();
+        if ($base == '/' &&
+            file_exists(APP . 'Controller/InstalldbController.php')) {
+            $this->Flash->error(__('File "src/Controller/InstalldbController.php" should be removed!'));
+        }
     }
 
     //------------------------------------------------------------------------
