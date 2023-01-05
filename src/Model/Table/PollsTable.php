@@ -32,7 +32,9 @@ class PollsTable extends Table
             ]
         );
         
-        $this->hasMany('Choices')->setDependent(true);
+        $this->hasMany('Choices', [
+            'foreignKey' => 'poll_id',
+        ])->setDependent(true);
         $this->hasMany('Entries')->setDependent(true);
         $this->hasMany('Users')->setDependent(true);
         $this->hasMany('Comments', [

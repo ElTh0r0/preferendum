@@ -27,9 +27,8 @@ class ChoicesController extends AppController
                 && isset($adminid) && !empty($adminid)
                 && isset($data) && !empty($data)
             ) {
-                $this->loadModel('Polls');
-                $poll = $this->Polls->find()
-                    ->where(['id' => $pollid])
+                $poll = $this->fetchTable('Polls')
+                    ->findById($pollid)
                     ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
                     ->firstOrFail();
                 $dbadminid = $poll->adminid;
@@ -39,7 +38,7 @@ class ChoicesController extends AppController
                     'conditions' => ['poll_id' => $pollid, 'option' => $data]
                     ]
                 );
-                $number = $query->count();
+                $number = $query->count();  // Check that choice with same name doesn't exist
 
                 if (strcmp($dbadminid, $adminid) == 0 && $number == 0) {
                     $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
@@ -53,24 +52,21 @@ class ChoicesController extends AppController
                     if ($this->Choices->save($dbchoice)) {
                         $success = true;
                         // Add 'maybe' for all existing entries
-                        $this->loadModel('Entries');
-                        $dbentries = $this->Polls->Entries->find()
-                            ->select(['name'])
+                        $dbentries = $this->fetchTable('Entries')->find()
+                            ->select(['name'])    
                             ->where(['poll_id' => $pollid])
                             ->group(['name']);
-                            $dbentries = $dbentries->all();
 
                         foreach ($dbentries as $entry) {
-                            $dbentry = $this->Entries->newEmptyEntity();
-                            $dbentry = $this->Entries->newEntity(
-                                [
+                            $dbentry = $this->fetchTable('Entries')->newEmptyEntity();
+                            $dbentry = $this->fetchTable('Entries')->newEntity([
                                 'poll_id' => $pollid,
                                 'option' => trim($data),
                                 'name' => trim($entry['name']),
                                 'value' => 2
-                                ]
-                            );
-                            if (!$this->Entries->save($dbentry)) {
+                            ]);
+
+                            if (!$this->fetchTable('Entries')->save($dbentry)) {
                                 $success = false;
                                 break;
                             }
@@ -97,15 +93,16 @@ class ChoicesController extends AppController
             && isset($adminid) && !empty($adminid)
             && isset($option) && !empty($option)
         ) {
-            $this->loadModel('Polls');
-            $db = $this->Polls->findById($pollid)->select('adminid')->firstOrFail();
-            $dbadminid = $db['adminid'];
-            
-            $this->loadModel('Entries');
-            $dbentries = $this->Entries->find()
+            $poll = $this->fetchTable('Polls')
+                ->findById($pollid)
+                ->select('adminid')
+                ->firstOrFail();
+            $dbadminid = $poll['adminid'];
+
+            $dbentries = $this->fetchTable('Entries')->find()
                 ->where(['poll_id' => $pollid, 'option' => $option]);
             if (strcmp($dbadminid, $adminid) == 0) {
-                if ($this->Entries->deleteMany($dbentries)) {
+                if ($this->fetchTable('Entries')->deleteMany($dbentries)) {
                     $dbentries = $this->Choices->find()
                         ->where(['poll_id' => $pollid, 'option' => $option]);
                     if ($this->Choices->deleteMany($dbentries)) {
