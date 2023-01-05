@@ -40,6 +40,7 @@ $this->Html->scriptEnd();
 
 <div id="poll-container">
     <table class="schedule">
+        <?php echo $this->element('choice/list'); ?>    
         <?php echo $this->element('entry/list'); ?>
 
         <!-- SPACER ROW -->

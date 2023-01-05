@@ -13,20 +13,6 @@
  */
 ?>
 
-<!-- TABLE HEADER / DATES -->
-<tr>
-    <td class="schedule-blank"></td>
-    <?php foreach ($poll->choices as $choice): ?>
-        <td class="schedule-header">
-            <div>
-                <div>
-                    <?php echo h($choice->option) ?>
-                </div>
-            </div>
-        </td>
-    <?php endforeach; ?>
-</tr>
-
 <!-- EXISTING ENTRIES -->
 <?php
 if ($poll->hideresult == 0) {

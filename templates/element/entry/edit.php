@@ -13,47 +13,6 @@
  */
 ?>
 
-<!-- TABLE HEADER / DATES -->
-<tr>
-    <td class="schedule-blank"></td>
-    <?php foreach ($poll->choices as $choice): ?>
-        <td class="schedule-header">
-            <div>
-                <div>
-                    <?php echo h($choice->option) ?>
-                </div>
-            </div>
-            <?php if (sizeof($poll->choices) > 2) {
-                echo $this->Form->postLink(
-                    $this->Form->button(
-                        '', [
-                        'type' => 'button', 'class' => 'date-delete']
-                    ),
-                    ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->option],
-                    ['escape' => false, 'confirm' => __('Are you sure to delete this option?')]
-                );
-            } ?>
-        </td>
-    <?php endforeach; ?>
-    <td><?php
-        echo $this->Form->create(
-            $option, [
-            'type' => 'post',
-            'url' => ['controller' => 'Choices', 'action' => 'add', $poll->id, $adminid]
-            ]
-        );
-        echo $this->Form->control(
-            'choice', [
-            'label' => '',
-            'minlength' => '1',
-            'maxlength' => '32'
-            ]
-        );
-        echo $this->Form->button('+');
-        echo $this->Form->end();
-        ?></td>
-</tr>
-
 <!-- EXISTING ENTRIES -->
 <?php
 foreach ($pollentries as $name => $entry) {
