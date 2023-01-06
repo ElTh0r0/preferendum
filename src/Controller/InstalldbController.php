@@ -128,8 +128,8 @@ class InstalldbController extends AppController
         $connection->execute('CREATE TABLE `entries` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
             `poll_id` varchar(32) NOT NULL,
+            `user_id` INT NOT NULL,
             `option` varchar(32) NOT NULL,
-            `name` varchar(32) NOT NULL,
             `value` tinyint(4) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
@@ -138,14 +138,13 @@ class InstalldbController extends AppController
             `id` INT AUTO_INCREMENT PRIMARY KEY,
             `name` varchar(32) NOT NULL,
             `role` varchar(16) DEFAULT "",
-            `poll_id` varchar(32) NOT NULL,
             `password` varchar(255) DEFAULT "",
             `info` varchar(255) DEFAULT ""
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
         echo '<ul><li>Creating default admin user</li></ul>';
-        $connection->execute('INSERT INTO `users` (`name`, `role`, `poll_id`, `password`) VALUES
-        ("admin", "admin", 9999, "$2y$10$YW0XBpcu4RoiUR5tW/rImuChkO1h8LDyecm6F1/Cty5QhJrwP958e");');
+        $connection->execute('INSERT INTO `users` (`name`, `role`, `password`) VALUES
+        ("admin", "admin", "$2y$10$YW0XBpcu4RoiUR5tW/rImuChkO1h8LDyecm6F1/Cty5QhJrwP958e");');
 
         echo '<li>Creating "polls" table</li>';
         $connection->execute('CREATE TABLE `polls` (
@@ -167,10 +166,10 @@ class InstalldbController extends AppController
             ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `choices`
             ADD KEY `poll_id` (`poll_id`);');
-        $connection->execute('ALTER TABLE `users`
-            ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `entries`
             ADD KEY `poll_id` (`poll_id`);');
+        $connection->execute('ALTER TABLE `entries`
+            ADD KEY `user_id` (`user_id`);');
 
         echo '</ul><p>DONE!</p>';
         echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';

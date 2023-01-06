@@ -119,4 +119,29 @@ class UsersController extends AppController
         $this->Flash->error(__('User {0} has NOT been deleted!', $userid));
         return $this->redirect(['action' => 'index']);
     }
+
+    //------------------------------------------------------------------------
+    
+    public function deleteUserAndPollEntries($pollid = null, $adminid = null, $userid = null)
+    {
+        $this->request->allowMethod(['post', 'deleteUserAndPollEntries']);
+    
+        if (isset($pollid) && !empty($pollid)
+            && isset($adminid) && !empty($adminid)
+            && isset($userid) && !empty($userid)
+        ) {
+            $db = $this->fetchTable('Polls')->findById($pollid)->select('adminid')->firstOrFail();
+            $dbadminid = $db['adminid'];
+
+            if (strcmp($dbadminid, $adminid) == 0) {
+                if ($this->Users->delete($this->Users->get($userid))) {
+                    $this->Flash->success(__('Entry has been deleted.'));
+                    return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
+                }
+            }
+        }
+        $this->Flash->error(__('Entry has NOT been deleted!'));
+        return $this->redirect($this->referer());
+    }
+
 }

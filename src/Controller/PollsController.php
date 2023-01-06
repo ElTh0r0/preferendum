@@ -82,8 +82,11 @@ class PollsController extends AppController
             ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
             ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
             ->firstOrFail();
-        
-        $dbentries = $this->Polls->Entries->findAllByPollId($pollid);
+
+        $dbentries = $this->fetchTable('Entries')->find()
+            ->where(['poll_id' => $pollid])
+            ->contain(['Users'])
+            ->select(['option', 'value', 'name' => 'Users.name']);
         $pollentries = array();
         foreach ($dbentries as $entry) {
             if (!isset($entry['name'])) {
@@ -92,19 +95,13 @@ class PollsController extends AppController
             $pollentries[$entry->name][$entry->option] = $entry->value;
         }
 
-        $this->loadModel('Entries');
-        $entry = $this->Entries->newEmptyEntity();
-        $this->loadModel('Comments');
-        $comment = $this->Comments->newEmptyEntity();
+        $entry = $this->fetchTable('Entries')->newEmptyEntity();
+        $comment = $this->fetchTable('Comments')->newEmptyEntity();
         
-        $locked = $this->Polls->findById($pollid)->select('locked')->firstOrFail();
-        $locked = $locked['locked'];
-        if ($locked != 0) {
+        if ($poll->locked != 0) {
             $this->Flash->error(__('This poll is locked - it is not possible to insert new entries or comments!'));
         }
-        $hiddenresult = $this->Polls->findById($pollid)->select('hideresult')->firstOrFail();
-        $hiddenresult = $hiddenresult['hideresult'];
-        if ($hiddenresult != 0) {
+        if ($poll->hideresult != 0) {
             $this->Flash->default(__('Only poll admin can see results and comments!'));
         }
 
@@ -121,17 +118,23 @@ class PollsController extends AppController
             ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
             ->firstOrFail();
         
-        $dbentries = $this->Polls->Entries->findAllByPollId($pollid);
+        $dbentries = $this->fetchTable('Entries')->find()
+            ->where(['poll_id' => $pollid])
+            ->contain(['Users'])
+            ->select(['option', 'value', 'name' => 'Users.name', 'user_id' => 'Users.id']);
+
         $pollentries = array();
+        $usermap = array();
+        // TODO: Think about better implementation for passing all the data...
         foreach ($dbentries as $entry) {
-            if (!isset($entry['name'])) {
+            if (!isset($pollentries[$entry['name']])) {
                 $pollentries[$entry['name']] = array();
+                $usermap[$entry['name']] = $entry->user_id;
             }
             $pollentries[$entry->name][$entry->option] = $entry->value;
         }
 
-        $this->loadModel('Choices');
-        $option = $this->Choices->newEmptyEntity();  // Needed for adding new options
+        $option = $this->fetchTable('Choices')->newEmptyEntity();  // Needed for adding new options
 
         $dbadminid = $poll->adminid;
         if (strcmp($dbadminid, $adminid) == 0) {
@@ -147,13 +150,11 @@ class PollsController extends AppController
             $this->redirect(['action' => 'index']);
         }
 
-        $locked = $this->Polls->findById($pollid)->select('locked')->firstOrFail();
-        $locked = $locked['locked'];
-        if ($locked != 0) {
+        if ($poll->locked != 0) {
             $this->Flash->error(__('This poll is locked!'));
         }
 
-        $this->set(compact('poll', 'adminid', 'pollentries', 'option'));
+        $this->set(compact('poll', 'adminid', 'pollentries', 'usermap', 'option'));
     }
 
     //------------------------------------------------------------------------
@@ -199,13 +200,30 @@ class PollsController extends AppController
             $poll = $this->Polls->findById($pollid)->firstOrFail();
             $dbadminid = $poll->adminid;
             if (strcmp($dbadminid, $adminid) == 0) {
-                if ($this->Polls->delete($poll)) {
-                    $this->Flash->success(__('Poll {0} has been deleted.', $poll->title));
-                    if ($this->referer() == '/admin') {
-                        // Stay on admin page, if deletion was triggered from there
-                        return $this->redirect($this->referer());
+                $userentries = $this->fetchTable('Entries')->find()
+                    ->where(['poll_id' => $pollid])
+                    ->contain(['Users'])
+                    ->select(['user_id' => 'Users.id'])
+                    ->group(['user_id']);
+                
+                $success = true;
+                // Users must be deleted manually, since there is no direct dependency between Polls and Users table
+                if ($userentries->count() > 0) {
+                    if (!$this->fetchTable('Users')->deleteAll(['id IN' => $userentries])) {
+                        $success = false;
                     }
-                    return $this->redirect(['action' => 'index']);
+                }
+                
+                if ($success) {
+                    // Comments and Choices
+                    if ($this->Polls->delete($poll)) {
+                        $this->Flash->success(__('Poll {0} has been deleted.', $poll->title));
+                        if ($this->referer() == '/admin') {
+                            // Stay on admin page, if deletion was triggered from there
+                            return $this->redirect($this->referer());
+                        }
+                        return $this->redirect(['action' => 'index']);
+                    }
                 }
             }
         }
@@ -242,6 +260,18 @@ class PollsController extends AppController
         if (sizeof($trash) > 0) {
             foreach ($trash as $poll) {
                 echo "Deleting poll: " . $poll['id'] . " ..." . PHP_EOL;
+                
+                $userentries = $this->fetchTable('Entries')->find()
+                    ->where(['poll_id' => $poll['id']])
+                    ->contain(['Users'])
+                    ->select(['user_id' => 'Users.id'])
+                    ->group(['user_id']);
+                
+                if ($userentries->count() > 0) {
+                    if (!$this->fetchTable('Users')->deleteAll(['id IN' => $userentries])) {
+                        echo "ERROR while deleting: " . $poll['id'] . " (error while user deletion)" . PHP_EOL;
+                    }
+                }
                 if (!$this->Polls->delete($poll)) {
                     echo "ERROR while deleting: " . $poll['id'] . PHP_EOL;
                 }

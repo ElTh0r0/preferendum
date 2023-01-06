@@ -84,19 +84,21 @@
             </tr>
                   <?php
                     if ($poll->userinfo == 1) {
-                        if (sizeof($poll->users) > 0) {
-                            ?>
-                        <tr><td colspan="6">
-                            <button type="button" class="collapsible"><?php echo h($poll->title) . ' - ' . __('User contact infos') ?></button>
-                            <div class="collapscontent">
-                                <ul>
-                                <?php foreach ($poll->users as $user) {
-                                    echo '<li><em>' . h($user['name']) . ':</em> ' . h($user['info']) . '</li>';
-                                } ?>
-                                </ul>
-                            </div>
-                        </td></tr>
-                               <?php
+                        if (array_key_exists($poll->id, $userinfos)) {
+                            if (sizeof($userinfos[$poll->id]) > 0) {
+                                ?>
+                            <tr><td colspan="6">
+                                <button type="button" class="collapsible"><?php echo h($poll->title) . ' - ' . __('User contact infos') ?></button>
+                                <div class="collapscontent">
+                                    <ul>
+                                    <?php foreach ($userinfos[$poll->id] as $user => $info) {
+                                        echo '<li><em>' . h($user) . ':</em> ' . h($info) . '</li>';
+                                    } ?>
+                                    </ul>
+                                </div>
+                            </td></tr>
+                                <?php
+                            }
                         }
                     }
                     ?>

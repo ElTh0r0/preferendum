@@ -27,13 +27,13 @@ class EntriesController extends AppController
 
             $query = $this->Entries->find(
                 'all', [
-                'conditions' => ['poll_id' => $pollid, 'name' => trim($data['name'])]
+                'contain' => ['Users'],
+                'conditions' => ['poll_id' => $pollid, 'Users.name' => trim($data['name'])]
                 ]
             );
             $number = $query->count();
 
-            $this->loadModel('Polls');
-            $db = $this->Polls->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
+            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
             $dbtitle = $db['title'];
             $dblocked = $db['locked'];
             $dbuserinfo = $db['userinfo'];
@@ -45,22 +45,36 @@ class EntriesController extends AppController
             $entryarray = array();
 
             if ($number == 0 && $dblocked == 0) {
-                $success = true;
-                for ($i = 0; $i < sizeof($data['choices']); $i++) {
-                    $dbentry = $this->Entries->newEmptyEntity();
-                    $dbentry = $this->Entries->newEntity(
-                        [
-                        'poll_id' => $pollid,
-                        'option' => trim($data['choices'][$i]),
-                        'name' => trim($data['name']),
-                        'value' => trim($data['values'][$i])
-                        ]
-                    );
-                    if (!$this->Entries->save($dbentry)) {
-                        $success = false;
-                        break;
+                $userinfo = '';
+                if ($dbuserinfo == 1) {
+                    $userinfo = trim($data['userdetails']);
+                }
+                $new_user = $this->fetchTable('Users')->newEmptyEntity();
+                $new_user = $this->fetchTable('Users')->newEntity([
+                    'name' => trim($data['name']),
+                    'info' => $userinfo
+                ]);
+                
+                if ($this->fetchTable('Users')->save($new_user)) {
+                    $success = true;
+
+                    for ($i = 0; $i < sizeof($data['choices']); $i++) {
+                        $dbentry = $this->Entries->newEmptyEntity();
+                        $dbentry = $this->Entries->newEntity(
+                            [
+                            'poll_id' => $pollid,
+                            'user_id' => $new_user->id,
+                            'option' => trim($data['choices'][$i]),
+                            'name' => trim($data['name']),
+                            'value' => trim($data['values'][$i])
+                            ]
+                        );
+                        if (!$this->Entries->save($dbentry)) {
+                            $success = false;
+                            break;
+                        }
+                        $entryarray[trim($data['choices'][$i])] = trim($data['values'][$i]);
                     }
-                    $entryarray[trim($data['choices'][$i])] = trim($data['values'][$i]);
                 }
                 
                 if ($success) {
@@ -82,27 +96,7 @@ class EntriesController extends AppController
                             ->deliver();
                     }
 
-                    if ($dbuserinfo == 1) {
-                        $userinfo = trim($data['userdetails']);
-                        if (!empty($userinfo)) {
-                            $this->loadModel('Users');
-                            $dbentry = $this->Users->newEmptyEntity();
-                            $dbentry = $this->Users->newEntity(
-                                [
-                                'poll_id' => $pollid,
-                                'name' => trim($data['name']),
-                                'info' => trim($data['userdetails'])
-                                ]
-                            );
-                            if ($this->Users->save($dbentry)) {
-                                return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
-                            }
-                        } else {
-                            return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
-                        }
-                    } else {
-                        return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
-                    }
+                    return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
                 }
             }
         }
@@ -112,26 +106,26 @@ class EntriesController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function delete($pollid = null, $adminid = null, $name = null)
+    /*
+    Use UsersController "deleteUserAndPollEntries" instead.
+    Due to dependencies, all entries will be removed once user is deleted.
+
+    public function delete($pollid = null, $adminid = null, $userid = null)
     {
         $this->request->allowMethod(['post', 'delete']);
     
         if (isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
-            && isset($name) && !empty($name)
+            && isset($userid) && !empty($userid)
         ) {
-            $this->loadModel('Polls');
-            $db = $this->Polls->findById($pollid)->select('adminid')->firstOrFail();
+            $db = $this->fetchTable('Polls')->findById($pollid)->select('adminid')->firstOrFail();
             $dbadminid = $db['adminid'];
             
             $dbentries = $this->Entries->find()
-                ->where(['poll_id' => $pollid, 'name' => $name]);
+                ->where(['poll_id' => $pollid, 'user_id' => $userid]);
             if (strcmp($dbadminid, $adminid) == 0) {
                 if ($this->Entries->deleteMany($dbentries)) {
-                    $this->loadModel('Users');
-                    $dbentries = $this->Users->find()
-                        ->where(['poll_id' => $pollid, 'name' => $name]);
-                    if ($this->Users->deleteMany($dbentries)) {
+                    if ($this->fetchTable('Users')->delete($this->fetchTable('Users')->get($userid))) {
                         $this->Flash->success(__('Entry has been deleted.'));
                         return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
                     }
@@ -141,4 +135,5 @@ class EntriesController extends AppController
         $this->Flash->error(__('Entry has NOT been deleted!'));
         return $this->redirect($this->referer());
     }
+    */
 }

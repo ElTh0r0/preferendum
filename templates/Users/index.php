@@ -80,7 +80,6 @@
             echo $this->Form->hidden('role', ['value' => array_search($currentUserRole, $allroles)]);
         }
         ?>
-        <?php echo $this->Form->hidden('poll_id', ['value' => '9999']) ?>
         <?php echo $this->Form->control(
             'password', [
             'required' => true,

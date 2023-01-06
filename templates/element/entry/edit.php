@@ -39,7 +39,7 @@ foreach ($pollentries as $name => $entry) {
             '', [
                 'type' => 'button', 'class' => 'schedule-delete']
         ),
-        ['controller' => 'Entries', 'action' => 'delete', $poll->id, $adminid, $name],
+        ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],
         ['escape' => false, 'confirm' => __('Are you sure to delete this entry?')]
     );
     echo '</td>';

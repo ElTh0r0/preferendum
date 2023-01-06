@@ -53,16 +53,16 @@ class ChoicesController extends AppController
                         $success = true;
                         // Add 'maybe' for all existing entries
                         $dbentries = $this->fetchTable('Entries')->find()
-                            ->select(['name'])    
                             ->where(['poll_id' => $pollid])
-                            ->group(['name']);
-
-                        foreach ($dbentries as $entry) {
+                            ->contain(['Users'])
+                            ->select(['user_id' => 'Users.id'])
+                            ->group(['user_id']);
+                        foreach ($dbentries as $user) {
                             $dbentry = $this->fetchTable('Entries')->newEmptyEntity();
                             $dbentry = $this->fetchTable('Entries')->newEntity([
                                 'poll_id' => $pollid,
+                                'user_id' => $user->user_id,
                                 'option' => trim($data),
-                                'name' => trim($entry['name']),
                                 'value' => 2
                             ]);
 

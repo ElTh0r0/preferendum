@@ -44,14 +44,30 @@ class AdminController extends AppController
         $identity = $this->Authentication->getIdentity();
         $currentUserRole = $identity->getOriginalData()['role'];
 
+        $dbuserinfos = $this->fetchTable('Entries')->find()
+                ->contain(['Polls', 'Users'])
+                ->where(['Polls.userinfo' => 1])
+                ->select(['poll_id' => 'Polls.id', 'name' => 'Users.name', 'info' => 'Users.info'])
+                ->group(['Users.id']);
+        // debug($dbuserinfos);
+        // die;
+        $userinfos = array();
+        foreach ($dbuserinfos as $uinfo) {
+            if (!isset($uinfo['poll_id'])) {
+                $userinfos[$uinfo['poll_id']] = array();
+            }
+            $userinfos[$uinfo->poll_id][$uinfo->name] = $uinfo->info;
+        }
+        // debug($userinfos);
+        // die;
+
         $polls = $this->paginate(
-            $this->fetchTable('Polls')->find('all')
-                ->contain(['Users']), [
+            $this->fetchTable('Polls')->find('all'), [
                     'limit' => 20,
                 ]
         );
 
-        $this->set(compact('polls', 'currentUserRole', 'viewerRole'));
+        $this->set(compact('polls', 'userinfos', 'currentUserRole', 'viewerRole'));
     }
 
     //------------------------------------------------------------------------

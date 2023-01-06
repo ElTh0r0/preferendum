@@ -21,7 +21,21 @@ class EntriesTable extends Table
 {
     public function initialize(array $config): void
     {
-        $this->belongsTo('Polls');
+        parent::initialize($config);
+
+        $this->setTable('entries');
+        $this->setDisplayField('id');
+        $this->setPrimaryKey('id');
+
+        $this->belongsTo('Polls', [
+            'foreignKey' => 'poll_id',
+            'joinType' => 'INNER',
+        ]);
+
+        $this->belongsTo('Users', [
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER',
+        ]);
     }
 
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
