@@ -44,13 +44,13 @@ class AdminController extends AppController
         $identity = $this->Authentication->getIdentity();
         $currentUserRole = $identity->getOriginalData()['role'];
 
+        $uinfopolls = $this->fetchTable('Polls')->findByUserinfo(1)->select('id');
         $dbuserinfos = $this->fetchTable('Entries')->find()
-                ->contain(['Polls', 'Users'])
-                ->where(['Polls.userinfo' => 1])
-                ->select(['poll_id' => 'Polls.id', 'name' => 'Users.name', 'info' => 'Users.info'])
+                ->contain(['Choices', 'Users'])
+                ->where(['Choices.poll_id IN' => $uinfopolls, 'Users.info !=' => ''])
+                ->select(['poll_id' => 'Choices.poll_id', 'name' => 'Users.name', 'info' => 'Users.info'])
                 ->group(['Users.id']);
-        // debug($dbuserinfos);
-        // die;
+
         $userinfos = array();
         foreach ($dbuserinfos as $uinfo) {
             if (!isset($uinfo['poll_id'])) {

@@ -11,17 +11,49 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+declare(strict_types=1);
+
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Event\EventInterface;
 use ArrayObject;
 use Cake\Validation\Validator;
 
+/**
+ * Polls Model
+ *
+ * @property \App\Model\Table\ChoicesTable&\Cake\ORM\Association\HasMany $Choices
+ * @property \App\Model\Table\CommentsTable&\Cake\ORM\Association\HasMany $Comments
+ *
+ * @method \App\Model\Entity\Poll newEmptyEntity()
+ * @method \App\Model\Entity\Poll newEntity(array $data, array $options = [])
+ * @method \App\Model\Entity\Poll[] newEntities(array $data, array $options = [])
+ * @method \App\Model\Entity\Poll get($primaryKey, $options = [])
+ * @method \App\Model\Entity\Poll findOrCreate($search, ?callable $callback = null, $options = [])
+ * @method \App\Model\Entity\Poll patchEntity(\Cake\Datasource\EntityInterface $entity, array $data, array $options = [])
+ * @method \App\Model\Entity\Poll[] patchEntities(iterable $entities, array $data, array $options = [])
+ * @method \App\Model\Entity\Poll|false save(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Poll saveOrFail(\Cake\Datasource\EntityInterface $entity, $options = [])
+ * @method \App\Model\Entity\Poll[]|\Cake\Datasource\ResultSetInterface|false saveMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Poll[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Poll[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
+ * @method \App\Model\Entity\Poll[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
+ *
+ * @mixin \Cake\ORM\Behavior\TimestampBehavior
+ */
 class PollsTable extends Table
 {
     public function initialize(array $config): void
     {
+        parent::initialize($config);
+
+        $this->setTable('polls');
+        $this->setDisplayField('title');
+        $this->setPrimaryKey('id');
+
         $this->addBehavior(
             'Timestamp', [
             'events' => [
@@ -33,9 +65,6 @@ class PollsTable extends Table
         );
         
         $this->hasMany('Choices', [
-            'foreignKey' => 'poll_id',
-        ])->setDependent(true);
-        $this->hasMany('Entries', [
             'foreignKey' => 'poll_id',
         ])->setDependent(true);
         $this->hasMany('Comments', [
@@ -74,10 +103,6 @@ class PollsTable extends Table
         $validator
             ->allowEmptyString('details')
             ->maxLength('details', 511);
-        
-        $validator
-            ->notEmptyString('options')
-            ->maxLength('options', 32);
 
         $validator
             ->maxLength('email', 32);

@@ -20,12 +20,12 @@
         <!--<div class="r r-legend r-no">--><?php //echo __('No') . ':' ?><!--</div>-->
     </td>
 <?php
-for ($i = 0; $i < sizeof($poll->choices); $i++) {
+for ($i = 0; $i < sizeof($pollchoices); $i++) {
     $no = 0;
     $yes = 0;
     $maybe = 0;
     foreach ($pollentries as $ent) {
-        switch ($ent[$poll->choices[$i]->option]) {
+        switch ($ent[$pollchoices[$i]->id]) {
         case 0: $no++; 
             break;
         case 1: $yes++; 

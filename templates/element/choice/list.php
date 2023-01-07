@@ -16,7 +16,7 @@
 <!-- TABLE HEADER / DATES -->
 <tr>
     <td class="schedule-blank"></td>
-    <?php foreach ($poll->choices as $choice): ?>
+    <?php foreach ($pollchoices as $choice): ?>
         <td class="schedule-header">
             <div>
                 <div>

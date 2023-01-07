@@ -134,6 +134,7 @@ class UsersController extends AppController
             $dbadminid = $db['adminid'];
 
             if (strcmp($dbadminid, $adminid) == 0) {
+                // Entries are deleted by dependency
                 if ($this->Users->delete($this->Users->get($userid))) {
                     $this->Flash->success(__('Entry has been deleted.'));
                     return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);

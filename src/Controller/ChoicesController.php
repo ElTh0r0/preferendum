@@ -54,15 +54,15 @@ class ChoicesController extends AppController
                         // Add 'maybe' for all existing entries
                         $dbentries = $this->fetchTable('Entries')->find()
                             ->where(['poll_id' => $pollid])
-                            ->contain(['Users'])
+                            ->contain(['Users', 'Choices'])
                             ->select(['user_id' => 'Users.id'])
                             ->group(['user_id']);
+
                         foreach ($dbentries as $user) {
                             $dbentry = $this->fetchTable('Entries')->newEmptyEntity();
                             $dbentry = $this->fetchTable('Entries')->newEntity([
-                                'poll_id' => $pollid,
+                                'choice_id' => $dbchoice->id,
                                 'user_id' => $user->user_id,
-                                'option' => trim($data),
                                 'value' => 2
                             ]);
 
@@ -85,13 +85,13 @@ class ChoicesController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function delete($pollid = null, $adminid = null, $option = null)
+    public function delete($pollid = null, $adminid = null, $choiceid = null)
     {
         $this->request->allowMethod(['post', 'delete']);
     
         if (isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
-            && isset($option) && !empty($option)
+            && isset($choiceid) && !empty($choiceid)
         ) {
             $poll = $this->fetchTable('Polls')
                 ->findById($pollid)
@@ -99,16 +99,11 @@ class ChoicesController extends AppController
                 ->firstOrFail();
             $dbadminid = $poll['adminid'];
 
-            $dbentries = $this->fetchTable('Entries')->find()
-                ->where(['poll_id' => $pollid, 'option' => $option]);
             if (strcmp($dbadminid, $adminid) == 0) {
-                if ($this->fetchTable('Entries')->deleteMany($dbentries)) {
-                    $dbentries = $this->Choices->find()
-                        ->where(['poll_id' => $pollid, 'option' => $option]);
-                    if ($this->Choices->deleteMany($dbentries)) {
-                        $this->Flash->success(__('Option has been deleted.'));
-                        return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
-                    }
+                // Entries are deleted by dependency
+                if ($this->Choices->delete($this->Choices->get($choiceid))) {
+                    $this->Flash->success(__('Option has been deleted.'));
+                    return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
                 }
             }
         }

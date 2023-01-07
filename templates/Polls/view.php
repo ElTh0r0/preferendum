@@ -44,7 +44,7 @@ $this->Html->scriptEnd();
         <?php echo $this->element('entry/list'); ?>
 
         <!-- SPACER ROW -->
-        <?php echo '<tr class="table-spacer-row"><td colspan="' . (sizeof($poll->choices) + 1) . '"></td></tr>'; ?>
+        <?php echo '<tr class="table-spacer-row"><td colspan="' . (sizeof($pollchoices) + 1) . '"></td></tr>'; ?>
 
         <!-- NEW ENTRY FORM ROW -->
         <?php if ($poll->locked == 0) {

@@ -16,20 +16,20 @@
 <!-- TABLE HEADER / DATES -->
 <tr>
     <td class="schedule-blank"></td>
-    <?php foreach ($poll->choices as $choice): ?>
+    <?php foreach ($pollchoices as $choice): ?>
         <td class="schedule-header">
             <div>
                 <div>
                     <?php echo h($choice->option) ?>
                 </div>
             </div>
-            <?php if (sizeof($poll->choices) > 2) {
+            <?php if (sizeof($pollchoices) > 2) {
                 echo $this->Form->postLink(
                     $this->Form->button(
                         '', [
                         'type' => 'button', 'class' => 'date-delete']
                     ),
-                    ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->option],
+                    ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->id],
                     ['escape' => false, 'confirm' => __('Are you sure to delete this option?')]
                 );
             } ?>

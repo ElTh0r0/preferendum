@@ -55,6 +55,9 @@ class ChoicesTable extends Table
             'foreignKey' => 'poll_id',
             'joinType' => 'INNER',
         ]);
+        $this->hasMany('Entries', [
+            'foreignKey' => 'choice_id',
+        ])->setDependent(true);
     }
 
     public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)

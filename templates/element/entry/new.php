@@ -37,7 +37,7 @@
 
     echo '</td>';
 
-    foreach ($poll->choices as $opt) {
+    foreach ($pollchoices as $opt) {
         echo '<td class="new-entry-box new-entry-choice new-entry-choice-maybe">';
         echo $this->Form->hidden(
             'va', [
@@ -49,7 +49,7 @@
         echo $this->Form->hidden(
             'op', [
             'name' => 'choices[]',
-            'value' => $opt->option,
+            'value' => $opt->id,
             'class' => 'entry-date',
             ]
         );

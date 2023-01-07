@@ -19,9 +19,9 @@ foreach ($pollentries as $name => $entry) {
     echo '<tr class="valign-middle">';
     echo '<td class="schedule-names">' . h($name) . '</td>';
 
-    for ($i = 0; $i < sizeof($poll->choices); $i++) {
+    for ($i = 0; $i < sizeof($pollchoices); $i++) {
         $value = 'maybe';
-        switch ($entry[$poll->choices[$i]->option]) {
+        switch ($entry[$pollchoices[$i]->id]) {
         case 0: $value = 'no'; 
             break;
         case 1: $value = 'yes'; 

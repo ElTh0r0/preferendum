@@ -26,9 +26,9 @@
 
     $displayDates = array();
     $count = 0;
-foreach ($poll->choices as $date) {
+foreach ($pollchoices as $date) {
     $displayDates[$count++] = array(
-        'date' => $date->option,
+        'date' => $date->id,
         'yes' => 0,
         'maybe' => 0,
         'no' => 0,
@@ -36,12 +36,12 @@ foreach ($poll->choices as $date) {
     );
 }
     
-for ($i = 0; $i < sizeof($poll->choices); $i++) {
+for ($i = 0; $i < sizeof($pollchoices); $i++) {
     foreach ($pollentries as $ent) {
-        if ($ent[$poll->choices[$i]->option] == 1) {
+        if ($ent[$pollchoices[$i]->id] == 1) {
             $displayDates[$i]['yes']++;
             $displayDates[$i]['total'] += 2;
-        } elseif ($ent[$poll->choices[$i]->option] == 2) {
+        } elseif ($ent[$pollchoices[$i]->id] == 2) {
             $displayDates[$i]['maybe']++;
             $displayDates[$i]['total'] += 1;
         } else {

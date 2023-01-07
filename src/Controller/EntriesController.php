@@ -27,7 +27,7 @@ class EntriesController extends AppController
 
             $query = $this->Entries->find(
                 'all', [
-                'contain' => ['Users'],
+                'contain' => ['Users', 'Choices'],
                 'conditions' => ['poll_id' => $pollid, 'Users.name' => trim($data['name'])]
                 ]
             );
@@ -62,10 +62,8 @@ class EntriesController extends AppController
                         $dbentry = $this->Entries->newEmptyEntity();
                         $dbentry = $this->Entries->newEntity(
                             [
-                            'poll_id' => $pollid,
+                            'choice_id' => $data['choices'][$i],
                             'user_id' => $new_user->id,
-                            'option' => trim($data['choices'][$i]),
-                            'name' => trim($data['name']),
                             'value' => trim($data['values'][$i])
                             ]
                         );

@@ -127,9 +127,8 @@ class InstalldbController extends AppController
         echo '<li>Creating "entries" table</li>';
         $connection->execute('CREATE TABLE `entries` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `poll_id` varchar(32) NOT NULL,
+            `choice_id` INT NOT NULL,
             `user_id` INT NOT NULL,
-            `option` varchar(32) NOT NULL,
             `value` tinyint(4) NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
@@ -167,7 +166,7 @@ class InstalldbController extends AppController
         $connection->execute('ALTER TABLE `choices`
             ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `entries`
-            ADD KEY `poll_id` (`poll_id`);');
+            ADD KEY `choice_id` (`choice_id`);');
         $connection->execute('ALTER TABLE `entries`
             ADD KEY `user_id` (`user_id`);');
 
