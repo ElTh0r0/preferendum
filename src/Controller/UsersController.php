@@ -82,7 +82,8 @@ class UsersController extends AppController
                 }
             }
 
-            if (strlen(trim($newOrUpdateUser['password'])) > 0 && strcmp(trim($newOrUpdateUser['password']), trim($newOrUpdateUser['confirmpassword'])) == 0) {
+            $confirmedPassword = trim($this->request->getData()['confirmpassword']);
+            if (strlen(trim($newOrUpdateUser['password'])) > 0 && strcmp(trim($newOrUpdateUser['password']), $confirmedPassword) == 0) {
                 $newOrUpdateUser['password'] = (new DefaultPasswordHasher)->hash(trim($newOrUpdateUser['password']));
             } else {
                 $this->Flash->error(__('Unable to add/update the user - password / confirmation not correct.'));

@@ -74,7 +74,7 @@
             );
 
             echo $this->Form->label('role', __('Role'));
-            echo $this->Form->select('role', $allroles, ['val' => $allroles[0]]);
+            echo $this->Form->select('role', $allroles, ['value' => 0, 'empty' => false]);
         } else {
             echo $this->Form->hidden('name', ['value' => $currentUserName]);
             echo $this->Form->hidden('role', ['value' => array_search($currentUserRole, $allroles)]);
