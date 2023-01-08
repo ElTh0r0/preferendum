@@ -503,6 +503,33 @@ td.schedule-delete:hover {
     background-color: var(--color-background-secondary-hover);
 }
 
+button.schedule-add {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: block;
+    padding: 0px;
+    margin: 0;
+    border: 0;
+    background-color: var(--color-background-secondary);
+    border-radius: var(--border-radius-big);
+    font-size: 11px;
+    color: var(--color-font-secondary);
+}
+
+button.schedule-add:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+#divNewChoice input {
+    font-size: 0.8em;
+}
+
+#divNewChoice button {
+    height: 24px;
+    margin-top: 3px;
+}
+
 td.schedule-submit:hover {
     background-color: var(--color-background-secondary-hover);
 }

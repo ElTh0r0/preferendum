@@ -13,6 +13,22 @@
  */
 ?>
 
+<?php $this->Html->scriptBlock(
+'function showAddChoice() {
+    var x = document.getElementById("divNewChoice");
+    var y = document.getElementById("btnAddChoice");
+    var z = document.getElementById("choice");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+        y.innerText = "-";
+        z.value = "";
+    } else {
+        x.style.display = "none";
+        y.innerText = "+";
+    }
+} ', ['block' => true]
+); ?>
+
 <!-- TABLE HEADER / DATES -->
 <tr>
     <td class="schedule-blank"></td>
@@ -35,7 +51,9 @@
             } ?>
         </td>
     <?php endforeach; ?>
-    <td><?php
+    <td><button class="schedule-add" id="btnAddChoice" onclick="showAddChoice()"><span class="btntext">+</span></button>
+        <div id="divNewChoice" style="display: none;">
+        <?php
         echo $this->Form->create(
             $option, [
             'type' => 'post',
@@ -46,10 +64,13 @@
             'choice', [
             'label' => '',
             'minlength' => '1',
-            'maxlength' => '32'
+            'maxlength' => '32',
+            'placeholder' => __('New option'),
             ]
         );
-        echo $this->Form->button('+');
+        echo $this->Form->button(__('Save'));
         echo $this->Form->end();
-        ?></td>
+        ?>
+        </div>
+    </td>
 </tr>
