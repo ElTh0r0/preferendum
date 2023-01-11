@@ -86,7 +86,7 @@ class PollsTable extends Table
     {
         if ($entity->isNew() && !$entity->id) {
             $entity->id = hash("crc32", time() . $entity->title);
-            if ($entity->adminLink != true) {
+            if ($entity->adminid != true) {
                 $entity->adminid = "NA";
             } else {
                 $entity->adminid = hash("crc32", time() . $entity->title . "admin");

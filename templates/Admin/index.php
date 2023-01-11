@@ -28,7 +28,7 @@
     
     <!-- POLLS OVERVIEW TABLE -->
     <table>
-        <tr><td colspan="6"><h1 class="fail"><?php echo __('Available polls') . ': ' . $this->Paginator->param('count'); ?></h1></td></tr>
+        <tr><td colspan="8"><h1 class="fail"><?php echo __('Available polls') . ': ' . $this->Paginator->param('count'); ?></h1></td></tr>
         <!-- EXISTING POLLS -->
         <?php
         if (sizeof($polls) > 0) {
@@ -40,19 +40,66 @@
             } else if ($this->Paginator->sortKey() == 'modified') {
                 $sModi = '<em>' . $sModi . ' ' . $curSortDir . '</em>';
             }
-            echo '<tr><td colspan="5">' . __('Sort by') . ': '. $this->Paginator->sort('title', $sTitle, ['escape' => false]) . '</td>';
-            echo '<td>' . $this->Paginator->sort('modified', $sModi, ['escape' => false]) . '</td></tr>';
+            echo '<tr><td>' . $this->Paginator->sort('title', $sTitle, ['escape' => false]) . '</td>';
+            echo '<td></td>';
+            echo '<td>' . __('Votes') . '</td>';
+            echo '<td>' . __('Comments') . '</td>';
+            echo '<td>' . $this->Paginator->sort('modified', $sModi, ['escape' => false]) . '</td>';
+            echo '<td colspan="3"></td></tr>';
             foreach ($polls as $poll) {
                 ?>
             <tr>
                 <td>
                     <em><?php echo h($poll->title) ?></em><br>
                 </td>
-                <td><?php echo h($poll->id) ?></td>
+                <td><?php if(strcmp($poll->adminid, 'NA') == 0) {
+                    echo '<img src="img/icon-no-key.png" title="' . __('Poll not protected by admin link') . '"/> ';
+                }
+                if ($poll->emailentry or $poll->emailcomment) {
+                    if ($poll->emailentry and $poll->emailcomment) {
+                        $text = __('Email after new comment/entry');
+                    } else if ($poll->emailentry) {
+                        $text = __('Email after new entry');
+                    } else {
+                        $text = __('Email after new comment');
+                    }
+                    echo '<img src="img/icon-email.png" title="' . $text . ': '  . $poll->email . '"/> ';
+                }
+                if ($poll->userinfo) {
+                    echo '<img src="img/icon-user-info.png" title="' . __('Collect user info') . '"/> ';
+                }
+                if ($poll->hideresult) {
+                    echo '<img src="img/icon-eye-off.png" title="' . __('Poll result hidden') . '"/> ';
+                }
+                if($poll->locked) {
+                    echo '<img src="img/icon-locked.png" title="' . __('Poll locked') . '"/> ';
+                }
+                ?></td>
+                <td>
+                    <?php
+                    if (array_key_exists($poll->id, $numentries)) {
+                        echo $numentries[$poll->id];
+                    } else {
+                        echo 0;
+                    }
+                    ?>
+                </td>
+                <td>
+                    <?php
+                    if (array_key_exists($poll->id, $numcomments)) {
+                        echo $numcomments[$poll->id];
+                    } else {
+                        echo 0;
+                    }
+                    ?>
+                </td>
+                <td>
+                    <span style="font-size:0.8em;"><?php echo $poll->modified->format('Y-m-d') ?></span>
+                </td>
                 <td>
                     <!-- BTN: VIEW -->
                     <?php echo $this->Html->link(
-                        $this->Form->button(__('View'), ['type' => 'button']),
+                        $this->Form->button('', ['type' => 'button', 'class' => 'admin-view-poll']),
                         ['controller' => 'Polls', 'action' => 'view', $poll->id],
                         ['target' => '_blank', 'escape' => false]
                     ); ?>
@@ -61,7 +108,7 @@
                     <?php
                     if (strcmp($currentUserRole, $viewerRole) != 0) {
                         echo $this->Html->link(
-                            $this->Form->button(__('Edit'), ['type' => 'button']),
+                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-edit-poll']),
                             ['controller' => 'Polls', 'action' => 'edit', $poll->id, $poll->adminid],
                             ['target' => '_blank', 'escape' => false]
                         );
@@ -71,15 +118,11 @@
                     <?php
                     if (strcmp($currentUserRole, $viewerRole) != 0) {
                         echo $this->Form->postLink(
-                            $this->Form->button(__('Delete'), ['type' => 'button']),
+                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-delete-poll']),
                             ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
                             ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
                         );
                     } ?>
-                </td>
-                <td>
-                    <!-- Info -->
-                    <span style="font-size:0.8em;"><?php echo $poll->modified->format('Y-m-d') ?></span>
                 </td>
             </tr>
                   <?php
@@ -87,7 +130,8 @@
                         if (array_key_exists($poll->id, $userinfos)) {
                             if (sizeof($userinfos[$poll->id]) > 0) {
                                 ?>
-                            <tr><td colspan="6">
+                            <tr><td colspan="8">
+                                <!-- Info -->
                                 <button type="button" class="collapsible"><?php echo h($poll->title) . ' - ' . __('User contact infos') ?></button>
                                 <div class="collapscontent">
                                     <ul>
@@ -104,11 +148,11 @@
                     ?>
                 <?php
             }
-            echo '<tr><td colspan="6" class="pagination" style="text-align:center">' . $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() . $this->Paginator->next('>'). $this->Paginator->last('>>') . '<td></tr>';
+            echo '<tr><td colspan="8" class="pagination" style="text-align:center">' . $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() . $this->Paginator->next('>'). $this->Paginator->last('>>') . '<td></tr>';
         } else {
             ?>
                 <tr>
-                    <td height="24" colspan="5"><?php echo __('No polls found in database!') ?></td>
+                    <td height="24" colspan="8"><?php echo __('No polls found in database!') ?></td>
                 </tr>
         <?php } ?>
 

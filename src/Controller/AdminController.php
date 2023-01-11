@@ -46,10 +46,10 @@ class AdminController extends AppController
 
         $uinfopolls = $this->fetchTable('Polls')->findByUserinfo(1)->select('id');
         $dbuserinfos = $this->fetchTable('Entries')->find()
-                ->contain(['Choices', 'Users'])
-                ->where(['Choices.poll_id IN' => $uinfopolls, 'Users.info !=' => ''])
-                ->select(['poll_id' => 'Choices.poll_id', 'name' => 'Users.name', 'info' => 'Users.info'])
-                ->group(['Users.id']);
+            ->contain(['Choices', 'Users'])
+            ->where(['Choices.poll_id IN' => $uinfopolls, 'Users.info !=' => ''])
+            ->select(['poll_id' => 'Choices.poll_id', 'name' => 'Users.name', 'info' => 'Users.info'])
+            ->group(['Users.id']);
 
         $userinfos = array();
         foreach ($dbuserinfos as $uinfo) {
@@ -61,13 +61,33 @@ class AdminController extends AppController
         // debug($userinfos);
         // die;
 
+        $dbnumentries = $this->fetchTable('Entries')->find()
+            ->contain(['Choices'])
+            ->select(['Choices.poll_id'])
+            ->group(['user_id']); 
+        $dbnumentries = $dbnumentries->all();
+        $numentries = array();
+        foreach($dbnumentries as $entry) {
+            $numentries[] = $entry->choice->poll_id;
+        }
+        $numentries = array_count_values($numentries);
+
+        $dbnumcomments = $this->fetchTable('Comments')->find()
+        ->select(['poll_id', 'count' => 'COUNT(*)'])
+        ->group(['poll_id']); 
+        $dbnumcomments = $dbnumcomments->all();
+        $numcomments = array();
+        foreach($dbnumcomments as $comm) {
+            $numcomments[$comm->poll_id] = $comm->count;
+        }
+ 
         $polls = $this->paginate(
             $this->fetchTable('Polls')->find('all'), [
                     'limit' => 20,
                 ]
         );
 
-        $this->set(compact('polls', 'userinfos', 'currentUserRole', 'viewerRole'));
+        $this->set(compact('polls', 'numentries', 'numcomments', 'userinfos', 'currentUserRole', 'viewerRole'));
     }
 
     //------------------------------------------------------------------------

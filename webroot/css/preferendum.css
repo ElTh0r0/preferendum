@@ -897,6 +897,33 @@ button[type="button"]:disabled {
     background-image: url("../img/icon-chart.png");
 }
 
+button.admin-view-poll {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-eye.png)
+        no-repeat;
+    background-position: center center;
+}
+
+button.admin-edit-poll {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-pen.png)
+        no-repeat;
+    background-position: center center;
+}
+
+button.admin-delete-poll {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-delete.png)
+        no-repeat;
+    background-position: center center;
+}
+
 .collapsible {
     width: 100%;
     text-align: left;

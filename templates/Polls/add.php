@@ -100,7 +100,7 @@ $this->Html->scriptEnd();
     if (\Cake\Core\Configure::read('preferendum.adminLinks')) {
         echo '<li>';
         echo $this->Form->checkbox(
-            'adminLink', [
+            'adminid', [
             'value' => 'true',
             'id' => 'adminInput',
             'onchange' => 'toggleHideResultInput()',
