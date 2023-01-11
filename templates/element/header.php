@@ -19,8 +19,8 @@
         <!-- HEADER IS USED IN OTHER VIEW -->
         <!-- On admin page $poll==Null / not set -->
         <?php
-        $base = $this->request->getUri()->getPath();
-        $base = basename($base);
+        $request = $this->request->getUri()->getPath();
+        $base = basename($request);
         if (strcmp($base, 'admin') == 0 || strcmp($base, 'login') == 0 || strcmp($base, 'users') == 0) { ?>
             <h1><?php echo __('Administration') ?></h1>
             <p class="details"></p>
@@ -35,12 +35,20 @@
             <h1><?php echo h($poll->title) ?></h1>
             <p class="details"><?php echo h($poll->details) ?></p>
             
+            <?php if (stripos($request, 'polls/edit') > 0) { ?>
             <div class="poll-url-container">
                 <span class="success"><em><?php echo __('Public link') . ':' ?></em></span>
                 <input type="text" id="public-url-field" title="<?php echo __('Give this public link to the participants of your poll!') ?>" readonly/>
                 <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
                 <span class="pale">&nbsp;&larr; <?php echo __('Give this public link to the participants of your poll!') ?></span>
             </div>
+            <?php } else { ?>
+                <div class="poll-url-container">
+                <span class="success"><em><?php echo __('Public link') . ':' ?></em></span>
+                <input type="text" id="public-url-field" readonly/>
+                <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
+            </div>
+            <?php } ?>
             <?php if (strcmp($poll->adminid, "NA") != 0 && strcmp($poll->adminid, $adminid) == 0) { ?>
             <div class="poll-url-container">
                 <span class="fail"><em><?php echo __('Admin link') . ':' ?></em></span>

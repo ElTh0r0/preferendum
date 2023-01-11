@@ -39,7 +39,7 @@
                     <?php echo h($choice->option) ?>
                 </div>
             </div>
-            <?php if (sizeof($pollchoices) > 2) {
+            <?php if (sizeof($pollchoices) > 1) {
                 echo $this->Form->postLink(
                     $this->Form->button(
                         '', [
