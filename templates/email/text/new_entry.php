@@ -6,7 +6,7 @@
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright 2020-2023 github.com/ElTh0r0
+ * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
