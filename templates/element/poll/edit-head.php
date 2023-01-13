@@ -39,7 +39,23 @@
     );
     
     echo '<ul>';
-    if (\Cake\Core\Configure::read('preferendum.collectUserinfo') && \Cake\Core\Configure::read('preferendum.adminInterface')) {
+    if (\Cake\Core\Configure::read('preferendum.hidePollResult') &&
+        strcmp($poll->adminid, "NA") != 0
+    ) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'hideresult', [
+            'value' => 'true',
+            'checked' => $poll->hideresult,
+            ]
+        );
+        echo '<span style="font-size: 90%;">' . __('Hide poll results for users (only admin can see the votes)') . '</span>';
+        echo '</li>';
+    }
+
+    if (\Cake\Core\Configure::read('preferendum.collectUserinfo') &&
+        \Cake\Core\Configure::read('preferendum.adminInterface')
+    ) {
         echo '<li>';
         echo $this->Form->checkbox(
             'userinfo', [
