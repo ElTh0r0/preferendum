@@ -17,17 +17,28 @@
 <?php $this->Html->script('poll_view.js', ['block' => 'scriptBottom']); ?>
 <?php $this->Html->script('clipboard.min.js', ['block' => true]); ?>
 <?php $this->Html->scriptBlock(
-    'function toggleEmailInput() {
-    document.getElementById("emailInput").disabled =
-        !document.getElementById("emailentryInput").checked &&
-        !document.getElementById("emailcommentInput").checked;
-
-    if (document.getElementById("emailInput").disabled) {
-        document.getElementById("emailInput").required = false;
-    } else {
-        document.getElementById("emailInput").required
-    }
-}', ['block' => true]
+    'var chkEmailEntry = document.getElementById("emailentryInput");
+    var chkEmailComment = document.getElementById("emailcommentInput");
+    function toggleEmailInput() {
+        var isCheckedEntry = false;
+        if (chkEmailEntry) {
+            isCheckedEntry = chkEmailEntry.checked;
+        }
+        var isCheckedComment = false;
+        if (chkEmailComment) {
+            isCheckedComment = chkEmailComment.checked;
+        }
+    
+        document.getElementById("emailInput").disabled =
+            !isCheckedEntry && !isCheckedComment;
+    
+        if (document.getElementById("emailInput").disabled) {
+            document.getElementById("emailInput").value = "";
+            document.getElementById("emailInput").required = false;
+        } else {
+            document.getElementById("emailInput").required;
+        }
+    }', ['block' => 'scriptBottom']
 ); ?>
 
 <?php

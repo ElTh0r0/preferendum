@@ -67,35 +67,33 @@
         echo '</li>';
     }
 
-    echo '<li>';
-    echo $this->Form->checkbox(
-        'emailentry', [
-        'value' => 'true',
-        'id' => 'emailentryInput',
-        'checked' => $poll->emailentry,
-        'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')),
-        ]
-    );
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'emailentry', [
+            'value' => 'true',
+            'id' => 'emailentryInput',
+            'checked' => $poll->emailentry,
+            'onchange' => 'toggleEmailInput()',
+            ]
+        );
         echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
+        echo '</li>';
     }
-    echo '</li>';
-        
-    echo '<li>';
-    echo $this->Form->checkbox(
-        'emailcomment', [
-        'value' => 'true',
-        'id' => 'emailcommentInput',
-        'checked' => $poll->emailcomment,
-        'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')),
-        ]
-    );
+
     if (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'emailcomment', [
+            'value' => 'true',
+            'id' => 'emailcommentInput',
+            'checked' => $poll->emailcomment,
+            'onchange' => 'toggleEmailInput()',
+            ]
+        );
         echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
+        echo '</li>';
     }
-    echo '</li>';
     echo '</ul>';
 
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail') 

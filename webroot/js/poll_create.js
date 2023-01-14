@@ -1,5 +1,4 @@
-$(document).ready(function() {
-
+$(document).ready(function () {
     $("#title").focus();
     $("#btnLess").css("cursor", "default");
 
@@ -8,20 +7,22 @@ $(document).ready(function() {
         autoHide: "true",
         weekStart: 1,
         language: jslocale,
-        days: [jssunday,
+        days: [
+            jssunday,
             jsmonday,
             jstuesday,
             jswednesday,
             jsthursday,
             jsfriday,
-            jssaturday]
+            jssaturday,
+        ],
     };
 
     //init first datepicker
     $(".dateInput").datepicker(datepickerOptions);
 
     //add new date field
-    $("#btnMore").click(function() {
+    $("#btnMore").click(function () {
         if ($(".dateInput").length >= jsmaxoptions) return;
         $(".dateInput").last().after($(".dateInput").last().clone());
         $(".dateInput").last().val($(".dateInput:nth-last-child(2)").val());
@@ -33,7 +34,7 @@ $(document).ready(function() {
     });
 
     //remove one date field
-    $("#btnLess").click(function() {
+    $("#btnLess").click(function () {
         $(".dateInput").not(":first").last().datepicker("destroy");
         $(".dateInput").not(":first").last().detach();
         $(".dateInput").last().focus();
@@ -44,24 +45,33 @@ $(document).ready(function() {
             $("#btnLess").css("cursor", "default");
         }
     });
-
 });
 
 //enable/disable email input depending on checkboxes
+var chkEmailEntry = document.getElementById("emailentryInput");
+var chkEmailComment = document.getElementById("emailcommentInput");
 function toggleEmailInput() {
+    var isCheckedEntry = false;
+    if (chkEmailEntry) {
+        isCheckedEntry = chkEmailEntry.checked;
+    }
+    var isCheckedComment = false;
+    if (chkEmailComment) {
+        isCheckedComment = chkEmailComment.checked;
+    }
+
     document.getElementById("emailInput").disabled =
-        !document.getElementById("emailentryInput").checked &&
-        !document.getElementById("emailcommentInput").checked;
+        !isCheckedEntry && !isCheckedComment;
 
     if (document.getElementById("emailInput").disabled) {
         document.getElementById("emailInput").value = "";
         document.getElementById("emailInput").required = false;
     } else {
-        document.getElementById("emailInput").required
+        document.getElementById("emailInput").required;
     }
 }
 
-//enable/disable email input depending on checkboxes
+//enable/disable hideresult option depending on checkboxes
 function toggleHideResultInput() {
     document.getElementById("hideresultInput").disabled =
         !document.getElementById("adminInput").checked;

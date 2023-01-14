@@ -40,8 +40,12 @@ class PollsController extends AppController
         if ($this->request->is('post')) {
             $poll = $this->Polls->patchEntity($poll, $this->request->getData());
 
+            // Some checks to prevent manipulating disabled input fields through browser tools
             if (\Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks')) {
                 $poll->adminid = true;
+            }
+            if (!$poll->adminid) {
+                $poll->hideresult = 0;
             }
             if (!($poll->emailentry) && !($poll->emailcomment)) {
                 $poll->email = '';
@@ -158,6 +162,9 @@ class PollsController extends AppController
         if (strcmp($dbadminid, $adminid) == 0) {
             if ($this->request->is(['post', 'put'])) {
                 $this->Polls->patchEntity($poll, $this->request->getData());
+                if (!($poll->emailentry) && !($poll->emailcomment)) {
+                    $poll->email = '';
+                }
                 if ($this->Polls->save($poll)) {
                     $this->Flash->success(__('Your poll has been updated.'));
                     return $this->redirect(['action' => 'edit', $poll->id, $adminid]);
