@@ -27,21 +27,25 @@ return [
     'preferendum' => [
         // Turn on(true)/off(false) admin interface
         'adminInterface' => false,
-        // Turn on(true)/off(false) admin link functionality (recommended)
-        'adminLinks' => true,
+
+        // Turn on(true)/off(false) to use admin links for ALL new polls automatically.
+        'alwaysUseAdminLinks' => true,
+        // If 'alwaysUseAdminLinks' is disabled, turn on(true)/off(false) admin link functionality optionally for each poll.
+        'opt_AdminLinks' => false,
 
         // Add (optional) field to make result only visible for admin
-        // (This feature can only be used, if 'adminLinks' is enabled and used, too.)
-        'hidePollResult' => false,
+        // (This feature can only be used, if 'alwaysUseAdminLinks' OR 'opt_AdminLinks' is enabled and used, too.)
+        'opt_HidePollResult' => false,
+
         // Add (optional) field to store user contact information together with entry. Only admin can see the user info.
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
-        'collectUserinfo' => false,
+        'opt_CollectUserinfo' => false,
 
         // Send an email after new poll entry or comment
         // After enabling this feature, it can be dis-/enabled for each poll separately and receiver can be defined.
         // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
-        'sendEntryEmail' => false,
-        'sendCommentEmail' => false,
+        'opt_SendEntryEmail' => false,
+        'opt_SendCommentEmail' => false,
 
         // Header Logo (set to true if you want to show header logo, false otherwise)
         'headerLogo' => true,
@@ -55,6 +59,7 @@ return [
 
         // Maximum number of options / dates per poll
         'maxPollOptions' => 30,
+
         // Datepicker date format (e.g. 'yyyy-mm-dd' or 'dd.mm.yyyy')
         'datepickerFormat' => 'yyyy-mm-dd',
 

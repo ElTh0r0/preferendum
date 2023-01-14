@@ -39,7 +39,7 @@
     );
     
     echo '<ul>';
-    if (\Cake\Core\Configure::read('preferendum.hidePollResult') &&
+    if (\Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
         strcmp($poll->adminid, "NA") != 0
     ) {
         echo '<li>';
@@ -53,7 +53,7 @@
         echo '</li>';
     }
 
-    if (\Cake\Core\Configure::read('preferendum.collectUserinfo') &&
+    if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
         \Cake\Core\Configure::read('preferendum.adminInterface')
     ) {
         echo '<li>';
@@ -74,10 +74,10 @@
         'id' => 'emailentryInput',
         'checked' => $poll->emailentry,
         'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('preferendum.sendEntryEmail')),
+        'hidden' => !(\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')),
         ]
     );
-    if (\Cake\Core\Configure::read('preferendum.sendEntryEmail')) {
+    if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
         echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
     }
     echo '</li>';
@@ -89,17 +89,17 @@
         'id' => 'emailcommentInput',
         'checked' => $poll->emailcomment,
         'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('preferendum.sendCommentEmail')),
+        'hidden' => !(\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')),
         ]
     );
-    if (\Cake\Core\Configure::read('preferendum.sendCommentEmail')) {
+    if (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')) {
         echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
     }
     echo '</li>';
     echo '</ul>';
 
-    if (\Cake\Core\Configure::read('preferendum.sendEntryEmail') 
-        || \Cake\Core\Configure::read('preferendum.sendCommentEmail')
+    if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail') 
+        || \Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
     ) {
         echo $this->Form->control(
             'email', [

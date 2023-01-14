@@ -60,7 +60,7 @@ class PollsController extends AppController
                 }
                 if ($success) {
                     $this->Flash->success(__('Your poll has been saved.'));
-                    if ($poll->adminLink == true) {
+                    if ($poll->adminid == true) {
                         return $this->redirect(['action' => 'view', $poll->id, $poll->adminid]);
                     }
                     return $this->redirect(['action' => 'view', $poll->id]);
