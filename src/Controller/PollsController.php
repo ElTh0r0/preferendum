@@ -39,7 +39,13 @@ class PollsController extends AppController
         $poll = $this->Polls->newEmptyEntity();
         if ($this->request->is('post')) {
             $poll = $this->Polls->patchEntity($poll, $this->request->getData());
-            $poll->locked = 0;
+
+            if (\Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks')) {
+                $poll->adminid = true;
+            }
+            if (!($poll->emailentry) && !($poll->emailcomment)) {
+                $poll->email = '';
+            }
 
             if ($this->Polls->save($poll)) {
                 $success = true;

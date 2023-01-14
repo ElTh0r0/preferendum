@@ -97,8 +97,8 @@ $this->Html->scriptEnd();
     echo '</div>';
 
     echo '<ul>';
-    if (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
-        \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks')
+    if (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') &&
+        !(\Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
     ) {
         echo '<li>';
         echo $this->Form->checkbox(
@@ -107,32 +107,26 @@ $this->Html->scriptEnd();
             'id' => 'adminInput',
             'onchange' => 'toggleHideResultInput()',
             'checked' => true,
-            'hidden' => \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'),
             ]
         );
-        if (!(\Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))) {
-            echo '<span style="font-size: 90%;">' . __('Edit/deleting poll/entries only with admin link') . '</span>';
-        }
+        echo '<span style="font-size: 90%;">' . __('Edit/deleting poll/entries only with admin link') . '</span>';
         echo '</li>';
     }
     
-    echo '<li>';
-    echo $this->Form->checkbox(
-        'hideresult', [
-        'value' => 'true',
-        'id' => 'hideresultInput',
-        'hidden' => !(\Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
-                      (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
-                      \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))),
-        ]
-    );
     if (\Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
         (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
-         \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
+        \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
     ) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'hideresult', [
+            'value' => 'true',
+            'id' => 'hideresultInput',
+            ]
+        );
         echo '<span style="font-size: 90%;">' . __('Hide poll results for users (only admin can see the votes)') . '</span>';
+        echo '</li>';
     }
-    echo '</li>';
 
     if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
         \Cake\Core\Configure::read('preferendum.adminInterface')
@@ -147,33 +141,31 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
 
-    echo '<li>';
-    echo $this->Form->checkbox(
-        'emailentry', [
-        'value' => 'true',
-        'id' => 'emailentryInput',
-        'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')),
-        ]
-    );
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'emailentry', [
+            'value' => 'true',
+            'id' => 'emailentryInput',
+            'onchange' => 'toggleEmailInput()',
+            ]
+        );
         echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
+        echo '</li>';
     }
-    echo '</li>';
     
-    echo '<li>';
-    echo $this->Form->checkbox(
-        'emailcomment', [
-        'value' => 'true',
-        'id' => 'emailcommentInput',
-        'onchange' => 'toggleEmailInput()',
-        'hidden' => !(\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')),
-        ]
-    );
     if (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'emailcomment', [
+            'value' => 'true',
+            'id' => 'emailcommentInput',
+            'onchange' => 'toggleEmailInput()',
+            ]
+        );
         echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
+        echo '</li>';
     }
-    echo '</li>';
     echo '</ul>';
 
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail') 
