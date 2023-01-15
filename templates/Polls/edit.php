@@ -36,7 +36,7 @@
             document.getElementById("emailInput").value = "";
             document.getElementById("emailInput").required = false;
         } else {
-            document.getElementById("emailInput").required;
+            document.getElementById("emailInput").required = "required";
         }
     }', ['block' => 'scriptBottom']
 ); ?>
