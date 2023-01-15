@@ -63,7 +63,14 @@
     }
     ?>
     
-    <?php echo $this->Form->create($newOrUpdateUser) ?>
+    <?php
+    echo $this->Form->create(
+        $user, [
+            'type' => 'post',
+            'url' => ['controller' => 'Users','action' => 'addOrUpdateUser', $currentUserName, $currentUserRole]
+            ]
+        );
+    ?> 
     <fieldset>
         <?php
         if (strcmp($currentUserRole, $allroles[0]) == 0) {
@@ -75,9 +82,6 @@
 
             echo $this->Form->label('role', __('Role'));
             echo $this->Form->select('role', $allroles, ['value' => 0, 'empty' => false]);
-        } else {
-            echo $this->Form->hidden('name', ['value' => $currentUserName]);
-            echo $this->Form->hidden('role', ['value' => array_search($currentUserRole, $allroles)]);
         }
         ?>
         <?php echo $this->Form->control(

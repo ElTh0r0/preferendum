@@ -18,21 +18,21 @@ use Cake\Mailer\Mailer;
 
 class CommentsController extends AppController
 {
-    public function add()
+    public function add($pollid = null)
     {
-        if ($this->request->is('post')) {
-            $comment = $this->Comments->newEmptyEntity();
-            $comment = $this->Comments->patchEntity($comment, $this->request->getData());
-            $pollid = $this->request->getData()['poll_id'];
-
+        if ($this->request->is('post') && isset($pollid) && !empty($pollid)) {
             $poll = $this->fetchTable('Polls')
                 ->findById($pollid)
-                ->select(['title', 'locked', 'email', 'emailcomment'])
+                ->select(['id', 'title', 'locked', 'email', 'emailcomment'])
                 ->firstOrFail();
             $dbtitle = $poll['title'];
             $dblocked = $poll['locked'];
             $dbemail = $poll['email'];
             $dbemailcomment = $poll['emailcomment'];
+
+            $comment = $this->Comments->newEmptyEntity();
+            $comment = $this->Comments->patchEntity($comment, $this->request->getData());
+            $comment->poll_id = $poll['id'];
             
             $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
             \Cake\Core\Configure::load('app_local');

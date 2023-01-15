@@ -25,6 +25,29 @@ class EntriesController extends AppController
             // die();
             $data = $this->request->getData();
 
+            // Check, that values are in the expected range and had not been manipulated
+            for ($i = 0; $i < sizeof($data['values']); $i++) {
+                if (strcmp(trim($data['values'][$i]), '0') != 0 &&
+                    strcmp(trim($data['values'][$i]), '1') != 0 &&
+                    strcmp(trim($data['values'][$i]), '2') != 0
+                ) {
+                    $this->Flash->error(__('Unable to save your entry.'));
+                    return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+                }
+            }
+
+            // Check, that choices ID was not manipulated
+            $dbchoices = $this->Entries->Choices->findByPollId($pollid)->select(['id'])->all();
+            $validchoices = array();
+            foreach ($dbchoices as $dbc) {
+                $validchoices[] = $dbc['id'];
+            }
+            $dbchoices = array_diff($validchoices, $data['choices']);
+            if (sizeof($dbchoices) > 0) {
+                $this->Flash->error(__('Unable to save your entry.'));
+                return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+            }
+
             $query = $this->Entries->find(
                 'all', [
                 'contain' => ['Users', 'Choices'],

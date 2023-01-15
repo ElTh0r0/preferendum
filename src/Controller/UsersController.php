@@ -50,16 +50,33 @@ class UsersController extends AppController
         $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role'])->where(['role IN' => self::ROLES]);
         $backendusers = $backendusers->all()->toArray();
 
-        $newOrUpdateUser = $this->Users->newEmptyEntity();
+        $user = $this->Users->newEmptyEntity();
+        
+        $this->set(compact('backendusers', 'allroles', 'currentUserName', 'currentUserRole', 'user'));
+    }
+
+    //------------------------------------------------------------------------
+
+    public function addOrUpdateUser($currentUserName = null, $currentUserRole = null)
+    {
+        $this->request->allowMethod(['post', 'addOrUpdateUser']);
+
         if ($this->request->is('post', 'put')) {
             if (self::DEMOMODE) {
                 $this->Flash->error(__('DEMO MODE enabled! User creation / password change is not possible!'));
                 return $this->redirect(['action' => 'index']);
             }
 
+            $newOrUpdateUser = $this->Users->newEmptyEntity();
             $this->Users->patchEntity($newOrUpdateUser, $this->request->getData());
-            $newOrUpdateUser['name'] = trim($newOrUpdateUser['name']);
-            $newOrUpdateUser['role'] = self::ROLES[$newOrUpdateUser['role']];
+            
+            // Name not set, considering that current user wants to update his password
+            if (!($newOrUpdateUser['name'])) {
+                $newOrUpdateUser['name'] = $currentUserName;
+                $newOrUpdateUser['role'] = $currentUserRole;    
+            } else {
+                $newOrUpdateUser['role'] = self::ROLES[$newOrUpdateUser['role']];
+            }          
 
             $dbuser = $this->Users
                 ->find()
@@ -97,7 +114,6 @@ class UsersController extends AppController
             $this->Flash->error(__('Unable to add the user.'));
             return $this->redirect(['action' => 'index']);
         }
-        $this->set(compact('backendusers', 'allroles', 'currentUserName', 'currentUserRole', 'newOrUpdateUser'));
     }
 
     //------------------------------------------------------------------------

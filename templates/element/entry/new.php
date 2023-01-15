@@ -20,11 +20,6 @@
         'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id]
         ]
     );
-    echo $this->Form->hidden(
-        'poll_id', [
-        'value' => $poll->id,
-        ]
-    );
     echo '<td class="schedule-name-input">';
     echo $this->Form->text(
         'name', [

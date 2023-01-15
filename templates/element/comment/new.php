@@ -23,12 +23,7 @@
         echo $this->Form->create(
             $comment, [
             'type' => 'post',
-            'url' => ['controller' => 'Comments','action' => 'add']
-            ]
-        );
-        echo $this->Form->hidden(
-            'poll_id', [
-            'value' => $poll->id,
+            'url' => ['controller' => 'Comments','action' => 'add', $poll->id]
             ]
         );
         echo $this->Form->control(
