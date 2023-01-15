@@ -107,6 +107,15 @@ class InstalldbController extends AppController
             die;
         }
 
+        $table = $connection->execute('SELECT IF( EXISTS(
+            SELECT *
+            FROM INFORMATION_SCHEMA.TABLES
+          WHERE TABLE_NAME = "polls"), 1, 0) as "exists";')->fetchAll('assoc');
+        if ($table[0]['exists']) {
+            echo '<li><strong>Attention:</strong> Install script was already executed - stopping execution!</li>';
+            die;
+        }
+
         echo '<li>Creating "comments" table</li>';
         $connection->execute('CREATE TABLE `comments` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -169,6 +178,16 @@ class InstalldbController extends AppController
             ADD KEY `choice_id` (`choice_id`);');
         $connection->execute('ALTER TABLE `entries`
             ADD KEY `user_id` (`user_id`);');
+
+        echo '<li>Creating contraints</li>';
+        $connection->execute('ALTER TABLE `comments`
+            ADD CONSTRAINT `fk_comm_pollid` FOREIGN KEY (`poll_id`) REFERENCES `polls` (`id`);');
+        $connection->execute('ALTER TABLE `choices`
+            ADD CONSTRAINT `fk_choi_pollid` FOREIGN KEY (`poll_id`) REFERENCES `polls` (`id`);');
+        $connection->execute('ALTER TABLE `entries`
+            ADD CONSTRAINT `fk_entr_choiceid` FOREIGN KEY (`choice_id`) REFERENCES `choices` (`id`);');
+        $connection->execute('ALTER TABLE `entries`
+            ADD CONSTRAINT `fk_entr_userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);');
 
         echo '</ul><p>DONE!</p>';
         echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';

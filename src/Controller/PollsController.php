@@ -225,28 +225,33 @@ class PollsController extends AppController
             $poll = $this->Polls->findById($pollid)->firstOrFail();
             $dbadminid = $poll->adminid;
             if (strcmp($dbadminid, $adminid) == 0) {
-                $users = $this->fetchTable('Entries')->find()
+                $success = true;
+                $entries = $this->fetchTable('Entries')->find()
+                    ->where(['poll_id' => $pollid])
+                    ->contain(['Choices'])
+                    ->select(['id']);
+                // Collect users before deleting the entries, otherwise users cannot be found anymore
+                $dbusers = $this->fetchTable('Entries')->find()
                     ->where(['poll_id' => $pollid])
                     ->contain(['Users', 'Choices'])
                     ->select(['user_id' => 'Users.id'])
-                    ->group(['user_id']);
+                    ->group(['user_id'])->all();
+                $users = array();
+                foreach ($dbusers as $usr) {
+                    $users[] = $usr['user_id'];
+                }
 
-                $success = true;
-                // Users must be deleted manually, since there is no direct dependency between Polls and Users table
-                if ($users->count() > 0) {
-                    if (!$this->fetchTable('Users')->deleteAll(['id IN' => $users])) {
+                // Entries must be deleted manually, since there is no direct dependency between Polls and Entries table
+                if ($entries->count() > 0) {
+                    if (!$this->fetchTable('Entries')->deleteAll(['id IN' => $entries])) {
                         $success = false;
                     }
                 }
 
-                if ($success) {
-                    $entries = $this->fetchTable('Entries')->find()
-                        ->where(['poll_id' => $pollid])
-                        ->contain(['Choices'])
-                        ->select(['id']);                    
-                    // Entries must be deleted manually, since there is no direct dependency between Polls and Entries table
-                    if ($entries->count() > 0) {
-                        if (!$this->fetchTable('Entries')->deleteAll(['id IN' => $entries])) {
+                if ($success) {                   
+                    // Users must be deleted manually, since there is no direct dependency between Polls and Users table
+                    if (sizeof($users) > 0) {
+                        if (!$this->fetchTable('Users')->deleteAll(['id IN' => $users])) {
                             $success = false;
                         }
                     }
