@@ -78,6 +78,7 @@ class EntriesController extends AppController
                     'info' => $userinfo
                 ]);
                 
+                $success = false;
                 if ($this->fetchTable('Users')->save($new_user)) {
                     $success = true;
 

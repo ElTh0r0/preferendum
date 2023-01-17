@@ -37,7 +37,7 @@ class PollsController extends AppController
     public function add()
     {
         $poll = $this->Polls->newEmptyEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') && null !== $this->request->getData('choices')) {
             $poll = $this->Polls->patchEntity($poll, $this->request->getData());
 
             // Some checks to prevent manipulating disabled input fields through browser tools
@@ -46,6 +46,10 @@ class PollsController extends AppController
             }
             if (!$poll->adminid) {
                 $poll->hideresult = 0;
+            }
+            if (!filter_var($poll->email, FILTER_VALIDATE_EMAIL)) {
+                $poll->emailentry = 0;
+                $poll->emailcomment = 0;
             }
             if (!($poll->emailentry) && !($poll->emailcomment)) {
                 $poll->email = '';
@@ -74,6 +78,8 @@ class PollsController extends AppController
                         return $this->redirect(['action' => 'view', $poll->id, $poll->adminid]);
                     }
                     return $this->redirect(['action' => 'view', $poll->id]);
+                } else {
+                    $this->Polls->delete($poll);
                 }
             }
             $this->Flash->error(__('Unable to add your poll.'));
@@ -162,6 +168,10 @@ class PollsController extends AppController
         if (strcmp($dbadminid, $adminid) == 0) {
             if ($this->request->is(['post', 'put'])) {
                 $this->Polls->patchEntity($poll, $this->request->getData());
+                if (!filter_var($poll->email, FILTER_VALIDATE_EMAIL)) {
+                    $poll->emailentry = 0;
+                    $poll->emailcomment = 0;
+                }
                 if (!($poll->emailentry) && !($poll->emailcomment)) {
                     $poll->email = '';
                 }
