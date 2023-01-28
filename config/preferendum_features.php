@@ -33,6 +33,9 @@ return [
         // If 'alwaysUseAdminLinks' is disabled, turn on(true)/off(false) admin link functionality optionally for each poll.
         'opt_AdminLinks' => false,
 
+        // Turn on(true)/off(false) to allow comments for ALL polls.
+        'alwaysAllowComments' => true,
+
         // Add (optional) field to make result only visible for admin
         // (This feature can only be used, if 'alwaysUseAdminLinks' OR 'opt_AdminLinks' is enabled and used, too.)
         'opt_HidePollResult' => false,

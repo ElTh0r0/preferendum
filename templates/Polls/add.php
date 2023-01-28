@@ -154,7 +154,9 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
     
-    if (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')) {
+    if (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
+        && \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+    ) {
         echo '<li>';
         echo $this->Form->checkbox(
             'emailcomment', [
@@ -169,7 +171,8 @@ $this->Html->scriptEnd();
     echo '</ul>';
 
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail') 
-        || \Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
+        || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
+            && \Cake\Core\Configure::read('preferendum.alwaysAllowComments'))
     ) {
         echo $this->Form->control(
             'email', [

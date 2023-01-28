@@ -43,7 +43,11 @@
             echo '<tr><td>' . $this->Paginator->sort('title', $sTitle, ['escape' => false]) . '</td>';
             echo '<td></td>';
             echo '<td>' . __('Votes') . '</td>';
-            echo '<td>' . __('Comments') . '</td>';
+            if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+                echo '<td>' . __('Comments') . '</td>';
+            } else {
+                echo '<td></td>';
+            }
             echo '<td>' . $this->Paginator->sort('modified', $sModi, ['escape' => false]) . '</td>';
             echo '<td colspan="3"></td></tr>';
             foreach ($polls as $poll) {
@@ -86,10 +90,12 @@
                 </td>
                 <td>
                     <?php
-                    if (array_key_exists($poll->id, $numcomments)) {
-                        echo $numcomments[$poll->id];
-                    } else {
-                        echo 0;
+                    if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+                        if (array_key_exists($poll->id, $numcomments)) {
+                            echo $numcomments[$poll->id];
+                        } else {
+                            echo 0;
+                        }
                     }
                     ?>
                 </td>

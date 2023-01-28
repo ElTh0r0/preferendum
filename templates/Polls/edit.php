@@ -82,8 +82,8 @@ $this->Html->scriptEnd();
     </table>
 </div>
 
-<!-- COMMENTS VIEW -->
-<div id="comments-wrapper">
-    <!-- COMMENTS LIST -->
-    <?php echo $this->element('comment/delete'); ?>
-</div>
+<?php if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+    echo '<div id="comments-wrapper">';
+        echo $this->element('comment/delete');
+    echo '</div>';
+} ?>

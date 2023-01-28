@@ -72,13 +72,17 @@ class AdminController extends AppController
         }
         $numentries = array_count_values($numentries);
 
-        $dbnumcomments = $this->fetchTable('Comments')->find()
-        ->select(['poll_id', 'count' => 'COUNT(*)'])
-        ->group(['poll_id']); 
-        $dbnumcomments = $dbnumcomments->all();
-        $numcomments = array();
-        foreach($dbnumcomments as $comm) {
-            $numcomments[$comm->poll_id] = $comm->count;
+        if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+            $dbnumcomments = $this->fetchTable('Comments')->find()
+            ->select(['poll_id', 'count' => 'COUNT(*)'])
+            ->group(['poll_id']); 
+            $dbnumcomments = $dbnumcomments->all();
+            $numcomments = array();
+            foreach($dbnumcomments as $comm) {
+                $numcomments[$comm->poll_id] = $comm->count;
+            }
+        } else {
+            $numcomments = array();
         }
  
         $polls = $this->paginate(

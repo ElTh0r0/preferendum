@@ -66,12 +66,13 @@ $this->Html->scriptEnd();
     </table>
 </div>
 
-<!-- COMMENTS VIEW -->
-<div id="comments-wrapper">
-    <?php if ($poll->hideresult == 0) {
-        echo $this->element('comment/list');
-    }
-    if ($poll->locked == 0) {
-        echo $this->element('comment/new');
-    } ?>
-</div>
+<?php if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+    echo '<div id="comments-wrapper">';
+        if ($poll->hideresult == 0) {
+            echo $this->element('comment/list');
+        }
+        if ($poll->locked == 0) {
+            echo $this->element('comment/new');
+        }
+    echo '</div>';
+} ?>

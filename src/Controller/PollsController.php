@@ -47,6 +47,9 @@ class PollsController extends AppController
             if (!$poll->adminid) {
                 $poll->hideresult = 0;
             }
+            if (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+                $poll->emailcomment = 0;
+            }
             if (!filter_var($poll->email, FILTER_VALIDATE_EMAIL)) {
                 $poll->emailentry = 0;
                 $poll->emailcomment = 0;
@@ -92,10 +95,18 @@ class PollsController extends AppController
 
     public function view($pollid = null, $adminid = 'NA')
     {
-        $poll = $this->Polls->find()
-            ->where(['id' => $pollid])
-            ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
-            ->firstOrFail();
+        if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+            $poll = $this->Polls->find()
+                ->where(['id' => $pollid])
+                ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
+                ->firstOrFail();
+            $comment = $this->fetchTable('Comments')->newEmptyEntity();  // New empty entity for new comment
+        } else {
+            $poll = $this->Polls->find()
+                ->where(['id' => $pollid])
+                ->firstOrFail();
+            $comment = null;
+        }
 
         $dbchoices = $this->fetchTable('Choices')->find()
             ->where(['poll_id' => $pollid])
@@ -117,8 +128,7 @@ class PollsController extends AppController
             $pollentries[$entry->name][$entry->choice_id] = $entry->value;
         }
 
-        $entry = $this->fetchTable('Entries')->newEmptyEntity();
-        $comment = $this->fetchTable('Comments')->newEmptyEntity();
+        $entry = $this->fetchTable('Entries')->newEmptyEntity();  // New empty entity for new entry
         
         if ($poll->locked != 0) {
             $this->Flash->error(__('This poll is locked - it is not possible to insert new entries or comments!'));
@@ -134,10 +144,16 @@ class PollsController extends AppController
 
     public function edit($pollid = null, $adminid = 'NA')
     {
-        $poll = $this->Polls->find()
-            ->where(['id' => $pollid])
-            ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
-            ->firstOrFail();
+        if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+            $poll = $this->Polls->find()
+                ->where(['id' => $pollid])
+                ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
+                ->firstOrFail();
+        } else {
+            $poll = $this->Polls->find()
+                ->where(['id' => $pollid])
+                ->firstOrFail();
+        }
         
         $dbchoices = $this->fetchTable('Choices')->find()
             ->where(['poll_id' => $pollid])
