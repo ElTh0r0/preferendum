@@ -35,6 +35,8 @@ return [
 
         // Turn on(true)/off(false) to allow comments for ALL polls.
         'alwaysAllowComments' => true,
+        // If 'alwaysAllowComments' is disabled, turn on(true)/off(false) to allow comments optionally for each poll.
+        'opt_Comments' => false,
 
         // Add (optional) field to make result only visible for admin
         // (This feature can only be used, if 'alwaysUseAdminLinks' OR 'opt_AdminLinks' is enabled and used, too.)

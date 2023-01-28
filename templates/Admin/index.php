@@ -43,7 +43,9 @@
             echo '<tr><td>' . $this->Paginator->sort('title', $sTitle, ['escape' => false]) . '</td>';
             echo '<td></td>';
             echo '<td>' . __('Votes') . '</td>';
-            if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+            if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+                || \Cake\Core\Configure::read('preferendum.opt_Comments')
+            ) {
                 echo '<td>' . __('Comments') . '</td>';
             } else {
                 echo '<td></td>';
@@ -72,6 +74,12 @@
                 if ($poll->userinfo) {
                     echo '<img src="img/icon-user-info.png" title="' . __('Collect user info') . '"/> ';
                 }
+                if (\Cake\Core\Configure::read('preferendum.opt_Comments')
+                    && !($poll->comment)
+                    && !(\Cake\Core\Configure::read('preferendum.alwaysAllowComments'))
+                ) {
+                    echo '<img src="img/icon-no-comment.png" title="' . __('No comments allowed') . '"/> ';
+                }
                 if ($poll->hideresult) {
                     echo '<img src="img/icon-eye-off.png" title="' . __('Poll result hidden') . '"/> ';
                 }
@@ -90,7 +98,9 @@
                 </td>
                 <td>
                     <?php
-                    if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+                    if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+                        || \Cake\Core\Configure::read('preferendum.opt_Comments')
+                    ) {
                         if (array_key_exists($poll->id, $numcomments)) {
                             echo $numcomments[$poll->id];
                         } else {

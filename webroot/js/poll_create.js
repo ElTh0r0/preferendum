@@ -46,37 +46,3 @@ $(document).ready(function () {
         }
     });
 });
-
-//enable/disable email input depending on checkboxes
-var chkEmailEntry = document.getElementById("emailentryInput");
-var chkEmailComment = document.getElementById("emailcommentInput");
-function toggleEmailInput() {
-    var isCheckedEntry = false;
-    if (chkEmailEntry) {
-        isCheckedEntry = chkEmailEntry.checked;
-    }
-    var isCheckedComment = false;
-    if (chkEmailComment) {
-        isCheckedComment = chkEmailComment.checked;
-    }
-
-    document.getElementById("emailInput").disabled =
-        !isCheckedEntry && !isCheckedComment;
-
-    if (document.getElementById("emailInput").disabled) {
-        document.getElementById("emailInput").value = "";
-        document.getElementById("emailInput").required = false;
-    } else {
-        document.getElementById("emailInput").required = "required";
-    }
-}
-
-//enable/disable hideresult option depending on checkboxes
-function toggleHideResultInput() {
-    document.getElementById("hideresultInput").disabled =
-        !document.getElementById("adminInput").checked;
-
-    if (document.getElementById("hideresultInput").disabled) {
-        document.getElementById("hideresultInput").checked = false;
-    }
-}

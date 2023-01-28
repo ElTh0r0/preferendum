@@ -110,7 +110,7 @@ class InstalldbController extends AppController
         $table = $connection->execute('SELECT IF( EXISTS(
             SELECT *
             FROM INFORMATION_SCHEMA.TABLES
-          WHERE TABLE_NAME = "polls"), 1, 0) as "exists";')->fetchAll('assoc');
+          WHERE TABLE_SCHEMA = "' . $connection->config()['database'] .'" AND TABLE_NAME = "polls"), 1, 0) as "exists";')->fetchAll('assoc');
         if ($table[0]['exists']) {
             echo '<li><strong>Attention:</strong> Install script was already executed - stopping execution!</li>';
             die;
@@ -164,6 +164,7 @@ class InstalldbController extends AppController
             `emailentry` tinyint(1) NOT NULL DEFAULT 0,
             `emailcomment` tinyint(1) NOT NULL DEFAULT 0,
             `userinfo` tinyint(1) NOT NULL DEFAULT 0,
+            `comment` tinyint(1) NOT NULL DEFAULT 0,
             `hideresult` tinyint(1) NOT NULL DEFAULT 0,
             `locked` tinyint(1) NOT NULL DEFAULT 0,
             `modified` DATETIME NOT NULL

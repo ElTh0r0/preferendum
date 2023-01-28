@@ -72,7 +72,9 @@ class AdminController extends AppController
         }
         $numentries = array_count_values($numentries);
 
-        if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+        if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+            || \Cake\Core\Configure::read('preferendum.opt_Comments')
+        ) {
             $dbnumcomments = $this->fetchTable('Comments')->find()
             ->select(['poll_id', 'count' => 'COUNT(*)'])
             ->group(['poll_id']); 

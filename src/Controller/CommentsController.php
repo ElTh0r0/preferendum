@@ -20,19 +20,22 @@ class CommentsController extends AppController
 {
     public function add($pollid = null)
     {
-        if (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
-            return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
-        }
-
         if ($this->request->is('post') && isset($pollid) && !empty($pollid)) {
             $poll = $this->fetchTable('Polls')
                 ->findById($pollid)
-                ->select(['id', 'title', 'locked', 'email', 'emailcomment'])
+                ->select(['id', 'title', 'locked', 'email', 'emailcomment', 'comment'])
                 ->firstOrFail();
             $dbtitle = $poll['title'];
             $dblocked = $poll['locked'];
             $dbemail = $poll['email'];
             $dbemailcomment = $poll['emailcomment'];
+            $dbcomment = $poll['comment'];
+
+            if (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+                && !($dbcomment)
+            ) {
+                return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+            }
 
             $comment = $this->Comments->newEmptyEntity();
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());

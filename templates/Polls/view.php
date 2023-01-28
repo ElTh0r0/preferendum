@@ -66,7 +66,7 @@ $this->Html->scriptEnd();
     </table>
 </div>
 
-<?php if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+<?php if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments') || $poll->comment) {
     echo '<div id="comments-wrapper">';
         if ($poll->hideresult == 0) {
             echo $this->element('comment/list');

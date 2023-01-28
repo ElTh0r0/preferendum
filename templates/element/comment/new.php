@@ -21,7 +21,7 @@
         }
         
         echo $this->Form->create(
-            $comment, [
+            $newcomment, [
             'type' => 'post',
             'url' => ['controller' => 'Comments','action' => 'add', $poll->id]
             ]

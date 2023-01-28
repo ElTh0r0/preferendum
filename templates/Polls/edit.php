@@ -16,30 +16,7 @@
 
 <?php $this->Html->script('poll_view.js', ['block' => 'scriptBottom']); ?>
 <?php $this->Html->script('clipboard.min.js', ['block' => true]); ?>
-<?php $this->Html->scriptBlock(
-    'var chkEmailEntry = document.getElementById("emailentryInput");
-    var chkEmailComment = document.getElementById("emailcommentInput");
-    function toggleEmailInput() {
-        var isCheckedEntry = false;
-        if (chkEmailEntry) {
-            isCheckedEntry = chkEmailEntry.checked;
-        }
-        var isCheckedComment = false;
-        if (chkEmailComment) {
-            isCheckedComment = chkEmailComment.checked;
-        }
-    
-        document.getElementById("emailInput").disabled =
-            !isCheckedEntry && !isCheckedComment;
-    
-        if (document.getElementById("emailInput").disabled) {
-            document.getElementById("emailInput").value = "";
-            document.getElementById("emailInput").required = false;
-        } else {
-            document.getElementById("emailInput").required = "required";
-        }
-    }', ['block' => 'scriptBottom']
-); ?>
+<?php $this->Html->script('poll_options.js', ['block' => 'scriptBottom']); ?>
 
 <?php
 $this->Html->scriptStart(['block' => true]);
@@ -82,7 +59,7 @@ $this->Html->scriptEnd();
     </table>
 </div>
 
-<?php if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')) {
+<?php if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments') || $poll->comment) {
     echo '<div id="comments-wrapper">';
         echo $this->element('comment/delete');
     echo '</div>';

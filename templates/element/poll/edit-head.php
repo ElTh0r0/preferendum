@@ -67,6 +67,40 @@
         echo '</li>';
     }
 
+    if (\Cake\Core\Configure::read('preferendum.opt_Comments')
+        && !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+    ) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'comment', [
+            'value' => 'true',
+            'id' => 'commentInput',
+            'checked' => $poll->comment,
+            'onchange' => 'toggleEmailInput()',
+            ]
+        );
+        echo '<span style="font-size: 90%;">' . __('Allow users to add a comment') . '</span>';
+        echo '</li>';
+    }
+
+    if (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
+        && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+            || \Cake\Core\Configure::read('preferendum.opt_Comments'))
+    ) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'emailcomment', [
+            'value' => 'true',
+            'id' => 'emailcommentInput',
+            'checked' => $poll->emailcomment,
+            'onchange' => 'toggleEmailInput()',
+            'disabled' => (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments') && \Cake\Core\Configure::read('preferendum.opt_Comments')) && (\Cake\Core\Configure::read('preferendum.opt_Comments') && !($poll->comment)),
+            ]
+        );
+        echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
+        echo '</li>';
+    }
+
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
         echo '<li>';
         echo $this->Form->checkbox(
@@ -80,27 +114,12 @@
         echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
         echo '</li>';
     }
-
-    if (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
-        && \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-    ) {
-        echo '<li>';
-        echo $this->Form->checkbox(
-            'emailcomment', [
-            'value' => 'true',
-            'id' => 'emailcommentInput',
-            'checked' => $poll->emailcomment,
-            'onchange' => 'toggleEmailInput()',
-            ]
-        );
-        echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
-        echo '</li>';
-    }
     echo '</ul>';
 
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail') 
         || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
-            && \Cake\Core\Configure::read('preferendum.alwaysAllowComments'))
+            && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+                || \Cake\Core\Configure::read('preferendum.opt_Comments')))
     ) {
         echo $this->Form->control(
             'email', [
