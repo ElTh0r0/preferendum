@@ -51,26 +51,29 @@
             } ?>
         </td>
     <?php endforeach; ?>
-    <td><button class="schedule-add" id="btnAddChoice" onclick="showAddChoice()"><span class="btntext">+</span></button>
-        <div id="divNewChoice" style="display: none;">
-        <?php
-        echo $this->Form->create(
-            $option, [
-            'type' => 'post',
-            'url' => ['controller' => 'Choices', 'action' => 'add', $poll->id, $adminid]
-            ]
-        );
-        echo $this->Form->control(
-            'choice', [
-            'label' => '',
-            'minlength' => '1',
-            'maxlength' => '32',
-            'placeholder' => __('New option'),
-            ]
-        );
-        echo $this->Form->button(__('Save'));
-        echo $this->Form->end();
-        ?>
-        </div>
+    <td>
+        <?php if (sizeof($pollchoices) < \Cake\Core\Configure::read('preferendum.maxPollOptions')) { ?>
+            <button class="schedule-add" id="btnAddChoice" onclick="showAddChoice()">+</button>
+            <div id="divNewChoice" style="display: none;">
+            <?php
+            echo $this->Form->create(
+                $option, [
+                'type' => 'post',
+                'url' => ['controller' => 'Choices', 'action' => 'add', $poll->id, $adminid]
+                ]
+            );
+            echo $this->Form->control(
+                'choice', [
+                'label' => '',
+                'minlength' => '1',
+                'maxlength' => '32',
+                'placeholder' => __('New option'),
+                ]
+            );
+            echo $this->Form->button(__('Save'));
+            echo $this->Form->end();
+            ?>
+            </div>
+        <?php } ?>
     </td>
 </tr>
