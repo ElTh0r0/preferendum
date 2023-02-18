@@ -40,7 +40,8 @@ class AdminController extends AppController
 
     public function index()
     {
-        $viewerRole = SELF::ROLES[2];
+        $adminRole = SELF::ROLES[0];
+        $polladmRole = SELF::ROLES[1];
         $identity = $this->Authentication->getIdentity();
         $currentUserRole = $identity->getOriginalData()['role'];
 
@@ -93,7 +94,7 @@ class AdminController extends AppController
                 ]
         );
 
-        $this->set(compact('polls', 'numentries', 'numcomments', 'userinfos', 'currentUserRole', 'viewerRole'));
+        $this->set(compact('polls', 'numentries', 'numcomments', 'userinfos', 'currentUserRole', 'adminRole', 'polladmRole'));
     }
 
     //------------------------------------------------------------------------
@@ -115,11 +116,14 @@ class AdminController extends AppController
                 return $this->redirect($target);
             } else {
                 $this->Flash->error(__('Invalid user or password'));
+                $this->Authentication->logout();
+                return $this->redirect(['action' => 'login']);
             }
         }
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
             $this->Flash->error(__('Invalid user or password'));
+            return $this->redirect(['action' => 'login']);
         }
     }
 
@@ -131,7 +135,7 @@ class AdminController extends AppController
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             $this->Authentication->logout();
-            return $this->redirect(['action' => 'login']);
         }
+        return $this->redirect(['action' => 'login']);
     }
 }

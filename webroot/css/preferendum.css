@@ -897,6 +897,14 @@ button[type="button"]:disabled {
     background-image: url("../img/icon-chart.png");
 }
 
+button.admin-new-poll {
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-plus.png)
+        no-repeat;
+    background-position: 10px 45%;
+    padding-left: 36px;
+}
+
 button.admin-view-poll {
     width: 24px;
     height: 24px;

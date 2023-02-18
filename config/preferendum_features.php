@@ -27,6 +27,9 @@ return [
     'preferendum' => [
         // Turn on(true)/off(false) admin interface
         'adminInterface' => false,
+        // Turn on(true)/off(false) that only 'admin' or 'polladmin' users can create polls
+        // (This feature can only be used, if 'adminInterface' is enabled, too.)
+        'restrictPollCreation' => false,
 
         // Turn on(true)/off(false) to use admin links for ALL new polls automatically.
         'alwaysUseAdminLinks' => true,

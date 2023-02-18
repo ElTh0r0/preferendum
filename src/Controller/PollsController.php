@@ -36,6 +36,25 @@ class PollsController extends AppController
     
     public function add()
     {
+        // Check if poll creation is restricted
+        if (\Cake\Core\Configure::read('preferendum.adminInterface') &&
+            \Cake\Core\Configure::read('preferendum.restrictPollCreation')) {
+            $this->loadComponent('Authentication.Authentication');
+            $result = $this->Authentication->getResult();
+            if ($result->isValid()) {
+                $adminRole = SELF::ROLES[0];
+                $polladmRole = SELF::ROLES[1];
+                $identity = $this->Authentication->getIdentity();
+                $currentUserRole = $identity->getOriginalData()['role'];
+                if (strcmp($currentUserRole, $adminRole) != 0 &&
+                    strcmp($currentUserRole, $polladmRole) != 0) {
+                    $this->redirect(['controller' => 'Admin','action' => 'login']);
+                }
+            } else {
+                $this->redirect(['controller' => 'Admin','action' => 'login']);
+            }
+        }
+
         $poll = $this->Polls->newEmptyEntity();
         if ($this->request->is('post') && null !== $this->request->getData('choices')) {
             $poll = $this->Polls->patchEntity($poll, $this->request->getData());

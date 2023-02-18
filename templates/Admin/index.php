@@ -25,10 +25,25 @@
 
 <div id="admin-page">
     <?php echo $this->Flash->render() ?>
-    
+
     <!-- POLLS OVERVIEW TABLE -->
     <table>
-        <tr><td colspan="8"><h1 class="fail"><?php echo __('Available polls') . ': ' . $this->Paginator->param('count'); ?></h1></td></tr>
+        <tr>
+            <td colspan="5"><h1 class="fail"><?php echo __('Available polls') . ': ' . $this->Paginator->param('count'); ?></h1></td>
+            <td colspan="3">
+            <?php
+            if (\Cake\Core\Configure::read('preferendum.restrictPollCreation') &&
+                (strcmp($currentUserRole, $adminRole) == 0 || strcmp($currentUserRole, $polladmRole) == 0)
+            ) {
+                echo $this->Html->link(
+                    $this->Form->button(__('New poll'), ['type' => 'button', 'class' => 'admin-new-poll']),
+                    ['controller' => 'Polls', 'action' => 'add'],
+                    ['escape' => false]
+                );
+            }
+            ?>
+            </td>
+        </tr>
         <!-- EXISTING POLLS -->
         <?php
         if (sizeof($polls) > 0) {
@@ -122,7 +137,8 @@
                 </td>
                 <td>
                     <?php
-                    if (strcmp($currentUserRole, $viewerRole) != 0) {
+                    if (strcmp($currentUserRole, $adminRole) == 0 ||
+                        strcmp($currentUserRole, $polladmRole) == 0) {
                         echo $this->Html->link(
                             $this->Form->button('', ['type' => 'button', 'class' => 'admin-edit-poll']),
                             ['controller' => 'Polls', 'action' => 'edit', $poll->id, $poll->adminid],
@@ -132,7 +148,8 @@
                 </td>
                 <td>
                     <?php
-                    if (strcmp($currentUserRole, $viewerRole) != 0) {
+                    if (strcmp($currentUserRole, $adminRole) == 0 ||
+                        strcmp($currentUserRole, $polladmRole) == 0) {
                         echo $this->Form->postLink(
                             $this->Form->button('', ['type' => 'button', 'class' => 'admin-delete-poll']),
                             ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],

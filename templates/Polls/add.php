@@ -41,10 +41,19 @@ echo 'var jsmaxoptions = ' . json_encode(
 $this->Html->scriptEnd();
 ?>
 
+<?php if (\Cake\Core\Configure::read('preferendum.adminInterface') &&
+            \Cake\Core\Configure::read('preferendum.restrictPollCreation')) { ?>
+<div id="poll-controls">
+    <div>
+        <?php echo $this->element('admin/ctrl-logout'); ?>
+    </div>
+</div>
+<?php } ?>
+
 <div class="center-box">
     <h1><?php echo __('Create a new poll ...') ?></h1>
     <?php echo $this->Flash->render() ?>
-
+ 
     <?php
     echo $this->Form->create(
         $poll, [

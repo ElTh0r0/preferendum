@@ -17,7 +17,21 @@
     <?php
     $base = $this->request->getUri()->getPath();
     $base = basename($base);
-    if (strcmp($base, 'users') == 0) {
+    if (strcmp($base, 'admin') == 0) {
+        $caption = __('User management');
+        if (strcmp($currentUserRole, $adminRole) != 0) {
+            $caption = __('Change password');
+        }
+        echo $this->Html->link(
+            $this->Form->button(
+                $caption, [
+                'type' => 'button',
+                'id' => 'ctrl-usermanagement',]
+            ),
+            ['controller' => 'Users', 'action' => 'index'],
+            ['escape' => false]
+        );
+    } else {
         echo $this->Html->link(
             $this->Form->button(
                 __('Poll administration'), [
@@ -25,16 +39,6 @@
                 'id' => 'ctrl-polls',]
             ),
             ['controller' => 'Admin', 'action' => 'index'],
-            ['escape' => false]
-        );
-    } else {
-        echo $this->Html->link(
-            $this->Form->button(
-                __('User management'), [
-                'type' => 'button',
-                'id' => 'ctrl-usermanagement',]
-            ),
-            ['controller' => 'Users', 'action' => 'index'],
             ['escape' => false]
         );
     }
