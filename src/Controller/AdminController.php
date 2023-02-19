@@ -39,60 +39,23 @@ class AdminController extends AppController
     //------------------------------------------------------------------------
 
     public function index()
-    {
-        $adminRole = SELF::ROLES[0];
-        $polladmRole = SELF::ROLES[1];
-        $identity = $this->Authentication->getIdentity();
-        $currentUserRole = $identity->getOriginalData()['role'];
-
-        $uinfopolls = $this->fetchTable('Polls')->findByUserinfo(1)->select('id');
-        $dbuserinfos = $this->fetchTable('Entries')->find()
-            ->contain(['Choices', 'Users'])
-            ->where(['Choices.poll_id IN' => $uinfopolls, 'Users.info !=' => ''])
-            ->select(['poll_id' => 'Choices.poll_id', 'name' => 'Users.name', 'info' => 'Users.info'])
-            ->group(['Users.id']);
-
-        $userinfos = array();
-        foreach ($dbuserinfos as $uinfo) {
-            if (!isset($uinfo['poll_id'])) {
-                $userinfos[$uinfo['poll_id']] = array();
-            }
-            $userinfos[$uinfo->poll_id][$uinfo->name] = $uinfo->info;
-        }
-        // debug($userinfos);
-        // die;
-
-        $dbnumentries = $this->fetchTable('Entries')->find()
-            ->contain(['Choices'])
-            ->select(['Choices.poll_id'])
-            ->group(['user_id']); 
-        $dbnumentries = $dbnumentries->all();
-        $numentries = array();
-        foreach($dbnumentries as $entry) {
-            $numentries[] = $entry->choice->poll_id;
-        }
-        $numentries = array_count_values($numentries);
-
-        if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-            || \Cake\Core\Configure::read('preferendum.opt_Comments')
-        ) {
-            $dbnumcomments = $this->fetchTable('Comments')->find()
-            ->select(['poll_id', 'count' => 'COUNT(*)'])
-            ->group(['poll_id']); 
-            $dbnumcomments = $dbnumcomments->all();
-            $numcomments = array();
-            foreach($dbnumcomments as $comm) {
-                $numcomments[$comm->poll_id] = $comm->count;
-            }
-        } else {
-            $numcomments = array();
-        }
- 
+    { 
         $polls = $this->paginate(
             $this->fetchTable('Polls')->find('all'), [
                     'limit' => 20,
                 ]
         );
+
+        $numentries = $this->getNumberOfEntries();
+        $numcomments = $this->getNumberOfComments();
+        $userinfos = $this->getUserInfos();
+        // debug($userinfos);
+        // die;
+
+        $identity = $this->Authentication->getIdentity();
+        $currentUserRole = $identity->getOriginalData()['role'];
+        $adminRole = SELF::ROLES[0];
+        $polladmRole = SELF::ROLES[1];
 
         $this->set(compact('polls', 'numentries', 'numcomments', 'userinfos', 'currentUserRole', 'adminRole', 'polladmRole'));
     }
@@ -137,5 +100,67 @@ class AdminController extends AppController
             $this->Authentication->logout();
         }
         return $this->redirect(['action' => 'login']);
+    }
+
+    //------------------------------------------------------------------------
+
+    private function getNumberOfEntries()
+    {
+        $dbnumentries = $this->fetchTable('Entries')->find()
+            ->contain(['Choices'])
+            ->select(['Choices.poll_id'])
+            ->group(['user_id']); 
+        $dbnumentries = $dbnumentries->all();
+        $numentries = array();
+        foreach($dbnumentries as $entry) {
+            $numentries[] = $entry->choice->poll_id;
+        }
+        $numentries = array_count_values($numentries);
+
+        return $numentries;
+    }
+    
+    //------------------------------------------------------------------------
+
+    private function getNumberOfComments()
+    {
+        $numcomments = array();
+
+        if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+            || \Cake\Core\Configure::read('preferendum.opt_Comments')
+        ) {
+            $dbnumcomments = $this->fetchTable('Comments')->find()
+            ->select(['poll_id', 'count' => 'COUNT(*)'])
+            ->group(['poll_id']); 
+            $dbnumcomments = $dbnumcomments->all();
+            $numcomments = array();
+            foreach($dbnumcomments as $comm) {
+                $numcomments[$comm->poll_id] = $comm->count;
+            }
+        }
+
+        return $numcomments;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function getUserInfos()
+    {
+        $uinfopolls = $this->fetchTable('Polls')->findByUserinfo(1)->select('id');
+        $dbuserinfos = $this->fetchTable('Entries')->find()
+            ->contain(['Choices', 'Users'])
+            ->where(['Choices.poll_id IN' => $uinfopolls, 'Users.info !=' => ''])
+            ->select(['poll_id' => 'Choices.poll_id', 'name' => 'Users.name', 'info' => 'Users.info'])
+            ->group(['Users.id']);
+
+        $userinfos = array();
+        foreach ($dbuserinfos as $uinfo) {
+            if (!isset($uinfo['poll_id'])) {
+                $userinfos[$uinfo['poll_id']] = array();
+            }
+            $userinfos[$uinfo->poll_id][$uinfo->name] = $uinfo->info;
+        }
+
+        return $userinfos;
     }
 }

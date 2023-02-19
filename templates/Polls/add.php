@@ -53,7 +53,7 @@ $this->Html->scriptEnd();
 <div class="center-box">
     <h1><?php echo __('Create a new poll ...') ?></h1>
     <?php echo $this->Flash->render() ?>
- 
+
     <?php
     echo $this->Form->create(
         $poll, [
