@@ -31,9 +31,7 @@ class CommentsController extends AppController
             $dbemailcomment = $poll['emailcomment'];
             $dbcomment = $poll['comment'];
 
-            if (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-                && !($dbcomment)
-            ) {
+            if ((!\Cake\Core\Configure::read('preferendum.alwaysAllowComments') && !($dbcomment)) || $dblocked) {
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
@@ -41,32 +39,13 @@ class CommentsController extends AppController
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
             $comment->poll_id = $poll['id'];
             
-            $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
-            \Cake\Core\Configure::load('app_local');
-            $from = \Cake\Core\Configure::read('Email.default.from');
-
-            if ($dblocked == 0) {
-                if ($this->Comments->save($comment)) {
-                    if ($dbemailcomment && !empty($dbemail)) {
-                        $mailer = new Mailer('default');
-                        $mailer->viewBuilder()->setTemplate('new_comment')->setLayout('default');
-                        $mailer->setFrom($from)
-                            ->setTo($dbemail)
-                            ->setEmailFormat('text')
-                            ->setSubject(__('New comment in poll "{0}"', h($dbtitle)))
-                            ->setViewVars(
-                                [
-                                'title' => $dbtitle,
-                                'link' => $link,
-                                'comment' => $comment,
-                                ]
-                            )
-                            ->deliver();
-                    }
-
-                    $this->Flash->success(__('The comment has been saved.'));
-                    return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+            if ($this->Comments->save($comment)) {
+                if ($dbemailcomment && !empty($dbemail)) {
+                    $this->sendCommentEmail($pollid, $dbemail, $dbtitle, $comment);
                 }
+            
+                $this->Flash->success(__('The comment has been saved.'));
+                return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
         }
         $this->Flash->error(__('Unable to save your comment.'));
@@ -95,5 +74,29 @@ class CommentsController extends AppController
         }
         $this->Flash->error(__('Comment {0} has NOT been deleted!', $comid));
         return $this->redirect($this->referer());
+    }
+
+    //------------------------------------------------------------------------
+
+    private function sendCommentEmail($pollid, $email, $title, $comment)
+    {
+        $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
+        \Cake\Core\Configure::load('app_local');
+        $from = \Cake\Core\Configure::read('Email.default.from');
+
+        $mailer = new Mailer('default');
+        $mailer->viewBuilder()->setTemplate('new_comment')->setLayout('default');
+        $mailer->setFrom($from)
+            ->setTo($email)
+            ->setEmailFormat('text')
+            ->setSubject(__('New comment in poll "{0}"', h($title)))
+            ->setViewVars(
+                [
+                'title' => $title,
+                'link' => $link,
+                'comment' => $comment,
+                ]
+            )
+            ->deliver();
     }
 }
