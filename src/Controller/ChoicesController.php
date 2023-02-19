@@ -20,12 +20,12 @@ class ChoicesController extends AppController
     public function add($pollid = null, $adminid = null)
     {
         if ($this->request->is('post')) {
-            $data = $this->request->getData();
-            $data = trim($data['choice']);
+            $newchoice = $this->request->getData();
+            $newchoice = trim($newchoice['choice']);
             
             if (isset($pollid) && !empty($pollid)
                 && isset($adminid) && !empty($adminid)
-                && isset($data) && !empty($data)
+                && isset($newchoice) && !empty($newchoice)
             ) {
                 $poll = $this->fetchTable('Polls')
                     ->findById($pollid)
@@ -33,44 +33,21 @@ class ChoicesController extends AppController
                     ->firstOrFail();
                 $dbadminid = $poll->adminid;
 
-                $query = $this->Choices->find(
-                    'all', [
-                    'conditions' => ['poll_id' => $pollid, 'option' => $data]
-                    ]
-                );
-                $number = $query->count();  // Check that choice with same name doesn't exist
-
-                if (strcmp($dbadminid, $adminid) == 0 && $number == 0) {
+                if (strcmp($dbadminid, $adminid) == 0 &&
+                    $this->isNewChoice($pollid, $newchoice)
+                ) {
                     $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
                     $dbchoice = $this->Choices->newEntity(
                         [
                         'poll_id' => $poll->id,
-                        'option' => trim($data),
+                        'option' => trim($newchoice),
                         'sort' => $nextsort
                         ]
                     );
+
                     if ($this->Choices->save($dbchoice)) {
-                        $success = true;
-                        // Add 'maybe' for all existing entries
-                        $dbentries = $this->fetchTable('Entries')->find()
-                            ->where(['poll_id' => $pollid])
-                            ->contain(['Users', 'Choices'])
-                            ->select(['user_id' => 'Users.id'])
-                            ->group(['user_id']);
-
-                        foreach ($dbentries as $user) {
-                            $dbentry = $this->fetchTable('Entries')->newEmptyEntity();
-                            $dbentry = $this->fetchTable('Entries')->newEntity([
-                                'choice_id' => $dbchoice->id,
-                                'user_id' => $user->user_id,
-                                'value' => 2
-                            ]);
-
-                            if (!$this->fetchTable('Entries')->save($dbentry)) {
-                                $success = false;
-                                break;
-                            }
-                        }
+                        $success = $this->addMaybeToExisting($pollid, $dbchoice);
+                        
                         if ($success) {
                             $this->Flash->success(__('Option has been added.'));
                             return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
@@ -109,5 +86,49 @@ class ChoicesController extends AppController
         }
         $this->Flash->error(__('Option has NOT been deleted!'));
         return $this->redirect($this->referer());
+    }
+
+    //------------------------------------------------------------------------
+
+    private function isNewChoice($pollid, $newchoice)
+    {
+        $query = $this->Choices->find(
+            'all', [
+            'conditions' => ['poll_id' => $pollid, 'option' => $newchoice]
+            ]
+        );
+        $number = $query->count();  // Check that choice with same name doesn't exist
+
+        return ($number == 0);
+    }
+
+    //------------------------------------------------------------------------
+
+    private function addMaybeToExisting($pollid, $dbchoice)
+    {
+        $success = true;
+
+        // Add 'maybe' for all existing entries
+        $dbentries = $this->fetchTable('Entries')->find()
+            ->where(['poll_id' => $pollid])
+            ->contain(['Users', 'Choices'])
+            ->select(['user_id' => 'Users.id'])
+            ->group(['user_id']);
+
+        foreach ($dbentries as $user) {
+            $dbentry = $this->fetchTable('Entries')->newEmptyEntity();
+            $dbentry = $this->fetchTable('Entries')->newEntity([
+                'choice_id' => $dbchoice->id,
+                'user_id' => $user->user_id,
+                'value' => 2
+            ]);
+
+            if (!$this->fetchTable('Entries')->save($dbentry)) {
+                $success = false;
+                break;
+            }
+        }
+
+        return $success;
     }
 }
