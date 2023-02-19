@@ -15,15 +15,17 @@
 echo __('New entry in poll "{0}"', h($title)) . "\r\n\r\n";
 echo __('From:') . ' ' . h($name) . "\r\n";
 echo __('Options:') . "\r\n";
-foreach ($entries as $option => $entry) {
+
+foreach ($entries as $entry) {
     $val = '?';
-    if ($entry == 0) {
+    if ($entry->value == 0) {
         $val = __('No');
-    } else if ($entry == 1) {
+    } else if ($entry->value == 1) {
         $val = __('Yes');
     }
-    echo ' - ' . h($option) . ': ' . $val . "\r\n";
+    echo ' - ' . h($entry->choice->option) . ': ' . $val . "\r\n";
 }
+
 echo "\r\n";
 echo __('Link:') . ' ' . $link . "\r\n";
 echo "\r\n";

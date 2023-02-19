@@ -21,40 +21,14 @@ class EntriesController extends AppController
     public function new($pollid)
     {
         if ($this->request->is('post')) {
-            // debug($this->request->getData());
-            // die();
             $data = $this->request->getData();
+            // debug($data);
+            // die();
 
-            // Check, that values are in the expected range and had not been manipulated
-            for ($i = 0; $i < sizeof($data['values']); $i++) {
-                if (strcmp(trim($data['values'][$i]), '0') != 0 &&
-                    strcmp(trim($data['values'][$i]), '1') != 0 &&
-                    strcmp(trim($data['values'][$i]), '2') != 0
-                ) {
-                    $this->Flash->error(__('Unable to save your entry.'));
-                    return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
-                }
-            }
-
-            // Check, that choices ID was not manipulated
-            $dbchoices = $this->Entries->Choices->findByPollId($pollid)->select(['id'])->all();
-            $validchoices = array();
-            foreach ($dbchoices as $dbc) {
-                $validchoices[] = $dbc['id'];
-            }
-            $dbchoices = array_diff($validchoices, $data['choices']);
-            if (sizeof($dbchoices) > 0) {
+            if(!$this->isValidEntry($pollid, $data)) {
                 $this->Flash->error(__('Unable to save your entry.'));
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
-
-            $query = $this->Entries->find(
-                'all', [
-                'contain' => ['Users', 'Choices'],
-                'conditions' => ['poll_id' => $pollid, 'Users.name' => trim($data['name'])]
-                ]
-            );
-            $number = $query->count();
 
             $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
             $dbtitle = $db['title'];
@@ -62,16 +36,13 @@ class EntriesController extends AppController
             $dbuserinfo = $db['userinfo'];
             $dbemail = $db['email'];
             $dbemailentry = $db['emailentry'];
-            $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
-            \Cake\Core\Configure::load('app_local');
-            $from = \Cake\Core\Configure::read('Email.default.from');
-            $entryarray = array();
 
-            if ($number == 0 && $dblocked == 0) {
+            if ($this->isNewEntry($pollid, trim($data['name'])) && !($dblocked)) {
                 $userinfo = '';
                 if ($dbuserinfo == 1) {
                     $userinfo = trim($data['userdetails']);
                 }
+                // Create new user and save
                 $new_user = $this->fetchTable('Users')->newEmptyEntity();
                 $new_user = $this->fetchTable('Users')->newEntity([
                     'name' => trim($data['name']),
@@ -82,6 +53,7 @@ class EntriesController extends AppController
                 if ($this->fetchTable('Users')->save($new_user)) {
                     $success = true;
 
+                    // Save each entry
                     for ($i = 0; $i < sizeof($data['choices']); $i++) {
                         $dbentry = $this->Entries->newEmptyEntity();
                         $dbentry = $this->Entries->newEntity(
@@ -91,31 +63,20 @@ class EntriesController extends AppController
                             'value' => trim($data['values'][$i])
                             ]
                         );
+
                         if (!$this->Entries->save($dbentry)) {
+                            // Rollback: Delete user and already created entries (by dependency)
+                            $this->fetchTable('Users')->delete($new_user);
+
                             $success = false;
                             break;
                         }
-                        $entryarray[trim($data['choices'][$i])] = trim($data['values'][$i]);
                     }
                 }
                 
                 if ($success) {
                     if ($dbemailentry && !empty($dbemail)) {
-                        $mailer = new Mailer('default');
-                        $mailer->viewBuilder()->setTemplate('new_entry')->setLayout('default');
-                        $mailer->setFrom($from)
-                            ->setTo($dbemail)
-                            ->setEmailFormat('text')
-                            ->setSubject(__('New entry in poll "{0}"', h($dbtitle)))
-                            ->setViewVars(
-                                [
-                                'title' => $dbtitle,
-                                'link' => $link,
-                                'name' => trim($data['name']),
-                                'entries' => $entryarray,
-                                ]
-                            )
-                            ->deliver();
+                        $this->sendEntryEmail($pollid, $dbemail, $dbtitle, $new_user->id, $new_user->name);
                     }
 
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
@@ -128,34 +89,78 @@ class EntriesController extends AppController
 
     //------------------------------------------------------------------------
 
-    /*
-    Use UsersController "deleteUserAndPollEntries" instead.
-    Due to dependencies, all entries will be removed once user is deleted.
-
-    public function delete($pollid = null, $adminid = null, $userid = null)
+    private function isValidEntry($pollid, $newentry)
     {
-        $this->request->allowMethod(['post', 'delete']);
-    
-        if (isset($pollid) && !empty($pollid)
-            && isset($adminid) && !empty($adminid)
-            && isset($userid) && !empty($userid)
-        ) {
-            $db = $this->fetchTable('Polls')->findById($pollid)->select('adminid')->firstOrFail();
-            $dbadminid = $db['adminid'];
-            
-            $dbentries = $this->Entries->find()
-                ->where(['poll_id' => $pollid, 'user_id' => $userid]);
-            if (strcmp($dbadminid, $adminid) == 0) {
-                if ($this->Entries->deleteMany($dbentries)) {
-                    if ($this->fetchTable('Users')->delete($this->fetchTable('Users')->get($userid))) {
-                        $this->Flash->success(__('Entry has been deleted.'));
-                        return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
-                    }
-                }
+        $isValid = true;
+
+        // Check, that values are in the expected range and had not been manipulated
+        for ($i = 0; $i < sizeof($newentry['values']); $i++) {
+            if (strcmp(trim($newentry['values'][$i]), '0') != 0 &&
+                strcmp(trim($newentry['values'][$i]), '1') != 0 &&
+                strcmp(trim($newentry['values'][$i]), '2') != 0
+            ) {
+                $isValid = false;
+                return $isValid;
             }
         }
-        $this->Flash->error(__('Entry has NOT been deleted!'));
-        return $this->redirect($this->referer());
+
+        // Check, that choices ID was not manipulated
+        $dbchoices = $this->Entries->Choices->findByPollId($pollid)->select(['id'])->all();
+        $validchoices = array();
+        foreach ($dbchoices as $dbc) {
+            $validchoices[] = $dbc['id'];
+        }
+        $dbchoices = array_diff($validchoices, $newentry['choices']);
+        if (sizeof($dbchoices) > 0) {
+            $isValid = false;
+        }
+
+        return $isValid;
     }
-    */
+
+    //------------------------------------------------------------------------
+
+    private function isNewEntry($pollid, $username)
+    {
+        $query = $this->Entries->find(
+            'all', [
+            'contain' => ['Users', 'Choices'],
+            'conditions' => ['poll_id' => $pollid, 'Users.name' => $username]
+            ]
+        );
+        $number = $query->count();
+
+        return ($number == 0);
+    }
+
+    //------------------------------------------------------------------------
+
+    private function sendEntryEmail($pollid, $email, $title, $userid, $username)
+    {
+        $dbentries = $this->Entries->find()
+            ->where(['poll_id' => $pollid, 'user_id' => $userid])
+            ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
+            ->select(['Choices.option', 'value']);
+        $dbentries = $dbentries->toArray();
+
+        $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
+        \Cake\Core\Configure::load('app_local');
+        $from = \Cake\Core\Configure::read('Email.default.from');
+
+        $mailer = new Mailer('default');
+        $mailer->viewBuilder()->setTemplate('new_entry')->setLayout('default');
+        $mailer->setFrom($from)
+            ->setTo($email)
+            ->setEmailFormat('text')
+            ->setSubject(__('New entry in poll "{0}"', h($title)))
+            ->setViewVars(
+                [
+                'title' => $title,
+                'link' => $link,
+                'name' => $username,
+                'entries' => $dbentries,
+                ]
+            )
+            ->deliver();
+    }
 }
