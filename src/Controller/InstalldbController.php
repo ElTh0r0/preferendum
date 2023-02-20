@@ -26,6 +26,22 @@ class InstalldbController extends AppController
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PREFERendum database setup</title></head>';
         echo '<body>';
 
+        $this->checkEnvironment();
+        $this->checkFilesystem();
+        $dbconnection = $this->checkDatabase();
+        $this->createTables($dbconnection);
+        
+        echo '<p>DONE!</p>';
+        echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';
+        echo '</body></html>';
+
+        $this->autoRender = false;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function checkEnvironment()
+    {
         echo '<h4>Environment</h4>';
         echo '<ul>';
         if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
@@ -58,7 +74,12 @@ class InstalldbController extends AppController
             die;
         }
         echo '</ul>';
+    }
 
+    //------------------------------------------------------------------------
+
+    private function checkFilesystem()
+    {
         echo '<h4>Filesystem</h4>';
         echo '<ul>';
         if (is_writable(TMP)) {
@@ -83,7 +104,12 @@ class InstalldbController extends AppController
             die;
         }
         echo '</ul>';
+    }
 
+    //------------------------------------------------------------------------
+
+    private function checkDatabase()
+    {
         echo '<h4>Database</h4>';
         echo '<ul>';
         try {
@@ -115,7 +141,16 @@ class InstalldbController extends AppController
             echo '<li><strong>Attention:</strong> Install script was already executed - stopping execution!</li>';
             die;
         }
+        echo '</ul>';
 
+        return $connection;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function createTables($connection)
+    {
+        echo '<ul>';
         echo '<li>Creating "comments" table</li>';
         $connection->execute('CREATE TABLE `comments` (
             `id` INT AUTO_INCREMENT PRIMARY KEY,
@@ -190,10 +225,6 @@ class InstalldbController extends AppController
         $connection->execute('ALTER TABLE `entries`
             ADD CONSTRAINT `fk_entr_userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);');
 
-        echo '</ul><p>DONE!</p>';
-        echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';
-        echo '</body></html>';
-
-        $this->autoRender = false;
+        echo '</ul>';
     }
 }
