@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -15,6 +16,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <?php echo $this->Html->charset() ?>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -32,10 +34,11 @@
     <?php echo $this->fetch('css') ?>
     <?php echo $this->fetch('script') ?>
 </head>
+
 <body>
     <noscript>
         <div id="noscript">
-            <img src="img/logo.png" alt=""/>
+            <img src="img/logo.png" alt="" />
             <span><?php echo __('Please enable JavaScript in your browser and reload this page.') ?></span>
         </div>
     </noscript>
@@ -44,9 +47,10 @@
     <?php echo $this->element('header'); ?>
 
     <?php echo $this->Flash->render() ?>
-    <?php echo $this->fetch('content') ?>    
-    
+    <?php echo $this->fetch('content') ?>
+
     <?php echo $this->element('footer'); ?>
     <?php echo $this->fetch('scriptBottom'); ?>
 </body>
+
 </html>

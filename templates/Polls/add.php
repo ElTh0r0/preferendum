@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -20,7 +21,9 @@
 <?php $this->Html->script('poll_options.js', ['block' => 'scriptBottom']); ?>
 
 <?php
+
 use Cake\I18n\I18n;
+
 $this->Html->scriptStart(['block' => true]);
 // Datepicker localizations
 echo 'var jslocale = ' . json_encode(I18n::getLocale()) . ';';
@@ -41,13 +44,15 @@ echo 'var jsmaxoptions = ' . json_encode(
 $this->Html->scriptEnd();
 ?>
 
-<?php if (\Cake\Core\Configure::read('preferendum.adminInterface') &&
-            \Cake\Core\Configure::read('preferendum.restrictPollCreation')) { ?>
-<div id="poll-controls">
-    <div>
-        <?php echo $this->element('admin/ctrl-logout'); ?>
+<?php if (
+    \Cake\Core\Configure::read('preferendum.adminInterface') &&
+    \Cake\Core\Configure::read('preferendum.restrictPollCreation')
+) { ?>
+    <div id="poll-controls">
+        <div>
+            <?php echo $this->element('admin/ctrl-logout'); ?>
+        </div>
     </div>
-</div>
 <?php } ?>
 
 <div class="center-box">
@@ -56,127 +61,143 @@ $this->Html->scriptEnd();
 
     <?php
     echo $this->Form->create(
-        $poll, [
-        'class' => 'form',
-        'id' => 'form-new-poll',
+        $poll,
+        [
+            'class' => 'form',
+            'id' => 'form-new-poll',
         ]
     );
     echo $this->Form->control(
-        'title', [
-        'class' => 'field-long',
-        'required' => true,
-        'label' => __('Title') . ' *',
-        'placeholder' => __('Title for your poll'),
+        'title',
+        [
+            'class' => 'field-long',
+            'required' => true,
+            'label' => __('Title') . ' *',
+            'placeholder' => __('Title for your poll'),
         ]
     );
     echo $this->Form->control(
-        'details', [
-        'rows' => '5',
-        'class' => 'field-long field-textarea',
-        'label' => __('Description'),
-        'placeholder' => __('Short description of what this poll is all about'),
+        'details',
+        [
+            'rows' => '5',
+            'class' => 'field-long field-textarea',
+            'label' => __('Description'),
+            'placeholder' => __('Short description of what this poll is all about'),
         ]
     );
 
     echo $this->Form->control(
-        'options', [
-        'name' => 'choices[]',
-        'maxlength' => '32',
-        'class' => 'dateInput field-long datepicker-here',
-        'required' => true,
-        'label' => __('Options') . ' *',
-        'placeholder' => __('Type whatever you want or pick a date!'),
-        'style' => 'margin-bottom: 8px;',
+        'options',
+        [
+            'name' => 'choices[]',
+            'maxlength' => '32',
+            'class' => 'dateInput field-long datepicker-here',
+            'required' => true,
+            'label' => __('Options') . ' *',
+            'placeholder' => __('Type whatever you want or pick a date!'),
+            'style' => 'margin-bottom: 8px;',
         ]
     );
     echo '<div class="content-right">';
     echo $this->Form->button(
-        '', [
-        'type' => 'button',
-        'id' => 'btnMore',
+        '',
+        [
+            'type' => 'button',
+            'id' => 'btnMore',
         ]
     );
     echo ' ';
     echo $this->Form->button(
-        '', [
-        'type' => 'button',
-        'id' => 'btnLess',
-        'disabled' => true,
+        '',
+        [
+            'type' => 'button',
+            'id' => 'btnLess',
+            'disabled' => true,
         ]
     );
     echo '</div>';
 
     echo '<ul>';
-    if (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') &&
+    if (
+        \Cake\Core\Configure::read('preferendum.opt_AdminLinks') &&
         !(\Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
     ) {
         echo '<li>';
         echo $this->Form->checkbox(
-            'adminid', [
-            'value' => 'true',
-            'id' => 'adminInput',
-            'onchange' => 'toggleHideResultInput()',
-            'checked' => true,
+            'adminid',
+            [
+                'value' => 'true',
+                'id' => 'adminInput',
+                'onchange' => 'toggleHideResultInput()',
+                'checked' => true,
             ]
         );
         echo '<span style="font-size: 90%;">' . __('Edit/deleting poll/entries only with admin link') . '</span>';
         echo '</li>';
     }
-    
-    if (\Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
+
+    if (
+        \Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
         (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
-        \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
+            \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
     ) {
         echo '<li>';
         echo $this->Form->checkbox(
-            'hideresult', [
-            'value' => 'true',
-            'id' => 'hideresultInput',
+            'hideresult',
+            [
+                'value' => 'true',
+                'id' => 'hideresultInput',
             ]
         );
         echo '<span style="font-size: 90%;">' . __('Hide poll results for users (only admin can see the votes)') . '</span>';
         echo '</li>';
     }
 
-    if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
+    if (
+        \Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
         \Cake\Core\Configure::read('preferendum.adminInterface')
     ) {
         echo '<li>';
         echo $this->Form->checkbox(
-            'userinfo', [
-            'value' => 'true',
+            'userinfo',
+            [
+                'value' => 'true',
             ]
         );
         echo '<span style="font-size: 90%;">' . __('Collect user contact information') . '</span>';
         echo '</li>';
     }
 
-    if (\Cake\Core\Configure::read('preferendum.opt_Comments')
+    if (
+        \Cake\Core\Configure::read('preferendum.opt_Comments')
         && !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
     ) {
         echo '<li>';
         echo $this->Form->checkbox(
-            'comment', [
-            'value' => 'true',
-            'id' => 'commentInput',
-            'onchange' => 'toggleEmailInput()',
+            'comment',
+            [
+                'value' => 'true',
+                'id' => 'commentInput',
+                'onchange' => 'toggleEmailInput()',
             ]
         );
         echo '<span style="font-size: 90%;">' . __('Allow users to add a comment') . '</span>';
         echo '</li>';
     }
-    
-    if (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
+
+    if (
+        \Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
         && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
             || \Cake\Core\Configure::read('preferendum.opt_Comments'))
     ) {
         echo '<li>';
         echo $this->Form->checkbox(
-            'emailcomment', [
-            'value' => 'true',
-            'id' => 'emailcommentInput',
-            'onchange' => 'toggleEmailInput()',
-            'disabled' => (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments') && \Cake\Core\Configure::read('preferendum.opt_Comments')),
+            'emailcomment',
+            [
+                'value' => 'true',
+                'id' => 'emailcommentInput',
+                'onchange' => 'toggleEmailInput()',
+                'disabled' => (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments') && \Cake\Core\Configure::read('preferendum.opt_Comments')),
             ]
         );
         echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
@@ -186,10 +207,11 @@ $this->Html->scriptEnd();
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
         echo '<li>';
         echo $this->Form->checkbox(
-            'emailentry', [
-            'value' => 'true',
-            'id' => 'emailentryInput',
-            'onchange' => 'toggleEmailInput()',
+            'emailentry',
+            [
+                'value' => 'true',
+                'id' => 'emailentryInput',
+                'onchange' => 'toggleEmailInput()',
             ]
         );
         echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
@@ -197,18 +219,20 @@ $this->Html->scriptEnd();
     }
     echo '</ul>';
 
-    if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail') 
+    if (
+        \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
         || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
             && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
                 || \Cake\Core\Configure::read('preferendum.opt_Comments')))
     ) {
         echo $this->Form->control(
-            'email', [
-            'class' => 'field-long',
-            'id' => 'emailInput',
-            'label' => __('Email'),
-            'disabled' => true,
-            'placeholder' => __('Email for receiving new entry/comment'),
+            'email',
+            [
+                'class' => 'field-long',
+                'id' => 'emailInput',
+                'label' => __('Email'),
+                'disabled' => true,
+                'placeholder' => __('Email for receiving new entry/comment'),
             ]
         );
     }

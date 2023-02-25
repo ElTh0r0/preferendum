@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -20,58 +21,56 @@
         <div class="r r-legend r-no"><?php echo __('No') . ':' ?></div>
         <div class="r r-legend"></div>
     </td>
-<?php
+    <?php
     $maxTotal = 0;
     $entriesCount = sizeof($pollentries);
 
     $displayDates = array();
     $count = 0;
-foreach ($pollchoices as $date) {
-    $displayDates[$count++] = array(
-        'date' => $date->id,
-        'yes' => 0,
-        'maybe' => 0,
-        'no' => 0,
-        'total' => 0
-    );
-}
-    
-for ($i = 0; $i < sizeof($pollchoices); $i++) {
-    foreach ($pollentries as $ent) {
-        if ($ent[$pollchoices[$i]->id] == 1) {
-            $displayDates[$i]['yes']++;
-            $displayDates[$i]['total'] += 2;
-        } elseif ($ent[$pollchoices[$i]->id] == 2) {
-            $displayDates[$i]['maybe']++;
-            $displayDates[$i]['total'] += 1;
-        } else {
-            $displayDates[$i]['no']++;
+    foreach ($pollchoices as $date) {
+        $displayDates[$count++] = array(
+            'date' => $date->id,
+            'yes' => 0,
+            'maybe' => 0,
+            'no' => 0,
+            'total' => 0
+        );
+    }
+
+    for ($i = 0; $i < sizeof($pollchoices); $i++) {
+        foreach ($pollentries as $ent) {
+            if ($ent[$pollchoices[$i]->id] == 1) {
+                $displayDates[$i]['yes']++;
+                $displayDates[$i]['total'] += 2;
+            } elseif ($ent[$pollchoices[$i]->id] == 2) {
+                $displayDates[$i]['maybe']++;
+                $displayDates[$i]['total'] += 1;
+            } else {
+                $displayDates[$i]['no']++;
+            }
         }
     }
-}
 
-if ($entriesCount > 0) {
-    foreach ($displayDates as $date) {
-        $maxTotal = max($date['total'] / ($entriesCount*2), $maxTotal);
+    if ($entriesCount > 0) {
+        foreach ($displayDates as $date) {
+            $maxTotal = max($date['total'] / ($entriesCount * 2), $maxTotal);
+        }
     }
-}
-    
-foreach ($displayDates as $date) {
-    $date['score'] = $entriesCount > 0 ? ($date['total'] / ($entriesCount*2)) : 0;
-    $date['score'] = $maxTotal > 0 ? ($date['score'] / $maxTotal) : 0;
-    $dateDynStyles = 'opacity: ' . $date['score']  . '; ';
-    $dateDynStyles .= 'background-size: ' . (($date['score'] * 100) - 10)  . '%; ';
-    $dateDynStyles .= $date['score'] == 1 ? "background-image: url('" . $this->request->getAttributes()['webroot'] . "img/icon-heart.png');" : '';
+
+    foreach ($displayDates as $date) {
+        $date['score'] = $entriesCount > 0 ? ($date['total'] / ($entriesCount * 2)) : 0;
+        $date['score'] = $maxTotal > 0 ? ($date['score'] / $maxTotal) : 0;
+        $dateDynStyles = 'opacity: ' . $date['score']  . '; ';
+        $dateDynStyles .= 'background-size: ' . (($date['score'] * 100) - 10)  . '%; ';
+        $dateDynStyles .= $date['score'] == 1 ? "background-image: url('" . $this->request->getAttributes()['webroot'] . "img/icon-heart.png');" : '';
     ?>
-    <td class="results-cell">
-        <div class="r r-yes"><?php echo $date['yes'] ?></div>
-        <div class="r r-maybe"><?php echo $date['maybe'] ?></div>
-        <div class="r r-no"><?php echo $date['no'] ?></div>
-        <!-- date/option score visualization -->
-        <div
-            class="r r-total"
-            style="<?php echo $dateDynStyles ?>">
-        </div>
-    </td>
-<?php }    ?>
+        <td class="results-cell">
+            <div class="r r-yes"><?php echo $date['yes'] ?></div>
+            <div class="r r-maybe"><?php echo $date['maybe'] ?></div>
+            <div class="r r-no"><?php echo $date['no'] ?></div>
+            <!-- date/option score visualization -->
+            <div class="r r-total" style="<?php echo $dateDynStyles ?>">
+            </div>
+        </td>
+    <?php }    ?>
 </tr>

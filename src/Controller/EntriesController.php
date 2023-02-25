@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0,
@@ -11,9 +12,11 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
 use Cake\Mailer\Mailer;
 
 class EntriesController extends AppController
@@ -25,7 +28,7 @@ class EntriesController extends AppController
             // debug($data);
             // die();
 
-            if(!$this->isValidEntry($pollid, $data)) {
+            if (!$this->isValidEntry($pollid, $data)) {
                 $this->Flash->error(__('Unable to save your entry.'));
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
@@ -48,7 +51,7 @@ class EntriesController extends AppController
                     'name' => trim($data['name']),
                     'info' => $userinfo
                 ]);
-                
+
                 $success = false;
                 if ($this->fetchTable('Users')->save($new_user)) {
                     $success = true;
@@ -58,9 +61,9 @@ class EntriesController extends AppController
                         $dbentry = $this->Entries->newEmptyEntity();
                         $dbentry = $this->Entries->newEntity(
                             [
-                            'choice_id' => $data['choices'][$i],
-                            'user_id' => $new_user->id,
-                            'value' => trim($data['values'][$i])
+                                'choice_id' => $data['choices'][$i],
+                                'user_id' => $new_user->id,
+                                'value' => trim($data['values'][$i])
                             ]
                         );
 
@@ -73,7 +76,7 @@ class EntriesController extends AppController
                         }
                     }
                 }
-                
+
                 if ($success) {
                     if ($dbemailentry && !empty($dbemail)) {
                         $this->sendEntryEmail($pollid, $dbemail, $dbtitle, $new_user->id, $new_user->name);
@@ -95,7 +98,8 @@ class EntriesController extends AppController
 
         // Check, that values are in the expected range and had not been manipulated
         for ($i = 0; $i < sizeof($newentry['values']); $i++) {
-            if (strcmp(trim($newentry['values'][$i]), '0') != 0 &&
+            if (
+                strcmp(trim($newentry['values'][$i]), '0') != 0 &&
                 strcmp(trim($newentry['values'][$i]), '1') != 0 &&
                 strcmp(trim($newentry['values'][$i]), '2') != 0
             ) {
@@ -123,9 +127,10 @@ class EntriesController extends AppController
     private function isNewEntry($pollid, $username)
     {
         $query = $this->Entries->find(
-            'all', [
-            'contain' => ['Users', 'Choices'],
-            'conditions' => ['poll_id' => $pollid, 'Users.name' => $username]
+            'all',
+            [
+                'contain' => ['Users', 'Choices'],
+                'conditions' => ['poll_id' => $pollid, 'Users.name' => $username]
             ]
         );
         $number = $query->count();
@@ -155,10 +160,10 @@ class EntriesController extends AppController
             ->setSubject(__('New entry in poll "{0}"', h($title)))
             ->setViewVars(
                 [
-                'title' => $title,
-                'link' => $link,
-                'name' => $username,
-                'entries' => $dbentries,
+                    'title' => $title,
+                    'link' => $link,
+                    'name' => $username,
+                    'entries' => $dbentries,
                 ]
             )
             ->deliver();

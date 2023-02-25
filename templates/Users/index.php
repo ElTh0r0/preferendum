@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -62,22 +63,25 @@
         echo '<h1>' . __('Change password') . '</h1>';
     }
     ?>
-    
+
     <?php
     echo $this->Form->create(
-        $user, [
+        $user,
+        [
             'type' => 'post',
-            'url' => ['controller' => 'Users','action' => 'addOrUpdateUser', $currentUserName, $currentUserRole]
-            ]
-        );
-    ?> 
+            'url' => ['controller' => 'Users', 'action' => 'addOrUpdateUser', $currentUserName, $currentUserRole]
+        ]
+    );
+    ?>
     <fieldset>
         <?php
         if (strcmp($currentUserRole, $allroles[0]) == 0) {
             echo $this->Form->control(
-                'name', [
-                'required' => true,
-                'label' => __('Name')]
+                'name',
+                [
+                    'required' => true,
+                    'label' => __('Name')
+                ]
             );
 
             echo $this->Form->label('role', __('Role'));
@@ -85,16 +89,20 @@
         }
         ?>
         <?php echo $this->Form->control(
-            'password', [
-            'required' => true,
-            'label' => __('Password'),
-            'type' => 'password']
+            'password',
+            [
+                'required' => true,
+                'label' => __('Password'),
+                'type' => 'password'
+            ]
         ) ?>
         <?php echo $this->Form->control(
-            'confirmpassword', [
-            'required' => true,
-            'label' => __('Confirm password'),
-            'type' => 'password']
+            'confirmpassword',
+            [
+                'required' => true,
+                'label' => __('Confirm password'),
+                'type' => 'password'
+            ]
         ) ?>
     </fieldset>
     <?php echo $this->Form->button(__('Submit')); ?>

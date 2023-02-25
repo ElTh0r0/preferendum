@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -18,15 +19,19 @@
     <?php echo $this->Form->create() ?>
     <fieldset>
         <?php echo $this->Form->control(
-            'name', [
-            'required' => true,
-            'label' => __('Name')]
+            'name',
+            [
+                'required' => true,
+                'label' => __('Name')
+            ]
         ) ?>
         <?php echo $this->Form->control(
-            'password', [
-            'required' => true,
-            'label' => __('Password'),
-            'type' => 'password']
+            'password',
+            [
+                'required' => true,
+                'label' => __('Password'),
+                'type' => 'password'
+            ]
         ) ?>
     </fieldset>
     <?php echo $this->Form->submit(__('Login')); ?>

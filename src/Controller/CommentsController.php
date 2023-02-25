@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,9 +12,11 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
 use Cake\Mailer\Mailer;
 
 class CommentsController extends AppController
@@ -38,12 +41,12 @@ class CommentsController extends AppController
             $comment = $this->Comments->newEmptyEntity();
             $comment = $this->Comments->patchEntity($comment, $this->request->getData());
             $comment->poll_id = $poll['id'];
-            
+
             if ($this->Comments->save($comment)) {
                 if ($dbemailcomment && !empty($dbemail)) {
                     $this->sendCommentEmail($pollid, $dbemail, $dbtitle, $comment);
                 }
-            
+
                 $this->Flash->success(__('The comment has been saved.'));
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
@@ -58,7 +61,8 @@ class CommentsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        if (isset($pollid) && !empty($pollid)
+        if (
+            isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
             && isset($comid) && !empty($comid)
         ) {
@@ -92,9 +96,9 @@ class CommentsController extends AppController
             ->setSubject(__('New comment in poll "{0}"', h($title)))
             ->setViewVars(
                 [
-                'title' => $title,
-                'link' => $link,
-                'comment' => $comment,
+                    'title' => $title,
+                    'link' => $link,
+                    'comment' => $comment,
                 ]
             )
             ->deliver();

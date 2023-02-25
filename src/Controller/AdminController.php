@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,9 +12,11 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
 use Cake\Auth\DefaultPasswordHasher;
 
 class AdminController extends AppController
@@ -39,11 +42,12 @@ class AdminController extends AppController
     //------------------------------------------------------------------------
 
     public function index()
-    { 
+    {
         $polls = $this->paginate(
-            $this->fetchTable('Polls')->find('all'), [
-                    'limit' => 20,
-                ]
+            $this->fetchTable('Polls')->find('all'),
+            [
+                'limit' => 20,
+            ]
         );
 
         $numentries = $this->getNumberOfEntries();
@@ -109,32 +113,33 @@ class AdminController extends AppController
         $dbnumentries = $this->fetchTable('Entries')->find()
             ->contain(['Choices'])
             ->select(['Choices.poll_id'])
-            ->group(['user_id']); 
+            ->group(['user_id']);
         $dbnumentries = $dbnumentries->all();
         $numentries = array();
-        foreach($dbnumentries as $entry) {
+        foreach ($dbnumentries as $entry) {
             $numentries[] = $entry->choice->poll_id;
         }
         $numentries = array_count_values($numentries);
 
         return $numentries;
     }
-    
+
     //------------------------------------------------------------------------
 
     private function getNumberOfComments()
     {
         $numcomments = array();
 
-        if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+        if (
+            \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
             || \Cake\Core\Configure::read('preferendum.opt_Comments')
         ) {
             $dbnumcomments = $this->fetchTable('Comments')->find()
-            ->select(['poll_id', 'count' => 'COUNT(*)'])
-            ->group(['poll_id']); 
+                ->select(['poll_id', 'count' => 'COUNT(*)'])
+                ->group(['poll_id']);
             $dbnumcomments = $dbnumcomments->all();
             $numcomments = array();
-            foreach($dbnumcomments as $comm) {
+            foreach ($dbnumcomments as $comm) {
                 $numcomments[$comm->poll_id] = $comm->count;
             }
         }

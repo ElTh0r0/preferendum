@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,6 +12,7 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -22,8 +24,9 @@ class ChoicesController extends AppController
         if ($this->request->is('post')) {
             $newchoice = $this->request->getData();
             $newchoice = trim($newchoice['choice']);
-            
-            if (isset($pollid) && !empty($pollid)
+
+            if (
+                isset($pollid) && !empty($pollid)
                 && isset($adminid) && !empty($adminid)
                 && isset($newchoice) && !empty($newchoice)
             ) {
@@ -33,21 +36,22 @@ class ChoicesController extends AppController
                     ->firstOrFail();
                 $dbadminid = $poll->adminid;
 
-                if (strcmp($dbadminid, $adminid) == 0 &&
+                if (
+                    strcmp($dbadminid, $adminid) == 0 &&
                     $this->isNewChoice($pollid, $newchoice)
                 ) {
                     $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
                     $dbchoice = $this->Choices->newEntity(
                         [
-                        'poll_id' => $poll->id,
-                        'option' => trim($newchoice),
-                        'sort' => $nextsort
+                            'poll_id' => $poll->id,
+                            'option' => trim($newchoice),
+                            'sort' => $nextsort
                         ]
                     );
 
                     if ($this->Choices->save($dbchoice)) {
                         $success = $this->addMaybeToExisting($pollid, $dbchoice);
-                        
+
                         if ($success) {
                             $this->Flash->success(__('Option has been added.'));
                             return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
@@ -65,8 +69,9 @@ class ChoicesController extends AppController
     public function delete($pollid = null, $adminid = null, $choiceid = null)
     {
         $this->request->allowMethod(['post', 'delete']);
-    
-        if (isset($pollid) && !empty($pollid)
+
+        if (
+            isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
             && isset($choiceid) && !empty($choiceid)
         ) {
@@ -93,8 +98,9 @@ class ChoicesController extends AppController
     private function isNewChoice($pollid, $newchoice)
     {
         $query = $this->Choices->find(
-            'all', [
-            'conditions' => ['poll_id' => $pollid, 'option' => $newchoice]
+            'all',
+            [
+                'conditions' => ['poll_id' => $pollid, 'option' => $newchoice]
             ]
         );
         $number = $query->count();  // Check that choice with same name doesn't exist

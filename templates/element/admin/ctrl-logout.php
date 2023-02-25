@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -24,9 +25,11 @@
         }
         echo $this->Html->link(
             $this->Form->button(
-                $caption, [
-                'type' => 'button',
-                'id' => 'ctrl-usermanagement',]
+                $caption,
+                [
+                    'type' => 'button',
+                    'id' => 'ctrl-usermanagement',
+                ]
             ),
             ['controller' => 'Users', 'action' => 'index'],
             ['escape' => false]
@@ -34,9 +37,11 @@
     } else {
         echo $this->Html->link(
             $this->Form->button(
-                __('Poll administration'), [
-                'type' => 'button',
-                'id' => 'ctrl-polls',]
+                __('Poll administration'),
+                [
+                    'type' => 'button',
+                    'id' => 'ctrl-polls',
+                ]
             ),
             ['controller' => 'Admin', 'action' => 'index'],
             ['escape' => false]
@@ -44,9 +49,11 @@
     }
     echo $this->Form->postLink(
         $this->Form->button(
-            __('Logout'), [
-            'type' => 'button',
-            'id' => 'ctrl-logout',]
+            __('Logout'),
+            [
+                'type' => 'button',
+                'id' => 'ctrl-logout',
+            ]
         ),
         ['controller' => 'Admin', 'action' => 'logout'],
         ['escape' => false]

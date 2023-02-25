@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,9 +12,11 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
 use App\Model\Entity\Choice;
 use App\Model\Entity\Entry;
 use App\Model\Entity\Comment;
@@ -26,19 +29,23 @@ class PollsController extends AppController
 
         // Show warning on main page if InstallDb script still exists
         $base = $this->request->getUri()->getPath();
-        if ($base == '/' &&
-            file_exists(APP . 'Controller/InstalldbController.php')) {
+        if (
+            $base == '/' &&
+            file_exists(APP . 'Controller/InstalldbController.php')
+        ) {
             $this->Flash->error(__('File "src/Controller/InstalldbController.php" should be removed!'));
         }
     }
 
     //------------------------------------------------------------------------
-    
+
     public function add()
     {
         // Check if poll creation is restricted
-        if (\Cake\Core\Configure::read('preferendum.adminInterface') &&
-            \Cake\Core\Configure::read('preferendum.restrictPollCreation')) {
+        if (
+            \Cake\Core\Configure::read('preferendum.adminInterface') &&
+            \Cake\Core\Configure::read('preferendum.restrictPollCreation')
+        ) {
             $this->loadComponent('Authentication.Authentication');
             $result = $this->Authentication->getResult();
             if ($result->isValid()) {
@@ -46,12 +53,14 @@ class PollsController extends AppController
                 $polladmRole = SELF::ROLES[1];
                 $identity = $this->Authentication->getIdentity();
                 $currentUserRole = $identity->getOriginalData()['role'];
-                if (strcmp($currentUserRole, $adminRole) != 0 &&
-                    strcmp($currentUserRole, $polladmRole) != 0) {
-                    $this->redirect(['controller' => 'Admin','action' => 'login']);
+                if (
+                    strcmp($currentUserRole, $adminRole) != 0 &&
+                    strcmp($currentUserRole, $polladmRole) != 0
+                ) {
+                    $this->redirect(['controller' => 'Admin', 'action' => 'login']);
                 }
             } else {
-                $this->redirect(['controller' => 'Admin','action' => 'login']);
+                $this->redirect(['controller' => 'Admin', 'action' => 'login']);
             }
         }
 
@@ -66,7 +75,8 @@ class PollsController extends AppController
             if (!$poll->adminid) {
                 $poll->hideresult = 0;
             }
-            if (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+            if (
+                !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
                 && !\Cake\Core\Configure::read('preferendum.opt_Comments')
             ) {
                 $poll->comment = 0;
@@ -90,9 +100,9 @@ class PollsController extends AppController
                     $dbchoice = $this->fetchTable('Choices')->newEmptyEntity();
                     $dbchoice = $this->fetchTable('Choices')->newEntity(
                         [
-                        'poll_id' => $poll->id,
-                        'option' => trim($choices[$i]),
-                        'sort' => $i+1
+                            'poll_id' => $poll->id,
+                            'option' => trim($choices[$i]),
+                            'sort' => $i + 1
                         ]
                     );
                     if (!$this->fetchTable('Choices')->save($dbchoice)) {
@@ -147,7 +157,7 @@ class PollsController extends AppController
         }
 
         $entry = $this->fetchTable('Entries')->newEmptyEntity();  // New empty entity for new entry
-        
+
         if ($poll->locked != 0) {
             $this->Flash->error(__('This poll is locked - it is not possible to insert new entries or comments!'));
         }
@@ -166,7 +176,7 @@ class PollsController extends AppController
             ->where(['id' => $pollid])
             ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
             ->firstOrFail();
-        
+
         $dbchoices = $this->fetchTable('Choices')->find()
             ->where(['poll_id' => $pollid])
             ->select(['id', 'option'])
@@ -196,7 +206,8 @@ class PollsController extends AppController
         if (strcmp($dbadminid, $adminid) == 0) {
             if ($this->request->is(['post', 'put'])) {
                 $this->Polls->patchEntity($poll, $this->request->getData());
-                if (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+                if (
+                    !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
                     && !\Cake\Core\Configure::read('preferendum.opt_Comments')
                 ) {
                     $poll->comment = 0;
@@ -235,12 +246,13 @@ class PollsController extends AppController
     {
         $this->request->allowMethod(['post', 'lock']);
 
-        if (isset($pollid) && !empty($pollid)
+        if (
+            isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
         ) {
             $poll = $this->Polls->findById($pollid)->firstOrFail();
             $dbadminid = $poll->adminid;
-            
+
             if (strcmp($dbadminid, $adminid) == 0) {
                 if ($poll->locked == 0) {
                     $poll->locked = 1;
@@ -266,7 +278,8 @@ class PollsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
 
-        if (isset($pollid) && !empty($pollid)
+        if (
+            isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
         ) {
             $poll = $this->Polls->findById($pollid)->firstOrFail();
@@ -295,7 +308,7 @@ class PollsController extends AppController
                     }
                 }
 
-                if ($success) {                   
+                if ($success) {
                     // Users must be deleted manually, since there is no direct dependency between Polls and Users table
                     if (sizeof($users) > 0) {
                         if (!$this->fetchTable('Users')->deleteAll(['id IN' => $users])) {
@@ -333,7 +346,7 @@ class PollsController extends AppController
         $deleteAfter = \Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter');
         //minimum last changed date
         $minDate = date("Y-m-d H:i:s", strtotime("-" . $deleteAfter . " days", time()));
-        
+
         echo PHP_EOL;
         echo "PREFERendum cleanup routine" . PHP_EOL;
         echo "***********************" . PHP_EOL;
@@ -341,7 +354,7 @@ class PollsController extends AppController
         echo "This will delete every poll that was inactive" . PHP_EOL . "since " . $minDate . " (for at least " . $deleteAfter . " days)." . PHP_EOL;
         echo "You may change this value in 'config/preferendum_features.php'" . PHP_EOL;
         echo PHP_EOL;
-        
+
         //get IDs of polls to delete
         $trash = $this->Polls->find('all')->where(['modified <' => $minDate]);
         $trash = $trash->all()->toArray();
@@ -350,13 +363,13 @@ class PollsController extends AppController
         if (sizeof($trash) > 0) {
             foreach ($trash as $poll) {
                 echo "Deleting poll: " . $poll['id'] . " ..." . PHP_EOL;
-                
+
                 $userentries = $this->fetchTable('Entries')->find()
                     ->where(['poll_id' => $poll['id']])
                     ->contain(['Users'])
                     ->select(['user_id' => 'Users.id'])
                     ->group(['user_id']);
-                
+
                 if ($userentries->count() > 0) {
                     if (!$this->fetchTable('Users')->deleteAll(['id IN' => $userentries])) {
                         echo "ERROR while deleting: " . $poll['id'] . " (error while user deletion)" . PHP_EOL;
@@ -373,7 +386,7 @@ class PollsController extends AppController
         echo PHP_EOL;
         echo "Deleted " . sizeof($trash) . " polls." . PHP_EOL;
         echo "Done." . PHP_EOL;
-        
+
         $this->autoRender = false;
     }
 }

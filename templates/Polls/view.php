@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -40,7 +41,7 @@ $this->Html->scriptEnd();
 
 <div id="poll-container">
     <table class="schedule">
-        <?php echo $this->element('choice/list'); ?>    
+        <?php echo $this->element('choice/list'); ?>
         <?php echo $this->element('entry/list'); ?>
 
         <!-- SPACER ROW -->
@@ -66,14 +67,16 @@ $this->Html->scriptEnd();
     </table>
 </div>
 
-<?php if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-          || (\Cake\Core\Configure::read('preferendum.opt_Comments') && $poll->comment)) {
+<?php if (
+    \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+    || (\Cake\Core\Configure::read('preferendum.opt_Comments') && $poll->comment)
+) {
     echo '<div id="comments-wrapper">';
-        if ($poll->hideresult == 0) {
-            echo $this->element('comment/list');
-        }
-        if ($poll->locked == 0) {
-            echo $this->element('comment/new');
-        }
+    if ($poll->hideresult == 0) {
+        echo $this->element('comment/list');
+    }
+    if ($poll->locked == 0) {
+        echo $this->element('comment/new');
+    }
     echo '</div>';
 } ?>

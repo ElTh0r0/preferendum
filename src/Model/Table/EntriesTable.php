@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,6 +12,7 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -85,7 +87,7 @@ class EntriesTable extends Table
         $this->Choices->Polls->touch($updatePollTimestamp);
         $this->Choices->Polls->save($updatePollTimestamp);
     }
-    
+
     public function afterDelete(EventInterface $event, $entity, $options)
     {
         $db = $this->findById($entity->id)

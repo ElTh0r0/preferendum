@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,6 +12,7 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -53,12 +55,13 @@ class CommentsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior(
-            'Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'created' => 'new'
+            'Timestamp',
+            [
+                'events' => [
+                    'Model.beforeSave' => [
+                        'created' => 'new'
+                    ]
                 ]
-            ]
             ]
         );
 
@@ -85,7 +88,7 @@ class CommentsTable extends Table
         $this->Polls->touch($updatePollTimestamp);
         $this->Polls->save($updatePollTimestamp);
     }
-    
+
     public function afterDelete(EventInterface $event, $entity, $options)
     {
         // Update timestamp in polls table

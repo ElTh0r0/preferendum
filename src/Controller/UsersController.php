@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,9 +12,11 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
 use Cake\Auth\DefaultPasswordHasher;
 
 class UsersController extends AppController
@@ -51,7 +54,7 @@ class UsersController extends AppController
         $backendusers = $backendusers->all()->toArray();
 
         $user = $this->Users->newEmptyEntity();
-        
+
         $this->set(compact('backendusers', 'allroles', 'currentUserName', 'currentUserRole', 'user'));
     }
 
@@ -69,14 +72,14 @@ class UsersController extends AppController
 
             $newOrUpdateUser = $this->Users->newEmptyEntity();
             $this->Users->patchEntity($newOrUpdateUser, $this->request->getData());
-            
+
             // Name not set, considering that current user wants to update his password
             if (!($newOrUpdateUser['name'])) {
                 $newOrUpdateUser['name'] = $currentUserName;
-                $newOrUpdateUser['role'] = $currentUserRole;    
+                $newOrUpdateUser['role'] = $currentUserRole;
             } else {
                 $newOrUpdateUser['role'] = self::ROLES[$newOrUpdateUser['role']];
-            }          
+            }
 
             $dbuser = $this->Users
                 ->find()
@@ -88,9 +91,11 @@ class UsersController extends AppController
             }
 
             // Check if current user is the only admin and user tries to remove his own admin role
-            if (strcmp($currentUserName, trim($newOrUpdateUser['name'])) == 0 &&
-            strcmp($currentUserRole, self::ROLES[0]) == 0 &&
-            strcmp($newOrUpdateUser['role'], self::ROLES[0]) != 0) {
+            if (
+                strcmp($currentUserName, trim($newOrUpdateUser['name'])) == 0 &&
+                strcmp($currentUserRole, self::ROLES[0]) == 0 &&
+                strcmp($newOrUpdateUser['role'], self::ROLES[0]) != 0
+            ) {
                 $cntAdmins = $this->Users->find('all')->where(['role' => self::ROLES[0]]);
                 $cntAdmins = $cntAdmins->count();
                 if ($cntAdmins == 1) {
@@ -138,12 +143,13 @@ class UsersController extends AppController
     }
 
     //------------------------------------------------------------------------
-    
+
     public function deleteUserAndPollEntries($pollid = null, $adminid = null, $userid = null)
     {
         $this->request->allowMethod(['post', 'deleteUserAndPollEntries']);
-    
-        if (isset($pollid) && !empty($pollid)
+
+        if (
+            isset($pollid) && !empty($pollid)
             && isset($adminid) && !empty($adminid)
             && isset($userid) && !empty($userid)
         ) {
@@ -161,5 +167,4 @@ class UsersController extends AppController
         $this->Flash->error(__('Entry has NOT been deleted!'));
         return $this->redirect($this->referer());
     }
-
 }

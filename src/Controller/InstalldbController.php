@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,13 +12,14 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Controller;
+
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-
 
 class InstalldbController extends AppController
 {
@@ -30,7 +32,7 @@ class InstalldbController extends AppController
         $this->checkFilesystem();
         $dbconnection = $this->checkDatabase();
         $this->createTables($dbconnection);
-        
+
         echo '<p>DONE!</p>';
         echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';
         echo '</body></html>';
@@ -136,7 +138,7 @@ class InstalldbController extends AppController
         $table = $connection->execute('SELECT IF( EXISTS(
             SELECT *
             FROM INFORMATION_SCHEMA.TABLES
-          WHERE TABLE_SCHEMA = "' . $connection->config()['database'] .'" AND TABLE_NAME = "polls"), 1, 0) as "exists";')->fetchAll('assoc');
+          WHERE TABLE_SCHEMA = "' . $connection->config()['database'] . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";')->fetchAll('assoc');
         if ($table[0]['exists']) {
             echo '<li><strong>Attention:</strong> Install script was already executed - stopping execution!</li>';
             die;

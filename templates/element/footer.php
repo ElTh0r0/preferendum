@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -14,11 +15,11 @@
 ?>
 
 <?php if (\Cake\Core\Configure::read('preferendum.footerLink')) { ?>
-<div id="footer">
-    <em>PREFERendum</em> open source scheduling polls.
-    <a href="https://github.com/ElTh0r0/preferendum" target="_blank">
-    <em>Visit on GitHub</em>
-    <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/icon-github.png' ?> alt=""/>
-    </a>
-</div>
+    <div id="footer">
+        <em>PREFERendum</em> open source scheduling polls.
+        <a href="https://github.com/ElTh0r0/preferendum" target="_blank">
+            <em>Visit on GitHub</em>
+            <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/icon-github.png' ?> alt="" />
+        </a>
+    </div>
 <?php } ?>

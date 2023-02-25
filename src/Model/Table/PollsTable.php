@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -11,6 +12,7 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.5.0
  */
+
 declare(strict_types=1);
 
 namespace App\Model\Table;
@@ -55,15 +57,16 @@ class PollsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->addBehavior(
-            'Timestamp', [
-            'events' => [
-                'Model.beforeSave' => [
-                    'modified' => 'always'
+            'Timestamp',
+            [
+                'events' => [
+                    'Model.beforeSave' => [
+                        'modified' => 'always'
+                    ]
                 ]
             ]
-            ]
         );
-        
+
         $this->hasMany('Choices', [
             'foreignKey' => 'poll_id',
         ])->setDependent(true);
@@ -99,14 +102,14 @@ class PollsTable extends Table
         $validator
             ->notEmptyString('title')
             ->maxLength('title', 255);
-        
+
         $validator
             ->allowEmptyString('details')
             ->maxLength('details', 511);
 
         $validator
             ->maxLength('email', 32);
-        
+
         return $validator;
     }
 }

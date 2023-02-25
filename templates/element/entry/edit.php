@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -22,12 +23,15 @@ foreach ($pollentries as $name => $entry) {
     for ($i = 0; $i < sizeof($pollchoices); $i++) {
         $value = 'maybe';
         switch ($entry[$pollchoices[$i]->id]) {
-        case 0: $value = 'no'; 
-            break;
-        case 1: $value = 'yes'; 
-            break;
-        case 2: $value = 'maybe'; 
-            break;
+            case 0:
+                $value = 'no';
+                break;
+            case 1:
+                $value = 'yes';
+                break;
+            case 2:
+                $value = 'maybe';
+                break;
         }
 
         echo '<td class="schedule-entry schedule-entry-' . $value . '"></td>';
@@ -36,14 +40,16 @@ foreach ($pollentries as $name => $entry) {
     echo '<td>';
     echo $this->Form->postLink(
         $this->Form->button(
-            '', [
-                'type' => 'button', 'class' => 'schedule-delete']
+            '',
+            [
+                'type' => 'button', 'class' => 'schedule-delete'
+            ]
         ),
         ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],
         ['escape' => false, 'confirm' => __('Are you sure to delete this entry?')]
     );
     echo '</td>';
-        
+
     echo '</tr>';
 }
 ?>

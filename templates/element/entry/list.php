@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -23,17 +24,20 @@ if ($poll->hideresult == 0) {
         for ($i = 0; $i < sizeof($pollchoices); $i++) {
             $value = 'maybe';
             switch ($entry[$pollchoices[$i]->id]) {
-            case 0: $value = 'no'; 
-                break;
-            case 1: $value = 'yes'; 
-                break;
-            case 2: $value = 'maybe'; 
-                break;
+                case 0:
+                    $value = 'no';
+                    break;
+                case 1:
+                    $value = 'yes';
+                    break;
+                case 2:
+                    $value = 'maybe';
+                    break;
             }
 
             echo '<td class="schedule-entry schedule-entry-' . $value . '"></td>';
         }
-            
+
         echo '</tr>';
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -16,7 +17,7 @@
 <!-- TABLE HEADER / DATES -->
 <tr>
     <td class="schedule-blank"></td>
-    <?php foreach ($pollchoices as $choice): ?>
+    <?php foreach ($pollchoices as $choice) : ?>
         <td class="schedule-header">
             <div>
                 <div>

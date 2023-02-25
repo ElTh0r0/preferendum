@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -16,8 +17,10 @@
 <!-- GO BACK TO POLL VIEW -->
 <?php echo $this->Html->link(
     $this->Form->button(
-        __('View Poll'), [
-        'type' => 'button', 'id' => 'ctrl-mini-view']
+        __('View Poll'),
+        [
+            'type' => 'button', 'id' => 'ctrl-mini-view'
+        ]
     ),
     ['action' => 'view', $poll->id, $adminid],
     ['escape' => false]
@@ -26,8 +29,10 @@
 <!-- UN-/LOCK POLL BUTTON -->
 <?php echo $this->Form->postLink(
     $this->Form->button(
-        __('Un-/Lock'), [
-        'type' => 'button', 'id' => 'ctrl-lock-poll']
+        __('Un-/Lock'),
+        [
+            'type' => 'button', 'id' => 'ctrl-lock-poll'
+        ]
     ),
     ['action' => 'lock', $poll->id, $adminid],
     ['escape' => false]
@@ -37,8 +42,10 @@
 <!-- DELETE POLL BUTTON -->
 <?php echo $this->Form->postLink(
     $this->Form->button(
-        __('Delete'), [
-        'type' => 'button', 'id' => 'ctrl-delete-poll']
+        __('Delete'),
+        [
+            'type' => 'button', 'id' => 'ctrl-delete-poll'
+        ]
     ),
     ['action' => 'delete', $poll->id, $adminid],
     ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]

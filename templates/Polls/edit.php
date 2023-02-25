@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -50,7 +51,7 @@ $this->Html->scriptEnd();
         echo $this->element('choice/edit');
         echo $this->element('entry/edit');
         echo '<tr class="table-spacer-row table-spacer-row-big"><td></td></tr>';
-        
+
         if (\Cake\Core\Configure::read('preferendum.trendResult')) {
             echo $this->element('poll/result-trend');
         } else {
@@ -59,9 +60,11 @@ $this->Html->scriptEnd();
     </table>
 </div>
 
-<?php if (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-          || (\Cake\Core\Configure::read('preferendum.opt_Comments') && $poll->comment)) {
+<?php if (
+    \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+    || (\Cake\Core\Configure::read('preferendum.opt_Comments') && $poll->comment)
+) {
     echo '<div id="comments-wrapper">';
-        echo $this->element('comment/delete');
+    echo $this->element('comment/delete');
     echo '</div>';
 } ?>

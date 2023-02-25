@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -21,11 +22,12 @@
         <?php
         $request = $this->request->getUri()->getPath();
         $base = basename($request);
-        if (strcmp($base, 'admin') == 0 ||
+        if (
+            strcmp($base, 'admin') == 0 ||
             strcmp($base, 'users') == 0 ||
             (strcmp($base, '') == 0 &&
-            \Cake\Core\Configure::read('preferendum.adminInterface') &&
-            \Cake\Core\Configure::read('preferendum.restrictPollCreation'))
+                \Cake\Core\Configure::read('preferendum.adminInterface') &&
+                \Cake\Core\Configure::read('preferendum.restrictPollCreation'))
         ) { ?>
             <h1><?php echo __('Administration') ?></h1>
             <p class="details"></p>
@@ -35,43 +37,43 @@
         <?php } elseif ($poll->isNew()) { ?>
             <h1><?php echo __('PREFERendum') ?></h1>
             <p class="details"><?php echo __('scheduling polls') ?></p>
-        <!-- HEADER IS USED IN POLL VIEW -->
+            <!-- HEADER IS USED IN POLL VIEW -->
         <?php } else { ?>
             <h1><?php echo h($poll->title) ?></h1>
             <p class="details"><?php echo h($poll->details) ?></p>
-            
+
             <?php if (stripos($request, 'polls/edit') > 0) { ?>
-            <div class="poll-url-container">
-                <span class="success"><em><?php echo __('Public link') . ':' ?></em></span>
-                <input type="text" id="public-url-field" title="<?php echo __('Give this public link to the participants of your poll!') ?>" readonly/>
-                <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
-                <span class="pale">&nbsp;&larr; <?php echo __('Give this public link to the participants of your poll!') ?></span>
-            </div>
+                <div class="poll-url-container">
+                    <span class="success"><em><?php echo __('Public link') . ':' ?></em></span>
+                    <input type="text" id="public-url-field" title="<?php echo __('Give this public link to the participants of your poll!') ?>" readonly />
+                    <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
+                    <span class="pale">&nbsp;&larr; <?php echo __('Give this public link to the participants of your poll!') ?></span>
+                </div>
             <?php } else { ?>
                 <div class="poll-url-container">
-                <span class="success"><em><?php echo __('Public link') . ':' ?></em></span>
-                <input type="text" id="public-url-field" readonly/>
-                <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
-            </div>
+                    <span class="success"><em><?php echo __('Public link') . ':' ?></em></span>
+                    <input type="text" id="public-url-field" readonly />
+                    <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
+                </div>
             <?php } ?>
             <?php if (strcmp($poll->adminid, "NA") != 0 && strcmp($poll->adminid, $adminid) == 0) { ?>
-            <div class="poll-url-container">
-                <span class="fail"><em><?php echo __('Admin link') . ':' ?></em></span>
-                <input type="text" id="admin-url-field" title="<?php echo __('Save this admin link, you need it to manage your poll!') ?>" readonly/>
-                <button type="button" class="copy-trigger" data-clipboard-target="#admin-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
-                <span class="pale">&nbsp;&larr; <?php echo __('Save this admin link, you need it to manage your poll!') ?></span>
-            </div>
+                <div class="poll-url-container">
+                    <span class="fail"><em><?php echo __('Admin link') . ':' ?></em></span>
+                    <input type="text" id="admin-url-field" title="<?php echo __('Save this admin link, you need it to manage your poll!') ?>" readonly />
+                    <button type="button" class="copy-trigger" data-clipboard-target="#admin-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
+                    <span class="pale">&nbsp;&larr; <?php echo __('Save this admin link, you need it to manage your poll!') ?></span>
+                </div>
             <?php } ?>
         <?php } ?>
 
     </div>
 
     <?php if (\Cake\Core\Configure::read('preferendum.headerLogo')) { ?>
-    <div id="logo">
-        <a href="<?php echo $this->request->getAttributes()['webroot'] ?>" title="<?php echo __('Create a new poll ...') ?>">
-            <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/logo.png' ?> alt=""/>
-        </a>
-    </div>
+        <div id="logo">
+            <a href="<?php echo $this->request->getAttributes()['webroot'] ?>" title="<?php echo __('Create a new poll ...') ?>">
+                <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/logo.png' ?> alt="" />
+            </a>
+        </div>
     <?php } ?>
 
 </div>

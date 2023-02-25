@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0, github.com/bkis
@@ -19,15 +20,15 @@
     <?php
     if (sizeof($poll->comments) > 0) {
         foreach ($poll->comments as $com) {
-            ?>
-        <div class="comment-container">
-            <span class="comment-name"><?php echo h($com->name) ?></span>
-            <div class="comment-date">
-                <?php echo $com->created->format(\Cake\Core\Configure::read('preferendum.dateformatComments')) ?>
+    ?>
+            <div class="comment-container">
+                <span class="comment-name"><?php echo h($com->name) ?></span>
+                <div class="comment-date">
+                    <?php echo $com->created->format(\Cake\Core\Configure::read('preferendum.dateformatComments')) ?>
+                </div>
+                <div class="comment-text"><?php echo nl2br(h($com->text)) ?></div>
             </div>
-            <div class="comment-text"><?php echo nl2br(h($com->text)) ?></div>
-        </div>
-            <?php
+    <?php
         }
     } else {
         echo __('No comments, yet.');
