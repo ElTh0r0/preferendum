@@ -34,7 +34,7 @@
             'type' => 'button', 'id' => 'ctrl-lock-poll'
         ]
     ),
-    ['action' => 'lock', $poll->id, $adminid],
+    ['action' => 'togglelock', $poll->id, $adminid],
     ['escape' => false]
 );
 ?>

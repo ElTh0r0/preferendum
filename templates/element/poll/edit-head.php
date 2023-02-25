@@ -21,6 +21,8 @@ echo $this->Form->create(
     [
         'class' => 'form',
         'id' => 'form-new-poll',
+        'type' => 'post',
+        'url' => ['controller' => 'Polls', 'action' => 'update', $poll->id, $adminid]
     ]
 );
 echo $this->Form->control(

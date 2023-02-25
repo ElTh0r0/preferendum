@@ -16,7 +16,7 @@
 
 <?php
 echo $this->Form->create(
-    $entry,
+    $newentry,
     [
         'type' => 'post',
         'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id]

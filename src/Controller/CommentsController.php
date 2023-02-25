@@ -38,13 +38,13 @@ class CommentsController extends AppController
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
-            $comment = $this->Comments->newEmptyEntity();
-            $comment = $this->Comments->patchEntity($comment, $this->request->getData());
-            $comment->poll_id = $poll['id'];
+            $newcomment = $this->Comments->newEmptyEntity();
+            $newcomment = $this->Comments->patchEntity($newcomment, $this->request->getData());
+            $newcomment->poll_id = $poll['id'];
 
-            if ($this->Comments->save($comment)) {
+            if ($this->Comments->save($newcomment)) {
                 if ($dbemailcomment && !empty($dbemail)) {
-                    $this->sendCommentEmail($pollid, $dbemail, $dbtitle, $comment);
+                    $this->sendCommentEmail($pollid, $dbemail, $dbtitle, $newcomment);
                 }
 
                 $this->Flash->success(__('The comment has been saved.'));

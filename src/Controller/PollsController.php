@@ -41,66 +41,31 @@ class PollsController extends AppController
 
     public function add()
     {
-        // Check if poll creation is restricted
-        if (
-            \Cake\Core\Configure::read('preferendum.adminInterface') &&
-            \Cake\Core\Configure::read('preferendum.restrictPollCreation')
-        ) {
-            $this->loadComponent('Authentication.Authentication');
-            $result = $this->Authentication->getResult();
-            if ($result->isValid()) {
-                $adminRole = SELF::ROLES[0];
-                $polladmRole = SELF::ROLES[1];
-                $identity = $this->Authentication->getIdentity();
-                $currentUserRole = $identity->getOriginalData()['role'];
-                if (
-                    strcmp($currentUserRole, $adminRole) != 0 &&
-                    strcmp($currentUserRole, $polladmRole) != 0
-                ) {
-                    $this->redirect(['controller' => 'Admin', 'action' => 'login']);
-                }
-            } else {
-                $this->redirect(['controller' => 'Admin', 'action' => 'login']);
-            }
+        if ($this->isPollCreationRestriced()) {
+            return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
         }
 
-        $poll = $this->Polls->newEmptyEntity();
+        $newpoll = $this->Polls->newEmptyEntity();
         if ($this->request->is('post') && null !== $this->request->getData('choices')) {
-            $poll = $this->Polls->patchEntity($poll, $this->request->getData());
+            $newpoll = $this->Polls->patchEntity($newpoll, $this->request->getData());
 
             // Some checks to prevent manipulating disabled input fields through browser tools
             if (\Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks')) {
-                $poll->adminid = true;
+                $newpoll->adminid = true;
             }
-            if (!$poll->adminid) {
-                $poll->hideresult = 0;
+            if (!$newpoll->adminid) {
+                $newpoll->hideresult = 0;
             }
-            if (
-                !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-                && !\Cake\Core\Configure::read('preferendum.opt_Comments')
-            ) {
-                $poll->comment = 0;
-                $poll->emailcomment = 0;
-            }
-            if (!$poll->comment && \Cake\Core\Configure::read('preferendum.opt_Comments')) {
-                $poll->emailcomment = 0;
-            }
-            if (!filter_var($poll->email, FILTER_VALIDATE_EMAIL)) {
-                $poll->emailentry = 0;
-                $poll->emailcomment = 0;
-            }
-            if (!($poll->emailentry) && !($poll->emailcomment)) {
-                $poll->email = '';
-            }
+            $this->validateSettings($newpoll);  // Call by reference
 
-            if ($this->Polls->save($poll)) {
+            if ($this->Polls->save($newpoll)) {
                 $success = true;
                 $choices = $this->request->getData('choices');
                 for ($i = 0; $i < sizeof($choices); $i++) {
                     $dbchoice = $this->fetchTable('Choices')->newEmptyEntity();
                     $dbchoice = $this->fetchTable('Choices')->newEntity(
                         [
-                            'poll_id' => $poll->id,
+                            'poll_id' => $newpoll->id,
                             'option' => trim($choices[$i]),
                             'sort' => $i + 1
                         ]
@@ -112,41 +77,27 @@ class PollsController extends AppController
                 }
                 if ($success) {
                     $this->Flash->success(__('Your poll has been saved.'));
-                    if ($poll->adminid == true) {
-                        return $this->redirect(['action' => 'view', $poll->id, $poll->adminid]);
+                    if ($newpoll->adminid == true) {
+                        return $this->redirect(['action' => 'view', $newpoll->id, $newpoll->adminid]);
                     }
-                    return $this->redirect(['action' => 'view', $poll->id]);
+                    return $this->redirect(['action' => 'view', $newpoll->id]);
                 } else {
-                    $this->Polls->delete($poll);
+                    $this->Polls->delete($newpoll);
                 }
             }
             $this->Flash->error(__('Unable to add your poll.'));
         }
 
-        $this->set('poll', $poll);
+        $this->set('poll', $newpoll);
     }
 
     //------------------------------------------------------------------------
 
     public function view($pollid = null, $adminid = 'NA')
     {
-        $poll = $this->Polls->find()
-            ->where(['id' => $pollid])
-            ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
-            ->firstOrFail();
-        $newcomment = $this->fetchTable('Comments')->newEmptyEntity();  // New empty entity for new comment
-
-        $dbchoices = $this->fetchTable('Choices')->find()
-            ->where(['poll_id' => $pollid])
-            ->select(['id', 'option'])
-            ->order(['sort' => 'ASC']);
-        $pollchoices = $dbchoices->toArray();
-
-        $dbentries = $this->fetchTable('Entries')->find()
-            ->where(['poll_id' => $pollid])
-            ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
-            ->contain(['Users'])
-            ->select(['choice_id', 'value', 'name' => 'Users.name']);
+        $poll = $this->getPollAndComments($pollid);
+        $pollchoices = $this->getPollChoices($pollid);
+        $dbentries = $this->getDbEntries($pollid);
 
         $pollentries = array();
         foreach ($dbentries as $entry) {
@@ -156,8 +107,6 @@ class PollsController extends AppController
             $pollentries[$entry->name][$entry->choice_id] = $entry->value;
         }
 
-        $entry = $this->fetchTable('Entries')->newEmptyEntity();  // New empty entity for new entry
-
         if ($poll->locked != 0) {
             $this->Flash->error(__('This poll is locked - it is not possible to insert new entries or comments!'));
         }
@@ -165,29 +114,19 @@ class PollsController extends AppController
             $this->Flash->default(__('Only poll admin can see results and comments!'));
         }
 
-        $this->set(compact('poll', 'adminid', 'pollchoices', 'pollentries', 'entry', 'newcomment'));
+        $newentry = $this->fetchTable('Entries')->newEmptyEntity();  // New empty entity for new entry
+        $newcomment = $this->fetchTable('Comments')->newEmptyEntity();  // New empty entity for new comment
+
+        $this->set(compact('poll', 'adminid', 'pollchoices', 'pollentries', 'newentry', 'newcomment'));
     }
 
     //------------------------------------------------------------------------
 
     public function edit($pollid = null, $adminid = 'NA')
     {
-        $poll = $this->Polls->find()
-            ->where(['id' => $pollid])
-            ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
-            ->firstOrFail();
-
-        $dbchoices = $this->fetchTable('Choices')->find()
-            ->where(['poll_id' => $pollid])
-            ->select(['id', 'option'])
-            ->order(['sort' => 'ASC']);
-        $pollchoices = $dbchoices->toArray();
-
-        $dbentries = $this->fetchTable('Entries')->find()
-            ->where(['poll_id' => $pollid])
-            ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
-            ->contain(['Users'])
-            ->select(['choice_id', 'value', 'name' => 'Users.name', 'user_id' => 'Users.id']);
+        $poll = $this->getPollAndComments($pollid);
+        $pollchoices = $this->getPollChoices($pollid);
+        $dbentries = $this->getDbEntries($pollid);
 
         $pollentries = array();
         $usermap = array();
@@ -200,51 +139,48 @@ class PollsController extends AppController
             $pollentries[$entry->name][$entry->choice_id] = $entry->value;
         }
 
-        $option = $this->fetchTable('Choices')->newEmptyEntity();  // Needed for adding new options
+        if ($poll->locked != 0) {
+            $this->Flash->error(__('This poll is locked!'));
+        }
 
-        $dbadminid = $poll->adminid;
-        if (strcmp($dbadminid, $adminid) == 0) {
-            if ($this->request->is(['post', 'put'])) {
+        $newchoice = $this->fetchTable('Choices')->newEmptyEntity();  // Needed for adding new options
+
+        $this->set(compact('poll', 'adminid', 'pollchoices', 'pollentries', 'usermap', 'newchoice'));
+    }
+
+    //------------------------------------------------------------------------
+
+    public function update($pollid = null, $adminid = null)
+    {
+        $this->request->allowMethod(['post', 'update']);
+
+        if (
+            $this->request->is('post', 'put') &&
+            isset($pollid) && !empty($pollid) &&
+            isset($adminid) && !empty($adminid)
+        ) {
+            $poll = $this->Polls->findById($pollid)->firstOrFail();
+            $dbadminid = $poll->adminid;
+            if (strcmp($dbadminid, $adminid) == 0) {
                 $this->Polls->patchEntity($poll, $this->request->getData());
-                if (
-                    !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-                    && !\Cake\Core\Configure::read('preferendum.opt_Comments')
-                ) {
-                    $poll->comment = 0;
-                    $poll->emailcomment = 0;
-                }
-                if (!$poll->comment && \Cake\Core\Configure::read('preferendum.opt_Comments')) {
-                    $poll->emailcomment = 0;
-                }
-                if (!filter_var($poll->email, FILTER_VALIDATE_EMAIL)) {
-                    $poll->emailentry = 0;
-                    $poll->emailcomment = 0;
-                }
-                if (!($poll->emailentry) && !($poll->emailcomment)) {
-                    $poll->email = '';
-                }
+                $this->validateSettings($poll);  // Call by reference
+
                 if ($this->Polls->save($poll)) {
                     $this->Flash->success(__('Your poll has been updated.'));
                     return $this->redirect(['action' => 'edit', $poll->id, $adminid]);
                 }
                 $this->Flash->error(__('Unable to update your poll.'));
+            } else {
+                return $this->redirect(['action' => 'index']);
             }
-        } else {
-            $this->redirect(['action' => 'index']);
         }
-
-        if ($poll->locked != 0) {
-            $this->Flash->error(__('This poll is locked!'));
-        }
-
-        $this->set(compact('poll', 'adminid', 'pollchoices', 'pollentries', 'usermap', 'option'));
     }
 
     //------------------------------------------------------------------------
 
-    public function lock($pollid = null, $adminid = null)
+    public function togglelock($pollid = null, $adminid = null)
     {
-        $this->request->allowMethod(['post', 'lock']);
+        $this->request->allowMethod(['post', 'togglelock']);
 
         if (
             isset($pollid) && !empty($pollid)
@@ -388,5 +324,97 @@ class PollsController extends AppController
         echo "Done." . PHP_EOL;
 
         $this->autoRender = false;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function isPollCreationRestriced()
+    {
+        $isRestricted = false;
+
+        if (
+            \Cake\Core\Configure::read('preferendum.adminInterface') &&
+            \Cake\Core\Configure::read('preferendum.restrictPollCreation')
+        ) {
+            $this->loadComponent('Authentication.Authentication');
+            $result = $this->Authentication->getResult();
+            if ($result->isValid()) {
+                $adminRole = SELF::ROLES[0];
+                $polladmRole = SELF::ROLES[1];
+                $identity = $this->Authentication->getIdentity();
+                $currentUserRole = $identity->getOriginalData()['role'];
+                if (
+                    strcmp($currentUserRole, $adminRole) != 0 &&
+                    strcmp($currentUserRole, $polladmRole) != 0
+                ) {
+                    $isRestricted = true;
+                }
+            } else {
+                $isRestricted = true;
+            }
+        }
+
+        return $isRestricted;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function getPollAndComments($pollid)
+    {
+        $poll = $this->Polls->find()
+            ->where(['id' => $pollid])
+            ->contain(['Comments' => ['sort' => ['Comments.created' => 'DESC']]])
+            ->firstOrFail();
+
+        return $poll;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function getPollChoices($pollid)
+    {
+        $dbchoices = $this->fetchTable('Choices')->find()
+            ->where(['poll_id' => $pollid])
+            ->select(['id', 'option'])
+            ->order(['sort' => 'ASC']);
+
+        return $dbchoices->toArray();
+    }
+
+    //------------------------------------------------------------------------
+
+    private function getDbEntries($pollid)
+    {
+        $dbentries = $this->fetchTable('Entries')->find()
+            ->where(['poll_id' => $pollid])
+            ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
+            ->contain(['Users'])
+            ->select(['choice_id', 'value', 'name' => 'Users.name', 'user_id' => 'Users.id']);
+
+        return $dbentries;
+    }
+
+    //------------------------------------------------------------------------
+
+    // Call by reference - $poll changed directly.
+    private function validateSettings(&$poll)
+    {
+        if (
+            !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+            && !\Cake\Core\Configure::read('preferendum.opt_Comments')
+        ) {
+            $poll->comment = 0;
+            $poll->emailcomment = 0;
+        }
+        if (!$poll->comment && \Cake\Core\Configure::read('preferendum.opt_Comments')) {
+            $poll->emailcomment = 0;
+        }
+        if (!filter_var($poll->email, FILTER_VALIDATE_EMAIL)) {
+            $poll->emailentry = 0;
+            $poll->emailcomment = 0;
+        }
+        if (!($poll->emailentry) && !($poll->emailcomment)) {
+            $poll->email = '';
+        }
     }
 }

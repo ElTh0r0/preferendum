@@ -24,11 +24,11 @@ class EntriesController extends AppController
     public function new($pollid)
     {
         if ($this->request->is('post')) {
-            $data = $this->request->getData();
-            // debug($data);
+            $newentry = $this->request->getData();
+            // debug($newentry);
             // die();
 
-            if (!$this->isValidEntry($pollid, $data)) {
+            if (!$this->isValidEntry($pollid, $newentry)) {
                 $this->Flash->error(__('Unable to save your entry.'));
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
@@ -40,15 +40,15 @@ class EntriesController extends AppController
             $dbemail = $db['email'];
             $dbemailentry = $db['emailentry'];
 
-            if ($this->isNewEntry($pollid, trim($data['name'])) && !($dblocked)) {
+            if ($this->isNewEntry($pollid, trim($newentry['name'])) && !($dblocked)) {
                 $userinfo = '';
                 if ($dbuserinfo == 1) {
-                    $userinfo = trim($data['userdetails']);
+                    $userinfo = trim($newentry['userdetails']);
                 }
                 // Create new user and save
                 $new_user = $this->fetchTable('Users')->newEmptyEntity();
                 $new_user = $this->fetchTable('Users')->newEntity([
-                    'name' => trim($data['name']),
+                    'name' => trim($newentry['name']),
                     'info' => $userinfo
                 ]);
 
@@ -57,13 +57,13 @@ class EntriesController extends AppController
                     $success = true;
 
                     // Save each entry
-                    for ($i = 0; $i < sizeof($data['choices']); $i++) {
+                    for ($i = 0; $i < sizeof($newentry['choices']); $i++) {
                         $dbentry = $this->Entries->newEmptyEntity();
                         $dbentry = $this->Entries->newEntity(
                             [
-                                'choice_id' => $data['choices'][$i],
+                                'choice_id' => $newentry['choices'][$i],
                                 'user_id' => $new_user->id,
-                                'value' => trim($data['values'][$i])
+                                'value' => trim($newentry['values'][$i])
                             ]
                         );
 

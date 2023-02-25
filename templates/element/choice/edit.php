@@ -61,7 +61,7 @@
             <div id="divNewChoice" style="display: none;">
                 <?php
                 echo $this->Form->create(
-                    $option,
+                    $newchoice,
                     [
                         'type' => 'post',
                         'url' => ['controller' => 'Choices', 'action' => 'add', $poll->id, $adminid]

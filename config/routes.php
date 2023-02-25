@@ -54,7 +54,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
     }
     $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
-    $builder->connect('/polls/lock/*', ['controller' => 'Polls', 'action' => 'lock']);
+    $builder->connect('/polls/togglelock/*', ['controller' => 'Polls', 'action' => 'togglelock']);
+    $builder->connect('/polls/update/*', ['controller' => 'Polls', 'action' => 'update']);
     $builder->connect('/polls/delete/*', ['controller' => 'Polls', 'action' => 'delete']);
     $builder->connect('/polls/*', ['controller' => 'Polls', 'action' => 'View']);
 
