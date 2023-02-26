@@ -97,7 +97,7 @@ class PollsController extends AppController
     {
         $poll = $this->getPollAndComments($pollid);
         $pollchoices = $this->getPollChoices($pollid);
-        $dbentries = $this->getDbEntries($pollid);
+        $dbentries = $this->getDbEntriesView($pollid);
 
         $pollentries = array();
         foreach ($dbentries as $entry) {
@@ -122,19 +122,23 @@ class PollsController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function edit($pollid = null, $adminid = 'NA')
+    public function edit($pollid = null, $adminid = 'NA', $userpw = '')
     {
         $poll = $this->getPollAndComments($pollid);
         $pollchoices = $this->getPollChoices($pollid);
-        $dbentries = $this->getDbEntries($pollid);
+        $dbentries = $this->getDbEntriesEdit($pollid);
 
         $pollentries = array();
         $usermap = array();
+        $usermap_pw = array();
+        $usermap_info = array();
         // TODO: Think about better implementation for passing all the data...
         foreach ($dbentries as $entry) {
             if (!isset($pollentries[$entry['name']])) {
                 $pollentries[$entry['name']] = array();
                 $usermap[$entry['name']] = $entry->user_id;
+                $usermap_pw[$entry['name']] = $entry->user_pw;
+                $usermap_info[$entry['name']] = $entry->user_info;
             }
             $pollentries[$entry->name][$entry->choice_id] = $entry->value;
         }
@@ -144,8 +148,9 @@ class PollsController extends AppController
         }
 
         $newchoice = $this->fetchTable('Choices')->newEmptyEntity();  // Needed for adding new options
+        $newentry = $this->fetchTable('Entries')->newEmptyEntity();  // New empty entity for new entry
 
-        $this->set(compact('poll', 'adminid', 'pollchoices', 'pollentries', 'usermap', 'newchoice'));
+        $this->set(compact('poll', 'adminid', 'pollchoices', 'pollentries', 'usermap', 'usermap_pw', 'userpw', 'usermap_info', 'newchoice', 'newentry'));
     }
 
     //------------------------------------------------------------------------
@@ -383,13 +388,26 @@ class PollsController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function getDbEntries($pollid)
+    private function getDbEntriesView($pollid)
     {
         $dbentries = $this->fetchTable('Entries')->find()
             ->where(['poll_id' => $pollid])
             ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
             ->contain(['Users'])
-            ->select(['choice_id', 'value', 'name' => 'Users.name', 'user_id' => 'Users.id']);
+            ->select(['choice_id', 'value', 'name' => 'Users.name']);
+
+        return $dbentries;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function getDbEntriesEdit($pollid)
+    {
+        $dbentries = $this->fetchTable('Entries')->find()
+            ->where(['poll_id' => $pollid])
+            ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
+            ->contain(['Users'])
+            ->select(['choice_id', 'value', 'name' => 'Users.name', 'user_id' => 'Users.id', 'user_pw' => 'Users.password', 'user_info' => 'Users.info']);
 
         return $dbentries;
     }

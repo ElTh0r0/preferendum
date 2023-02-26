@@ -13,7 +13,7 @@
  * @version   0.5.0
  */
 
-echo __('New entry in poll "{0}"', h($title)) . "\r\n\r\n";
+echo __('Entry in poll "{0}"', h($title)) . "\r\n\r\n";
 echo __('From:') . ' ' . h($name) . "\r\n";
 echo __('Options:') . "\r\n";
 

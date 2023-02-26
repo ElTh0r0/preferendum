@@ -49,6 +49,7 @@ class EntriesController extends AppController
                 $new_user = $this->fetchTable('Users')->newEmptyEntity();
                 $new_user = $this->fetchTable('Users')->newEntity([
                     'name' => trim($newentry['name']),
+                    'password' => hash("crc32", trim($newentry['name']) . time() . trim($newentry['name'])),
                     'info' => $userinfo
                 ]);
 
@@ -92,7 +93,83 @@ class EntriesController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function isValidEntry($pollid, $newentry)
+    public function edit($pollid, $userid, $userpw, $adminid = null)
+    {
+        if ($this->request->is('post')) {
+            $editentry = $this->request->getData();
+            // debug($newentry);
+            // die();
+
+            if (!$this->isValidEntry($pollid, $editentry, $userid)) {
+                $this->Flash->error(__('Unable to save your entry.'));
+                return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+            }
+
+            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
+            $dbtitle = $db['title'];
+            $dblocked = $db['locked'];
+            $dbuserinfo = $db['userinfo'];
+            $dbemail = $db['email'];
+            $dbemailentry = $db['emailentry'];
+
+            $dbuser = $this->fetchTable('Users')->findById($userid)->firstOrFail();
+            if (
+                !($dblocked) &&
+                strcmp($dbuser['password'], $userpw) == 0
+            ) {
+                // Change user
+                $userinfo = '';
+                if ($dbuserinfo == 1) {
+                    $userinfo = trim($editentry['userdetails']);
+                }
+                $edituser = [
+                    'name' => trim($editentry['name']),
+                    'info' => $userinfo,
+                ];
+                $this->fetchTable('Users')->patchEntity($dbuser, $edituser);
+
+                $success = false;
+                if ($this->fetchTable('Users')->save($dbuser)) {
+                    $success = true;
+
+                    // Save each entry
+                    for ($i = 0; $i < sizeof($editentry['choices']); $i++) {
+                        $dbentry = $this->fetchTable('Entries')->findByChoiceId($editentry['choices'][$i])->where(['user_id' => $userid])->firstOrFail();
+                        $changedentry = [
+                            'value' => trim($editentry['values'][$i]),
+                        ];
+                        $this->fetchTable('Entries')->patchEntity($dbentry, $changedentry);
+
+                        if (!$this->Entries->save($dbentry)) {
+                            // Rollback: Delete user and already created entries (by dependency)
+                            $this->fetchTable('Users')->delete($dbuser);
+
+                            $success = false;
+                            break;
+                        }
+                    }
+                }
+
+                if ($success) {
+                    if ($dbemailentry && !empty($dbemail)) {
+                        $this->sendEntryEmail($pollid, $dbemail, $dbtitle, $dbuser->id, $dbuser->name, true);
+                    }
+
+                    if (isset($adminid)) {
+                        return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
+                    } else {
+                        return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+                    }
+                }
+            }
+        }
+        $this->Flash->error(__('Unable to save your entry.'));
+        return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+    }
+
+    //------------------------------------------------------------------------
+
+    private function isValidEntry($pollid, $newentry, $userid = null)
     {
         $isValid = true;
 
@@ -119,6 +196,20 @@ class EntriesController extends AppController
             $isValid = false;
         }
 
+        // Check for editing an entry if user belongs to poll
+        if (isset($userid)) {
+            $query = $this->Entries->find(
+                'all',
+                [
+                    'contain' => ['Choices'],
+                    'conditions' => ['poll_id' => $pollid, 'user_id' => $userid]
+                ]
+            );
+            if ($query->count() != sizeof($validchoices)) {
+                $isValid = false;
+            }
+        }
+
         return $isValid;
     }
 
@@ -140,7 +231,7 @@ class EntriesController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function sendEntryEmail($pollid, $email, $title, $userid, $username)
+    private function sendEntryEmail($pollid, $email, $title, $userid, $username, $changedentry = false)
     {
         $dbentries = $this->Entries->find()
             ->where(['poll_id' => $pollid, 'user_id' => $userid])
@@ -151,13 +242,17 @@ class EntriesController extends AppController
         $link = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
         \Cake\Core\Configure::load('app_local');
         $from = \Cake\Core\Configure::read('Email.default.from');
+        $subject = __('New entry in poll "{0}"', h($title));
+        if ($changedentry) {
+            $subject = __('Updated entry in poll "{0}"', h($title));
+        }
 
         $mailer = new Mailer('default');
         $mailer->viewBuilder()->setTemplate('new_entry')->setLayout('default');
         $mailer->setFrom($from)
             ->setTo($email)
             ->setEmailFormat('text')
-            ->setSubject(__('New entry in poll "{0}"', h($title)))
+            ->setSubject($subject)
             ->setViewVars(
                 [
                     'title' => $title,

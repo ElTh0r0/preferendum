@@ -49,7 +49,7 @@ $this->Html->scriptEnd();
     <table class="schedule">
         <?php
         echo $this->element('choice/edit');
-        echo $this->element('entry/edit');
+        echo $this->element('entry/edit_view');
         echo '<tr class="table-spacer-row table-spacer-row-big"><td></td></tr>';
 
         if (\Cake\Core\Configure::read('preferendum.trendResult')) {

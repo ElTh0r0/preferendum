@@ -481,6 +481,28 @@ tr.schedule-results td.top {
     background-color: var(--color-feedback-positive);
 }
 
+button.schedule-edit {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-pen.png)
+        no-repeat;
+    background-position: center center;
+    border-top-right-radius: var(--border-radius-big);
+    border-bottom-right-radius: var(--border-radius-big);
+}
+
+table.schedule.mini td.schedule-edit {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    background-size: 12px;
+}
+
+td.schedule-edit:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
 button.schedule-delete {
     width: 24px;
     height: 24px;
