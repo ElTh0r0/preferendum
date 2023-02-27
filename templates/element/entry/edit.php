@@ -22,7 +22,10 @@ if (in_array($userpw, $usermap_pw)) {
     $editinfo = $usermap_info[$edituser];
 }
 
-if (!isset($adminid)) {
+if (
+    !isset($adminid) ||
+    (!strcmp($poll->adminid, $adminid) == 0)
+) {
     $adminid = null;
 }
 

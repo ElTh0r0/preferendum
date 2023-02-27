@@ -16,7 +16,10 @@
 
 <!-- EXISTING ENTRIES -->
 <?php
+$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $this->request->getAttributes()['webroot'] . 'polls/' . $poll->id . '/NA/';
+$cnt = 0;
 foreach ($pollentries as $name => $entry) {
+    $cnt++;
     echo '<tr class="valign-middle">';
     echo '<td class="schedule-names">' . h($name) . '</td>';
 
@@ -38,11 +41,14 @@ foreach ($pollentries as $name => $entry) {
     }
 
     echo '<td>';
+    echo '<div style="position: absolute; left: -99999px;"><input type="text" id="entry-link-' . $cnt . '" value="' . $link . $usermap_pw[$name] . '" readonly /></div>';
+    echo '<button type="button" class="copy-trigger entry-copy-link" data-clipboard-target="#entry-link-' . $cnt . '" title="' . __('Copy entry edit link to clipboard') . '"></button>';
+    echo ' ';
     echo $this->Form->postLink(
         $this->Form->button(
             '',
             [
-                'type' => 'button', 'class' => 'schedule-edit'
+                'type' => 'button', 'class' => 'entry-edit'
             ]
         ),
         ['controller' => 'Polls', 'action' => 'edit', $poll->id, $adminid, $usermap_pw[$name]],

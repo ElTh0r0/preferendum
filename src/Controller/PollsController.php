@@ -93,16 +93,23 @@ class PollsController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function view($pollid = null, $adminid = 'NA')
+    public function view($pollid = null, $adminid = 'NA', $userpw = null)
     {
         $poll = $this->getPollAndComments($pollid);
         $pollchoices = $this->getPollChoices($pollid);
-        $dbentries = $this->getDbEntriesView($pollid);
+        $dbentries = $this->getDbEntries($pollid);
 
         $pollentries = array();
+        $usermap = array();
+        $usermap_pw = array();
+        $usermap_info = array();
+        // TODO: Think about better implementation for passing all the data...
         foreach ($dbentries as $entry) {
-            if (!isset($entry['name'])) {
+            if (!isset($pollentries[$entry['name']])) {
                 $pollentries[$entry['name']] = array();
+                $usermap[$entry['name']] = $entry->user_id;
+                $usermap_pw[$entry['name']] = $entry->user_pw;
+                $usermap_info[$entry['name']] = $entry->user_info;
             }
             $pollentries[$entry->name][$entry->choice_id] = $entry->value;
         }
@@ -114,10 +121,20 @@ class PollsController extends AppController
             $this->Flash->default(__('Only poll admin can see results and comments!'));
         }
 
+        // Check if valid user password was provided for editing an entry
+        if (isset($userpw)) {
+            if (!in_array($userpw, $usermap_pw)) {
+                $userpw = null;
+                $usermap = array();
+                $usermap_pw = array();
+                $usermap_info = array();
+            }
+        }
+
         $newentry = $this->fetchTable('Entries')->newEmptyEntity();  // New empty entity for new entry
         $newcomment = $this->fetchTable('Comments')->newEmptyEntity();  // New empty entity for new comment
 
-        $this->set(compact('poll', 'adminid', 'pollchoices', 'pollentries', 'newentry', 'newcomment'));
+        $this->set(compact('poll', 'adminid', 'pollchoices', 'pollentries', 'usermap', 'usermap_pw', 'userpw', 'usermap_info', 'newentry', 'newcomment'));
     }
 
     //------------------------------------------------------------------------
@@ -125,8 +142,12 @@ class PollsController extends AppController
     public function edit($pollid = null, $adminid = 'NA', $userpw = '')
     {
         $poll = $this->getPollAndComments($pollid);
+        if (!strcmp($poll->adminid, $adminid) == 0) {
+            return $this->redirect(['action' => 'view', $pollid]);
+        }
+
         $pollchoices = $this->getPollChoices($pollid);
-        $dbentries = $this->getDbEntriesEdit($pollid);
+        $dbentries = $this->getDbEntries($pollid);
 
         $pollentries = array();
         $usermap = array();
@@ -388,20 +409,7 @@ class PollsController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function getDbEntriesView($pollid)
-    {
-        $dbentries = $this->fetchTable('Entries')->find()
-            ->where(['poll_id' => $pollid])
-            ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
-            ->contain(['Users'])
-            ->select(['choice_id', 'value', 'name' => 'Users.name']);
-
-        return $dbentries;
-    }
-
-    //------------------------------------------------------------------------
-
-    private function getDbEntriesEdit($pollid)
+    private function getDbEntries($pollid)
     {
         $dbentries = $this->fetchTable('Entries')->find()
             ->where(['poll_id' => $pollid])

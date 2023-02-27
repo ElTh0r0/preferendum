@@ -97,7 +97,7 @@ class EntriesController extends AppController
     {
         if ($this->request->is('post')) {
             $editentry = $this->request->getData();
-            // debug($newentry);
+            // debug($editentry);
             // die();
 
             if (!$this->isValidEntry($pollid, $editentry, $userid)) {
