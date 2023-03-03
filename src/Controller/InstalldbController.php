@@ -201,6 +201,7 @@ class InstalldbController extends AppController
             `emailentry` tinyint(1) NOT NULL DEFAULT 0,
             `emailcomment` tinyint(1) NOT NULL DEFAULT 0,
             `userinfo` tinyint(1) NOT NULL DEFAULT 0,
+            `editentry` tinyint(1) NOT NULL DEFAULT 0,
             `comment` tinyint(1) NOT NULL DEFAULT 0,
             `hideresult` tinyint(1) NOT NULL DEFAULT 0,
             `locked` tinyint(1) NOT NULL DEFAULT 0,

@@ -37,6 +37,10 @@ return [
         // If 'alwaysUseAdminLinks' is disabled, turn on(true)/off(false) admin link functionality optionally for each poll.
         'opt_AdminLinks' => false,
 
+        // Turn on(true)/off(false) that users can change their entry through a personal link
+        // (This feature can only be used, if 'alwaysUseAdminLinks' OR 'opt_AdminLinks' is enabled and used, too.)
+        'opt_AllowChangeEntry' => true,
+
         // Turn on(true)/off(false) to allow comments for ALL polls.
         'alwaysAllowComments' => true,
         // If 'alwaysAllowComments' is disabled, turn on(true)/off(false) to allow comments optionally for each poll.

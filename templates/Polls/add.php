@@ -128,7 +128,7 @@ $this->Html->scriptEnd();
             [
                 'value' => 'true',
                 'id' => 'adminInput',
-                'onchange' => 'toggleHideResultInput()',
+                'onchange' => 'toggleAdminLinkInput()',
                 'checked' => true,
             ]
         );
@@ -150,6 +150,23 @@ $this->Html->scriptEnd();
             ]
         );
         echo '<span style="font-size: 90%;">' . __('Hide poll results for users (only admin can see the votes)') . '</span>';
+        echo '</li>';
+    }
+
+    if (
+        \Cake\Core\Configure::read('preferendum.opt_AllowChangeEntry') &&
+        (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
+            \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
+    ) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'editentry',
+            [
+                'value' => 'true',
+                'id' => 'editentryInput',
+            ]
+        );
+        echo '<span style="font-size: 90%;">' . __('Users can modify their entry with a personal link') . '</span>';
         echo '</li>';
     }
 

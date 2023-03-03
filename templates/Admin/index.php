@@ -78,7 +78,9 @@
                     <td>
                         <em><?php echo h($poll->title) ?></em><br>
                     </td>
-                    <td><?php if (strcmp($poll->adminid, 'NA') == 0) {
+                    <td>
+                        <?php
+                        if (strcmp($poll->adminid, 'NA') == 0) {
                             echo '<img src="img/icon-no-key.png" title="' . __('Poll not protected by admin link') . '"/> ';
                         }
                         if ($poll->emailentry or $poll->emailcomment) {
@@ -104,10 +106,14 @@
                         if ($poll->hideresult) {
                             echo '<img src="img/icon-eye-off.png" title="' . __('Poll result hidden') . '"/> ';
                         }
+                        if ($poll->editentry) {
+                            echo '<img src="img/icon-edit.png" title="' . __('Users can modify their entry') . '"/> ';
+                        }
                         if ($poll->locked) {
                             echo '<img src="img/icon-locked.png" title="' . __('Poll locked') . '"/> ';
                         }
-                        ?></td>
+                        ?>
+                    </td>
                     <td>
                         <?php
                         if (array_key_exists($poll->id, $numentries)) {

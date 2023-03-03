@@ -56,6 +56,7 @@ class Poll extends Entity
         'emailentry' => true,
         'emailcomment' => true,
         'userinfo' => true,
+        'editentry' => true,
         'comment' => true,
         'hideresult' => true,
         'locked' => true,

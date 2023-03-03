@@ -33,12 +33,13 @@ class EntriesController extends AppController
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
-            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
+            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo', 'editentry'])->firstOrFail();
             $dbtitle = $db['title'];
             $dblocked = $db['locked'];
             $dbuserinfo = $db['userinfo'];
             $dbemail = $db['email'];
             $dbemailentry = $db['emailentry'];
+            $dbeditentry = $db['editentry'];
 
             if ($this->isNewEntry($pollid, trim($newentry['name'])) && !($dblocked)) {
                 $userinfo = '';
@@ -83,6 +84,23 @@ class EntriesController extends AppController
                         $this->sendEntryEmail($pollid, $dbemail, $dbtitle, $new_user->id, $new_user->name);
                     }
 
+                    if ($dbeditentry) {
+                        $link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid . '/NA/';
+                        //debug($link . $new_user->password);
+                        $this->Flash->default(
+                            __('Your entry has been saved, but please note: If you want to edit your entry, you must keep this personalised link.') . '<br>' .
+                                '<input type="text" id="user-edit-url" title="' . __('Copy the link and store it on your device!') . '" value="' . $link . $new_user->password . '" size="33" readonly />
+                        <button type="button" class="copy-trigger entry-copy-link" data-clipboard-target="#user-edit-url" title="' . __('Copy link to clipboard!') . '"></button>',
+                            [
+                                'params' => [
+                                    'class' => 'success',
+                                    'permanent' => true,
+                                    'escape' => false
+                                ]
+                            ]
+                        );
+                    }
+
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
                 }
             }
@@ -105,16 +123,17 @@ class EntriesController extends AppController
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
-            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo'])->firstOrFail();
+            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo', 'editentry'])->firstOrFail();
             $dbtitle = $db['title'];
             $dblocked = $db['locked'];
             $dbuserinfo = $db['userinfo'];
             $dbemail = $db['email'];
             $dbemailentry = $db['emailentry'];
+            $dbeditallowed = $db['editentry'];
 
             $dbuser = $this->fetchTable('Users')->findById($userid)->firstOrFail();
             if (
-                !($dblocked) &&
+                !($dblocked) && $dbeditallowed &&
                 strcmp($dbuser['password'], $userpw) == 0
             ) {
                 // Change user

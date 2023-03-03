@@ -50,10 +50,10 @@ $this->Html->scriptEnd();
         <!-- NEW ENTRY FORM ROW -->
         <?php if ($poll->locked == 0) {
             echo '<tr class="schedule-new valign-middle">';
-            if (!isset($userpw)) {
-                echo $this->element('entry/new');
-            } else {
+            if (isset($userpw) && $poll->editentry == 1) {
                 echo $this->element('entry/edit');
+            } else {
+                echo $this->element('entry/new');
             }
             echo '</tr>';
 

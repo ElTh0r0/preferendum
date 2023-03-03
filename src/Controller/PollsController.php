@@ -55,6 +55,7 @@ class PollsController extends AppController
             }
             if (!$newpoll->adminid) {
                 $newpoll->hideresult = 0;
+                $newpoll->editentry = 0;
             }
             $this->validateSettings($newpoll);  // Call by reference
 
@@ -115,20 +116,34 @@ class PollsController extends AppController
         }
 
         if ($poll->locked != 0) {
-            $this->Flash->error(__('This poll is locked - it is not possible to insert new entries or comments!'));
+            $this->Flash->default(__('This poll is locked - it is not possible to insert new entries or comments!'), [
+                'params' => [
+                    'class' => 'error',
+                    'permanent' => true
+                ]
+            ]);
         }
         if ($poll->hideresult != 0) {
-            $this->Flash->default(__('Only poll admin can see results and comments!'));
+            $this->Flash->default(__('Only poll admin can see results and comments!'), [
+                'params' => [
+                    'permanent' => true
+                ]
+            ]);
         }
 
-        // Check if valid user password was provided for editing an entry
-        if (isset($userpw)) {
+        // Check if valid user password was provided for editing an entry and if editing is allowed at all
+        if (isset($userpw) && ($poll->editentry != 0)) {
             if (!in_array($userpw, $usermap_pw)) {
                 $userpw = null;
                 $usermap = array();
                 $usermap_pw = array();
                 $usermap_info = array();
             }
+        } else {
+            $userpw = null;
+            $usermap = array();
+            $usermap_pw = array();
+            $usermap_info = array();
         }
 
         $newentry = $this->fetchTable('Entries')->newEmptyEntity();  // New empty entity for new entry
@@ -165,7 +180,12 @@ class PollsController extends AppController
         }
 
         if ($poll->locked != 0) {
-            $this->Flash->error(__('This poll is locked!'));
+            $this->Flash->default(__('This poll is locked!'), [
+                'params' => [
+                    'class' => 'error',
+                    'permanent' => true
+                ]
+            ]);
         }
 
         $newchoice = $this->fetchTable('Choices')->newEmptyEntity();  // Needed for adding new options

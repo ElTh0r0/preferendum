@@ -492,6 +492,25 @@ button.entry-copy-link {
     border-bottom-right-radius: var(--border-radius-big);
 }
 
+.center-box input[type="text"] {
+    font-size: inherit;
+    height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.center-box button.copy-success,
+.center-box button.copy-success:hover {
+    background-color: var(--color-feedback-positive);
+}
+
+.center-box button.copy-fail,
+.center-box button.copy-fail:hover {
+    background-color: var(--color-feedback-negative);
+}
+
+
 table.schedule button.copy-success,
 table.schedule button.copy-success:hover {
     background-color: var(--color-feedback-positive);

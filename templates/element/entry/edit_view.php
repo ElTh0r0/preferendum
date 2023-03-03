@@ -41,9 +41,11 @@ foreach ($pollentries as $name => $entry) {
     }
 
     echo '<td>';
-    echo '<div style="position: absolute; left: -99999px;"><input type="text" id="entry-link-' . $cnt . '" value="' . $link . $usermap_pw[$name] . '" readonly /></div>';
-    echo '<button type="button" class="copy-trigger entry-copy-link" data-clipboard-target="#entry-link-' . $cnt . '" title="' . __('Copy entry edit link to clipboard') . '"></button>';
-    echo ' ';
+    if ($poll->editentry) {
+        echo '<div style="position: absolute; left: -99999px;"><input type="text" id="entry-link-' . $cnt . '" value="' . $link . $usermap_pw[$name] . '" readonly /></div>';
+        echo '<button type="button" class="copy-trigger entry-copy-link" data-clipboard-target="#entry-link-' . $cnt . '" title="' . __('Copy entry edit link to clipboard') . '"></button>';
+        echo ' ';
+    }
     echo $this->Form->postLink(
         $this->Form->button(
             '',

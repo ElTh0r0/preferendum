@@ -62,6 +62,22 @@ if (
 }
 
 if (
+    \Cake\Core\Configure::read('preferendum.opt_AllowChangeEntry') &&
+    strcmp($poll->adminid, "NA") != 0
+) {
+    echo '<li>';
+    echo $this->Form->checkbox(
+        'editentry',
+        [
+            'value' => 'true',
+            'checked' => $poll->editentry,
+        ]
+    );
+    echo '<span style="font-size: 90%;">' . __('Users can modify their entry with a personal link') . '</span>';
+    echo '</li>';
+}
+
+if (
     \Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
     \Cake\Core\Configure::read('preferendum.adminInterface')
 ) {
