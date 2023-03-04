@@ -73,6 +73,8 @@
                         'label' => '',
                         'minlength' => '1',
                         'maxlength' => '32',
+                        'class' => 'dateInput field-long datepicker-here',
+                        'required' => true,
                         'placeholder' => __('New option'),
                     ]
                 );
