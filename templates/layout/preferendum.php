@@ -28,7 +28,7 @@
     <?php echo $this->Html->meta('icon') ?>
 
     <?php echo $this->Html->css(['reset', 'preferendum']) ?>
-    <?php echo $this->Html->script('jquery-3.4.1.min.js', array('inline' => false)) ?>
+    <?php echo $this->Html->script('jquery-3.6.3.min.js', array('inline' => false)) ?>
 
     <?php echo $this->fetch('meta') ?>
     <?php echo $this->fetch('css') ?>
