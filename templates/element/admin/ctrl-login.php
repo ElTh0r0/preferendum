@@ -18,13 +18,17 @@
     <?php echo $this->Flash->render() ?>
     <?php echo $this->Form->create() ?>
     <fieldset>
-        <?php echo $this->Form->control(
+        <?php
+        echo $this->Form->control(
             'name',
             [
                 'required' => true,
-                'label' => __('Name')
+                'label' => isset($pollid) ? '' : __('Name'),
+                'hidden' => isset($pollid),
+                'value' => isset($pollid) ? $pollid : '',
             ]
-        ) ?>
+        );
+        ?>
         <?php echo $this->Form->control(
             'password',
             [
@@ -32,7 +36,7 @@
                 'label' => __('Password'),
                 'type' => 'password'
             ]
-        ) ?>
+        ); ?>
     </fieldset>
     <?php echo $this->Form->submit(__('Login')); ?>
     <?php echo $this->Form->end() ?>

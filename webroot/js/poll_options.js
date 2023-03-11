@@ -53,3 +53,19 @@ function toggleAdminLinkInput() {
         }
     }
 }
+
+//enable/disable password input
+var chkPwProtect = document.getElementById("pwprotectInput");
+var inpPassword = document.getElementById("passwordInput");
+function togglePasswordInput() {
+    if (chkPwProtect) {
+        inpPassword.disabled = !chkPwProtect.checked;
+
+        if (inpPassword.disabled) {
+            inpPassword.value = "";
+            inpPassword.required = false;
+        } else {
+            inpPassword.required = "required";
+        }
+    }
+}

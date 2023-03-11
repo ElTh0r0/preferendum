@@ -67,6 +67,7 @@ $this->Html->scriptEnd();
             'id' => 'form-new-poll',
         ]
     );
+    // Poll title
     echo $this->Form->control(
         'title',
         [
@@ -76,6 +77,7 @@ $this->Html->scriptEnd();
             'placeholder' => __('Title for your poll'),
         ]
     );
+    // Poll description
     echo $this->Form->control(
         'details',
         [
@@ -85,7 +87,7 @@ $this->Html->scriptEnd();
             'placeholder' => __('Short description of what this poll is all about'),
         ]
     );
-
+    // Choices
     echo $this->Form->control(
         'options',
         [
@@ -118,6 +120,8 @@ $this->Html->scriptEnd();
     echo '</div>';
 
     echo '<ul>';
+    // --------------------------------------------------------------
+    // Use admin link
     if (
         \Cake\Core\Configure::read('preferendum.opt_AdminLinks') &&
         !(\Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
@@ -136,6 +140,8 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
 
+    // --------------------------------------------------------------
+    // Hide poll result
     if (
         \Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
         (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
@@ -153,6 +159,8 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
 
+    // --------------------------------------------------------------
+    // Allow to change entry
     if (
         \Cake\Core\Configure::read('preferendum.opt_AllowChangeEntry') &&
         (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
@@ -170,6 +178,8 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
 
+    // --------------------------------------------------------------
+    // Collect user info
     if (
         \Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
         \Cake\Core\Configure::read('preferendum.adminInterface')
@@ -185,6 +195,35 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
 
+    // --------------------------------------------------------------
+    // Protect poll access with a password
+    if (\Cake\Core\Configure::read('preferendum.opt_PollPassword')) {
+        echo '<li>';
+        echo $this->Form->checkbox(
+            'pwprotect',
+            [
+                'value' => 'true',
+                'id' => 'pwprotectInput',
+                'onchange' => 'togglePasswordInput()',
+            ]
+        );
+        echo '<span style="font-size: 90%;">' . __('Protect poll access with a password') . '</span>';
+        echo '</li>';
+        echo '</ul>';
+        echo $this->Form->password(
+            'password',
+            [
+                'class' => 'field-long',
+                'id' => 'passwordInput',
+                'disabled' => true,
+                'placeholder' => __('Password'),
+            ]
+        );
+    }
+
+    echo '<ul>';
+    // --------------------------------------------------------------
+    // Allow comment per poll
     if (
         \Cake\Core\Configure::read('preferendum.opt_Comments')
         && !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
@@ -202,6 +241,8 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
 
+    // --------------------------------------------------------------
+    // Receive email after new comment
     if (
         \Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
         && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
@@ -221,6 +262,8 @@ $this->Html->scriptEnd();
         echo '</li>';
     }
 
+    // --------------------------------------------------------------
+    // Receive email after new entry
     if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
         echo '<li>';
         echo $this->Form->checkbox(
@@ -236,6 +279,8 @@ $this->Html->scriptEnd();
     }
     echo '</ul>';
 
+    // --------------------------------------------------------------
+    // Email textbox
     if (
         \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
         || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')

@@ -25,6 +25,7 @@ echo $this->Form->create(
         'url' => ['controller' => 'Polls', 'action' => 'update', $poll->id, $adminid]
     ]
 );
+// Poll title
 echo $this->Form->control(
     'title',
     [
@@ -34,6 +35,7 @@ echo $this->Form->control(
         'placeholder' => __('Title for your poll'),
     ]
 );
+// Poll description
 echo $this->Form->control(
     'details',
     [
@@ -45,6 +47,8 @@ echo $this->Form->control(
 );
 
 echo '<ul>';
+// --------------------------------------------------------------
+// Hide poll result
 if (
     \Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
     strcmp($poll->adminid, "NA") != 0
@@ -61,6 +65,8 @@ if (
     echo '</li>';
 }
 
+// --------------------------------------------------------------
+// Allow to change entry
 if (
     \Cake\Core\Configure::read('preferendum.opt_AllowChangeEntry') &&
     strcmp($poll->adminid, "NA") != 0
@@ -77,6 +83,8 @@ if (
     echo '</li>';
 }
 
+// --------------------------------------------------------------
+// Collect user info
 if (
     \Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
     \Cake\Core\Configure::read('preferendum.adminInterface')
@@ -93,6 +101,36 @@ if (
     echo '</li>';
 }
 
+// --------------------------------------------------------------
+// Protect poll access with a password
+if (\Cake\Core\Configure::read('preferendum.opt_PollPassword')) {
+    echo '<li>';
+    echo $this->Form->checkbox(
+        'pwprotect',
+        [
+            'value' => 'true',
+            'checked' => $poll->pwprotect,
+            'id' => 'pwprotectInput',
+            'onchange' => 'togglePasswordInput()',
+        ]
+    );
+    echo '<span style="font-size: 90%;">' . __('Protect poll access with a password') . '</span>';
+    echo '</li>';
+    echo '</ul>';
+    echo $this->Form->password(
+        'password',
+        [
+            'class' => 'field-long',
+            'id' => 'passwordInput',
+            'disabled' => !$poll->pwprotect,
+            'placeholder' => __('Password'),
+        ]
+    );
+}
+
+echo '<ul>';
+// --------------------------------------------------------------
+// Allow comment per poll
 if (
     \Cake\Core\Configure::read('preferendum.opt_Comments')
     && !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
@@ -111,6 +149,8 @@ if (
     echo '</li>';
 }
 
+// --------------------------------------------------------------
+// Receive email after new comment
 if (
     \Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
     && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
@@ -131,6 +171,8 @@ if (
     echo '</li>';
 }
 
+// --------------------------------------------------------------
+// Receive email after new entry
 if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
     echo '<li>';
     echo $this->Form->checkbox(
@@ -147,6 +189,8 @@ if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
 }
 echo '</ul>';
 
+// --------------------------------------------------------------
+// Email textbox
 if (
     \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
     || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
@@ -159,7 +203,7 @@ if (
             'class' => 'field-long',
             'id' => 'emailInput',
             'label' => __('Email'),
-            'disabled' => (!$poll->emailentry & !$poll->emailcomment),
+            'disabled' => (!$poll->emailentry && !$poll->emailcomment),
             'placeholder' => __('Email for receiving new entry/comment'),
         ]
     );

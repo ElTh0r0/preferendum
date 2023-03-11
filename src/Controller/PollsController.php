@@ -20,6 +20,7 @@ namespace App\Controller;
 use App\Model\Entity\Choice;
 use App\Model\Entity\Entry;
 use App\Model\Entity\Comment;
+use Cake\Auth\DefaultPasswordHasher;
 
 class PollsController extends AppController
 {
@@ -57,6 +58,15 @@ class PollsController extends AppController
                 $newpoll->hideresult = 0;
                 $newpoll->editentry = 0;
             }
+
+            $pollpw = '';
+            if ($newpoll->pwprotect && isset($this->request->getData()['password'])) {
+                $pollpw = trim($this->request->getData()['password']);
+            }
+            if (strcmp($pollpw, '') == 0) {
+                $newpoll->pwprotect = 0;
+            }
+
             $this->validateSettings($newpoll);  // Call by reference
 
             if ($this->Polls->save($newpoll)) {
@@ -76,6 +86,11 @@ class PollsController extends AppController
                         break;
                     }
                 }
+
+                if ($success && $newpoll->pwprotect) {
+                    $success = $this->createPollPwUser($newpoll->id, $pollpw);
+                }
+
                 if ($success) {
                     $this->Flash->success(__('Your poll has been saved.'));
                     if ($newpoll->adminid == true) {
@@ -97,6 +112,9 @@ class PollsController extends AppController
     public function view($pollid = null, $adminid = 'NA', $userpw = null)
     {
         $poll = $this->getPollAndComments($pollid);
+        if ($this->isPollAccessRestriced($poll->id, $poll->pwprotect)) {
+            return $this->redirect(['controller' => 'Admin', 'action' => 'login', $poll->id, $adminid]);
+        }
         $pollchoices = $this->getPollChoices($pollid);
         $dbentries = $this->getDbEntries($pollid);
 
@@ -160,6 +178,9 @@ class PollsController extends AppController
         if (!strcmp($poll->adminid, $adminid) == 0) {
             return $this->redirect(['action' => 'view', $pollid]);
         }
+        if ($this->isPollAccessRestriced($poll->id, $poll->pwprotect)) {
+            return $this->redirect(['controller' => 'Admin', 'action' => 'login', $poll->id, $adminid]);
+        }
 
         $pollchoices = $this->getPollChoices($pollid);
         $dbentries = $this->getDbEntries($pollid);
@@ -206,14 +227,44 @@ class PollsController extends AppController
             isset($adminid) && !empty($adminid)
         ) {
             $poll = $this->Polls->findById($pollid)->firstOrFail();
+            $wasPwProtected = $poll->pwprotect;
             $dbadminid = $poll->adminid;
             if (strcmp($dbadminid, $adminid) == 0) {
                 $this->Polls->patchEntity($poll, $this->request->getData());
+
+                $pollpw = '';
+                if ($poll->pwprotect && isset($this->request->getData()['password'])) {
+                    $pollpw = trim($this->request->getData()['password']);
+                }
+
                 $this->validateSettings($poll);  // Call by reference
 
                 if ($this->Polls->save($poll)) {
-                    $this->Flash->success(__('Your poll has been updated.'));
-                    return $this->redirect(['action' => 'edit', $poll->id, $adminid]);
+                    $success = true;
+                    // Update password user
+                    if ($wasPwProtected && $poll->pwprotect && (strcmp($pollpw, '') != 0)) {
+                        $dbpwuser = $this->fetchTable('Users')->find()
+                            ->select('id')
+                            ->where(['name' => $poll->id, 'role' => self::POLLPWROLE])
+                            ->firstOrFail();
+                        $dbpwuser->password = (new DefaultPasswordHasher)->hash(trim($pollpw));
+                        $success = $this->fetchTable('Users')->save($dbpwuser);
+                    }
+
+                    // Delete password user, if password protection was removed
+                    if ($wasPwProtected && !$poll->pwprotect) {
+                        $success = $this->deletePollPwUser($poll->id);
+                    }
+
+                    // Create password user, if password protection was added
+                    if (!$wasPwProtected && $poll->pwprotect) {
+                        $success = $this->createPollPwUser($poll->id, $pollpw);
+                    }
+
+                    if ($success) {
+                        $this->Flash->success(__('Your poll has been updated.'));
+                        return $this->redirect(['action' => 'edit', $poll->id, $adminid]);
+                    }
                 }
                 $this->Flash->error(__('Unable to update your poll.'));
             } else {
@@ -269,12 +320,12 @@ class PollsController extends AppController
             if (strcmp($dbadminid, $adminid) == 0) {
                 $success = true;
                 $entries = $this->fetchTable('Entries')->find()
-                    ->where(['poll_id' => $pollid])
+                    ->where(['poll_id' => $poll->id])
                     ->contain(['Choices'])
                     ->select(['id']);
                 // Collect users before deleting the entries, otherwise users cannot be found anymore
                 $dbusers = $this->fetchTable('Entries')->find()
-                    ->where(['poll_id' => $pollid])
+                    ->where(['poll_id' => $poll->id])
                     ->contain(['Users', 'Choices'])
                     ->select(['user_id' => 'Users.id'])
                     ->group(['user_id'])->all();
@@ -296,6 +347,9 @@ class PollsController extends AppController
                         if (!$this->fetchTable('Users')->deleteAll(['id IN' => $users])) {
                             $success = false;
                         }
+                    }
+                    if ($success && $poll->pwprotect) {
+                        $success = $this->deletePollPwUser($pollid);
                     }
 
                     if ($success) {
@@ -389,11 +443,13 @@ class PollsController extends AppController
                 $polladmRole = SELF::ROLES[1];
                 $identity = $this->Authentication->getIdentity();
                 $currentUserRole = $identity->getOriginalData()['role'];
+
                 if (
                     strcmp($currentUserRole, $adminRole) != 0 &&
                     strcmp($currentUserRole, $polladmRole) != 0
                 ) {
                     $isRestricted = true;
+                    $this->Authentication->logout();
                 }
             } else {
                 $isRestricted = true;
@@ -401,6 +457,71 @@ class PollsController extends AppController
         }
 
         return $isRestricted;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function isPollAccessRestriced($pollid, $pwprotect)
+    {
+        $isRestricted = false;
+
+        if ($pwprotect) {
+            $this->loadComponent('Authentication.Authentication');
+            $result = $this->Authentication->getResult();
+            if ($result->isValid()) {
+                $pollpwRole = SELF::POLLPWROLE;
+                $identity = $this->Authentication->getIdentity();
+                $currentUserName = $identity->getOriginalData()['name'];
+                $currentUserRole = $identity->getOriginalData()['role'];
+
+                if (
+                    !in_array($currentUserRole, self::ROLES) &&
+                    (strcmp($currentUserName, $pollid) != 0 ||
+                        strcmp($currentUserRole, $pollpwRole) != 0)
+                ) {
+                    $isRestricted = true;
+                    $this->Authentication->logout();
+                }
+            } else {
+                $isRestricted = true;
+            }
+        }
+
+        return $isRestricted;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function createPollPwUser($pollid, $pollpw)
+    {
+        $dbpwuser = $this->fetchTable('Users')->newEmptyEntity();
+        $dbpwuser = $this->fetchTable('Users')->newEntity(
+            [
+                'name' => $pollid,
+                'role' => SELF::POLLPWROLE,
+                'password' => (new DefaultPasswordHasher)->hash(trim($pollpw))
+            ]
+        );
+
+        if ($this->fetchTable('Users')->save($dbpwuser)) {
+            return true;
+        }
+        return false;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function deletePollPwUser($pollid)
+    {
+        $dbpwuser = $this->fetchTable('Users')->find()
+            ->select('id')
+            ->where(['name' => $pollid, 'role' => self::POLLPWROLE])
+            ->firstOrFail();
+
+        if ($this->fetchTable('Users')->delete($dbpwuser)) {
+            return true;
+        }
+        return false;
     }
 
     //------------------------------------------------------------------------
@@ -461,6 +582,9 @@ class PollsController extends AppController
         }
         if (!($poll->emailentry) && !($poll->emailcomment)) {
             $poll->email = '';
+        }
+        if (!(\Cake\Core\Configure::read('preferendum.opt_PollPassword'))) {
+            $poll->pwprotect = 0;
         }
     }
 }

@@ -43,6 +43,17 @@ class AdminController extends AppController
 
     public function index()
     {
+        $identity = $this->Authentication->getIdentity();
+        $currentUserRole = $identity->getOriginalData()['role'];
+        $adminRole = SELF::ROLES[0];
+        $polladmRole = SELF::ROLES[1];
+
+        // Extra check needed since poll password using login credentials as well
+        if (!in_array($currentUserRole, self::ROLES)) {
+            $this->Authentication->logout();
+            return $this->redirect(['action' => 'login']);
+        }
+
         $polls = $this->paginate(
             $this->fetchTable('Polls')->find('all'),
             [
@@ -56,21 +67,15 @@ class AdminController extends AppController
         // debug($userinfos);
         // die;
 
-        $identity = $this->Authentication->getIdentity();
-        $currentUserRole = $identity->getOriginalData()['role'];
-        $adminRole = SELF::ROLES[0];
-        $polladmRole = SELF::ROLES[1];
-
         $this->set(compact('polls', 'numentries', 'numcomments', 'userinfos', 'currentUserRole', 'adminRole', 'polladmRole'));
     }
 
     //------------------------------------------------------------------------
 
-    public function login()
+    public function login($pollid = null, $polladmid = null)
     {
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
-
         // debug($result);
         // debug($result->getData()['role']);
         // die;
@@ -81,6 +86,14 @@ class AdminController extends AppController
                 // redirect after login success
                 $target = $this->Authentication->getLoginRedirect() ?? '/admin';
                 return $this->redirect($target);
+            } else if (
+                strcmp($result->getData()['role'], self::POLLPWROLE) == 0 &&
+                isset($pollid)
+            ) {
+                if (isset($pollid) && isset($polladmid)) {
+                    return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid, $polladmid]);
+                }
+                return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             } else {
                 $this->Flash->error(__('Invalid user or password'));
                 $this->Authentication->logout();
@@ -92,6 +105,8 @@ class AdminController extends AppController
             $this->Flash->error(__('Invalid user or password'));
             return $this->redirect(['action' => 'login']);
         }
+
+        $this->set(compact('pollid'));
     }
 
     //------------------------------------------------------------------------

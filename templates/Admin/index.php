@@ -109,6 +109,9 @@
                         if ($poll->editentry) {
                             echo '<img src="img/icon-edit.png" title="' . __('Users can modify their entry') . '"/> ';
                         }
+                        if ($poll->pwprotect) {
+                            echo '<img src="img/icon-password.png" title="' . __('Poll is password protected') . '"/> ';
+                        }
                         if ($poll->locked) {
                             echo '<img src="img/icon-locked.png" title="' . __('Poll locked') . '"/> ';
                         }

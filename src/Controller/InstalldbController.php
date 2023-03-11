@@ -204,6 +204,7 @@ class InstalldbController extends AppController
             `editentry` tinyint(1) NOT NULL DEFAULT 0,
             `comment` tinyint(1) NOT NULL DEFAULT 0,
             `hideresult` tinyint(1) NOT NULL DEFAULT 0,
+            `pwprotect` tinyint(1) NOT NULL DEFAULT 0,
             `locked` tinyint(1) NOT NULL DEFAULT 0,
             `modified` DATETIME NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');

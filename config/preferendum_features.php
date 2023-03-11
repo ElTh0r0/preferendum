@@ -54,6 +54,9 @@ return [
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
         'opt_CollectUserinfo' => false,
 
+        // Add (optional) field to protect access to poll with a password
+        'opt_PollPassword' => false,
+
         // Send an email after new poll entry or comment
         // After enabling this feature, it can be dis-/enabled for each poll separately and receiver can be defined.
         // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!

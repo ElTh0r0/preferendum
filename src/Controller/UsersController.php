@@ -50,6 +50,12 @@ class UsersController extends AppController
         $currentUserRole = $identity->getOriginalData()['role'];
         $currentUserName = $identity->getOriginalData()['name'];
 
+        // Extra check needed since poll password using login credentials as well
+        if (!in_array($currentUserRole, self::ROLES)) {
+            $this->Authentication->logout();
+            return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
+        }
+
         $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role'])->where(['role IN' => self::ROLES]);
         $backendusers = $backendusers->all()->toArray();
 

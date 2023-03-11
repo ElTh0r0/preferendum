@@ -63,5 +63,6 @@ class Poll extends Entity
         'modified' => true,
         'choices' => true,
         'comments' => true,
+        'pwprotect' => true,
     ];
 }
