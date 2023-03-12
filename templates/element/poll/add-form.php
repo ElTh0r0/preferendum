@@ -15,14 +15,11 @@
 ?>
 
 <?php
-echo '<h1>' . __('Edit poll') . '</h1>';
 echo $this->Form->create(
     $poll,
     [
         'class' => 'form',
         'id' => 'form-new-poll',
-        'type' => 'post',
-        'url' => ['controller' => 'Polls', 'action' => 'update', $poll->id, $adminid]
     ]
 );
 // Poll title
@@ -30,7 +27,7 @@ echo $this->Form->control(
     'title',
     [
         'class' => 'field-long',
-        'required' => 'true',
+        'required' => true,
         'label' => __('Title') . ' *',
         'placeholder' => __('Title for your poll'),
     ]
@@ -45,20 +42,72 @@ echo $this->Form->control(
         'placeholder' => __('Short description of what this poll is all about'),
     ]
 );
+// Choices
+echo $this->Form->control(
+    'options',
+    [
+        'name' => 'choices[]',
+        'maxlength' => '32',
+        'class' => 'dateInput field-long datepicker-here',
+        'required' => true,
+        'label' => __('Options') . ' *',
+        'placeholder' => __('Type whatever you want or pick a date!'),
+        'style' => 'margin-bottom: 8px;',
+    ]
+);
+echo '<div class="content-right">';
+echo $this->Form->button(
+    '',
+    [
+        'type' => 'button',
+        'id' => 'btnMore',
+    ]
+);
+echo ' ';
+echo $this->Form->button(
+    '',
+    [
+        'type' => 'button',
+        'id' => 'btnLess',
+        'disabled' => true,
+    ]
+);
+echo '</div>';
 
 echo '<ul>';
+// --------------------------------------------------------------
+// Use admin link
+if (
+    \Cake\Core\Configure::read('preferendum.opt_AdminLinks') &&
+    !(\Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
+) {
+    echo '<li>';
+    echo $this->Form->checkbox(
+        'adminid',
+        [
+            'value' => 'true',
+            'id' => 'adminInput',
+            'onchange' => 'toggleAdminLinkInput()',
+            'checked' => true,
+        ]
+    );
+    echo '<span style="font-size: 90%;">' . __('Edit/deleting poll/entries only with admin link') . '</span>';
+    echo '</li>';
+}
+
 // --------------------------------------------------------------
 // Hide poll result
 if (
     \Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
-    strcmp($poll->adminid, "NA") != 0
+    (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
+        \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
 ) {
     echo '<li>';
     echo $this->Form->checkbox(
         'hideresult',
         [
             'value' => 'true',
-            'checked' => $poll->hideresult,
+            'id' => 'hideresultInput',
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Hide poll results for users (only admin can see the votes)') . '</span>';
@@ -69,14 +118,15 @@ if (
 // Allow to change entry
 if (
     \Cake\Core\Configure::read('preferendum.opt_AllowChangeEntry') &&
-    strcmp($poll->adminid, "NA") != 0
+    (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
+        \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
 ) {
     echo '<li>';
     echo $this->Form->checkbox(
         'editentry',
         [
             'value' => 'true',
-            'checked' => $poll->editentry,
+            'id' => 'editentryInput',
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Users can modify their entry with a personal link') . '</span>';
@@ -94,7 +144,6 @@ if (
         'userinfo',
         [
             'value' => 'true',
-            'checked' => $poll->userinfo,
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Collect user contact information') . '</span>';
@@ -109,7 +158,6 @@ if (\Cake\Core\Configure::read('preferendum.opt_PollPassword')) {
         'pwprotect',
         [
             'value' => 'true',
-            'checked' => $poll->pwprotect,
             'id' => 'pwprotectInput',
             'onchange' => 'togglePasswordInput()',
         ]
@@ -122,7 +170,7 @@ if (\Cake\Core\Configure::read('preferendum.opt_PollPassword')) {
         [
             'class' => 'field-long',
             'id' => 'passwordInput',
-            'disabled' => !$poll->pwprotect,
+            'disabled' => true,
             'placeholder' => __('Password'),
         ]
     );
@@ -141,7 +189,6 @@ if (
         [
             'value' => 'true',
             'id' => 'commentInput',
-            'checked' => $poll->comment,
             'onchange' => 'toggleEmailInput()',
         ]
     );
@@ -162,9 +209,8 @@ if (
         [
             'value' => 'true',
             'id' => 'emailcommentInput',
-            'checked' => $poll->emailcomment,
             'onchange' => 'toggleEmailInput()',
-            'disabled' => (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments') && \Cake\Core\Configure::read('preferendum.opt_Comments')) && (\Cake\Core\Configure::read('preferendum.opt_Comments') && !($poll->comment)),
+            'disabled' => (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments') && \Cake\Core\Configure::read('preferendum.opt_Comments')),
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
@@ -180,7 +226,6 @@ if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
         [
             'value' => 'true',
             'id' => 'emailentryInput',
-            'checked' => $poll->emailentry,
             'onchange' => 'toggleEmailInput()',
         ]
     );
@@ -203,14 +248,14 @@ if (
             'class' => 'field-long',
             'id' => 'emailInput',
             'label' => __('Email'),
-            'disabled' => (!$poll->emailentry && !$poll->emailcomment),
+            'disabled' => true,
             'placeholder' => __('Email for receiving new entry/comment'),
         ]
     );
 }
 
 echo '<div class="content-right">';
-echo $this->Form->button(__('Save changes'));
+echo $this->Form->button(__('Create poll'));
 echo '</div>';
 echo $this->Form->end();
 ?>

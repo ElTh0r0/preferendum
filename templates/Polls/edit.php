@@ -13,38 +13,21 @@
  * @version   0.5.0
  */
 ?>
-<?php $this->assign('title', __('Edit poll') . ' - ' . $poll->title); ?>
-
-<?php $this->Html->css('datepicker.min.css', ['block' => true]); ?>
-<?php $this->Html->script('datepicker.min.js', ['block' => true]); ?>
-<?php $this->Html->script('poll_create.js', ['block' => 'scriptBottom']); ?>
-<?php $this->Html->script('poll_view.js', ['block' => 'scriptBottom']); ?>
-<?php $this->Html->script('clipboard.min.js', ['block' => true]); ?>
-<?php $this->Html->script('poll_options.js', ['block' => 'scriptBottom']); ?>
 
 <?php
+$this->assign('title', __('Edit poll') . ' - ' . $poll->title);
 
-use Cake\I18n\I18n;
+echo $this->element('poll/datepicker');
+$this->Html->script('poll_create.js', ['block' => 'scriptBottom']);
+$this->Html->script('poll_options.js', ['block' => 'scriptBottom']);
+$this->Html->script('poll_view.js', ['block' => 'scriptBottom']);
+$this->Html->script('clipboard.min.js', ['block' => true]);
 
 $this->Html->scriptStart(['block' => true]);
-// Datepicker localizations
-echo 'var jslocale = ' . json_encode(I18n::getLocale()) . ';';
-echo 'var jsdateformat = ' . json_encode(
-    \Cake\Core\Configure::read('preferendum.datepickerFormat')
-) . ';';
-echo 'var jsmonday = ' . json_encode(__('Monday')) . ';';
-echo 'var jstuesday = ' . json_encode(__('Tuesday')) . ';';
-echo 'var jswednesday = ' . json_encode(__('Wednesday')) . ';';
-echo 'var jsthursday = ' . json_encode(__('Thursday')) . ';';
-echo 'var jsfriday = ' . json_encode(__('Friday')) . ';';
-echo 'var jssaturday = ' . json_encode(__('Saturday')) . ';';
-echo 'var jssunday = ' . json_encode(__('Sunday')) . ';';
-
 echo 'var jswebroot = ' . json_encode($this->request->getAttributes()['webroot']) . ';';
 echo 'var jspollid = ' . json_encode($poll->id) . ';';
 echo 'var jsadminid = ' . json_encode($adminid) . ';';
 $this->Html->scriptEnd();
-
 ?>
 
 <!-- POLL CONTROLS -->
@@ -55,11 +38,12 @@ $this->Html->scriptEnd();
 </div>
 
 <div class="center-box">
-    <?php echo $this->Flash->render() ?>
-</div>
+    <?php
+    echo '<h1>' . __('Edit poll') . '</h1>';
+    echo $this->Flash->render();
 
-<div class="center-box">
-    <?php echo $this->element('poll/edit-head'); ?>
+    echo $this->element('poll/edit-form');
+    ?>
 </div>
 
 <div id="poll-container">

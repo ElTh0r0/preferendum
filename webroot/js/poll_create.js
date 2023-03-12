@@ -5,17 +5,7 @@ $(document).ready(function () {
     var datepickerOptions = {
         format: jsdateformat,
         autoHide: "true",
-        weekStart: 1,
         language: jslocale,
-        days: [
-            jssunday,
-            jsmonday,
-            jstuesday,
-            jswednesday,
-            jsthursday,
-            jsfriday,
-            jssaturday,
-        ],
     };
 
     //init first datepicker
