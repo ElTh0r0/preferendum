@@ -52,6 +52,8 @@ $routes->scope('/', function (RouteBuilder $builder) {
 
     if ((\Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter') == 0)) {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
+    } else {
+        $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'cleanup']);
     }
     $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
     $builder->connect('/polls/togglelock/*', ['controller' => 'Polls', 'action' => 'togglelock']);
@@ -59,6 +61,11 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/polls/delete/*', ['controller' => 'Polls', 'action' => 'delete']);
     $builder->connect('/polls/*', ['controller' => 'Polls', 'action' => 'View']);
 
+    // Allow route to login mask, needed for using poll password
+    if (\Cake\Core\Configure::read('preferendum.opt_PollPassword') == true) {
+        $builder->connect('/admin/login/*', ['controller' => 'Admin', 'action' => 'login']);
+        $builder->connect('/admin/logout/*', ['controller' => 'Admin', 'action' => 'logout']);
+    }
     if (\Cake\Core\Configure::read('preferendum.adminInterface') != true) {
         $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);
         $builder->connect('/users/*', ['controller' => 'Polls', 'action' => 'add']);

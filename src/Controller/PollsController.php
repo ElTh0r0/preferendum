@@ -92,7 +92,22 @@ class PollsController extends AppController
                 }
 
                 if ($success) {
-                    $this->Flash->success(__('Your poll has been saved.'));
+                    if ($newpoll->pwprotect) {
+                        $this->Flash->default(
+                            __('Your poll has been saved.') . '<br><br>' .
+                                __('Please login with your chosen password!'),
+                            [
+                                'params' => [
+                                    'class' => 'success',
+                                    'permanent' => true,
+                                    'escape' => false
+                                ]
+                            ]
+                        );
+                    } else {
+                        $this->Flash->success(__('Your poll has been saved.'));
+                    }
+
                     if ($newpoll->adminid == true) {
                         return $this->redirect(['action' => 'view', $newpoll->id, $newpoll->adminid]);
                     }
@@ -318,51 +333,13 @@ class PollsController extends AppController
             $poll = $this->Polls->findById($pollid)->firstOrFail();
             $dbadminid = $poll->adminid;
             if (strcmp($dbadminid, $adminid) == 0) {
-                $success = true;
-                $entries = $this->fetchTable('Entries')->find()
-                    ->where(['poll_id' => $poll->id])
-                    ->contain(['Choices'])
-                    ->select(['id']);
-                // Collect users before deleting the entries, otherwise users cannot be found anymore
-                $dbusers = $this->fetchTable('Entries')->find()
-                    ->where(['poll_id' => $poll->id])
-                    ->contain(['Users', 'Choices'])
-                    ->select(['user_id' => 'Users.id'])
-                    ->group(['user_id'])->all();
-                $users = array();
-                foreach ($dbusers as $usr) {
-                    $users[] = $usr['user_id'];
-                }
-
-                // Entries must be deleted manually, since there is no direct dependency between Polls and Entries table
-                if ($entries->count() > 0) {
-                    if (!$this->fetchTable('Entries')->deleteAll(['id IN' => $entries])) {
-                        $success = false;
+                if ($this->deleteSinglePoll($poll)) {
+                    $this->Flash->success(__('Poll {0} has been deleted.', $poll->title));
+                    if ($this->referer() == '/admin') {
+                        // Stay on admin page, if deletion was triggered from there
+                        return $this->redirect($this->referer());
                     }
-                }
-
-                if ($success) {
-                    // Users must be deleted manually, since there is no direct dependency between Polls and Users table
-                    if (sizeof($users) > 0) {
-                        if (!$this->fetchTable('Users')->deleteAll(['id IN' => $users])) {
-                            $success = false;
-                        }
-                    }
-                    if ($success && $poll->pwprotect) {
-                        $success = $this->deletePollPwUser($pollid);
-                    }
-
-                    if ($success) {
-                        // Comments and Choices deleted automatically due to table dependency
-                        if ($this->Polls->delete($poll)) {
-                            $this->Flash->success(__('Poll {0} has been deleted.', $poll->title));
-                            if ($this->referer() == '/admin') {
-                                // Stay on admin page, if deletion was triggered from there
-                                return $this->redirect($this->referer());
-                            }
-                            return $this->redirect(['action' => 'index']);
-                        }
-                    }
+                    return $this->redirect(['action' => 'index']);
                 }
             }
         }
@@ -375,7 +352,7 @@ class PollsController extends AppController
     public function cleanup()
     {
         if (!(PHP_SAPI === 'cli')) {
-            echo "ERROR: The cleanup routine can only be run from the command line (i.e. via cronjojb).";
+            echo "ERROR: The cleanup routine can only be run from the command line (i.e. via cronjojb)." . PHP_EOL;;
             exit();
         }
 
@@ -385,7 +362,7 @@ class PollsController extends AppController
 
         echo PHP_EOL;
         echo "PREFERendum cleanup routine" . PHP_EOL;
-        echo "***********************" . PHP_EOL;
+        echo "***************************" . PHP_EOL;
         echo PHP_EOL;
         echo "This will delete every poll that was inactive" . PHP_EOL . "since " . $minDate . " (for at least " . $deleteAfter . " days)." . PHP_EOL;
         echo "You may change this value in 'config/preferendum_features.php'" . PHP_EOL;
@@ -399,21 +376,7 @@ class PollsController extends AppController
         if (sizeof($trash) > 0) {
             foreach ($trash as $poll) {
                 echo "Deleting poll: " . $poll['id'] . " ..." . PHP_EOL;
-
-                $userentries = $this->fetchTable('Entries')->find()
-                    ->where(['poll_id' => $poll['id']])
-                    ->contain(['Users'])
-                    ->select(['user_id' => 'Users.id'])
-                    ->group(['user_id']);
-
-                if ($userentries->count() > 0) {
-                    if (!$this->fetchTable('Users')->deleteAll(['id IN' => $userentries])) {
-                        echo "ERROR while deleting: " . $poll['id'] . " (error while user deletion)" . PHP_EOL;
-                    }
-                }
-                if (!$this->Polls->delete($poll)) {
-                    echo "ERROR while deleting: " . $poll['id'] . PHP_EOL;
-                }
+                $this->deleteSinglePoll($poll);
             }
         } else {
             echo "No polls inactive since " . $minDate . PHP_EOL;
@@ -424,6 +387,66 @@ class PollsController extends AppController
         echo "Done." . PHP_EOL;
 
         $this->autoRender = false;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function deleteSinglePoll($poll, $cli = false)
+    {
+        $entries = $this->fetchTable('Entries')->find()
+            ->where(['poll_id' => $poll->id])
+            ->contain(['Choices'])
+            ->select(['id']);
+        // Collect users before deleting the entries, otherwise users cannot be found anymore
+        $dbusers = $this->fetchTable('Entries')->find()
+            ->where(['poll_id' => $poll->id])
+            ->contain(['Users', 'Choices'])
+            ->select(['user_id' => 'Users.id'])
+            ->group(['user_id'])->all();
+        $users = array();
+        foreach ($dbusers as $usr) {
+            $users[] = $usr['user_id'];
+        }
+
+        // Entries must be deleted manually, since there is no direct dependency between Polls and Entries table
+        if ($entries->count() > 0) {
+            if (!$this->fetchTable('Entries')->deleteAll(['id IN' => $entries])) {
+                if ($cli) {
+                    echo "ERROR while deleting: " . $poll['id'] . " (error while Entries deletion)" . PHP_EOL;
+                }
+                return false;
+            }
+        }
+
+        // Users must be deleted manually, since there is no direct dependency between Polls and Users table
+        if (sizeof($users) > 0) {
+            if (!$this->fetchTable('Users')->deleteAll(['id IN' => $users])) {
+                if ($cli) {
+                    echo "ERROR while deleting: " . $poll['id'] . " (error while Users deletion)" . PHP_EOL;
+                }
+                return false;
+            }
+        }
+
+        // Delete poll password user
+        if ($poll->pwprotect) {
+            if (!$this->deletePollPwUser($poll->id)) {
+                if ($cli) {
+                    echo "ERROR while deleting: " . $poll['id'] . " (error while PollPwUser deletion)" . PHP_EOL;
+                }
+                return false;
+            }
+        }
+
+        // Comments and Choices deleted automatically due to table dependency
+        if (!$this->Polls->delete($poll)) {
+            if ($cli) {
+                echo "ERROR while deleting: " . $poll['id'] . " (error while Poll/Comments/Choices deletion)" . PHP_EOL;
+            }
+            return false;
+        }
+
+        return true;
     }
 
     //------------------------------------------------------------------------
