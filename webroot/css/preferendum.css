@@ -929,6 +929,16 @@ button[type="button"]:disabled {
 #admin-page {
     padding: 2rem;
 }
+
+#search_input{
+    float:left;
+    margin-right:10px;
+}
+
+#search_submit {
+    float:left;
+}
+
 #admin-page table {
     margin: 0 auto;
 }

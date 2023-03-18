@@ -54,20 +54,28 @@ class AdminController extends AppController
             return $this->redirect(['action' => 'login']);
         }
 
+        $search = $this->request->getQuery('search');
+        if ($search) {
+            $query = $this->getSearchQuery($search);
+        } else {
+            $query = $this->fetchTable('Polls')->find('all');
+        }
+
         $polls = $this->paginate(
-            $this->fetchTable('Polls')->find('all'),
+            $query,
             [
                 'limit' => 20,
             ]
         );
 
+        $numpolls = $this->fetchTable('Polls')->find('all')->count();
         $numentries = $this->getNumberOfEntries();
         $numcomments = $this->getNumberOfComments();
         $userinfos = $this->getUserInfos();
         // debug($userinfos);
         // die;
 
-        $this->set(compact('polls', 'numentries', 'numcomments', 'userinfos', 'currentUserRole', 'adminRole', 'polladmRole'));
+        $this->set(compact('polls', 'numpolls', 'numentries', 'numcomments', 'userinfos', 'currentUserRole', 'adminRole', 'polladmRole'));
     }
 
     //------------------------------------------------------------------------
@@ -119,6 +127,31 @@ class AdminController extends AppController
             $this->Authentication->logout();
         }
         return $this->redirect(['action' => 'login']);
+    }
+
+    //------------------------------------------------------------------------
+
+    private function getSearchQuery($search)
+    {
+        $searchusers = $this->fetchTable('Entries')->find()
+            ->contain(['Choices', 'Users'])
+            ->where(['Users.name like'  => '%' . $search . '%'])
+            ->select(['poll_id' => 'Choices.poll_id'])
+            ->group(['Users.id']);
+
+        $searchcmtusers = $this->fetchTable('Comments')->find()
+            ->where(['name like' => '%' . $search . '%'])
+            ->select(['poll_id'])
+            ->group(['poll_id']);
+
+        $query = $this->fetchTable('Polls')->find('all')
+            ->where(['Or' => [
+                'title like' => '%' . $search . '%',
+                'id in' => $searchusers,
+                'id in' => $searchcmtusers
+            ]]);
+
+        return $query;
     }
 
     //------------------------------------------------------------------------

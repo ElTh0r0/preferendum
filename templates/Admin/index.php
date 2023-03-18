@@ -28,17 +28,14 @@
     <?php echo $this->Flash->render() ?>
 
     <!-- POLLS OVERVIEW TABLE -->
-    <table>
+    <table style="min-width: 500px">
         <tr>
             <td colspan="5">
-                <h1 class="fail"><?php echo __('Available polls') . ': ' . $this->Paginator->param('count'); ?></h1>
+                <h1 class="fail"><?php echo __('Total polls') . ': ' . $numpolls; ?></h1>
             </td>
             <td colspan="3">
                 <?php
-                if (
-                    \Cake\Core\Configure::read('preferendum.restrictPollCreation') &&
-                    (strcmp($currentUserRole, $adminRole) == 0 || strcmp($currentUserRole, $polladmRole) == 0)
-                ) {
+                if (strcmp($currentUserRole, $adminRole) == 0 || strcmp($currentUserRole, $polladmRole) == 0) {
                     echo $this->Html->link(
                         $this->Form->button(__('New poll'), ['type' => 'button', 'class' => 'admin-new-poll']),
                         ['controller' => 'Polls', 'action' => 'add'],
@@ -46,6 +43,28 @@
                     );
                 }
                 ?>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <?php
+                echo $this->Form->create(null, ['type' => 'get', 'id' => 'search_form']);
+                echo $this->Form->control('search', ['label' => '', 'value' => $this->request->getQuery('search'), 'id' => 'search_input', 'placeholder' => __('Search poll or user'),]);
+                echo $this->Form->submit(__('Search'), ['id' => 'search_submit']);
+                echo $this->Form->end();
+                ?>
+            </td>
+        </tr>
+        <?php if ($this->request->getQuery('search')) { ?>
+            <tr>
+                <td colspan="8">
+                    <?php echo __('Filtered polls') . ': ' . $this->Paginator->param('count'); ?>
+                </td>
+            </tr>
+        <?php } ?>
+        <tr>
+            <td colspan="8">
+                <?php echo '&nbsp;' ?>
             </td>
         </tr>
         <!-- EXISTING POLLS -->
