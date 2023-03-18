@@ -123,8 +123,9 @@ class EntriesController extends AppController
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
-            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo', 'editentry'])->firstOrFail();
+            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'adminid', 'locked', 'email', 'emailentry', 'userinfo', 'editentry'])->firstOrFail();
             $dbtitle = $db['title'];
+            $dbadmid = $db['adminid'];
             $dblocked = $db['locked'];
             $dbuserinfo = $db['userinfo'];
             $dbemail = $db['email'];
@@ -133,8 +134,8 @@ class EntriesController extends AppController
 
             $dbuser = $this->fetchTable('Users')->findById($userid)->firstOrFail();
             if (
-                !($dblocked) && $dbeditallowed &&
-                strcmp($dbuser['password'], $userpw) == 0
+                (!($dblocked) && $dbeditallowed && strcmp($dbuser['password'], $userpw) == 0) ||  // User changes own entry
+                (strcmp($dbadmid, $adminid) == 0)  // Admin changes user entry
             ) {
                 // Change user
                 $userinfo = '';
