@@ -335,7 +335,7 @@ class PollsController extends AppController
             if (strcmp($dbadminid, $adminid) == 0) {
                 if ($this->deleteSinglePoll($poll)) {
                     $this->Flash->success(__('Poll {0} has been deleted.', $poll->title));
-                    if ($this->referer() == '/admin') {
+                    if (str_starts_with($this->referer(), '/admin')) {
                         // Stay on admin page, if deletion was triggered from there
                         return $this->redirect($this->referer());
                     }

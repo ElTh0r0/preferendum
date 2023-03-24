@@ -933,10 +933,16 @@ button[type="button"]:disabled {
 #search_input{
     float:left;
     margin-right:10px;
+    width: 250px;
 }
 
 #search_submit {
-    float:left;
+    float:right;
+    margin-right:10px;
+}
+
+#search_clear {
+    float:right;
 }
 
 #admin-page table {
@@ -963,6 +969,7 @@ button.admin-new-poll {
     background: var(--color-background-secondary) url(../img/icon-plus.png)
         no-repeat;
     background-position: 10px 45%;
+    float: right;
     padding-left: 36px;
 }
 

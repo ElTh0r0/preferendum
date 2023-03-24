@@ -50,6 +50,11 @@
                 <?php
                 echo $this->Form->create(null, ['type' => 'get', 'id' => 'search_form']);
                 echo $this->Form->control('search', ['label' => '', 'value' => $this->request->getQuery('search'), 'id' => 'search_input', 'placeholder' => __('Search poll or user'),]);
+                echo $this->Html->link(
+                    $this->Form->button(__('Clear filter'), ['type' => 'button', 'id' => 'search_clear']),
+                    ['controller' => 'admin', 'action' => 'index'],
+                    ['escape' => false]
+                );
                 echo $this->Form->submit(__('Search'), ['id' => 'search_submit']);
                 echo $this->Form->end();
                 ?>

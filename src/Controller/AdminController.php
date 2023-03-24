@@ -138,18 +138,33 @@ class AdminController extends AppController
             ->where(['Users.name like'  => '%' . $search . '%'])
             ->select(['poll_id' => 'Choices.poll_id'])
             ->group(['Users.id']);
+        $searchusers = $searchusers->all()->extract('poll_id');
+        $foundVoters = array();
+        foreach ($searchusers as $pid) {
+            $foundVoters[] = $pid;
+        }
 
         $searchcmtusers = $this->fetchTable('Comments')->find()
             ->where(['name like' => '%' . $search . '%'])
             ->select(['poll_id'])
             ->group(['poll_id']);
+        $searchcmtusers = $searchcmtusers->all()->extract('poll_id');
+        $foundCmtUsers = array();
+        foreach ($searchcmtusers as $pid) {
+            $foundCmtUsers[] = $pid;
+        }
 
-        $query = $this->fetchTable('Polls')->find('all')
-            ->where(['Or' => [
-                'title like' => '%' . $search . '%',
-                'id in' => $searchusers,
-                'id in' => $searchcmtusers
-            ]]);
+        $found = array_merge($foundVoters, $foundCmtUsers);
+        if (!$found) { // Merged array is empty
+            $query = $this->fetchTable('Polls')->find('all')
+                ->where(['title like' => '%' . $search . '%']);
+        } else {
+            $query = $this->fetchTable('Polls')->find('all')
+                ->where(['Or' => [
+                    'title like' => '%' . $search . '%',
+                    'id in' => $found
+                ]]);
+        }
 
         return $query;
     }
