@@ -21,6 +21,7 @@ use App\Model\Entity\Choice;
 use App\Model\Entity\Entry;
 use App\Model\Entity\Comment;
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\I18n\FrozenTime;
 
 class PollsController extends AppController
 {
@@ -126,6 +127,8 @@ class PollsController extends AppController
 
     public function view($pollid = null, $adminid = 'NA', $userpw = null)
     {
+        $this->checkExpiryAndLock($pollid);
+
         $poll = $this->getPollAndComments($pollid);
         if ($this->isPollAccessRestriced($poll->id, $poll->pwprotect)) {
             return $this->redirect(['controller' => 'Admin', 'action' => 'login', $poll->id, $adminid]);
@@ -189,6 +192,8 @@ class PollsController extends AppController
 
     public function edit($pollid = null, $adminid = 'NA', $userpw = '')
     {
+        $this->checkExpiryAndLock($pollid);
+
         $poll = $this->getPollAndComments($pollid);
         if (!strcmp($poll->adminid, $adminid) == 0) {
             return $this->redirect(['action' => 'view', $pollid]);
@@ -352,7 +357,7 @@ class PollsController extends AppController
     public function cleanup()
     {
         if (!(PHP_SAPI === 'cli')) {
-            echo "ERROR: The cleanup routine can only be run from the command line (i.e. via cronjojb)." . PHP_EOL;;
+            echo "ERROR: The cleanup routine can only be run from the command line (i.e. via cronjob)." . PHP_EOL;;
             exit();
         }
 
@@ -608,6 +613,33 @@ class PollsController extends AppController
         }
         if (!(\Cake\Core\Configure::read('preferendum.opt_PollPassword'))) {
             $poll->pwprotect = 0;
+        }
+        if (
+            \Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') == 0 ||
+            // $poll->expiry <= FrozenTime::now() ||
+            $poll->hasexp == 0
+        ) {
+            $poll->expiry = '0000-00-00';
+        }
+    }
+
+    //------------------------------------------------------------------------
+
+    private function checkExpiryAndLock($pollid = null)
+    {
+        if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+            if (isset($pollid) && !empty($pollid)) {
+                $expired = $this->Polls->query();
+                $expired->update()
+                    ->set(['locked' => 1])
+                    ->where([
+                        'id' => $pollid,
+                        'locked' => 0,
+                        'expiry >' => '0000-00-00',
+                        'expiry <=' => FrozenTime::now()
+                    ])
+                    ->execute();
+            }
         }
     }
 }

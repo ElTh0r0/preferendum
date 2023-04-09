@@ -69,3 +69,12 @@ function togglePasswordInput() {
         }
     }
 }
+
+//enable/disable expiry input
+var chkExpiry = document.getElementById("hasexpInput");
+var inpExpiry = document.getElementById("expInput");
+function toggleExpiryInput() {
+    if (chkExpiry) {
+        inpExpiry.disabled = !chkExpiry.checked;
+    }
+}

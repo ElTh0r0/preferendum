@@ -25,51 +25,63 @@
 </div>
 
 <div id="admin-page">
-    <?php echo $this->Flash->render() ?>
+    <?php
+    echo $this->Flash->render();
+    $today = new DateTime();
+
+    // ToDo: Replace ugly table layout
+    $allcols = 8;
+    $colsleft = 5;
+    $colsright = 3;
+    if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+        $allcols += 1;
+        $colsleft += 1;
+    }
+    ?>
 
     <!-- POLLS OVERVIEW TABLE -->
     <table style="min-width: 500px">
         <tr>
-            <td colspan="5">
-                <h1 class="fail"><?php echo __('Total polls') . ': ' . $numpolls; ?></h1>
+            <?php echo '<td colspan="' . $colsleft . '">'; ?>
+            <h1 class="fail"><?php echo __('Total polls') . ': ' . $numpolls; ?></h1>
             </td>
-            <td colspan="3">
-                <?php
-                if (strcmp($currentUserRole, $adminRole) == 0 || strcmp($currentUserRole, $polladmRole) == 0) {
-                    echo $this->Html->link(
-                        $this->Form->button(__('New poll'), ['type' => 'button', 'class' => 'admin-new-poll']),
-                        ['controller' => 'Polls', 'action' => 'add'],
-                        ['escape' => false]
-                    );
-                }
-                ?>
+            <?php echo '<td colspan="' . $colsright . '">'; ?>
+            <?php
+            if (strcmp($currentUserRole, $adminRole) == 0 || strcmp($currentUserRole, $polladmRole) == 0) {
+                echo $this->Html->link(
+                    $this->Form->button(__('New poll'), ['type' => 'button', 'class' => 'admin-new-poll']),
+                    ['controller' => 'Polls', 'action' => 'add'],
+                    ['escape' => false]
+                );
+            }
+            ?>
             </td>
         </tr>
         <tr>
-            <td colspan="8">
-                <?php
-                echo $this->Form->create(null, ['type' => 'get', 'id' => 'search_form']);
-                echo $this->Form->control('search', ['label' => '', 'value' => $this->request->getQuery('search'), 'id' => 'search_input', 'placeholder' => __('Search poll or user'),]);
-                echo $this->Html->link(
-                    $this->Form->button(__('Clear filter'), ['type' => 'button', 'id' => 'search_clear']),
-                    ['controller' => 'admin', 'action' => 'index'],
-                    ['escape' => false]
-                );
-                echo $this->Form->submit(__('Search'), ['id' => 'search_submit']);
-                echo $this->Form->end();
-                ?>
+            <?php echo '<td colspan="' . $allcols . '">'; ?>
+            <?php
+            echo $this->Form->create(null, ['type' => 'get', 'id' => 'search_form']);
+            echo $this->Form->control('search', ['label' => '', 'value' => $this->request->getQuery('search'), 'id' => 'search_input', 'placeholder' => __('Search poll or user'),]);
+            echo $this->Html->link(
+                $this->Form->button(__('Clear filter'), ['type' => 'button', 'id' => 'search_clear']),
+                ['controller' => 'admin', 'action' => 'index'],
+                ['escape' => false]
+            );
+            echo $this->Form->submit(__('Search'), ['id' => 'search_submit']);
+            echo $this->Form->end();
+            ?>
             </td>
         </tr>
         <?php if ($this->request->getQuery('search')) { ?>
             <tr>
-                <td colspan="8">
-                    <?php echo __('Filtered polls') . ': ' . $this->Paginator->param('count'); ?>
+                <?php echo '<td colspan="' . $allcols . '">'; ?>
+                <?php echo __('Filtered polls') . ': ' . $this->Paginator->param('count'); ?>
                 </td>
             </tr>
         <?php } ?>
         <tr>
-            <td colspan="8">
-                <?php echo '&nbsp;' ?>
+            <?php echo '<td colspan="' . $allcols . '">'; ?>
+            <?php echo '&nbsp;' ?>
             </td>
         </tr>
         <!-- EXISTING POLLS -->
@@ -78,11 +90,15 @@
             $curSortDir = ($this->Paginator->sortDir() == 'asc') ? "&uarr;" : "&darr;";
             $sTitle = __('Title');
             $sModi = __('Last change');
+            $sExp = __('Expiry date');
             if ($this->Paginator->sortKey() == 'title') {
                 $sTitle = '<em>' . $sTitle . ' ' . $curSortDir . '</em>';
             } else if ($this->Paginator->sortKey() == 'modified') {
                 $sModi = '<em>' . $sModi . ' ' . $curSortDir . '</em>';
+            } else if ($this->Paginator->sortKey() == 'expiry') {
+                $sExp = '<em>' . $sExp . ' ' . $curSortDir . '</em>';
             }
+
             echo '<tr><td>' . $this->Paginator->sort('title', $sTitle, ['escape' => false]) . '</td>';
             echo '<td></td>';
             echo '<td>' . __('Votes') . '</td>';
@@ -94,8 +110,12 @@
             } else {
                 echo '<td></td>';
             }
+            if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+                echo '<td>' . $this->Paginator->sort('expiry', $sExp, ['escape' => false]) . '</td>';
+            }
             echo '<td>' . $this->Paginator->sort('modified', $sModi, ['escape' => false]) . '</td>';
-            echo '<td colspan="3"></td></tr>';
+            echo '<td colspan="' . $colsright . '"></td>';
+            echo '</tr>';
             foreach ($polls as $poll) {
         ?>
                 <tr>
@@ -164,6 +184,17 @@
                         }
                         ?>
                     </td>
+                    <?php if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+                        $exp = '-';
+                        $style = '';
+                        if ($poll->expiry) {
+                            if ($poll->expiry < $today) {
+                                $style = 'class="fail"';
+                            }
+                            $exp = $poll->expiry->format('Y-m-d');
+                        }
+                        echo '<td><span ' . $style . ' style="font-size:0.8em;">' . $exp . '</span></td>';
+                    } ?>
                     <td>
                         <span style="font-size:0.8em;"><?php echo $poll->modified->format('Y-m-d') ?></span>
                     </td>
@@ -208,16 +239,16 @@
                         if (sizeof($userinfos[$poll->id]) > 0) {
                 ?>
                             <tr>
-                                <td colspan="8">
-                                    <!-- Info -->
-                                    <button type="button" class="collapsible"><?php echo h($poll->title) . ' - ' . __('User contact infos') ?></button>
-                                    <div class="collapscontent">
-                                        <ul>
-                                            <?php foreach ($userinfos[$poll->id] as $user => $info) {
-                                                echo '<li><em>' . h($user) . ':</em> ' . h($info) . '</li>';
-                                            } ?>
-                                        </ul>
-                                    </div>
+                                <?php echo '<td colspan="' . $allcols . '">'; ?>
+                                <!-- Info -->
+                                <button type="button" class="collapsible"><?php echo h($poll->title) . ' - ' . __('User contact infos') ?></button>
+                                <div class="collapscontent">
+                                    <ul>
+                                        <?php foreach ($userinfos[$poll->id] as $user => $info) {
+                                            echo '<li><em>' . h($user) . ':</em> ' . h($info) . '</li>';
+                                        } ?>
+                                    </ul>
+                                </div>
                                 </td>
                             </tr>
                 <?php
@@ -227,11 +258,11 @@
                 ?>
             <?php
             }
-            echo '<tr><td colspan="8" class="pagination" style="text-align:center">' . $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() . $this->Paginator->next('>') . $this->Paginator->last('>>') . '<td></tr>';
+            echo '<tr><td colspan="' . $allcols . '" class="pagination" style="text-align:center">' . $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() . $this->Paginator->next('>') . $this->Paginator->last('>>') . '<td></tr>';
         } else {
             ?>
             <tr>
-                <td height="24" colspan="8"><?php echo __('No polls found in database!') ?></td>
+                <?php echo '<td height="24" colspan="' . $allcols . '">' . __('No polls found in database!') . '</td>'; ?>
             </tr>
         <?php } ?>
 

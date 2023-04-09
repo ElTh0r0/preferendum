@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\I18n\FrozenTime;
 
 class AdminController extends AppController
 {
@@ -91,6 +92,8 @@ class AdminController extends AppController
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             if (in_array($result->getData()['role'], self::ROLES)) {
+                $this->checkExpiryAndLockPolls();  // ToDo: Move to cronjob ?!
+
                 // redirect after login success
                 $target = $this->Authentication->getLoginRedirect() ?? '/admin';
                 return $this->redirect($target);
@@ -230,5 +233,22 @@ class AdminController extends AppController
         }
 
         return $userinfos;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function checkExpiryAndLockPolls()
+    {
+        if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+            $expiredpolls = $this->fetchTable('Polls')->query();
+            $expiredpolls->update()
+                ->set(['locked' => 1])
+                ->where([
+                    'locked' => 0,
+                    'expiry >' => '0000-00-00',
+                    'expiry <=' => FrozenTime::now()
+                ])
+                ->execute();
+        }
     }
 }

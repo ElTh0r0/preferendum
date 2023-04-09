@@ -205,6 +205,7 @@ class InstalldbController extends AppController
             `comment` tinyint(1) NOT NULL DEFAULT 0,
             `hideresult` tinyint(1) NOT NULL DEFAULT 0,
             `pwprotect` tinyint(1) NOT NULL DEFAULT 0,
+            `expiry` DATE NOT NULL DEFAULT "0000-00-00",
             `locked` tinyint(1) NOT NULL DEFAULT 0,
             `modified` DATETIME NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');

@@ -208,6 +208,45 @@ if (
     );
 }
 
+// --------------------------------------------------------------
+// Poll expiry date
+$expadd = \Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter');
+if ($expadd > 0) {
+    $exp = $poll->expiry;
+    $hasdate = true;
+    if (!$exp) {
+        $hasdate = false;
+        $exp = new DateTime('NOW');
+        $exp->modify('+' . $expadd . ' days');
+    }
+
+    echo $this->Form->label(__('Expiry date'));
+    echo '<ul><li>';
+    echo $this->Form->checkbox(
+        'hasexp',
+        [
+            'checked' => $hasdate,
+            'value' => 'true',
+            'id' => 'hasexpInput',
+            'onchange' => 'toggleExpiryInput()',
+        ]
+    );
+    echo '<span style="font-size: 90%;">' . __('Poll is automatically locked on expiry date') . '</span>';
+    echo '</li></ul>';
+
+    echo $this->Form->control(
+        'expiry',
+        [
+            'class' => 'field-long',
+            'id' => 'expInput',
+            'value' => $exp,
+            'label' => '',
+            'disabled' => (!$hasdate),
+            'style' => 'margin-bottom: 8px;',
+        ]
+    );
+}
+
 echo '<div class="content-right">';
 echo $this->Form->button(__('Save changes'));
 echo '</div>';

@@ -60,6 +60,8 @@ class Poll extends Entity
         'comment' => true,
         'hideresult' => true,
         'locked' => true,
+        'hasexp' => true,  // Not stored in DB, but send from form to Controller
+        'expiry' => true,
         'modified' => true,
         'choices' => true,
         'comments' => true,

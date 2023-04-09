@@ -135,7 +135,7 @@ class EntriesController extends AppController
             $dbuser = $this->fetchTable('Users')->findById($userid)->firstOrFail();
             if (
                 (!($dblocked) && $dbeditallowed && strcmp($dbuser['password'], $userpw) == 0) ||  // User changes own entry
-                (strcmp($dbadmid, $adminid) == 0)  // Admin changes user entry
+                (isset($adminid) && strcmp($dbadmid, $adminid) == 0)  // Admin changes user entry
             ) {
                 // Change user
                 $userinfo = '';

@@ -63,6 +63,10 @@ return [
         'opt_SendEntryEmail' => false,
         'opt_SendCommentEmail' => false,
 
+        // Optionally lock poll automatically at a certain date (0 = disabled at all)
+        // Defined value will be used as default offset from today during poll creation, but date can be freely chosen by creator
+        'opt_PollExpirationAfter' => 0,
+
         // Header Logo (set to true if you want to show header logo, false otherwise)
         'headerLogo' => true,
         // Footer Text and Link
