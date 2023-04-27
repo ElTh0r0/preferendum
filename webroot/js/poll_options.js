@@ -34,14 +34,14 @@ function toggleEmailInput() {
 
 //enable/disable options depending on AdminLink checkbox
 var chkAdminLink = document.getElementById("adminInput");
-var chkHideResult = document.getElementById("hideresultInput");
+var chkHideVotes = document.getElementById("hidevotesInput");
 var chkEditEntry = document.getElementById("editentryInput");
 function toggleAdminLinkInput() {
-    if (chkHideResult) {
-        chkHideResult.disabled = !chkAdminLink.checked;
+    if (chkHideVotes) {
+        chkHideVotes.disabled = !chkAdminLink.checked;
 
-        if (chkHideResult.disabled) {
-            chkHideResult.checked = false;
+        if (chkHideVotes.disabled) {
+            chkHideVotes.checked = false;
         }
     }
 

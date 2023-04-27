@@ -46,9 +46,9 @@ return [
         // If 'alwaysAllowComments' is disabled, turn on(true)/off(false) to allow comments optionally for each poll.
         'opt_Comments' => false,
 
-        // Add (optional) field to make result only visible for admin
+        // Add (optional) field to make votes only visible for admin
         // (This feature can only be used, if 'alwaysUseAdminLinks' OR 'opt_AdminLinks' is enabled and used, too.)
-        'opt_HidePollResult' => false,
+        'opt_HidePollVotes' => false,
 
         // Add (optional) field to store user contact information together with entry. Only admin can see the user info.
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
@@ -74,8 +74,11 @@ return [
         // Hot tipp of the week: Consider being nice and leaving it there!)
         'footerLink' => true,
 
-        // Show trend visualization(true) or simple result just counting 'yes'(false)
-        'trendResult' => true,
+        // Show vote result visualization. Current options:
+        // 'trend': Showing kind of trend visualization weighting 'yes' and 'maybe'
+        // 'simple': Just showing sum of 'yes' votes
+        // 'none': No result visualization
+        'resultVisualization' => 'trend',
 
         // Maximum number of options / dates per poll
         'maxPollOptions' => 30,

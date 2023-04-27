@@ -203,7 +203,7 @@ class InstalldbController extends AppController
             `userinfo` tinyint(1) NOT NULL DEFAULT 0,
             `editentry` tinyint(1) NOT NULL DEFAULT 0,
             `comment` tinyint(1) NOT NULL DEFAULT 0,
-            `hideresult` tinyint(1) NOT NULL DEFAULT 0,
+            `hidevotes` tinyint(1) NOT NULL DEFAULT 0,
             `pwprotect` tinyint(1) NOT NULL DEFAULT 0,
             `expiry` DATE NOT NULL DEFAULT "0000-00-00",
             `locked` tinyint(1) NOT NULL DEFAULT 0,

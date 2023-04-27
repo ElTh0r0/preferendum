@@ -96,21 +96,21 @@ if (
 }
 
 // --------------------------------------------------------------
-// Hide poll result
+// Hide poll votes
 if (
-    \Cake\Core\Configure::read('preferendum.opt_HidePollResult') &&
+    \Cake\Core\Configure::read('preferendum.opt_HidePollVotes') &&
     (\Cake\Core\Configure::read('preferendum.opt_AdminLinks') ||
         \Cake\Core\Configure::read('preferendum.alwaysUseAdminLinks'))
 ) {
     echo '<li>';
     echo $this->Form->checkbox(
-        'hideresult',
+        'hidevotes',
         [
             'value' => 'true',
-            'id' => 'hideresultInput',
+            'id' => 'hidevotesInput',
         ]
     );
-    echo '<span style="font-size: 90%;">' . __('Hide poll results for users (only admin can see the votes)') . '</span>';
+    echo '<span style="font-size: 90%;">' . __('Hide poll votes for users (only admin can see the votes)') . '</span>';
     echo '</li>';
 }
 

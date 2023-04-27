@@ -42,7 +42,9 @@ $this->Html->scriptEnd();
 <div id="poll-container">
     <table class="schedule">
         <?php echo $this->element('choice/list'); ?>
-        <?php echo $this->element('entry/list'); ?>
+        <?php if ($poll->hidevotes == 0) {
+            echo $this->element('entry/list');
+        } ?>
 
         <!-- SPACER ROW -->
         <?php echo '<tr class="table-spacer-row"><td colspan="' . (sizeof($pollchoices) + 1) . '"></td></tr>'; ?>
@@ -61,11 +63,12 @@ $this->Html->scriptEnd();
         } ?>
 
         <!-- RESULTS -->
-        <?php if ($poll->hideresult == 0) {
-            if (\Cake\Core\Configure::read('preferendum.trendResult')) {
-                echo $this->element('poll/result-trend');
-            } else {
-                echo $this->element('poll/result-simple');
+        <?php if ($poll->hidevotes == 0) {
+            $resultVisual = \Cake\Core\Configure::read('preferendum.resultVisualization');
+            if (0 != strcmp('none', $resultVisual)) {
+                if (file_exists(Cake\Core\App::path('templates')[0] . 'element/poll/result-' . $resultVisual . '.php')) {
+                    echo $this->element('poll/result-' . $resultVisual);
+                }
             }
         } ?>
     </table>
@@ -76,7 +79,7 @@ $this->Html->scriptEnd();
     || (\Cake\Core\Configure::read('preferendum.opt_Comments') && $poll->comment)
 ) {
     echo '<div id="comments-wrapper">';
-    if ($poll->hideresult == 0) {
+    if ($poll->hidevotes == 0) {
         echo $this->element('comment/list');
     }
     if ($poll->locked == 0) {

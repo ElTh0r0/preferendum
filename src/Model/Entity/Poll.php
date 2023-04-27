@@ -30,7 +30,7 @@ use Cake\ORM\Entity;
  * @property bool $emailentry
  * @property bool $emailcomment
  * @property bool $userinfo
- * @property bool $hideresult
+ * @property bool $hidevotes
  * @property bool $locked
  * @property \Cake\I18n\FrozenTime $modified
  *
@@ -58,7 +58,7 @@ class Poll extends Entity
         'userinfo' => true,
         'editentry' => true,
         'comment' => true,
-        'hideresult' => true,
+        'hidevotes' => true,
         'locked' => true,
         'hasexp' => true,  // Not stored in DB, but send from form to Controller
         'expiry' => true,

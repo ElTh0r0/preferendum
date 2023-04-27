@@ -147,8 +147,8 @@
                         ) {
                             echo '<img src="img/icon-no-comment.png" title="' . __('No comments allowed') . '"/> ';
                         }
-                        if ($poll->hideresult) {
-                            echo '<img src="img/icon-eye-off.png" title="' . __('Poll result hidden') . '"/> ';
+                        if ($poll->hidevotes) {
+                            echo '<img src="img/icon-eye-off.png" title="' . __('Poll votes hidden') . '"/> ';
                         }
                         if ($poll->editentry) {
                             echo '<img src="img/icon-edit.png" title="' . __('Users can modify their entry') . '"/> ';

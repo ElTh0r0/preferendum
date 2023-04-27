@@ -72,5 +72,5 @@
             <div class="r r-total" style="<?php echo $dateDynStyles ?>">
             </div>
         </td>
-    <?php }    ?>
+    <?php } ?>
 </tr>

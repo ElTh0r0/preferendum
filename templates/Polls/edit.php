@@ -56,11 +56,13 @@ $this->Html->scriptEnd();
         echo $this->element('entry/edit_view');
         echo '<tr class="table-spacer-row table-spacer-row-big"><td></td></tr>';
 
-        if (\Cake\Core\Configure::read('preferendum.trendResult')) {
-            echo $this->element('poll/result-trend');
-        } else {
-            echo $this->element('poll/result-simple');
-        } ?>
+        $resultVisual = \Cake\Core\Configure::read('preferendum.resultVisualization');
+        if (0 != strcmp('none', $resultVisual)) {
+            if (file_exists(Cake\Core\App::path('templates')[0] . 'element/poll/result-' . $resultVisual . '.php')) {
+                echo $this->element('poll/result-' . $resultVisual);
+            }
+        }
+        ?>
     </table>
 </div>
 

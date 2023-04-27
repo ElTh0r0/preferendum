@@ -56,7 +56,7 @@ class PollsController extends AppController
                 $newpoll->adminid = true;
             }
             if (!$newpoll->adminid) {
-                $newpoll->hideresult = 0;
+                $newpoll->hidevotes = 0;
                 $newpoll->editentry = 0;
             }
 
@@ -159,8 +159,8 @@ class PollsController extends AppController
                 ]
             ]);
         }
-        if ($poll->hideresult != 0) {
-            $this->Flash->default(__('Only poll admin can see results and comments!'), [
+        if ($poll->hidevotes != 0) {
+            $this->Flash->default(__('Only poll admin can see votes and comments!'), [
                 'params' => [
                     'permanent' => true
                 ]
