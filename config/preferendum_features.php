@@ -80,6 +80,9 @@ return [
         // 'none': No result visualization
         'resultVisualization' => 'trend',
 
+        // Turn on(true)/off(false) that admin or polladmin can download the vote results as CSV
+        'downloadCsv' => false,
+
         // Maximum number of options / dates per poll
         'maxPollOptions' => 30,
 

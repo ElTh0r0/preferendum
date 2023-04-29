@@ -309,21 +309,26 @@ p.details {
     background-color: var(--color-background-secondary-hover);
 }
 
-#poll-controls button#ctrl-delete-poll {
-    background-image: url("../img/icon-delete.png");
-}
-
-#poll-controls button#ctrl-lock-poll {
-    background-image: url("../img/icon-lock.png");
+#poll-controls button#ctrl-mini-view {
+    background-image: url("../img/icon-eye.png");
 }
 
 #poll-controls button#ctrl-edit-poll {
     background-image: url("../img/icon-pen.png");
 }
 
-#poll-controls button#ctrl-mini-view {
-    background-image: url("../img/icon-eye.png");
+#poll-controls button#ctrl-lock-poll {
+    background-image: url("../img/icon-lock.png");
 }
+
+#poll-controls button#ctrl-download-poll {
+    background-image: url("../img/icon-download.png");
+}
+
+#poll-controls button#ctrl-delete-poll {
+    background-image: url("../img/icon-delete.png");
+}
+
 
 #poll-container {
     overflow-x: auto;
@@ -991,13 +996,26 @@ button.admin-edit-poll {
     background-position: center center;
 }
 
+button.admin-export-poll {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-download.png)
+        no-repeat;
+    background-position: center center;
+}
+
 button.admin-delete-poll {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-delete.png)
+    background: var(--color-feedback-negative) url(../img/icon-delete.png)
         no-repeat;
     background-position: center center;
+}
+
+button.admin-delete-poll[type="button"]:hover {
+    background-color: var(--color-feedback-negative);
 }
 
 .collapsible {

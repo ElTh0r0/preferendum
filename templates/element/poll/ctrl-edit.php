@@ -39,6 +39,19 @@
 );
 ?>
 
+<!--DOWNLOAD CSV BUTTON -->
+<?php echo $this->Form->postLink(
+    $this->Form->button(
+        __('Download CSV'),
+        [
+            'type' => 'button', 'id' => 'ctrl-download-poll'
+        ]
+    ),
+    ['action' => 'exportcsv', $poll->id, $adminid],
+    ['escape' => false]
+);
+?>
+
 <!-- DELETE POLL BUTTON -->
 <?php echo $this->Form->postLink(
     $this->Form->button(

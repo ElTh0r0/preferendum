@@ -25,6 +25,8 @@ use Cake\I18n\FrozenTime;
 
 class PollsController extends AppController
 {
+    const CSV_SEPARATOR = ',';
+
     public function initialize(): void
     {
         parent::initialize();
@@ -323,6 +325,76 @@ class PollsController extends AppController
         }
         $this->Flash->error(__('Poll lock has NOT been changed!', $pollid));
         return $this->redirect($this->referer());
+    }
+
+    //------------------------------------------------------------------------
+
+    public function exportcsv($pollid = null, $adminid = null)
+    {
+        $this->request->allowMethod(['post', 'exportcsv']);
+
+        if (
+            isset($pollid) && !empty($pollid)
+            && isset($adminid) && !empty($adminid)
+        ) {
+            $poll = $this->Polls->findById($pollid)->firstOrFail();
+            $dbadminid = $poll->adminid;
+
+            if (strcmp($dbadminid, $adminid) == 0) {
+                $filename = $poll->title . '.csv';
+                $filename = str_replace(' ', '_', $filename);
+                $choices = $this->getPollChoices($pollid);
+                $headerline = array_column($choices, 'option');
+                if ($poll->userinfo) {
+                    array_unshift($headerline, __('Contact info'));
+                }
+                array_unshift($headerline, __('Name'));
+
+                ob_start();
+                $fp = fopen('php://output', 'w');
+                fputcsv($fp, $headerline, self::CSV_SEPARATOR);
+
+                $dbentries = $this->getDbEntries($pollid);
+                $pollentries = array();
+                $usermap_info = array();
+                // TODO: Think about better implementation for passing all the data...
+                foreach ($dbentries as $entry) {
+                    if (!isset($pollentries[$entry['name']])) {
+                        $pollentries[$entry['name']] = array();
+                        $usermap_info[$entry['name']] = $entry->user_info;
+                    }
+                    $pollentries[$entry->name][$entry->choice_id] = $entry->value;
+                }
+                foreach ($pollentries as $name => $entry) {
+                    $csvline = array();
+                    $csvline[] = $name;
+                    if ($poll->userinfo) {
+                        $csvline[] = $usermap_info[$name];
+                    }
+
+                    for ($i = 0; $i < sizeof($choices); $i++) {
+                        switch ($entry[$choices[$i]->id]) {
+                            case 0:
+                                $csvline[] = __('no');
+                                break;
+                            case 1:
+                                $csvline[] = __('yes');
+                                break;
+                            default:
+                                $csvline[] = '?';
+                        }
+                    }
+                    fputcsv($fp, $csvline);
+                }
+
+                fclose($fp);
+
+                header('Content-Type: text/csv; charset=utf-8');
+                header('Content-Disposition: attachment; filename=' . $filename);
+                ob_end_flush();
+            }
+        }
+        exit;
     }
 
     //------------------------------------------------------------------------

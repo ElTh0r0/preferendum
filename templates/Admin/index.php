@@ -30,13 +30,15 @@
     $today = new DateTime();
 
     // ToDo: Replace ugly table layout
-    $allcols = 8;
     $colsleft = 5;
     $colsright = 3;
     if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
-        $allcols += 1;
         $colsleft += 1;
     }
+    if (\Cake\Core\Configure::read('preferendum.downloadCsv')) {
+        $colsright += 1;
+    }
+    $allcols = $colsleft + $colsright;
     ?>
 
     <!-- POLLS OVERVIEW TABLE -->
@@ -219,6 +221,20 @@
                             );
                         } ?>
                     </td>
+                    <?php
+                    if (
+                        \Cake\Core\Configure::read('preferendum.downloadCsv') &&
+                        (strcmp($currentUserRole, $adminRole) == 0 ||
+                            strcmp($currentUserRole, $polladmRole) == 0)
+                    ) {
+                        echo '<td>';
+                        echo $this->Form->postLink(
+                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-export-poll']),
+                            ['controller' => 'Polls', 'action' => 'exportcsv', $poll->id, $poll->adminid],
+                            ['escape' => false]
+                        );
+                        echo '</td>';
+                    } ?>
                     <td>
                         <?php
                         if (
