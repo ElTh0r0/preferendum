@@ -51,7 +51,7 @@ return [
         'opt_HidePollVotes' => false,
 
         // Add (optional) field to store user contact information together with entry. Only admin can see the user info.
-        // (This feature can only be used, if 'adminInterface' is enabled, too.)
+        // (This feature can only be used, if 'adminInterface' is enabled and if admin link is used for the poll)
         'opt_CollectUserinfo' => false,
 
         // Add (optional) field to protect access to poll with a password
@@ -66,13 +66,6 @@ return [
         // Optionally lock poll automatically at a certain date (0 = disabled at all)
         // Defined value will be used as default offset from today during poll creation, but date can be freely chosen by creator
         'opt_PollExpirationAfter' => 0,
-
-        // Header Logo (set to true if you want to show header logo, false otherwise)
-        'headerLogo' => true,
-        // Footer Text and Link
-        // (Insert false if you want to remove the GitHub footer link.
-        // Hot tipp of the week: Consider being nice and leaving it there!)
-        'footerLink' => true,
 
         // Show vote result visualization. Current options:
         // 'trend': Showing kind of trend visualization weighting 'yes' and 'maybe'
@@ -96,5 +89,12 @@ return [
         // Lifespan (in days) of inactive polls (0 = disabled at all)
         // (read README.md for further instructions - cronjob needed!)
         'deleteInactivePollsAfter' => 0,
+
+        // Header Logo (set to true if you want to show header logo, false otherwise)
+        'headerLogo' => true,
+        // Footer Text and Link
+        // (Insert false if you want to remove the GitHub footer link.
+        // Hot tipp of the week: Consider being nice and leaving it there!)
+        'footerLink' => true,
     ],
 ];

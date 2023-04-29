@@ -144,6 +144,7 @@ if (
         'userinfo',
         [
             'value' => 'true',
+            'id' => 'userinfoInput',
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Collect user contact information') . '</span>';

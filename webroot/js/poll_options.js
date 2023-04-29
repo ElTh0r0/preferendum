@@ -36,6 +36,7 @@ function toggleEmailInput() {
 var chkAdminLink = document.getElementById("adminInput");
 var chkHideVotes = document.getElementById("hidevotesInput");
 var chkEditEntry = document.getElementById("editentryInput");
+var chkUserInfo = document.getElementById("userinfoInput");
 function toggleAdminLinkInput() {
     if (chkHideVotes) {
         chkHideVotes.disabled = !chkAdminLink.checked;
@@ -50,6 +51,14 @@ function toggleAdminLinkInput() {
 
         if (chkEditEntry.disabled) {
             chkEditEntry.checked = false;
+        }
+    }
+
+    if (chkUserInfo) {
+        chkUserInfo.disabled = !chkAdminLink.checked;
+
+        if (chkUserInfo.disabled) {
+            chkUserInfo.checked = false;
         }
     }
 }

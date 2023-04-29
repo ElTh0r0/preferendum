@@ -60,6 +60,7 @@ class PollsController extends AppController
             if (!$newpoll->adminid) {
                 $newpoll->hidevotes = 0;
                 $newpoll->editentry = 0;
+                $newpoll->userinfo = 0;
             }
 
             $pollpw = '';

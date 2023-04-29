@@ -86,7 +86,8 @@ if (
 // Collect user info
 if (
     \Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
-    \Cake\Core\Configure::read('preferendum.adminInterface')
+    \Cake\Core\Configure::read('preferendum.adminInterface') &&
+    strcmp($poll->adminid, "NA") != 0
 ) {
     echo '<li>';
     echo $this->Form->checkbox(
