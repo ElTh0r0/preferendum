@@ -321,7 +321,7 @@ p.details {
     background-image: url("../img/icon-lock.png");
 }
 
-#poll-controls button#ctrl-download-poll {
+#poll-controls button#ctrl-export-poll {
     background-image: url("../img/icon-download.png");
 }
 

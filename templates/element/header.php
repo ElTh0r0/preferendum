@@ -71,7 +71,7 @@
     <?php if (\Cake\Core\Configure::read('preferendum.headerLogo')) { ?>
         <div id="logo">
             <a href="<?php echo $this->request->getAttributes()['webroot'] ?>" title="<?php echo __('Create a new poll ...') ?>">
-                <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/logo.png' ?> alt="" />
+                <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/logo.png' ?> alt="">
             </a>
         </div>
     <?php } ?>

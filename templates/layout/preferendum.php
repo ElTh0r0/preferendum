@@ -15,7 +15,7 @@
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo str_replace('_', '-', \Cake\Core\Configure::read('App.defaultLocale')) ?>">
 
 <head>
     <?php echo $this->Html->charset() ?>
@@ -38,7 +38,7 @@
 <body>
     <noscript>
         <div id="noscript">
-            <img src="img/logo.png" alt="" />
+            <img src="img/logo.png" alt="">
             <span><?php echo __('Please enable JavaScript in your browser and reload this page.') ?></span>
         </div>
     </noscript>

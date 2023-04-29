@@ -30,14 +30,31 @@
     $today = new DateTime();
 
     // ToDo: Replace ugly table layout
-    $colsleft = 5;
-    $colsright = 3;
+    $colsleft = 4;  // Default columns: Title, Icons, Votes, Last Change
+    if (
+        \Cake\Core\Configure::read('preferendum.alwaysAllowComments') ||
+        \Cake\Core\Configure::read('preferendum.opt_Comments')
+    ) {
+        $colsleft += 1;
+    }
     if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
         $colsleft += 1;
     }
-    if (\Cake\Core\Configure::read('preferendum.downloadCsv')) {
-        $colsright += 1;
+
+    $colsright = 1;  // Default: View button
+    // Add buttons for admins
+    if (
+        strcmp($currentUserRole, $adminRole) == 0 ||
+        strcmp($currentUserRole, $polladmRole) == 0
+    ) {
+        // Export button
+        if (\Cake\Core\Configure::read('preferendum.exportCsv')) {
+            $colsright += 1;
+        }
+        // Edit and deletion buttons
+        $colsright += 2;
     }
+
     $allcols = $colsleft + $colsright;
     ?>
 
@@ -101,23 +118,30 @@
                 $sExp = '<em>' . $sExp . ' ' . $curSortDir . '</em>';
             }
 
+            // ------ Table header row ------
+            // Title
             echo '<tr><td>' . $this->Paginator->sort('title', $sTitle, ['escape' => false]) . '</td>';
+            // Icons
             echo '<td></td>';
+            // Votes
             echo '<td>' . __('Votes') . '</td>';
+            // Comments
             if (
                 \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
                 || \Cake\Core\Configure::read('preferendum.opt_Comments')
             ) {
                 echo '<td>' . __('Comments') . '</td>';
-            } else {
-                echo '<td></td>';
             }
+            // Expiry date
             if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
                 echo '<td>' . $this->Paginator->sort('expiry', $sExp, ['escape' => false]) . '</td>';
             }
+            // Last change
             echo '<td>' . $this->Paginator->sort('modified', $sModi, ['escape' => false]) . '</td>';
+            // Buttons
             echo '<td colspan="' . $colsright . '"></td>';
             echo '</tr>';
+            // ------ Poll rows ------
             foreach ($polls as $poll) {
         ?>
                 <tr>
@@ -126,8 +150,9 @@
                     </td>
                     <td>
                         <?php
+                        // Icons
                         if (strcmp($poll->adminid, 'NA') == 0) {
-                            echo '<img src="img/icon-no-key.png" title="' . __('Poll not protected by admin link') . '"/> ';
+                            echo '<img src="img/icon-no-key.png" title="' . __('Poll not protected by admin link') . '"> ';
                         }
                         if ($poll->emailentry or $poll->emailcomment) {
                             if ($poll->emailentry and $poll->emailcomment) {
@@ -137,34 +162,35 @@
                             } else {
                                 $text = __('Email after new comment');
                             }
-                            echo '<img src="img/icon-email.png" title="' . $text . ': '  . $poll->email . '"/> ';
+                            echo '<img src="img/icon-email.png" title="' . $text . ': '  . $poll->email . '"> ';
                         }
                         if ($poll->userinfo) {
-                            echo '<img src="img/icon-user-info.png" title="' . __('Collect user info') . '"/> ';
+                            echo '<img src="img/icon-user-info.png" title="' . __('Collect user info') . '"> ';
                         }
                         if (
                             \Cake\Core\Configure::read('preferendum.opt_Comments')
                             && !($poll->comment)
                             && !(\Cake\Core\Configure::read('preferendum.alwaysAllowComments'))
                         ) {
-                            echo '<img src="img/icon-no-comment.png" title="' . __('No comments allowed') . '"/> ';
+                            echo '<img src="img/icon-no-comment.png" title="' . __('No comments allowed') . '"> ';
                         }
                         if ($poll->hidevotes) {
-                            echo '<img src="img/icon-eye-off.png" title="' . __('Poll votes hidden') . '"/> ';
+                            echo '<img src="img/icon-eye-off.png" title="' . __('Poll votes hidden') . '"> ';
                         }
                         if ($poll->editentry) {
-                            echo '<img src="img/icon-edit.png" title="' . __('Users can modify their entry') . '"/> ';
+                            echo '<img src="img/icon-edit.png" title="' . __('Users can modify their entry') . '"> ';
                         }
                         if ($poll->pwprotect) {
-                            echo '<img src="img/icon-password.png" title="' . __('Poll is password protected') . '"/> ';
+                            echo '<img src="img/icon-password.png" title="' . __('Poll is password protected') . '"> ';
                         }
                         if ($poll->locked) {
-                            echo '<img src="img/icon-locked.png" title="' . __('Poll locked') . '"/> ';
+                            echo '<img src="img/icon-locked.png" title="' . __('Poll locked') . '"> ';
                         }
                         ?>
                     </td>
                     <td>
                         <?php
+                        // Number of votes
                         if (array_key_exists($poll->id, $numentries)) {
                             echo $numentries[$poll->id];
                         } else {
@@ -172,21 +198,24 @@
                         }
                         ?>
                     </td>
-                    <td>
-                        <?php
-                        if (
-                            \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-                            || \Cake\Core\Configure::read('preferendum.opt_Comments')
-                        ) {
-                            if (array_key_exists($poll->id, $numcomments)) {
-                                echo $numcomments[$poll->id];
-                            } else {
-                                echo 0;
-                            }
+                    <?php
+                    // Number of comments
+                    if (
+                        \Cake\Core\Configure::read('preferendum.alwaysAllowComments') ||
+                        \Cake\Core\Configure::read('preferendum.opt_Comments')
+                    ) {
+                        echo '<td>';
+                        if (array_key_exists($poll->id, $numcomments)) {
+                            echo $numcomments[$poll->id];
+                        } else {
+                            echo 0;
                         }
-                        ?>
-                    </td>
-                    <?php if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+                        echo '</td>';
+                    }
+                    ?>
+                    <?php
+                    // Expiry date
+                    if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
                         $exp = '-';
                         $style = '';
                         if ($poll->expiry) {
@@ -196,34 +225,39 @@
                             $exp = $poll->expiry->format('Y-m-d');
                         }
                         echo '<td><span ' . $style . ' style="font-size:0.8em;">' . $exp . '</span></td>';
-                    } ?>
+                    }
+                    ?>
                     <td>
                         <span style="font-size:0.8em;"><?php echo $poll->modified->format('Y-m-d') ?></span>
                     </td>
                     <td>
-                        <!-- BTN: VIEW -->
-                        <?php echo $this->Html->link(
+                        <?php
+                        // View button
+                        echo $this->Html->link(
                             $this->Form->button('', ['type' => 'button', 'class' => 'admin-view-poll']),
                             ['controller' => 'Polls', 'action' => 'view', $poll->id],
                             ['target' => '_blank', 'escape' => false]
-                        ); ?>
-                    </td>
-                    <td>
-                        <?php
-                        if (
-                            strcmp($currentUserRole, $adminRole) == 0 ||
-                            strcmp($currentUserRole, $polladmRole) == 0
-                        ) {
-                            echo $this->Html->link(
-                                $this->Form->button('', ['type' => 'button', 'class' => 'admin-edit-poll']),
-                                ['controller' => 'Polls', 'action' => 'edit', $poll->id, $poll->adminid],
-                                ['target' => '_blank', 'escape' => false]
-                            );
-                        } ?>
+                        );
+                        ?>
                     </td>
                     <?php
+                    // Edit button
                     if (
-                        \Cake\Core\Configure::read('preferendum.downloadCsv') &&
+                        strcmp($currentUserRole, $adminRole) == 0 ||
+                        strcmp($currentUserRole, $polladmRole) == 0
+                    ) {
+                        echo '<td>';
+                        echo $this->Html->link(
+                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-edit-poll']),
+                            ['controller' => 'Polls', 'action' => 'edit', $poll->id, $poll->adminid],
+                            ['target' => '_blank', 'escape' => false]
+                        );
+                        echo '</td>';
+                    } ?>
+                    <?php
+                    // CSV export button
+                    if (
+                        \Cake\Core\Configure::read('preferendum.exportCsv') &&
                         (strcmp($currentUserRole, $adminRole) == 0 ||
                             strcmp($currentUserRole, $polladmRole) == 0)
                     ) {
@@ -235,21 +269,23 @@
                         );
                         echo '</td>';
                     } ?>
-                    <td>
-                        <?php
-                        if (
-                            strcmp($currentUserRole, $adminRole) == 0 ||
-                            strcmp($currentUserRole, $polladmRole) == 0
-                        ) {
-                            echo $this->Form->postLink(
-                                $this->Form->button('', ['type' => 'button', 'class' => 'admin-delete-poll']),
-                                ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
-                                ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
-                            );
-                        } ?>
-                    </td>
+                    <?php
+                    // Delete button
+                    if (
+                        strcmp($currentUserRole, $adminRole) == 0 ||
+                        strcmp($currentUserRole, $polladmRole) == 0
+                    ) {
+                        echo '<td>';
+                        echo $this->Form->postLink(
+                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-delete-poll']),
+                            ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
+                            ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
+                        );
+                        echo '</td>';
+                    } ?>
                 </tr>
                 <?php
+                // User info row
                 if ($poll->userinfo == 1) {
                     if (array_key_exists($poll->id, $userinfos)) {
                         if (sizeof($userinfos[$poll->id]) > 0) {
@@ -274,7 +310,9 @@
                 ?>
             <?php
             }
-            echo '<tr><td colspan="' . $allcols . '" class="pagination" style="text-align:center">' . $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() . $this->Paginator->next('>') . $this->Paginator->last('>>') . '<td></tr>';
+            // ------ End of poll rows ------
+
+            echo '<tr><td colspan="' . $allcols . '" class="pagination" style="text-align:center"><ul>' . $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() . $this->Paginator->next('>') . $this->Paginator->last('>>') . '</ul></td></tr>';
         } else {
             ?>
             <tr>

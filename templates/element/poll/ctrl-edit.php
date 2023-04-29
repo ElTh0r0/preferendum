@@ -14,8 +14,9 @@
  */
 ?>
 
-<!-- GO BACK TO POLL VIEW -->
-<?php echo $this->Html->link(
+<?php
+// Go back to poll view
+echo $this->Html->link(
     $this->Form->button(
         __('View Poll'),
         [
@@ -24,10 +25,10 @@
     ),
     ['action' => 'view', $poll->id, $adminid],
     ['escape' => false]
-); ?>
+);
 
-<!-- UN-/LOCK POLL BUTTON -->
-<?php echo $this->Form->postLink(
+// Un-/lock poll button
+echo $this->Form->postLink(
     $this->Form->button(
         __('Un-/Lock'),
         [
@@ -37,23 +38,23 @@
     ['action' => 'togglelock', $poll->id, $adminid],
     ['escape' => false]
 );
-?>
 
-<!--DOWNLOAD CSV BUTTON -->
-<?php echo $this->Form->postLink(
-    $this->Form->button(
-        __('Download CSV'),
-        [
-            'type' => 'button', 'id' => 'ctrl-download-poll'
-        ]
-    ),
-    ['action' => 'exportcsv', $poll->id, $adminid],
-    ['escape' => false]
-);
-?>
+// Export CSV button
+if (\Cake\Core\Configure::read('preferendum.exportCsv')) {
+    echo $this->Form->postLink(
+        $this->Form->button(
+            __('CSV export'),
+            [
+                'type' => 'button', 'id' => 'ctrl-export-poll'
+            ]
+        ),
+        ['action' => 'exportcsv', $poll->id, $adminid],
+        ['escape' => false]
+    );
+}
 
-<!-- DELETE POLL BUTTON -->
-<?php echo $this->Form->postLink(
+// Delete poll button
+echo $this->Form->postLink(
     $this->Form->button(
         __('Delete'),
         [

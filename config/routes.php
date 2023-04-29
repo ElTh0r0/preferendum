@@ -55,7 +55,7 @@ $routes->scope('/', function (RouteBuilder $builder) {
     } else {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'cleanup']);
     }
-    if (\Cake\Core\Configure::read('preferendum.downloadCsv') == true) {
+    if (\Cake\Core\Configure::read('preferendum.exportCsv') == true) {
         $builder->connect('/polls/exportcsv/*', ['controller' => 'Polls', 'action' => 'exportcsv']);
     }
     $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
