@@ -59,7 +59,7 @@ $this->Html->scriptEnd();
             }
             echo '</tr>';
 
-            echo '<tr class="table-spacer-row table-spacer-row-big"><td></td></tr>';
+            echo '<tr class="table-spacer-row table-spacer-row-big"><td colspan="' . (sizeof($pollchoices) + 1) . '"></td></tr>';
         } ?>
 
         <!-- RESULTS -->

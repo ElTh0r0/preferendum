@@ -1,8 +1,8 @@
 //enable/disable email input depending on checkboxes
-var chkEmailEntry = document.getElementById("emailentryInput");
-var chkEmailComment = document.getElementById("emailcommentInput");
-var inpEmail = document.getElementById("emailInput");
-var chkComment = document.getElementById("commentInput");
+var chkEmailEntry = document.getElementById("emailentryinput");
+var chkEmailComment = document.getElementById("emailcommentinput");
+var inpEmail = document.getElementById("emailinput");
+var chkComment = document.getElementById("commentinput");
 function toggleEmailInput() {
     if (chkComment && chkEmailComment) {
         if (chkComment.checked) {
@@ -33,10 +33,10 @@ function toggleEmailInput() {
 }
 
 //enable/disable options depending on AdminLink checkbox
-var chkAdminLink = document.getElementById("adminInput");
-var chkHideVotes = document.getElementById("hidevotesInput");
-var chkEditEntry = document.getElementById("editentryInput");
-var chkUserInfo = document.getElementById("userinfoInput");
+var chkAdminLink = document.getElementById("admininput");
+var chkHideVotes = document.getElementById("hidevotesinput");
+var chkEditEntry = document.getElementById("editentryinput");
+var chkUserInfo = document.getElementById("userinfoinput");
 function toggleAdminLinkInput() {
     if (chkHideVotes) {
         chkHideVotes.disabled = !chkAdminLink.checked;
@@ -64,8 +64,8 @@ function toggleAdminLinkInput() {
 }
 
 //enable/disable password input
-var chkPwProtect = document.getElementById("pwprotectInput");
-var inpPassword = document.getElementById("passwordInput");
+var chkPwProtect = document.getElementById("pwprotectinput");
+var inpPassword = document.getElementById("passwordinput");
 function togglePasswordInput() {
     if (chkPwProtect) {
         inpPassword.disabled = !chkPwProtect.checked;
@@ -80,8 +80,8 @@ function togglePasswordInput() {
 }
 
 //enable/disable expiry input
-var chkExpiry = document.getElementById("hasexpInput");
-var inpExpiry = document.getElementById("expInput");
+var chkExpiry = document.getElementById("hasexpinput");
+var inpExpiry = document.getElementById("expinput");
 function toggleExpiryInput() {
     if (chkExpiry) {
         inpExpiry.disabled = !chkExpiry.checked;

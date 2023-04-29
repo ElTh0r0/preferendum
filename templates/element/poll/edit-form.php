@@ -110,25 +110,25 @@ if (\Cake\Core\Configure::read('preferendum.opt_PollPassword')) {
         [
             'value' => 'true',
             'checked' => $poll->pwprotect,
-            'id' => 'pwprotectInput',
+            'id' => 'pwprotectinput',
             'onchange' => 'togglePasswordInput()',
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Protect poll access with a password') . '</span>';
     echo '</li>';
-    echo '</ul>';
+    echo '<li>';
     echo $this->Form->password(
         'password',
         [
             'class' => 'field-long',
-            'id' => 'passwordInput',
+            'id' => 'passwordinput',
             'disabled' => !$poll->pwprotect,
             'placeholder' => __('Password'),
         ]
     );
+    echo '</li>';
 }
 
-echo '<ul>';
 // --------------------------------------------------------------
 // Allow comment per poll
 if (
@@ -140,7 +140,7 @@ if (
         'comment',
         [
             'value' => 'true',
-            'id' => 'commentInput',
+            'id' => 'commentinput',
             'checked' => $poll->comment,
             'onchange' => 'toggleEmailInput()',
         ]
@@ -161,7 +161,7 @@ if (
         'emailcomment',
         [
             'value' => 'true',
-            'id' => 'emailcommentInput',
+            'id' => 'emailcommentinput',
             'checked' => $poll->emailcomment,
             'onchange' => 'toggleEmailInput()',
             'disabled' => (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments') && \Cake\Core\Configure::read('preferendum.opt_Comments')) && (\Cake\Core\Configure::read('preferendum.opt_Comments') && !($poll->comment)),
@@ -179,7 +179,7 @@ if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
         'emailentry',
         [
             'value' => 'true',
-            'id' => 'emailentryInput',
+            'id' => 'emailentryinput',
             'checked' => $poll->emailentry,
             'onchange' => 'toggleEmailInput()',
         ]
@@ -187,7 +187,6 @@ if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
     echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
     echo '</li>';
 }
-echo '</ul>';
 
 // --------------------------------------------------------------
 // Email textbox
@@ -197,16 +196,18 @@ if (
         && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
             || \Cake\Core\Configure::read('preferendum.opt_Comments')))
 ) {
+    echo '<li>';
     echo $this->Form->control(
         'email',
         [
             'class' => 'field-long',
-            'id' => 'emailInput',
-            'label' => __('Email'),
+            'id' => 'emailinput',
+            'label' => '',
             'disabled' => (!$poll->emailentry && !$poll->emailcomment),
             'placeholder' => __('Email for receiving new entry/comment'),
         ]
     );
+    echo '</li>';
 }
 
 // --------------------------------------------------------------
@@ -221,32 +222,36 @@ if ($expadd > 0) {
         $exp->modify('+' . $expadd . ' days');
     }
 
-    echo $this->Form->label(__('Expiry date'));
-    echo '<ul><li>';
+    echo '<li>' . $this->Form->label('hasexpinput', __('Expiry date')) . '</li>';
+    echo '<li>';
     echo $this->Form->checkbox(
         'hasexp',
         [
             'checked' => $hasdate,
             'value' => 'true',
-            'id' => 'hasexpInput',
+            'id' => 'hasexpinput',
             'onchange' => 'toggleExpiryInput()',
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Poll is automatically locked on expiry date') . '</span>';
-    echo '</li></ul>';
+    echo '</li>';
 
+    echo '<li>';
     echo $this->Form->control(
         'expiry',
         [
             'class' => 'field-long',
-            'id' => 'expInput',
+            'id' => 'expinput',
             'value' => $exp,
             'label' => '',
             'disabled' => (!$hasdate),
             'style' => 'margin-bottom: 8px;',
         ]
     );
+    echo '</li>';
 }
+// --------------------------------------------------------------
+echo '</ul>';
 
 echo '<div class="content-right">';
 echo $this->Form->button(__('Save changes'));

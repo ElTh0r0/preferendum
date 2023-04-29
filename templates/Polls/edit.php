@@ -54,7 +54,7 @@ $this->Html->scriptEnd();
         <?php
         echo $this->element('choice/edit');
         echo $this->element('entry/edit_view');
-        echo '<tr class="table-spacer-row table-spacer-row-big"><td></td></tr>';
+        echo '<tr class="table-spacer-row table-spacer-row-big"><td colspan="' . (sizeof($pollchoices) + 2) . '"></td></tr>';
 
         $resultVisual = \Cake\Core\Configure::read('preferendum.resultVisualization');
         if (0 != strcmp('none', $resultVisual)) {

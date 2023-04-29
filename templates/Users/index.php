@@ -47,6 +47,8 @@
                         ['escape' => false, 'confirm' => __('Are you sure to delete this user?')]
                     );
                     echo '</span></td>';
+                } else {
+                    echo '<td></td>';
                 }
                 echo '</tr>';
             }
@@ -84,8 +86,8 @@
                 ]
             );
 
-            echo $this->Form->label('role', __('Role'));
-            echo $this->Form->select('role', $allroles, ['value' => 0, 'empty' => false]);
+            echo $this->Form->label('selectrole', __('Role'));
+            echo $this->Form->select('role', $allroles, ['value' => 0, 'empty' => false, 'id' => 'selectrole']);
         }
         ?>
         <?php echo $this->Form->control(
