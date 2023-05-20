@@ -60,8 +60,10 @@
     foreach ($displayDates as $date) {
         $date['score'] = $entriesCount > 0 ? ($date['total'] / ($entriesCount * 2)) : 0;
         $date['score'] = $maxTotal > 0 ? ($date['score'] / $maxTotal) : 0;
-        $dateDynStyles = 'opacity: ' . $date['score']  . '; ';
-        $dateDynStyles .= 'background-size: ' . (($date['score'] * 100) - 10)  . '%; ';
+        $dateDynStyles = 'opacity: ' . $date['score'] . '; ';
+        $size = (($date['score'] * 100) - 10);
+        $size = $size < 0 ? 0 : $size;
+        $dateDynStyles .= 'background-size: ' . $size . '%; ';
         $dateDynStyles .= $date['score'] == 1 ? "background-image: url('" . $this->request->getAttributes()['webroot'] . "img/icon-heart.png');" : '';
     ?>
         <td class="results-cell">

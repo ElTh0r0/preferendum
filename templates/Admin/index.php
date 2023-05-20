@@ -162,7 +162,7 @@
                             } else {
                                 $text = __('Email after new comment');
                             }
-                            echo '<img src="img/icon-email.png" title="' . $text . ': '  . $poll->email . '"> ';
+                            echo '<img src="img/icon-email.png" title="' . $text . ': ' . $poll->email . '"> ';
                         }
                         if ($poll->userinfo) {
                             echo '<img src="img/icon-user-info.png" title="' . __('Collect user info') . '"> ';
