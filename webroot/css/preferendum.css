@@ -1018,37 +1018,13 @@ button.admin-delete-poll[type="button"]:hover {
     background-color: var(--color-feedback-negative);
 }
 
-.collapsible {
-    width: 100%;
-    text-align: left;
-    outline: none;
-}
-
-.active,
-.collapsible:hover {
-    background-color: var(--color-background-secondary-hover);
-}
-
-.collapsible:after {
-    content: "+";
-    color: #ffffff;
-    float: right;
-    margin-left: 5px;
-}
-
-.active:after {
-    content: "-";
-}
-
-.collapscontent {
-    padding: 0 18px;
-    display: none;
-    overflow: hidden;
-    background-color: #f1f1f1;
-}
-
-.collapscontent li {
-    margin: 8px 0;
+button.admin-view-userinfo {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-user-info2.png)
+        no-repeat;
+    background-position: center center;
 }
 
 /* ==== Pagination ==== */

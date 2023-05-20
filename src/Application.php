@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App;
 
 use Cake\Core\Configure;
@@ -43,7 +45,7 @@ use Cake\Routing\Router;
  * want to use in your application.
  */
 class Application extends BaseApplication
-    implements AuthenticationServiceProviderInterface
+implements AuthenticationServiceProviderInterface
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -152,7 +154,7 @@ class Application extends BaseApplication
     {
         // Define where users should be redirected to when they are not authenticated
         $authenticationService = new AuthenticationService([
-            'unauthenticatedRedirect' => 'admin/login',
+            'unauthenticatedRedirect' => Router::url('/admin/login'),
         ]);
 
         $fields = [

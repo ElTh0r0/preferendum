@@ -72,11 +72,37 @@ class AdminController extends AppController
         $numpolls = $this->fetchTable('Polls')->find('all')->count();
         $numentries = $this->getNumberOfEntries();
         $numcomments = $this->getNumberOfComments();
-        $userinfos = $this->getUserInfos();
+
+        $this->set(compact('polls', 'numpolls', 'numentries', 'numcomments', 'currentUserRole', 'adminRole', 'polladmRole'));
+    }
+
+    //------------------------------------------------------------------------
+
+    public function userinfo($pollid = null)
+    {
+        $identity = $this->Authentication->getIdentity();
+        $currentUserRole = $identity->getOriginalData()['role'];
+
+        // Extra check needed since poll password using login credentials as well
+        if (!in_array($currentUserRole, self::ROLES)) {
+            $this->Authentication->logout();
+            return $this->redirect(['action' => 'login']);
+        }
+
+        $poll = $this->fetchTable('Polls')->find()
+            ->where(['id' => $pollid])
+            ->select(['title', 'userinfo'])
+            ->firstOrFail();
+        $polltitle = $poll->title;
+        if ($poll->userinfo) {
+            $userinfos = $this->getUserInfos($pollid);
+        } else {
+            $userinfos = array();
+        }
         // debug($userinfos);
         // die;
 
-        $this->set(compact('polls', 'numpolls', 'numentries', 'numcomments', 'userinfos', 'currentUserRole', 'adminRole', 'polladmRole'));
+        $this->set(compact('polltitle', 'userinfos'));
     }
 
     //------------------------------------------------------------------------
@@ -215,24 +241,15 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function getUserInfos()
+    private function getUserInfos($pollid = null)
     {
-        $uinfopolls = $this->fetchTable('Polls')->findByUserinfo(1)->select('id');
         $dbuserinfos = $this->fetchTable('Entries')->find()
             ->contain(['Choices', 'Users'])
-            ->where(['Choices.poll_id IN' => $uinfopolls, 'Users.info !=' => ''])
-            ->select(['poll_id' => 'Choices.poll_id', 'name' => 'Users.name', 'info' => 'Users.info'])
+            ->where(['Choices.poll_id' => $pollid, 'Users.info !=' => ''])
+            ->select(['name' => 'Users.name', 'info' => 'Users.info'])
             ->group(['Users.id']);
 
-        $userinfos = array();
-        foreach ($dbuserinfos as $uinfo) {
-            if (!isset($uinfo['poll_id'])) {
-                $userinfos[$uinfo['poll_id']] = array();
-            }
-            $userinfos[$uinfo->poll_id][$uinfo->name] = $uinfo->info;
-        }
-
-        return $userinfos;
+        return $dbuserinfos->toArray();
     }
 
     //------------------------------------------------------------------------

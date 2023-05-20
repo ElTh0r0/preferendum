@@ -15,8 +15,6 @@
 ?>
 <?php $this->assign('title', __('Poll administration')); ?>
 
-<?php $this->Html->script('poll_admin.js', ['block' => 'scriptBottom']); ?>
-
 <!-- POLL CONTROLS -->
 <div id="poll-controls">
     <div>
@@ -38,6 +36,9 @@
         $colsleft += 1;
     }
     if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+        $colsleft += 1;
+    }
+    if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo')) {
         $colsleft += 1;
     }
 
@@ -138,6 +139,10 @@
             }
             // Last change
             echo '<td>' . $this->Paginator->sort('modified', $sModi, ['escape' => false]) . '</td>';
+            // User infos
+            if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo')) {
+                echo '<td></td>';
+            }
             // Buttons
             echo '<td colspan="' . $colsright . '"></td>';
             echo '</tr>';
@@ -230,6 +235,20 @@
                     <td>
                         <span style="font-size:0.8em;"><?php echo $poll->modified->format('Y-m-d') ?></span>
                     </td>
+                    <?php
+                    // User infos
+                    if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo')) {
+                        echo '<td>';
+                        if ($poll->userinfo) {
+                            echo $this->Html->link(
+                                $this->Form->button('', ['type' => 'button', 'class' => 'admin-view-userinfo']),
+                                ['action' => 'userinfo', $poll->id],
+                                ['target' => '_blank', 'escape' => false]
+                            );
+                        }
+                        echo '</td>';
+                    }
+                    ?>
                     <td>
                         <?php
                         // View button
@@ -284,30 +303,6 @@
                         echo '</td>';
                     } ?>
                 </tr>
-                <?php
-                // User info row
-                if ($poll->userinfo == 1) {
-                    if (array_key_exists($poll->id, $userinfos)) {
-                        if (sizeof($userinfos[$poll->id]) > 0) {
-                ?>
-                            <tr>
-                                <?php echo '<td colspan="' . $allcols . '">'; ?>
-                                <!-- Info -->
-                                <button type="button" class="collapsible"><?php echo h($poll->title) . ' - ' . __('User contact infos') ?></button>
-                                <div class="collapscontent">
-                                    <ul>
-                                        <?php foreach ($userinfos[$poll->id] as $user => $info) {
-                                            echo '<li><em>' . h($user) . ':</em> ' . h($info) . '</li>';
-                                        } ?>
-                                    </ul>
-                                </div>
-                                </td>
-                            </tr>
-                <?php
-                        }
-                    }
-                }
-                ?>
             <?php
             }
             // ------ End of poll rows ------
