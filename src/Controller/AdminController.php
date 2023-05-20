@@ -44,16 +44,8 @@ class AdminController extends AppController
 
     public function index()
     {
-        $identity = $this->Authentication->getIdentity();
-        $currentUserRole = $identity->getOriginalData()['role'];
-        $adminRole = SELF::ROLES[0];
-        $polladmRole = SELF::ROLES[1];
-
         // Extra check needed since poll password using login credentials as well
-        if (!in_array($currentUserRole, self::ROLES)) {
-            $this->Authentication->logout();
-            return $this->redirect(['action' => 'login']);
-        }
+        $currentUserRole = $this->recheckAdminPermissions();
 
         $search = $this->request->getQuery('search');
         if ($search) {
@@ -72,6 +64,8 @@ class AdminController extends AppController
         $numpolls = $this->fetchTable('Polls')->find('all')->count();
         $numentries = $this->getNumberOfEntries();
         $numcomments = $this->getNumberOfComments();
+        $adminRole = SELF::ROLES[0];
+        $polladmRole = SELF::ROLES[1];
 
         $this->set(compact('polls', 'numpolls', 'numentries', 'numcomments', 'currentUserRole', 'adminRole', 'polladmRole'));
     }
@@ -80,14 +74,8 @@ class AdminController extends AppController
 
     public function userinfo($pollid = null)
     {
-        $identity = $this->Authentication->getIdentity();
-        $currentUserRole = $identity->getOriginalData()['role'];
-
         // Extra check needed since poll password using login credentials as well
-        if (!in_array($currentUserRole, self::ROLES)) {
-            $this->Authentication->logout();
-            return $this->redirect(['action' => 'login']);
-        }
+        $this->recheckAdminPermissions();
 
         $poll = $this->fetchTable('Polls')->find()
             ->where(['id' => $pollid])
@@ -156,6 +144,22 @@ class AdminController extends AppController
             $this->Authentication->logout();
         }
         return $this->redirect(['action' => 'login']);
+    }
+
+    //------------------------------------------------------------------------
+
+    private function recheckAdminPermissions()
+    {
+        $identity = $this->Authentication->getIdentity();
+        $currentUserRole = $identity->getOriginalData()['role'];
+
+        // Extra check needed since poll password using login credentials as well
+        if (!in_array($currentUserRole, self::ROLES)) {
+            $this->Authentication->logout();
+            return $this->redirect(['action' => 'login']);
+        }
+
+        return $currentUserRole;
     }
 
     //------------------------------------------------------------------------
