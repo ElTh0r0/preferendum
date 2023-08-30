@@ -21,7 +21,7 @@
     </div>
 </div>
 
-<div style="padding: 2rem;">
+<div id="useradmin-page">
     <?php echo $this->Flash->render() ?>
     <?php
     if (strcmp($currentUserRole, $allroles[0]) == 0) { ?>
@@ -34,13 +34,13 @@
                     $cntAdmins = $cntAdmins + 1;
                 }
             }
-            echo '<tr><th><em>Name</em></th><th><em>&nbsp;&nbsp;Role</em></th><th></th></tr>';
+            echo '<tr><td><em>Name</em></td><td><em>Role</em></td><td></td></tr>';
             foreach ($backendusers as $backuser) {
                 echo '<tr>';
                 echo '<td>' . $backuser['name'] . '</td>';
-                echo '<td>&nbsp;&nbsp;' . $backuser['role'] . '</td>';
+                echo '<td>' . $backuser['role'] . '</td>';
                 if ($cntAdmins > 1 || strcmp($backuser['role'], $allroles[0]) != 0) {
-                    echo '<td>&nbsp;&nbsp;<span style="font-size: 0.8em;">';
+                    echo '<td><span style="font-size: 0.8em;">';
                     echo $this->Form->postLink(
                         __('Delete'),
                         ['action' => 'deleteBackendUser', $backuser['id']],

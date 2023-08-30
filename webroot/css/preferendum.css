@@ -27,15 +27,11 @@
 /* ==== GENERAL ==== */
 
 * {
-    -webkit-transition: background-color var(--animation-duration);
-    -ms-transition: background-color var(--animation-duration);
     transition: background-color var(--animation-duration);
     font-family: "Quicksand", sans-serif;
 }
 
 .schedule td {
-    -webkit-transition: var(--animation-duration);
-    -ms-transition: var(--animation-duration);
     transition: var(--animation-duration);
     min-width: 36px;
 }
@@ -432,23 +428,7 @@ table.schedule.mini td.schedule-header > div {
 td.schedule-header > div > div {
     display: inline-block;
     white-space: nowrap;
-    /* this is for shity "non IE" browsers
-       that dosn't support writing-mode */
-    -webkit-transform: translate(0.75em, 0) rotate(90deg);
-    -moz-transform: translate(0.75em, 0) rotate(90deg);
-    -o-transform: translate(0.75em, 0) rotate(90deg);
-    transform: translate(0.75em, 0) rotate(90deg);
-    -webkit-transform-origin: 0 0;
-    -moz-transform-origin: 0 0;
-    -o-transform-origin: 0 0;
-    transform-origin: 0 0;
-    /* IE9+ */
-    -ms-transform: none;
-    -ms-transform-origin: none;
-    /* IE8+ */
-    -ms-writing-mode: tb-rl;
-    /* IE7 and below */
-    *writing-mode: tb-rl;
+    writing-mode: vertical-lr;
     text-align: center;
 }
 
@@ -871,8 +851,6 @@ input[type="password"],
 textarea,
 select {
     box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     border: 1px solid #bebebe;
     padding: 7px;
     margin: 0px;
@@ -1025,6 +1003,16 @@ button.admin-view-userinfo {
     background: var(--color-background-secondary) url(../img/icon-user-info2.png)
         no-repeat;
     background-position: center center;
+}
+
+/* ==== User admin page ==== */
+
+#useradmin-page {
+    padding: 2rem;
+}
+
+#useradmin-page td {
+    padding: 2px 10px 2px 0;
 }
 
 /* ==== Pagination ==== */
