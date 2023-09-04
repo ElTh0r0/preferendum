@@ -349,7 +349,7 @@ msgstr "Benutzerinformation"
 
 #: ./templates/Admin/userinfo.php:21
 msgid "User info for poll"
-msgstr "Benutzerinformationen für Abstimmung"
+msgstr "Benutzerinformationen für Umfrage"
 
 #: ./templates/Admin/userinfo.php:23
 msgid "Info"
@@ -357,7 +357,7 @@ msgstr "Info"
 
 #: ./templates/Admin/userinfo.php:28
 msgid "No user information available for this poll!"
-msgstr "Keine Benutzerinformationen für diese Abstimmung vorhanden!"
+msgstr "Keine Benutzerinformationen für diese Umfrage vorhanden!"
 
 #: ./templates/Error/error400.php:40 ./templates/Error/error500.php:44
 msgid "Error"
