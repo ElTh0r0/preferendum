@@ -239,8 +239,8 @@ msgstr "Abgelaufen"
 #: ./templates/Admin/index.php:78
 msgid "Are you sure to delete expired polls (expired since >{0} days)?"
 msgstr ""
-"Sollen wirklich alle abgelaufenen Abstimmungen gelöscht werden (abgelaufen "
-"seit >{0} Tagen)?"
+"Sollen wirklich alle abgelaufenen Umfragen gelöscht werden (abgelaufen seit "
+">{0} Tagen)?"
 
 #: ./templates/Admin/index.php:83
 msgid "Inactive"
