@@ -175,11 +175,11 @@ msgstr "Inaktive Umfrage {0} konnte NICHT gelöscht werden!"
 
 #: ./src/Controller/PollsController.php:544
 msgid "Expired poll {0} has been deleted."
-msgstr "Abgelaufene Abstimmung {0} wurde gelöscht."
+msgstr "Abgelaufene Umfrage {0} wurde gelöscht."
 
 #: ./src/Controller/PollsController.php:548
 msgid "Expired poll {0} could NOT be deleted!"
-msgstr "Abgelaufene Abstimmung {0} konnte NICHT gelöscht werden!"
+msgstr "Abgelaufene Umfrage {0} konnte NICHT gelöscht werden!"
 
 #: ./src/Controller/UsersController.php:75
 msgid "DEMO MODE enabled! User creation / password change is not possible!"
