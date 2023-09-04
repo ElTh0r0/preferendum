@@ -171,7 +171,7 @@ msgstr "Inaktive Umfrage {0} wurde gelöscht."
 
 #: ./src/Controller/PollsController.php:506
 msgid "Inactive poll {0} could NOT be deleted!"
-msgstr "Inaktive Abstimmung {0} konnte NICHT gelöscht werden!"
+msgstr "Inaktive Umfrage {0} konnte NICHT gelöscht werden!"
 
 #: ./src/Controller/PollsController.php:544
 msgid "Expired poll {0} has been deleted."
