@@ -69,11 +69,11 @@ Default credentials: admin/admin
 If you are enabling this feature, please change the password after the installation!
 
 ### Automatic deletion of inactive polls (needs cronjob!)
-You can set up a certain number of days in the `config/preferendum_features.php` to mark the maximum age of an **inactive** poll (*inactive* as in: no new answers and comments). PREFERendum comes with a cleanup function that you can set up to be executed periodically via a cronjob, e.g.
+You can set up a certain number of days in the `config/preferendum_features.php` to mark the maximum age of an **inactive** poll (*inactive* as in: no new answers and comments) or **expired** poll. PREFERendum comes with a cleanup function that you can set up to be executed periodically via a cronjob, e.g.
 
 `0 0 1 * * /usr/bin/php /var/www/html/preferendum/polls/cleanup`
 
-The cleanup script will then delete all inactive polls that became too old.
+The cleanup script will then delete all inactive/expired polls that became too old.
 
 ## Contribution
 This is my first project using [CakePHP](https://cakephp.org), so there might exist many code sections, which could be implemented much more elegant with the build-in CakePHP features. I'm open for any optimization! Same for suggestions for additional features or if you are running into problems setting up PREFERendum, **write an issue**! Additional translations are highly welcome as well or if you feel like improving the code of this app, send a (well documented) **pull request**! If you just like PREFERendum as it is, let me know by donating this repo a star.

@@ -50,7 +50,9 @@ $routes->scope('/', function (RouteBuilder $builder) {
     $builder->connect('/', ['controller' => 'Polls', 'action' => 'add']);
     $builder->connect('/polls', ['controller' => 'Polls', 'action' => 'add']);
 
-    if ((\Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter') == 0)) {
+    if ((\Cake\Core\Configure::read('preferendum.deleteExpiredPollsAfter') == 0) &&
+        (\Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter') == 0)
+    ) {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
     } else {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'cleanup']);

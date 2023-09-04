@@ -86,8 +86,12 @@ return [
         // See: https://www.php.net/manual/en/datetime.format.php
         'dateformatComments' => 'Y-m-d h:i a',
 
+        // Lifespan (in days) of expired polls (0 = disabled at all)
+        // (read README.md for further instructions if cronjob shall be used)
+        'deleteExpiredPollsAfter' => 0,
+
         // Lifespan (in days) of inactive polls (0 = disabled at all)
-        // (read README.md for further instructions - cronjob needed!)
+        // (read README.md for further instructions if cronjob shall be used)
         'deleteInactivePollsAfter' => 0,
 
         // Header Logo (set to true if you want to show header logo, false otherwise)
