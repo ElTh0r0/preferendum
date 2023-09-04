@@ -62,12 +62,29 @@
     <!-- POLLS OVERVIEW TABLE -->
     <table style="min-width: 500px">
         <tr>
-            <?php echo '<td colspan="' . $colsleft . '">'; ?>
+            <?php echo '<td colspan="3">'; ?>
             <h1 class="fail"><?php echo __('Total polls') . ': ' . $numpolls; ?></h1>
             </td>
-            <?php echo '<td colspan="' . $colsright . '">'; ?>
+            <?php echo '<td colspan="' . ($allcols - 3) . '">'; ?>
             <?php
             if (strcmp($currentUserRole, $adminRole) == 0 || strcmp($currentUserRole, $polladmRole) == 0) {
+                $rmInactiveAfter = \Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter');
+                $rmExpiredAfter = \Cake\Core\Configure::read('preferendum.deleteExpiredPollsAfter');
+
+                if (($rmExpiredAfter > 0) && (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0)) {
+                    echo $this->Html->link(
+                        $this->Form->button(__('Expired'), ['type' => 'button', 'class' => 'admin-delexpired-polls']),
+                        ['controller' => 'Polls', 'action' => 'cleanupmanually', 1],
+                        ['escape' => false, 'confirm' => __('Are you sure to delete expired polls (expired since >{0} days)?', $rmExpiredAfter)]
+                    );
+                }
+                if ($rmInactiveAfter > 0) {
+                    echo $this->Html->link(
+                        $this->Form->button(__('Inactive'), ['type' => 'button', 'class' => 'admin-delinactive-polls']),
+                        ['controller' => 'Polls', 'action' => 'cleanupmanually', 0],
+                        ['escape' => false, 'confirm' => __('Are you sure to delete inactive poll (inactive since >{0} days)?', $rmInactiveAfter)]
+                    );
+                }
                 echo $this->Html->link(
                     $this->Form->button(__('New poll'), ['type' => 'button', 'class' => 'admin-new-poll']),
                     ['controller' => 'Polls', 'action' => 'add'],

@@ -54,8 +54,10 @@ $routes->scope('/', function (RouteBuilder $builder) {
         (\Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter') == 0)
     ) {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
+        $builder->connect('/polls/cleanupmanually/*', ['controller' => 'Polls', 'action' => 'add']);
     } else {
         $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'cleanup']);
+        $builder->connect('/polls/cleanupmanually/*', ['controller' => 'Polls', 'action' => 'cleanupmanually']);
     }
     if (\Cake\Core\Configure::read('preferendum.exportCsv') == true) {
         $builder->connect('/polls/exportcsv/*', ['controller' => 'Polls', 'action' => 'exportcsv']);

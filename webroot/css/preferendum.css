@@ -954,6 +954,33 @@ button.admin-new-poll {
     background-position: 10px 45%;
     float: right;
     padding-left: 36px;
+    margin-left: 10px;
+}
+
+button.admin-delinactive-polls {
+    cursor: pointer;
+    background: var(--color-feedback-negative) url(../img/icon-delete.png)
+        no-repeat;
+    background-position: 10px 45%;
+    float: right;
+    padding-left: 36px;
+    margin-left: 10px;
+}
+button.admin-delinactive-polls[type="button"]:hover {
+    background-color: var(--color-feedback-negative);
+}
+
+button.admin-delexpired-polls {
+    cursor: pointer;
+    background: var(--color-feedback-negative) url(../img/icon-delete.png)
+        no-repeat;
+    background-position: 10px 45%;
+    float: right;
+    padding-left: 36px;
+    margin-left: 10px;
+}
+button.admin-delexpired-polls[type="button"]:hover {
+    background-color: var(--color-feedback-negative);
 }
 
 button.admin-view-poll {

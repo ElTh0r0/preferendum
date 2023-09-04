@@ -434,59 +434,137 @@ class PollsController extends AppController
             exit();
         }
 
-        $rmInactiveAfter = \Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter');
-        //minimum last changed date
-        $minDateInactive = date("Y-m-d H:i:s", strtotime("-" . $rmInactiveAfter . " days", time()));
-
-        $rmExpiredAfter = \Cake\Core\Configure::read('preferendum.deleteExpiredPollsAfter');
-        //minimum expiration date
-        $minDateExpired = date("Y-m-d H:i:s", strtotime("-" . $rmExpiredAfter . " days", time()));
-
-        $trashInactive = array();
-        $trashExpired = array();
-
         echo PHP_EOL;
         echo "PREFERendum cleanup routine" . PHP_EOL;
         echo "***************************" . PHP_EOL;
         echo PHP_EOL;
-        if ($rmInactiveAfter > 0) {
-            echo "This will delete every poll that was inactive" . PHP_EOL . "since " . $minDateInactive . " (for at least " . $rmInactiveAfter . " days)." . PHP_EOL;
-            $trashInactive = $this->Polls->find('all')->where(['modified <' => $minDateInactive]);
-            $trashInactive = $trashInactive->all()->toArray();
-        }
-        if ($rmExpiredAfter > 0) {
-            echo "This will delete every poll that has expired" . PHP_EOL . "since " . $minDateExpired . " (for at least " . $rmExpiredAfter . " days)." . PHP_EOL;
-            $trashExpired = $this->Polls->find('all')->where([
-                'expiry >' => '0000-00-00', 'expiry <' => $minDateExpired
-            ]);
-            $trashExpired = $trashExpired->all()->toArray();
-        }
-        echo "You may change this value in 'config/preferendum_features.php'" . PHP_EOL;
-        echo PHP_EOL;
-
-        $trash = array_unique(array_merge($trashInactive, $trashExpired));
-
-        //remove old polls
-        if (sizeof($trash) > 0) {
-            foreach ($trash as $poll) {
-                echo "Deleting poll: " . $poll['title'] . " (" . $poll['id'] . ") ..." . PHP_EOL;
-                $this->deleteSinglePoll($poll);
-            }
-
-            echo PHP_EOL;
-            echo "Deleted " . sizeof($trash) . " polls." . PHP_EOL;
-            echo "Done." . PHP_EOL;
-        } else {
-            echo PHP_EOL . "No polls to be deleted!" . PHP_EOL;
-        }
+        echo "You may change the cleanup values in 'config/preferendum_features.php'" . PHP_EOL;
+        $this->cleanupInactivePolls(true);
+        $this->cleanupExpiredPolls(true);
+        echo "Done." . PHP_EOL;
 
         $this->autoRender = false;
     }
 
     //------------------------------------------------------------------------
 
+    public function cleanupmanually($expired)
+    {
+        $this->loadComponent('Authentication.Authentication');
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $adminRole = SELF::ROLES[0];
+            $polladmRole = SELF::ROLES[1];
+            $identity = $this->Authentication->getIdentity();
+            $currentUserRole = $identity->getOriginalData()['role'];
+
+            if (
+                in_array($currentUserRole, self::ROLES) &&
+                (strcmp($currentUserRole, $adminRole) == 0 ||
+                    strcmp($currentUserRole, $polladmRole) == 0)
+            ) {
+                if ($expired) {
+                    $this->cleanupExpiredPolls();
+                } else {
+                    $this->cleanupInactivePolls();
+                }
+            } else {
+                $this->Authentication->logout();
+            }
+        }
+        return $this->redirect($this->referer());
+    }
+
+    //------------------------------------------------------------------------
+
+    private function cleanupInactivePolls($cli = false)
+    {
+        $rmInactiveAfter = \Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter');
+        if ($rmInactiveAfter <= 0) {
+            return;
+        }
+
+        //minimum last changed date
+        $minDateInactive = date("Y-m-d H:i:s", strtotime("-" . $rmInactiveAfter . " days", time()));
+
+        if ($cli) {
+            echo PHP_EOL;
+            echo "This will delete every poll that was inactive" . PHP_EOL . "since " . $minDateInactive . " (for at least " . $rmInactiveAfter . " days):" . PHP_EOL;
+        }
+        $trash = $this->Polls->find('all')->where(['modified <' => $minDateInactive]);
+        $trash = $trash->all()->toArray();
+
+        //remove old polls
+        if (sizeof($trash) > 0) {
+            foreach ($trash as $poll) {
+                if ($this->deleteSinglePoll($poll, $cli)) {
+                    if (!$cli) {
+                        $this->Flash->success(__('Inactive poll {0} has been deleted.', $poll->title));
+                    }
+                } else {
+                    if (!$cli) {
+                        $this->Flash->error(__('Inactive poll {0} could NOT be deleted!', $poll->title));
+                    }
+                }
+            }
+        }
+
+        if ($cli) {
+            echo "Deleted " . sizeof($trash) . " inactive polls." . PHP_EOL;
+            echo PHP_EOL;
+        }
+    }
+
+    //------------------------------------------------------------------------
+
+    private function cleanupExpiredPolls($cli = false)
+    {
+        $rmExpiredAfter = \Cake\Core\Configure::read('preferendum.deleteExpiredPollsAfter');
+        if ($rmExpiredAfter <= 0) {
+            return;
+        }
+
+        //minimum expiration date
+        $minDateExpired = date("Y-m-d H:i:s", strtotime("-" . $rmExpiredAfter . " days", time()));
+
+        if ($cli) {
+            echo PHP_EOL;
+            echo "This will delete every poll that has expired" . PHP_EOL . "since " . $minDateExpired . " (for at least " . $rmExpiredAfter . " days):" . PHP_EOL;
+        }
+        $trash = $this->Polls->find('all')->where([
+            'expiry >' => '0000-00-00', 'expiry <' => $minDateExpired
+        ]);
+        $trash = $trash->all()->toArray();
+
+        //remove old polls
+        if (sizeof($trash) > 0) {
+            foreach ($trash as $poll) {
+                if ($this->deleteSinglePoll($poll, $cli)) {
+                    if (!$cli) {
+                        $this->Flash->success(__('Expired poll {0} has been deleted.', $poll->title));
+                    }
+                } else {
+                    if (!$cli) {
+                        $this->Flash->error(__('Expired poll {0} could NOT be deleted!', $poll->title));
+                    }
+                }
+            }
+        }
+
+        if ($cli) {
+            echo "Deleted " . sizeof($trash) . " expired polls." . PHP_EOL;
+            echo PHP_EOL;
+        }
+    }
+
+    //------------------------------------------------------------------------
+
     private function deleteSinglePoll($poll, $cli = false)
     {
+        if ($cli) {
+            echo " - Deleting poll '" . $poll['title'] . "' (" . $poll['id'] . ") ..." . PHP_EOL;
+        }
+
         $entries = $this->fetchTable('Entries')->find()
             ->where(['poll_id' => $poll->id])
             ->contain(['Choices'])
