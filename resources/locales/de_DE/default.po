@@ -167,19 +167,19 @@ msgstr "Umfrage {0} konnte NICHT gelöscht werden!"
 
 #: ./src/Controller/PollsController.php:502
 msgid "Inactive poll {0} has been deleted."
-msgstr "Inaktive Abstimmung {0} wurde gelöscht."
+msgstr "Inaktive Umfrage {0} wurde gelöscht."
 
 #: ./src/Controller/PollsController.php:506
 msgid "Inactive poll {0} could NOT be deleted!"
-msgstr "Inaktive Abstimmung {0} konnte NICHT gelöscht werden!"
+msgstr "Inaktive Umfrage {0} konnte NICHT gelöscht werden!"
 
 #: ./src/Controller/PollsController.php:544
 msgid "Expired poll {0} has been deleted."
-msgstr "Abgelaufene Abstimmung {0} wurde gelöscht."
+msgstr "Abgelaufene Umfrage {0} wurde gelöscht."
 
 #: ./src/Controller/PollsController.php:548
 msgid "Expired poll {0} could NOT be deleted!"
-msgstr "Abgelaufene Abstimmung {0} konnte NICHT gelöscht werden!"
+msgstr "Abgelaufene Umfrage {0} konnte NICHT gelöscht werden!"
 
 #: ./src/Controller/UsersController.php:75
 msgid "DEMO MODE enabled! User creation / password change is not possible!"
@@ -239,8 +239,8 @@ msgstr "Abgelaufen"
 #: ./templates/Admin/index.php:78
 msgid "Are you sure to delete expired polls (expired since >{0} days)?"
 msgstr ""
-"Sollen wirklich alle abgelaufenen Abstimmungen gelöscht werden (abgelaufen "
-"seit >{0} Tagen)?"
+"Sollen wirklich alle abgelaufenen Umfragen gelöscht werden (abgelaufen seit "
+">{0} Tagen)?"
 
 #: ./templates/Admin/index.php:83
 msgid "Inactive"
@@ -249,8 +249,8 @@ msgstr "Inaktiv"
 #: ./templates/Admin/index.php:85
 msgid "Are you sure to delete inactive poll (inactive since >{0} days)?"
 msgstr ""
-"Sollen wirklich alle inaktiven Abstimmungen gelöscht werden (inaktiv seit "
-">{0} Tagen)?"
+"Sollen wirklich alle inaktiven Umfragen gelöscht werden (inaktiv seit >{0} "
+"Tagen)?"
 
 #: ./templates/Admin/index.php:89
 msgid "New poll"
@@ -349,7 +349,7 @@ msgstr "Benutzerinformation"
 
 #: ./templates/Admin/userinfo.php:21
 msgid "User info for poll"
-msgstr "Benutzerinformationen für Abstimmung"
+msgstr "Benutzerinformationen für Umfrage"
 
 #: ./templates/Admin/userinfo.php:23
 msgid "Info"
@@ -357,7 +357,7 @@ msgstr "Info"
 
 #: ./templates/Admin/userinfo.php:28
 msgid "No user information available for this poll!"
-msgstr "Keine Benutzerinformationen für diese Abstimmung vorhanden!"
+msgstr "Keine Benutzerinformationen für diese Umfrage vorhanden!"
 
 #: ./templates/Error/error400.php:40 ./templates/Error/error500.php:44
 msgid "Error"
