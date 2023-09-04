@@ -249,8 +249,8 @@ msgstr "Inaktiv"
 #: ./templates/Admin/index.php:85
 msgid "Are you sure to delete inactive poll (inactive since >{0} days)?"
 msgstr ""
-"Sollen wirklich alle inaktiven Abstimmungen gelöscht werden (inaktiv seit "
-">{0} Tagen)?"
+"Sollen wirklich alle inaktiven Umfragen gelöscht werden (inaktiv seit >{0} "
+"Tagen)?"
 
 #: ./templates/Admin/index.php:89
 msgid "New poll"
