@@ -55,6 +55,7 @@ class Poll extends Entity
         'email' => true,
         'emailentry' => true,
         'emailcomment' => true,
+        'emailpoll' => true,  // Not stored in DB, but send from form to Controller
         'userinfo' => true,
         'editentry' => true,
         'comment' => true,

@@ -1,6 +1,7 @@
 //enable/disable email input depending on checkboxes
 var chkEmailEntry = document.getElementById("emailentryinput");
 var chkEmailComment = document.getElementById("emailcommentinput");
+var chkEmailPoll = document.getElementById("emailpollinput");
 var inpEmail = document.getElementById("emailinput");
 var chkComment = document.getElementById("commentinput");
 function toggleEmailInput() {
@@ -21,8 +22,12 @@ function toggleEmailInput() {
     if (chkEmailComment) {
         isCheckedMailComment = chkEmailComment.checked;
     }
+    var isCheckedMailPoll = false;
+    if (chkEmailPoll) {
+        isCheckedMailPoll = chkEmailPoll.checked;
+    }
 
-    inpEmail.disabled = !isCheckedMailEntry && !isCheckedMailComment;
+    inpEmail.disabled = !isCheckedMailEntry && !isCheckedMailComment && !isCheckedMailPoll;
 
     if (inpEmail.disabled) {
         inpEmail.value = "";

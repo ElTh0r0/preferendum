@@ -150,6 +150,17 @@ if (
 }
 
 // --------------------------------------------------------------
+// Label for email options
+if (
+    \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
+    || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
+        && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+            || \Cake\Core\Configure::read('preferendum.opt_Comments')))
+) {
+    echo '<li>' . $this->Form->label('emailinput', __('Email')) . '</li>';
+}
+
+// --------------------------------------------------------------
 // Receive email after new comment
 if (
     \Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')

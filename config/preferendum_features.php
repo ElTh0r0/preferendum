@@ -57,11 +57,12 @@ return [
         // Add (optional) field to protect access to poll with a password
         'opt_PollPassword' => false,
 
-        // Send an email after new poll entry or comment
+        // Send an email after new poll entry/comment or email with poll links after poll creation
         // After enabling this feature, it can be dis-/enabled for each poll separately and receiver can be defined.
         // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
         'opt_SendEntryEmail' => false,
         'opt_SendCommentEmail' => false,
+        'opt_SendPollCreationEmail' => false,
 
         // Optionally lock poll automatically at a certain date (0 = disabled at all)
         // Defined value will be used as default offset from today during poll creation, but date can be freely chosen by creator

@@ -198,6 +198,18 @@ if (
 }
 
 // --------------------------------------------------------------
+// Label for email options
+if (
+    \Cake\Core\Configure::read('preferendum.opt_SendPollCreationEmail')
+    || \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
+    || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
+        && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+            || \Cake\Core\Configure::read('preferendum.opt_Comments')))
+) {
+    echo '<li>' . $this->Form->label('emailinput', __('Email')) . '</li>';
+}
+
+// --------------------------------------------------------------
 // Receive email after new comment
 if (
     \Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
@@ -235,9 +247,26 @@ if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
 }
 
 // --------------------------------------------------------------
+// Receive email after poll creation
+if (\Cake\Core\Configure::read('preferendum.opt_SendPollCreationEmail')) {
+    echo '<li>';
+    echo $this->Form->checkbox(
+        'emailpoll',
+        [
+            'value' => 'true',
+            'id' => 'emailpollinput',
+            'onchange' => 'toggleEmailInput()',
+        ]
+    );
+    echo '<span style="font-size: 90%;">' . __('Receive email after poll creation with poll links') . '</span>';
+    echo '</li>';
+}
+
+// --------------------------------------------------------------
 // Email textbox
 if (
-    \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
+    \Cake\Core\Configure::read('preferendum.opt_SendPollCreationEmail')
+    || \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
     || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
         && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
             || \Cake\Core\Configure::read('preferendum.opt_Comments')))
@@ -250,7 +279,7 @@ if (
             'id' => 'emailinput',
             'label' => '',
             'disabled' => true,
-            'placeholder' => __('Email for receiving new entry/comment'),
+            'placeholder' => __('Email for receiving entry/comment/poll links'),
         ]
     );
     echo '</li>';
