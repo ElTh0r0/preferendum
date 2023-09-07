@@ -74,13 +74,13 @@ class PollsController extends AppController
 
             // Temporary save email in separate variable before calling validateSettings(), if poll links shall be sent
             // (If entry/comments shall not be sent, email won't be saved!)
-            $sendpollemail = '';
+            $pollemail = '';
             if (
                 filter_var($newpoll->email, FILTER_VALIDATE_EMAIL) &&
                 $newpoll->emailpoll &&
                 \Cake\Core\Configure::read('preferendum.opt_SendPollCreationEmail')
             ) {
-                $sendpollemail = $newpoll->email;
+                $pollemail = $newpoll->email;
             }
             $this->validateSettings($newpoll);  // Call by reference
 
@@ -123,8 +123,8 @@ class PollsController extends AppController
                         $this->Flash->success(__('Your poll has been saved.'));
                     }
 
-                    if (!empty($sendpollemail)) {
-                        $this->sendPollEmail($sendpollemail, $newpoll->title, $newpoll->id, $newpoll->adminid, $pollpw);
+                    if (!empty($pollemail)) {
+                        $this->sendPollEmail($pollemail, $newpoll->title, $newpoll->id, $newpoll->adminid, $pollpw);
                     }
 
                     if ($newpoll->adminid == true) {
@@ -643,9 +643,10 @@ class PollsController extends AppController
         \Cake\Core\Configure::load('app_local');
         $from = \Cake\Core\Configure::read('Email.default.from');
         $mailer = new Mailer('default');
+        $publiclink = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
 
         if (strcmp($adminid, "NA") != 0) {
-            $adminlink = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid . '/' . $adminid;
+            $adminlink = $publiclink . '/' . $adminid;
             $subject = __('New poll "{0}" - ADMIN link', h($title));
             $mailer->viewBuilder()->setTemplate('new_poll_admin')->setLayout('default');
             $mailer->setFrom($from)
@@ -662,7 +663,6 @@ class PollsController extends AppController
                 ->deliver();
         }
 
-        $publiclink = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid;
         $subject = __('New poll "{0}" - USER link', h($title));
         $mailer->viewBuilder()->setTemplate('new_poll_user')->setLayout('default');
         $mailer->setFrom($from)
