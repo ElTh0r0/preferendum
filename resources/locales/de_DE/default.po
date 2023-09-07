@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-09-04 18:10+0200\n"
+"POT-Creation-Date: 2023-09-05 20:16+0200\n"
 "PO-Revision-Date: 2021-06-13 12:05+0000\n"
 "Last-Translator: El Thoro, 2023\n"
 "Language-Team: German (Germany) (https://app.transifex.com/elth0r0/teams/121734/de_DE/)\n"
@@ -92,94 +92,102 @@ msgstr "Neuer Eintrag in Umfrage \"{0}\""
 msgid "Updated entry in poll \"{0}\""
 msgstr "Aktualisierter Eintrag in Umfrage \"{0}\""
 
-#: ./src/Controller/PollsController.php:40
+#: ./src/Controller/PollsController.php:41
 msgid "File \"src/Controller/InstalldbController.php\" should be removed!"
 msgstr "Datei \"src/Controller/InstalldbController.php\" sollte gelöscht werden!"
 
-#: ./src/Controller/PollsController.php:101
 #: ./src/Controller/PollsController.php:112
+#: ./src/Controller/PollsController.php:123
 msgid "Your poll has been saved."
 msgstr "Dein Umfrage wurde gespeichert."
 
-#: ./src/Controller/PollsController.php:102
+#: ./src/Controller/PollsController.php:113
 msgid "Please login with your chosen password!"
 msgstr "Bitte melde Dich mit Deinem gewählten Passwort an!"
 
-#: ./src/Controller/PollsController.php:123
+#: ./src/Controller/PollsController.php:138
 msgid "Unable to add your poll."
 msgstr "Umfrage konnte nicht gespeichert werden."
 
-#: ./src/Controller/PollsController.php:158
+#: ./src/Controller/PollsController.php:173
 msgid ""
 "This poll is locked - it is not possible to insert new entries or comments!"
 msgstr ""
 "Diese Umfrage ist gesperrt - es können keine neuen Einträge oder Kommentare "
 "erstellt werden!"
 
-#: ./src/Controller/PollsController.php:166
+#: ./src/Controller/PollsController.php:181
 msgid "Only poll admin can see votes and comments!"
 msgstr "Nur Umfrageersteller kann die Stimmen und Kommentare sehen!"
 
-#: ./src/Controller/PollsController.php:227
+#: ./src/Controller/PollsController.php:242
 msgid "This poll is locked!"
 msgstr "Diese Umfrage ist gesperrt!"
 
-#: ./src/Controller/PollsController.php:288
+#: ./src/Controller/PollsController.php:303
 msgid "Your poll has been updated."
 msgstr "Deine Umfrage wurde aktualisiert."
 
-#: ./src/Controller/PollsController.php:292
+#: ./src/Controller/PollsController.php:307
 msgid "Unable to update your poll."
 msgstr "Die Umfrage konnte nicht aktualisiert werden."
 
-#: ./src/Controller/PollsController.php:321
+#: ./src/Controller/PollsController.php:336
 msgid "Poll has been unlocked"
 msgstr "Die Umfrage wurde entsperrt"
 
-#: ./src/Controller/PollsController.php:327
+#: ./src/Controller/PollsController.php:342
 msgid "Poll lock has NOT been changed!"
 msgstr "Sperrung der Umfrage konnte nicht geändert werden!"
 
-#: ./src/Controller/PollsController.php:350
+#: ./src/Controller/PollsController.php:365
 msgid "Contact info"
 msgstr "Kontaktinformation"
 
-#: ./src/Controller/PollsController.php:352 ./templates/Admin/userinfo.php:23
+#: ./src/Controller/PollsController.php:367 ./templates/Admin/userinfo.php:23
 #: ./templates/Users/index.php:85 ./templates/element/admin/ctrl-login.php:26
 msgid "Name"
 msgstr "Name"
 
-#: ./src/Controller/PollsController.php:379
+#: ./src/Controller/PollsController.php:394
 msgid "no"
 msgstr "nein"
 
-#: ./src/Controller/PollsController.php:382
+#: ./src/Controller/PollsController.php:397
 msgid "yes"
 msgstr "ja"
 
-#: ./src/Controller/PollsController.php:415
+#: ./src/Controller/PollsController.php:430
 msgid "Poll {0} has been deleted."
 msgstr "Umfrage {0} wurde gelöscht."
 
-#: ./src/Controller/PollsController.php:424
+#: ./src/Controller/PollsController.php:439
 msgid "Poll {0} has NOT been deleted!"
 msgstr "Umfrage {0} konnte NICHT gelöscht werden!"
 
-#: ./src/Controller/PollsController.php:502
+#: ./src/Controller/PollsController.php:517
 msgid "Inactive poll {0} has been deleted."
 msgstr "Inaktive Umfrage {0} wurde gelöscht."
 
-#: ./src/Controller/PollsController.php:506
+#: ./src/Controller/PollsController.php:521
 msgid "Inactive poll {0} could NOT be deleted!"
 msgstr "Inaktive Umfrage {0} konnte NICHT gelöscht werden!"
 
-#: ./src/Controller/PollsController.php:544
+#: ./src/Controller/PollsController.php:559
 msgid "Expired poll {0} has been deleted."
 msgstr "Abgelaufene Umfrage {0} wurde gelöscht."
 
-#: ./src/Controller/PollsController.php:548
+#: ./src/Controller/PollsController.php:563
 msgid "Expired poll {0} could NOT be deleted!"
 msgstr "Abgelaufene Umfrage {0} konnte NICHT gelöscht werden!"
+
+#: ./src/Controller/PollsController.php:649
+msgid "New poll \"{0}\" - ADMIN link"
+msgstr "Neue Umfrage \"{0}\" - ADMINISTRATIONS Link"
+
+#: ./src/Controller/PollsController.php:666
+msgid "New poll \"{0}\" - USER link"
+msgstr "Neue Umfrage \"{0}\" - TEILNEHMER Link"
 
 #: ./src/Controller/UsersController.php:75
 msgid "DEMO MODE enabled! User creation / password change is not possible!"
@@ -281,8 +289,8 @@ msgstr "Titel"
 msgid "Last change"
 msgstr "Letzte Änderung"
 
-#: ./templates/Admin/index.php:130 ./templates/element/poll/add-form.php:263
-#: ./templates/element/poll/edit-form.php:225
+#: ./templates/Admin/index.php:130 ./templates/element/poll/add-form.php:292
+#: ./templates/element/poll/edit-form.php:236
 msgid "Expiry date"
 msgstr "Ablaufdatum"
 
@@ -375,7 +383,7 @@ msgstr "Zurück"
 msgid "An internal error has occurred"
 msgstr "Ein interner Fehler ist aufgetreten"
 
-#: ./templates/Polls/add.php:17 ./templates/element/poll/add-form.php:296
+#: ./templates/Polls/add.php:17 ./templates/element/poll/add-form.php:325
 msgid "Create poll"
 msgstr "Umfrage erstellen"
 
@@ -598,23 +606,31 @@ msgstr "Schütze den Zugriff auf die Umfrage mit einem Passwort"
 msgid "Allow users to add a comment"
 msgstr "Erlaube den Teilnehmern einen Kommentar zu hinterlassen"
 
-#: ./templates/element/poll/add-form.php:217
-#: ./templates/element/poll/edit-form.php:170
+#: ./templates/element/poll/add-form.php:209
+#: ./templates/element/poll/edit-form.php:160
+msgid "Email"
+msgstr "Email"
+
+#: ./templates/element/poll/add-form.php:229
+#: ./templates/element/poll/edit-form.php:181
 msgid "Receive email after new comment"
 msgstr "Erhalte eine Email nach einem neuen Kommentar"
 
-#: ./templates/element/poll/add-form.php:233
-#: ./templates/element/poll/edit-form.php:187
+#: ./templates/element/poll/add-form.php:245
+#: ./templates/element/poll/edit-form.php:198
 msgid "Receive email after new entry"
 msgstr "Erhalte eine Email nach einem neuen Eintrag"
 
-#: ./templates/element/poll/add-form.php:253
-#: ./templates/element/poll/edit-form.php:207
-msgid "Email for receiving new entry/comment"
-msgstr "Email um neue Einträge/Kommentare zu erhalten"
+#: ./templates/element/poll/add-form.php:261
+msgid "Receive email after poll creation with poll links"
+msgstr "Email nach der Umfrage-Erstellung mit den Umfrage-Links erhalten"
 
-#: ./templates/element/poll/add-form.php:274
-#: ./templates/element/poll/edit-form.php:236
+#: ./templates/element/poll/add-form.php:282
+msgid "Email for receiving entry/comment/poll links"
+msgstr "Email zum Erhalt von Einträgen/Kommentaren/Umfrage-Links"
+
+#: ./templates/element/poll/add-form.php:303
+#: ./templates/element/poll/edit-form.php:247
 msgid "Poll is automatically locked on expiry date"
 msgstr "Die Umfrage wird bei Erreichen des Ablaufdatums automatisch gesperrt"
 
@@ -634,7 +650,11 @@ msgstr "CSV Export"
 msgid "Edit"
 msgstr "Ändern"
 
-#: ./templates/element/poll/edit-form.php:257
+#: ./templates/element/poll/edit-form.php:218
+msgid "Email for receiving new entry/comment"
+msgstr "Email um neue Einträge/Kommentare zu erhalten"
+
+#: ./templates/element/poll/edit-form.php:268
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
@@ -674,6 +694,43 @@ msgstr "Eintrag in Umfrage \"{0}\""
 #: ./templates/email/text/new_entry.php:18
 msgid "Options:"
 msgstr "Optionen:"
+
+#: ./templates/email/text/new_poll_admin.php:16
+#: ./templates/email/text/new_poll_user.php:16
+msgid "New poll \"{0}\" created"
+msgstr "Neue Umfrage \"{0}\" erstellt"
+
+#: ./templates/email/text/new_poll_admin.php:17
+msgid ""
+"This message should NOT be sent to the poll users. It contains your "
+"administration link!"
+msgstr ""
+"Diese Nachricht sollte NICHT an Umfrage-Teilnehmer geschickt werden. Sie "
+"enthält den Administrations-Link!"
+
+#: ./templates/email/text/new_poll_admin.php:19
+msgid "ADMIN link:"
+msgstr "ADMIN Link:"
+
+#: ./templates/email/text/new_poll_admin.php:23
+msgid "Poll password:"
+msgstr "Umfrage-Passwort:"
+
+#: ./templates/email/text/new_poll_user.php:17
+msgid ""
+"This email can be forwarded to any user who shall participated the poll!"
+msgstr ""
+"Diese Email kann an alle Personen weitergeleitet werden, die an der Umfrage "
+"teilnehmen sollen."
+
+#: ./templates/email/text/new_poll_user.php:19
+msgid "USER link:"
+msgstr "TEILNEHMER Link:"
+
+#: ./templates/email/text/new_poll_user.php:23
+msgid "For accessing the poll, following password is required:"
+msgstr ""
+"Für den Zugriff auf die Umfrage ist das folgende Passwort erforderlich:"
 
 #: ./templates/layout/preferendum.php:42
 msgid "Please enable JavaScript in your browser and reload this page."
