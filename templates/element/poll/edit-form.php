@@ -15,6 +15,8 @@
 ?>
 
 <?php
+$prefconf = \Cake\Core\Configure::read('preferendum');
+
 echo $this->Form->create(
     $poll,
     [
@@ -45,11 +47,19 @@ echo $this->Form->control(
     ]
 );
 
+// No 'Poll options' caption, if none of 'opt_*' configuration parameters is true
+$filtered = array_filter($prefconf, function ($k) {
+    return str_starts_with($k, 'opt_');
+}, ARRAY_FILTER_USE_KEY);
+if (in_array(1, $filtered, false)) {
+    echo '<h2>' . __('Poll options') . '</h2>';
+}
+
 echo '<ul>';
 // --------------------------------------------------------------
 // Hide poll votes
 if (
-    \Cake\Core\Configure::read('preferendum.opt_HidePollVotes') &&
+    $prefconf['opt_HidePollVotes'] &&
     strcmp($poll->adminid, "NA") != 0
 ) {
     echo '<li>';
@@ -67,7 +77,7 @@ if (
 // --------------------------------------------------------------
 // Allow to change entry
 if (
-    \Cake\Core\Configure::read('preferendum.opt_AllowChangeEntry') &&
+    $prefconf['opt_AllowChangeEntry'] &&
     strcmp($poll->adminid, "NA") != 0
 ) {
     echo '<li>';
@@ -85,8 +95,8 @@ if (
 // --------------------------------------------------------------
 // Collect user info
 if (
-    \Cake\Core\Configure::read('preferendum.opt_CollectUserinfo') &&
-    \Cake\Core\Configure::read('preferendum.adminInterface') &&
+    $prefconf['opt_CollectUserinfo'] &&
+    $prefconf['adminInterface'] &&
     strcmp($poll->adminid, "NA") != 0
 ) {
     echo '<li>';
@@ -103,7 +113,7 @@ if (
 
 // --------------------------------------------------------------
 // Protect poll access with a password
-if (\Cake\Core\Configure::read('preferendum.opt_PollPassword')) {
+if ($prefconf['opt_PollPassword']) {
     echo '<li>';
     echo $this->Form->checkbox(
         'pwprotect',
@@ -132,8 +142,8 @@ if (\Cake\Core\Configure::read('preferendum.opt_PollPassword')) {
 // --------------------------------------------------------------
 // Allow comment per poll
 if (
-    \Cake\Core\Configure::read('preferendum.opt_Comments')
-    && !\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
+    $prefconf['opt_Comments'] &&
+    !$prefconf['alwaysAllowComments']
 ) {
     echo '<li>';
     echo $this->Form->checkbox(
@@ -152,10 +162,10 @@ if (
 // --------------------------------------------------------------
 // Label for email options
 if (
-    \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
-    || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
-        && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-            || \Cake\Core\Configure::read('preferendum.opt_Comments')))
+    $prefconf['opt_SendEntryEmail'] ||
+    ($prefconf['opt_SendCommentEmail'] &&
+        ($prefconf['alwaysAllowComments'] ||
+            $prefconf['opt_Comments']))
 ) {
     echo '<li>' . $this->Form->label('emailinput', __('Email')) . '</li>';
 }
@@ -163,9 +173,9 @@ if (
 // --------------------------------------------------------------
 // Receive email after new comment
 if (
-    \Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
-    && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-        || \Cake\Core\Configure::read('preferendum.opt_Comments'))
+    $prefconf['opt_SendCommentEmail'] &&
+    ($prefconf['alwaysAllowComments'] ||
+        $prefconf['opt_Comments'])
 ) {
     echo '<li>';
     echo $this->Form->checkbox(
@@ -175,7 +185,7 @@ if (
             'id' => 'emailcommentinput',
             'checked' => $poll->emailcomment,
             'onchange' => 'toggleEmailInput()',
-            'disabled' => (!\Cake\Core\Configure::read('preferendum.alwaysAllowComments') && \Cake\Core\Configure::read('preferendum.opt_Comments')) && (\Cake\Core\Configure::read('preferendum.opt_Comments') && !($poll->comment)),
+            'disabled' => (!$prefconf['alwaysAllowComments'] && $prefconf['opt_Comments']) && ($prefconf['opt_Comments'] && !($poll->comment)),
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
@@ -184,7 +194,7 @@ if (
 
 // --------------------------------------------------------------
 // Receive email after new entry
-if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
+if ($prefconf['opt_SendEntryEmail']) {
     echo '<li>';
     echo $this->Form->checkbox(
         'emailentry',
@@ -202,10 +212,10 @@ if (\Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')) {
 // --------------------------------------------------------------
 // Email textbox
 if (
-    \Cake\Core\Configure::read('preferendum.opt_SendEntryEmail')
-    || (\Cake\Core\Configure::read('preferendum.opt_SendCommentEmail')
-        && (\Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-            || \Cake\Core\Configure::read('preferendum.opt_Comments')))
+    $prefconf['opt_SendEntryEmail'] ||
+    ($prefconf['opt_SendCommentEmail'] &&
+        ($prefconf['alwaysAllowComments'] ||
+            $prefconf['opt_Comments']))
 ) {
     echo '<li>';
     echo $this->Form->control(
@@ -223,14 +233,13 @@ if (
 
 // --------------------------------------------------------------
 // Poll expiry date
-$expadd = \Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter');
-if ($expadd > 0) {
+if ($prefconf['opt_PollExpirationAfter'] > 0) {
     $exp = $poll->expiry;
     $hasdate = true;
     if (!$exp) {
         $hasdate = false;
         $exp = new DateTime('NOW');
-        $exp->modify('+' . $expadd . ' days');
+        $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
     }
 
     echo '<li>' . $this->Form->label('hasexpinput', __('Expiry date')) . '</li>';

@@ -420,6 +420,18 @@ td.schedule-header .date-delete {
         no-repeat;
     background-position: center center;
 }
+td.schedule-header .date-edit {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: block;
+    padding: 0px;
+    margin: 0;
+    border: 0;
+    background: var(--color-background-secondary) url(../img/icon-pen.png)
+        no-repeat;
+    background-position: center center;
+}
 
 table.schedule.mini td.schedule-header > div {
     width: 1.1rem;

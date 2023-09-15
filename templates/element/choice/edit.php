@@ -16,18 +16,35 @@
 
 <?php $this->Html->scriptBlock(
     'function showAddChoice() {
+    var w = document.getElementById("changechoiceid");
     var x = document.getElementById("divNewChoice");
     var y = document.getElementById("btnAddChoice");
     var z = document.getElementById("choice");
     if (x.style.display === "none") {
+        w.value = "";
         x.style.display = "block";
         y.innerText = "-";
         z.value = "";
+        z.placeholder = "' . __('New option') . '";
     } else {
+        w.value = "";
         x.style.display = "none";
         y.innerText = "+";
+        z.placeholder = "' . __('New option') . '";
     }
-} ',
+}
+
+function showEditChoice(currentChoiceId, currentChoiceText) {
+    var w = document.getElementById("changechoiceid");
+    var x = document.getElementById("divNewChoice");
+    var y = document.getElementById("btnAddChoice");
+    var z = document.getElementById("choice");
+    w.value = currentChoiceId;
+    x.style.display = "block";
+    y.innerText = "-";
+    z.value = currentChoiceText;
+    z.placeholder = currentChoiceText;
+}',
     ['block' => true]
 ); ?>
 
@@ -41,7 +58,9 @@
                     <?php echo h($choice->option) ?>
                 </div>
             </div>
-            <?php if (sizeof($pollchoices) > 1) {
+            <?php
+            echo '<button type="button" class="date-edit" onclick="showEditChoice(' . $choice->id . ', ' . h($choice->option) . ')"></button>';
+            if (sizeof($pollchoices) > 1) {
                 echo $this->Form->postLink(
                     $this->Form->button(
                         '',
@@ -52,7 +71,8 @@
                     ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->id],
                     ['escape' => false, 'confirm' => __('Are you sure to delete this option?')]
                 );
-            } ?>
+            }
+            ?>
         </td>
     <?php endforeach; ?>
     <td>
@@ -64,7 +84,7 @@
                     $newchoice,
                     [
                         'type' => 'post',
-                        'url' => ['controller' => 'Choices', 'action' => 'add', $poll->id, $adminid]
+                        'url' => ['controller' => 'Choices', 'action' => 'addedit', $poll->id, $adminid]
                     ]
                 );
                 echo $this->Form->control(
@@ -76,6 +96,13 @@
                         'class' => 'dateInput field-long datepicker-here',
                         'required' => true,
                         'placeholder' => __('New option'),
+                    ]
+                );
+                echo $this->Form->hidden(
+                    'id',
+                    [
+                        'id' => 'changechoiceid',
+                        'value' => '',
                     ]
                 );
                 echo $this->Form->button(__('Save'));

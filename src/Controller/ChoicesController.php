@@ -19,16 +19,18 @@ namespace App\Controller;
 
 class ChoicesController extends AppController
 {
-    public function add($pollid = null, $adminid = null)
+    public function addedit($pollid = null, $adminid = null)
     {
         if ($this->request->is('post')) {
-            $newchoice = $this->request->getData();
-            $newchoice = trim($newchoice['choice']);
+            $choicedata = $this->request->getData();
+            $choiceid = trim($choicedata['id']);
+            $choicestring = trim($choicedata['choice']);
+            $success = false;
 
             if (
                 isset($pollid) && !empty($pollid)
                 && isset($adminid) && !empty($adminid)
-                && isset($newchoice) && !empty($newchoice)
+                && isset($choicestring) && !empty($choicestring)
             ) {
                 $poll = $this->fetchTable('Polls')
                     ->findById($pollid)
@@ -38,29 +40,36 @@ class ChoicesController extends AppController
 
                 if (
                     strcmp($dbadminid, $adminid) == 0 &&
-                    $this->isNewChoice($pollid, $newchoice)
+                    $this->isNewChoice($pollid, $choicestring)  // Independent if creating new or editing existing choice
                 ) {
-                    $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
-                    $dbchoice = $this->Choices->newEntity(
-                        [
-                            'poll_id' => $poll->id,
-                            'option' => trim($newchoice),
-                            'sort' => $nextsort
-                        ]
-                    );
-
-                    if ($this->Choices->save($dbchoice)) {
-                        $success = $this->addMaybeToExisting($pollid, $dbchoice);
-
-                        if ($success) {
-                            $this->Flash->success(__('Option has been added.'));
-                            return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
+                    if (isset($choiceid) && !empty($choiceid)) {  // Edit existing choice
+                        if ($this->isValidExisting($pollid, $choiceid)) {
+                            $dbchoice = $this->Choices->findById($choiceid)->firstOrFail();
+                            $this->Choices->patchEntity($dbchoice, ['option' => trim($choicestring)]);
+                            $success = $this->Choices->save($dbchoice);
                         }
+                    } else {  // New choice
+                        $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
+                        $dbchoice = $this->Choices->newEntity(
+                            [
+                                'poll_id' => $poll->id,
+                                'option' => trim($choicestring),
+                                'sort' => $nextsort
+                            ]
+                        );
+
+                        if ($this->Choices->save($dbchoice)) {
+                            $success = $this->addMaybeToExisting($pollid, $dbchoice);
+                        }
+                    }
+                    if ($success) {
+                        $this->Flash->success(__('Option has been saved.'));
+                        return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
                     }
                 }
             }
         }
-        $this->Flash->error(__('Option has NOT been added!'));
+        $this->Flash->error(__('Option has NOT been saved!'));
         return $this->redirect($this->referer());
     }
 
@@ -106,6 +115,20 @@ class ChoicesController extends AppController
         $number = $query->count();  // Check that choice with same name doesn't exist
 
         return ($number == 0);
+    }
+
+    //------------------------------------------------------------------------
+
+    private function isValidExisting($pollid, $choiceid)
+    {
+        $query = $this->Choices->find(
+            'all',
+            [
+                'conditions' => ['id' => $choiceid, 'poll_id' => $pollid]
+            ]
+        );
+
+        return (!$query->isEmpty());
     }
 
     //------------------------------------------------------------------------
