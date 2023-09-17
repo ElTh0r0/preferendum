@@ -51,6 +51,34 @@ function showEditChoice(currentChoiceId, currentChoiceText) {
 <!-- TABLE HEADER / DATES -->
 <tr>
     <td class="schedule-blank"></td>
+    <?php for ($i = 0; $i < count($pollchoices); $i++) {
+        echo '<td style="text-align: center;">';
+        if (0 === $i) {
+            echo $this->Form->postLink(
+                '>',
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1]
+            );
+        } else if ($i === count($pollchoices) - 1) {
+            echo $this->Form->postLink(
+                '<',
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i]
+            );
+        } else {
+            echo $this->Form->postLink(
+                '<',
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i]
+            ) . '&nbsp;';
+            echo $this->Form->postLink(
+                '>',
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1]
+            );
+        }
+        echo '</td>';
+    } ?>
+    <td></td>
+</tr>
+<tr>
+    <td class="schedule-blank"></td>
     <?php foreach ($pollchoices as $choice) : ?>
         <td class="schedule-header">
             <div>

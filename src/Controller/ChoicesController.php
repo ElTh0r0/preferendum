@@ -75,6 +75,43 @@ class ChoicesController extends AppController
 
     //------------------------------------------------------------------------
 
+    public function swap($pollid = null, $adminid = null, $id1 = null, $id2 = null)
+    {
+        $this->request->allowMethod(['post', 'swap']);
+        if (
+            isset($pollid) && !empty($pollid) &&
+            isset($adminid) && !empty($adminid) &&
+            isset($id1) && isset($id2)
+        ) {
+            $poll = $this->fetchTable('Polls')
+                ->findById($pollid)
+                ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
+                ->firstOrFail();
+            $dbadminid = $poll->adminid;
+            $choices = $poll->choices;
+
+            if (
+                strcmp($dbadminid, $adminid) == 0 &&
+                $id1 >= 0 && $id2 >= 0 &&
+                $id1 < count($choices) && $id2 < count($choices) &&
+                ($id1 == $id2 - 1 || $id1 == $id2 + 1)
+            ) {
+                [$choices[$id1]->sort, $choices[$id2]->sort] = [$choices[$id2]->sort, $choices[$id1]->sort];
+                if ($this->Choices->save($choices[$id1])) {
+                    if ($this->Choices->save($choices[$id2])) {
+                        $this->Flash->success(__('Order has been updated.'));
+                        return $this->redirect($this->referer());
+                    }
+                }
+            }
+        }
+
+        $this->Flash->error(__('Order has not been updated!'));
+        return $this->redirect($this->referer());
+    }
+
+    //------------------------------------------------------------------------
+
     public function delete($pollid = null, $adminid = null, $choiceid = null)
     {
         $this->request->allowMethod(['post', 'delete']);
