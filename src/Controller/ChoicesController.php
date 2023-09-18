@@ -106,7 +106,7 @@ class ChoicesController extends AppController
             }
         }
 
-        $this->Flash->error(__('Order has not been updated!'));
+        $this->Flash->error(__('Order has NOT been updated!'));
         return $this->redirect($this->referer());
     }
 

@@ -87,7 +87,7 @@ function showEditChoice(currentChoiceId, currentChoiceText) {
                 </div>
             </div>
             <?php
-            echo '<button type="button" class="date-edit" onclick="showEditChoice(' . $choice->id . ', ' . h($choice->option) . ')"></button>';
+            echo '<button type="button" class="date-edit" onclick="showEditChoice(' . $choice->id . ', \'' . h($choice->option) . '\')"></button>';
             if (sizeof($pollchoices) > 1) {
                 echo $this->Form->postLink(
                     $this->Form->button(
