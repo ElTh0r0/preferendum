@@ -27,8 +27,10 @@ if (Configure::read('debug')) :
     <?php Debugger::dump($error->params) ?>
 <?php endif; ?>
 <?php if ($error instanceof Error) : ?>
+    <?php $file = $error->getFile() ?>
+    <?php $line = $error->getLine() ?>
     <strong>Error in: </strong>
-    <?= sprintf('%s, line %s', str_replace(ROOT, 'ROOT', $error->getFile()), $error->getLine()) ?>
+    <?= $this->Html->link(sprintf('%s, line %s', Debugger::trimPath($file), $line), Debugger::editorUrl($file, $line)); ?>
 <?php endif; ?>
 <?php
     echo $this->element('auto_table_warning');
@@ -45,5 +47,5 @@ endif;
         <?php echo h($message) ?>
         <br><br>
         <?php echo $this->Html->link(__('Back'), 'javascript:history.back()') ?>
-    </p>
+</p>
 </div>

@@ -26,82 +26,92 @@ use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
 /*
- * The default class to use for all routes
- *
- * The following route classes are supplied with CakePHP and are appropriate
- * to set as the default:
- *
- * - Route
- * - InflectedRoute
- * - DashedRoute
- *
- * If no call is made to `Router::defaultRouteClass()`, the class used is
- * `Route` (`Cake\Routing\Route\Route`)
- *
- * Note that `Route` does not do any inflections on URLs which will result in
- * inconsistently cased URLs when used with `:plugin`, `:controller` and
- * `:action` markers.
+ * This file is loaded in the context of the `Application` class.
+  * So you can use  `$this` to reference the application class instance
+  * if required.
  */
 
-/** @var \Cake\Routing\RouteBuilder $routes */
-$routes->setRouteClass(DashedRoute::class);
+return function (RouteBuilder $routes): void {
+    /*
+     * The default class to use for all routes
+     *
+     * The following route classes are supplied with CakePHP and are appropriate
+     * to set as the default:
+     *
+     * - Route
+     * - InflectedRoute
+     * - DashedRoute
+     *
+     * If no call is made to `Router::defaultRouteClass()`, the class used is
+     * `Route` (`Cake\Routing\Route\Route`)
+     *
+     * Note that `Route` does not do any inflections on URLs which will result in
+     * inconsistently cased URLs when used with `{plugin}`, `{controller}` and
+     * `{action}` markers.
+     */
+    $routes->setRouteClass(DashedRoute::class);
 
-$routes->scope('/', function (RouteBuilder $builder) {
-    $builder->connect('/', ['controller' => 'Polls', 'action' => 'add']);
-    $builder->connect('/polls', ['controller' => 'Polls', 'action' => 'add']);
+    $routes->scope('/', function (RouteBuilder $builder): void {
+        $builder->connect('/', ['controller' => 'Polls', 'action' => 'add']);
+        $builder->connect('/polls', ['controller' => 'Polls', 'action' => 'add']);
 
-    if ((\Cake\Core\Configure::read('preferendum.deleteExpiredPollsAfter') == 0) &&
-        (\Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter') == 0)
-    ) {
-        $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
-        $builder->connect('/polls/cleanupmanually/*', ['controller' => 'Polls', 'action' => 'add']);
-    } else {
-        $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'cleanup']);
-        $builder->connect('/polls/cleanupmanually/*', ['controller' => 'Polls', 'action' => 'cleanupmanually']);
-    }
-    if (\Cake\Core\Configure::read('preferendum.exportCsv') == true) {
-        $builder->connect('/polls/exportcsv/*', ['controller' => 'Polls', 'action' => 'exportcsv']);
-    }
-    $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
-    $builder->connect('/polls/togglelock/*', ['controller' => 'Polls', 'action' => 'togglelock']);
-    $builder->connect('/polls/update/*', ['controller' => 'Polls', 'action' => 'update']);
-    $builder->connect('/polls/delete/*', ['controller' => 'Polls', 'action' => 'delete']);
-    $builder->connect('/polls/*', ['controller' => 'Polls', 'action' => 'View']);
+        if ((\Cake\Core\Configure::read('preferendum.deleteExpiredPollsAfter') == 0) &&
+            (\Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter') == 0)
+        ) {
+            $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
+            $builder->connect('/polls/cleanupmanually/*', ['controller' => 'Polls', 'action' => 'add']);
+        } else {
+            $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'cleanup']);
+            $builder->connect('/polls/cleanupmanually/*', ['controller' => 'Polls', 'action' => 'cleanupmanually']);
+        }
+        if (\Cake\Core\Configure::read('preferendum.exportCsv') == true) {
+            $builder->connect('/polls/exportcsv/*', ['controller' => 'Polls', 'action' => 'exportcsv']);
+        }
+        $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
+        $builder->connect('/polls/togglelock/*', ['controller' => 'Polls', 'action' => 'togglelock']);
+        $builder->connect('/polls/update/*', ['controller' => 'Polls', 'action' => 'update']);
+        $builder->connect('/polls/delete/*', ['controller' => 'Polls', 'action' => 'delete']);
+        $builder->connect('/polls/*', ['controller' => 'Polls', 'action' => 'View']);
 
-    // Allow route to login mask, needed for using poll password
-    if (\Cake\Core\Configure::read('preferendum.opt_PollPassword') == true) {
-        $builder->connect('/admin/login/*', ['controller' => 'Admin', 'action' => 'login']);
-        $builder->connect('/admin/logout/*', ['controller' => 'Admin', 'action' => 'logout']);
-    }
-    if (\Cake\Core\Configure::read('preferendum.adminInterface') != true) {
-        $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);
-        $builder->connect('/users/*', ['controller' => 'Polls', 'action' => 'add']);
-    }
+        // Allow route to login mask, needed for using poll password
+        if (\Cake\Core\Configure::read('preferendum.opt_PollPassword') == true) {
+            $builder->connect('/admin/login/*', ['controller' => 'Admin', 'action' => 'login']);
+            $builder->connect('/admin/logout/*', ['controller' => 'Admin', 'action' => 'logout']);
+        }
+        if (\Cake\Core\Configure::read('preferendum.adminInterface') != true) {
+            $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);
+            $builder->connect('/users/*', ['controller' => 'Polls', 'action' => 'add']);
+        }
+
+        /*
+         * Connect catchall routes for all controllers.
+         *
+         * The `fallbacks` method is a shortcut for
+         *
+         * ```
+         * $builder->connect('/{controller}', ['action' => 'index']);
+         * $builder->connect('/{controller}/{action}/*', []);
+         * ```
+         *
+         * You can remove these routes once you've connected the
+         * routes you want in your application.
+         */
+        $builder->fallbacks();
+    });
 
     /*
-     * Connect catchall routes for all controllers.
-     *
-     * The `fallbacks` method is a shortcut for
+     * If you need a different set of middleware or none at all,
+     * open new scope and define routes there.
      *
      * ```
-     * $builder->connect('/:controller', ['action' => 'index']);
-     * $builder->connect('/:controller/:action/*', []);
-     * ```
+     * $routes->scope('/api', function (RouteBuilder $builder): void {
+     *     // No $builder->applyMiddleware() here.
      *
-     * You can remove these routes once you've connected the
-     * routes you want in your application.
+     *     // Parse specified extensions from URLs
+     *     // $builder->setExtensions(['json', 'xml']);
+     *
+     *     // Connect API actions here.
+     * });
+     * ```
      */
-    $builder->fallbacks();
-});
-
-/*
- * If you need a different set of middleware or none at all,
- * open new scope and define routes there.
- *
- * ```
- * $routes->scope('/api', function (RouteBuilder $builder) {
- *     // No $builder->applyMiddleware() here.
- *     // Connect API actions here.
- * });
- * ```
- */
+};

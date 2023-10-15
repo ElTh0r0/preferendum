@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -18,7 +19,7 @@ declare(strict_types=1);
 /*
  * Configure paths required to find CakePHP + general filepath constants
  */
-require __DIR__ . '/paths.php';
+require __DIR__ . DIRECTORY_SEPARATOR . 'paths.php';
 
 /*
  * Bootstrap CakePHP.
@@ -76,6 +77,7 @@ use Cake\Utility\Security;
  * idea to create multiple configuration files, and separate the configuration
  * that changes from configuration that does not. This makes deployment simpler.
  */
+
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
@@ -105,7 +107,7 @@ if (Configure::read('debug')) {
 
 /*
  * Set the default server timezone. Using UTC makes time calculations / conversions easier.
- * Check http://php.net/manual/en/timezones.php for list of valid timezone strings.
+ * Check https://php.net/manual/en/timezones.php for list of valid timezone strings.
  */
 date_default_timezone_set(Configure::read('App.defaultTimezone'));
 
@@ -222,4 +224,9 @@ TypeFactory::map('time', StringType::class);
 //Inflector::rules('plural', ['/^(inflect)or$/i' => '\1ables']);
 //Inflector::rules('irregular', ['red' => 'redlings']);
 //Inflector::rules('uninflected', ['dontinflectme']);
-//Inflector::rules('transliteration', ['/å/' => 'aa']);
+
+// set a custom date and time format
+// see https://book.cakephp.org/4/en/core-libraries/time.html#setting-the-default-locale-and-format-string
+// and https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax
+//\Cake\I18n\FrozenDate::setToStringFormat('dd.MM.yyyy');
+//\Cake\I18n\FrozenTime::setToStringFormat('dd.MM.yyyy HH:mm');

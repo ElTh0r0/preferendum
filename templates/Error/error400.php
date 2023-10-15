@@ -23,13 +23,14 @@ if (Configure::read('debug')) :
     </p>
 <?php endif; ?>
 <?php if (!empty($error->params)) : ?>
-        <strong>SQL Query Params: </strong>
-        <?php Debugger::dump($error->params) ?>
+    <strong>SQL Query Params: </strong>
+    <?php Debugger::dump($error->params) ?>
 <?php endif; ?>
-<?= $this->element('auto_table_warning') ?>
-<?php
 
-$this->end();
+<?php
+    echo $this->element('auto_table_warning');
+
+    $this->end();
 endif;
 ?>
 
@@ -41,5 +42,5 @@ endif;
         <?php echo __('The requested address {0} was not found on this server.', "<strong>'{$url}'</strong>") ?>
         <br><br>
         <?php echo $this->Html->link(__('Back'), 'javascript:history.back()') ?>
-    </p>
+</p>
 </div>

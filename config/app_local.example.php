@@ -1,4 +1,5 @@
 <?php
+
 /**
  * PREFERendum (https://github.com/ElTh0r0/preferendum)
  * Copyright (c) github.com/ElTh0r0
@@ -61,13 +62,13 @@ return [
             'password' => 'secret',
 
             'database' => 'preferendum',
-            /**
+            /*
              * If not using the default 'public' schema with the PostgreSQL driver
              * set it here.
              */
             //'schema' => 'myapp',
 
-            /**
+            /*
              * You can use a DSN string to set the entire configuration
              */
             'url' => env('DATABASE_URL', null),
