@@ -261,7 +261,7 @@ class AdminController extends AppController
     private function checkExpiryAndLockPolls()
     {
         if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
-            $expiredpolls = $this->fetchTable('Polls')->query();
+            $expiredpolls = $this->fetchTable('Polls')->UpdateQuery();
             $expiredpolls->update()
                 ->set(['locked' => 1])
                 ->where([

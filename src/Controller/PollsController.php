@@ -854,7 +854,7 @@ class PollsController extends AppController
     {
         if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
             if (isset($pollid) && !empty($pollid)) {
-                $expired = $this->Polls->query();
+                $expired = $this->Polls->UpdateQuery();
                 $expired->update()
                     ->set(['locked' => 1])
                     ->where([
