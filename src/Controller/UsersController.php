@@ -29,7 +29,7 @@ class UsersController extends AppController
         // Configure the login action to not require authentication, preventing
         // the infinite redirect loop issue
         $this->Authentication->allowUnauthenticated(
-            ['login', 'logout',]
+            ['login', 'logout', 'deleteUserAndPollEntries',]
         );
     }
 
