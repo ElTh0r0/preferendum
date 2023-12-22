@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-09-15 20:51+0200\n"
+"POT-Creation-Date: 2023-12-22 18:47+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -19,19 +19,27 @@ msgstr ""
 msgid "Invalid user or password"
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:71
+#: ./src/Controller/ChoicesController.php:66
 msgid "Option has been saved."
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:77
+#: ./src/Controller/ChoicesController.php:72
 msgid "Option has NOT been saved!"
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:101
+#: ./src/Controller/ChoicesController.php:102
+msgid "Order has been updated."
+msgstr ""
+
+#: ./src/Controller/ChoicesController.php:109
+msgid "Order has NOT been updated!"
+msgstr ""
+
+#: ./src/Controller/ChoicesController.php:133
 msgid "Option has been deleted."
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:106
+#: ./src/Controller/ChoicesController.php:138
 msgid "Option has NOT been deleted!"
 msgstr ""
 
@@ -275,7 +283,7 @@ msgid "Last change"
 msgstr ""
 
 #: ./templates/Admin/index.php:130
-#: ./templates/element/poll/add-form.php:302
+#: ./templates/element/poll/add-form.php:305
 #: ./templates/element/poll/edit-form.php:245
 msgid "Expiry date"
 msgstr ""
@@ -355,26 +363,26 @@ msgstr ""
 msgid "No user information available for this poll!"
 msgstr ""
 
-#: ./templates/Error/error400.php:40
-#: ./templates/Error/error500.php:44
+#: ./templates/Error/error400.php:41
+#: ./templates/Error/error500.php:46
 msgid "Error"
 msgstr ""
 
-#: ./templates/Error/error400.php:41
+#: ./templates/Error/error400.php:42
 msgid "The requested address {0} was not found on this server."
 msgstr ""
 
-#: ./templates/Error/error400.php:43
-#: ./templates/Error/error500.php:47
+#: ./templates/Error/error400.php:44
+#: ./templates/Error/error500.php:49
 msgid "Back"
 msgstr ""
 
-#: ./templates/Error/error500.php:42
+#: ./templates/Error/error500.php:44
 msgid "An internal error has occurred"
 msgstr ""
 
 #: ./templates/Polls/add.php:17
-#: ./templates/element/poll/add-form.php:335
+#: ./templates/element/poll/add-form.php:338
 msgid "Create poll"
 msgstr ""
 
@@ -464,19 +472,15 @@ msgstr ""
 
 #: ./templates/element/choice/edit.php:28
 #: ./templates/element/choice/edit.php:33
-#: ./templates/element/choice/edit.php:98
+#: ./templates/element/choice/edit.php:126
 msgid "New option"
 msgstr ""
 
-#: ./templates/element/choice/edit.php:46
-msgid "Change option"
-msgstr ""
-
-#: ./templates/element/choice/edit.php:72
+#: ./templates/element/choice/edit.php:100
 msgid "Are you sure to delete this option?"
 msgstr ""
 
-#: ./templates/element/choice/edit.php:108
+#: ./templates/element/choice/edit.php:136
 #: ./templates/element/comment/new.php:54
 #: ./templates/element/entry/edit.php:87
 #: ./templates/element/entry/new.php:59
@@ -640,7 +644,11 @@ msgstr ""
 msgid "Email for receiving entry/comment/poll links"
 msgstr ""
 
-#: ./templates/element/poll/add-form.php:313
+#: ./templates/element/poll/add-form.php:297
+msgid "Attention: If no admin link is used, the email address is visible for everyone!"
+msgstr ""
+
+#: ./templates/element/poll/add-form.php:316
 #: ./templates/element/poll/edit-form.php:256
 msgid "Poll is automatically locked on expiry date"
 msgstr ""
