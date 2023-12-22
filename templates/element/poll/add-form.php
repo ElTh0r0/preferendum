@@ -293,6 +293,9 @@ if (
             'placeholder' => __('Email for receiving entry/comment/poll links'),
         ]
     );
+    if (!$prefconf['alwaysUseAdminLinks']) {
+        echo '<div id="emailwarn" class="fail" style="display: none;"><p><span style="font-size: 80%;">' . __('Attention: If no admin link is used, the email address is visible for everyone!') . '</span></p></div>';
+    }
     echo '</li>';
 }
 

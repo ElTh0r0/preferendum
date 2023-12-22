@@ -42,6 +42,7 @@ var chkAdminLink = document.getElementById("admininput");
 var chkHideVotes = document.getElementById("hidevotesinput");
 var chkEditEntry = document.getElementById("editentryinput");
 var chkUserInfo = document.getElementById("userinfoinput");
+var emailWarning = document.getElementById("emailwarn");
 function toggleAdminLinkInput() {
     if (chkHideVotes) {
         chkHideVotes.disabled = !chkAdminLink.checked;
@@ -64,6 +65,14 @@ function toggleAdminLinkInput() {
 
         if (chkUserInfo.disabled) {
             chkUserInfo.checked = false;
+        }
+    }
+
+    if (emailWarning) {
+        if (!chkAdminLink.checked) {
+            emailWarning.style.display = "block"
+        } else {
+            emailWarning.style.display = "none"
         }
     }
 }
