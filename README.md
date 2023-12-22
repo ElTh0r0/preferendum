@@ -38,49 +38,33 @@
   - Take care of proper folder permissions, see [CakePHP permissions](https://book.cakephp.org/4/en/installation.html#permissions)
   - Copy `config/app_local.example.php` and rename it to `config/app_local.php`.
 - Install option #2:
-  - Download **source code** from latest release and run `composer install --no-dev`. The install command will download all needed dependencies.
+  - Download **source code** from latest release
+  - Download [Composer](https://getcomposer.org/download/)
+  - Run `composer install --no-dev`. The install command will download all needed dependencies.
 - In `config/app_local.php` change the following entries:
   - Datasources\Default: Set host, username, password, database according to your environment.
   - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).
 - In `config/preferendum_features.php` configure the features as needed.
 - Upload the `preferendum` directory to your web server (root-directory or somewhere else)
 - Access `<your installation folder>/installdb` through your browser (e.g. `yourdomain.com/preferendum/installdb`)
--  Delete `src/Controller/InstalldbController.php` from your server
--  Enjoy!
+- Delete `src/Controller/InstalldbController.php` from your server
+- Enjoy!
 
 ## Configuration and customization
-### Features configuration
-You can turn on/off and configure all the available features (like admin interface) in `config/preferendum_features.php`.
-### Texts and labels
-By default English and German translations are included and one can switch between the available languages in `config/preferendum_features.php`. PREFERendum uses **gettext** for translation and based on the English strings in `resources/locales/default.pot` one can create further translations, which have to be put into a separate sub folder (using ISO code as folder name).
+You can turn on/off and configure all the available features in `config/preferendum_features.php`. For a full list of the options see the [Wiki](https://github.com/ElTh0r0/preferendum/wiki).
 
-#### Help translating
-New translations and corrections are highly welcome! You can either fork the source code from GitHub, make your changes and create a pull request or you can participate on Transifex: https://www.transifex.com/elth0r0/preferendum/
-
-### Colors
-At the top of the CSS stylesheet (`css/preferendum.css`), you'll find a list of [CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/--*) you can change to customize colors and some other layout/design related things.
-
-## Administration
 ### Poll administration interface (off by default)
-If you want to use the optional admin interface (to view and delete any polls on your server via a web interface under `/admin`) you have to enable this in `config/preferendum_features.php`!
-
-Default credentials: admin/admin
-
-If you are enabling this feature, please change the password after the installation!
-
-### Automatic deletion of inactive/expired polls (needs cronjob!)
-You can set up a certain number of days in the `config/preferendum_features.php` to mark the maximum age of an **inactive** poll (*inactive* as in: no new answers and comments) or **expired** poll. PREFERendum comes with a cleanup function that you can set up to be executed periodically via a cronjob, e.g.
-
-`0 0 1 * * /usr/bin/php /var/www/html/preferendum/polls/cleanup`
-
-The cleanup script will then delete all inactive/expired polls that became too old.
-
-If cronjob cannot be used, one can manually delete inactive/expired polls through the admin interface.
+If you want to use the optional admin interface (to view and delete any polls on your server via a web interface at `yourdomain.com/preferendum/admin`) you have to enable this in `config/preferendum_features.php` ('adminInterface')! See [Admin Interface](https://github.com/ElTh0r0/preferendum/wiki/5-Admin-interface) for more information.
 
 ## Contribution
-This is my first project using [CakePHP](https://cakephp.org), so there might exist many code sections, which could be implemented much more elegant with the build-in CakePHP features. I'm open for any optimization! Same for suggestions for additional features or if you are running into problems setting up PREFERendum, **write an issue**! Additional translations are highly welcome as well or if you feel like improving the code of this app, send a (well documented) **pull request**! If you just like PREFERendum as it is, let me know by donating this repo a star.
+This is my first project using [CakePHP](https://cakephp.org), so there might exist many code sections, which could be implemented much more elegant with the build-in CakePHP features. I'm open for any optimization, just send a (well documented) **pull request**! Same for suggestions for additional features or if you are running into problems setting up PREFERendum, please write an [issue](https://github.com/ElTh0r0/preferendum/issues).
 
 If you want to work on the code, clone the repositiory and run `composer install`. This will download CakePHP library and dependencies.
+
+If you just like PREFERendum as it is, let me know by donating this repo a star.
+
+### Help translating
+New translations and corrections are highly welcome! You can either fork the source code from GitHub, make your changes and create a pull request or you can participate on Transifex: https://www.transifex.com/elth0r0/preferendum/
 
 ## Attribution of used third-party software/media
 PREFERendum makes use of the following software/media and says **Thank you!** to:
