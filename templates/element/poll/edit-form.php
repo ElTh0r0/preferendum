@@ -228,6 +228,9 @@ if (
             'placeholder' => __('Email for receiving new entry/comment'),
         ]
     );
+    if (strcmp($poll->adminid, "NA") == 0) {
+        echo '<div class="fail"><p><span style="font-size: 80%;">' . __('Attention: If no admin link is used, the email address is visible for everyone!') . '</span></p></div>';
+    }
     echo '</li>';
 }
 
