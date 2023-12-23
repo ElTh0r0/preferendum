@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-12-22 18:47+0100\n"
+"POT-Creation-Date: 2023-12-23 16:00+0100\n"
 "PO-Revision-Date: 2021-06-13 12:05+0000\n"
 "Last-Translator: El Thoro, 2023\n"
 "Language-Team: German (Germany) (https://app.transifex.com/elth0r0/teams/121734/de_DE/)\n"
@@ -71,7 +71,7 @@ msgstr "Neuer Kommentar in Umfrage \"{0}\""
 #: ./src/Controller/EntriesController.php:32
 #: ./src/Controller/EntriesController.php:108
 #: ./src/Controller/EntriesController.php:122
-#: ./src/Controller/EntriesController.php:186
+#: ./src/Controller/EntriesController.php:189
 msgid "Unable to save your entry."
 msgstr "Eintrag konnte nicht gespeichert werden."
 
@@ -92,11 +92,11 @@ msgstr "Kopiere den Link und speichere ihn auf Deinem Gerät!"
 msgid "Copy link to clipboard!"
 msgstr "Kopiere den Link in die Zwischenablage!"
 
-#: ./src/Controller/EntriesController.php:265
+#: ./src/Controller/EntriesController.php:268
 msgid "New entry in poll \"{0}\""
 msgstr "Neuer Eintrag in Umfrage \"{0}\""
 
-#: ./src/Controller/EntriesController.php:267
+#: ./src/Controller/EntriesController.php:270
 msgid "Updated entry in poll \"{0}\""
 msgstr "Aktualisierter Eintrag in Umfrage \"{0}\""
 
@@ -223,19 +223,23 @@ msgstr "Der Benutzer wurde erstellt/aktualisiert."
 msgid "Unable to add the user."
 msgstr "Benutzer konnte nicht erstellt werden."
 
-#: ./src/Controller/UsersController.php:142
+#: ./src/Controller/UsersController.php:137
+msgid "DEMO MODE enabled! User deletion is not possible!"
+msgstr "DEMO MODUS aktiviert! Benutzerlöschung ist nicht möglich!"
+
+#: ./src/Controller/UsersController.php:147
 msgid "User has been deleted."
 msgstr "Benutzer wurde gelöscht."
 
-#: ./src/Controller/UsersController.php:147
+#: ./src/Controller/UsersController.php:152
 msgid "User {0} has NOT been deleted!"
 msgstr "Benutzer {0} konnte NICHT gelöscht werden!"
 
-#: ./src/Controller/UsersController.php:168
+#: ./src/Controller/UsersController.php:173
 msgid "Entry has been deleted."
 msgstr "Eintrag wurde gelöscht."
 
-#: ./src/Controller/UsersController.php:173
+#: ./src/Controller/UsersController.php:178
 msgid "Entry has NOT been deleted!"
 msgstr "Eintrag konnte NICHT gelöscht werden!"
 
@@ -298,7 +302,7 @@ msgid "Last change"
 msgstr "Letzte Änderung"
 
 #: ./templates/Admin/index.php:130 ./templates/element/poll/add-form.php:305
-#: ./templates/element/poll/edit-form.php:245
+#: ./templates/element/poll/edit-form.php:248
 msgid "Expiry date"
 msgstr "Ablaufdatum"
 
@@ -487,7 +491,7 @@ msgstr "Soll diese Option wirklich gelöscht werden?"
 
 #: ./templates/element/choice/edit.php:136
 #: ./templates/element/comment/new.php:54
-#: ./templates/element/entry/edit.php:87 ./templates/element/entry/new.php:59
+#: ./templates/element/entry/edit.php:91 ./templates/element/entry/new.php:59
 msgid "Save"
 msgstr "Speichern"
 
@@ -520,7 +524,7 @@ msgstr "Dein Kommentar"
 msgid "Your name?"
 msgstr "Dein Name?"
 
-#: ./templates/element/entry/edit.php:97 ./templates/element/entry/new.php:69
+#: ./templates/element/entry/edit.php:101 ./templates/element/entry/new.php:69
 msgid "Optional: Contact info"
 msgstr "Optional: Kontaktinformationen"
 
@@ -645,6 +649,7 @@ msgid "Email for receiving entry/comment/poll links"
 msgstr "Email zum Erhalt von Einträgen/Kommentaren/Umfrage-Links"
 
 #: ./templates/element/poll/add-form.php:297
+#: ./templates/element/poll/edit-form.php:232
 msgid ""
 "Attention: If no admin link is used, the email address is visible for "
 "everyone!"
@@ -653,7 +658,7 @@ msgstr ""
 " sichtbar!"
 
 #: ./templates/element/poll/add-form.php:316
-#: ./templates/element/poll/edit-form.php:256
+#: ./templates/element/poll/edit-form.php:259
 msgid "Poll is automatically locked on expiry date"
 msgstr "Die Umfrage wird bei Erreichen des Ablaufdatums automatisch gesperrt"
 
@@ -677,7 +682,7 @@ msgstr "Ändern"
 msgid "Email for receiving new entry/comment"
 msgstr "Email um neue Einträge/Kommentare zu erhalten"
 
-#: ./templates/element/poll/edit-form.php:277
+#: ./templates/element/poll/edit-form.php:280
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
