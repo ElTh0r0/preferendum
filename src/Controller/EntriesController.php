@@ -41,7 +41,7 @@ class EntriesController extends AppController
             $dbemailentry = $db['emailentry'];
             $dbeditentry = $db['editentry'];
 
-            if ($this->isNewEntry($pollid, trim($newentry['name'])) && !($dblocked)) {
+            if (!$this->isNameAlreadyUsed($pollid, trim($newentry['name'])) && !($dblocked)) {
                 $userinfo = '';
                 if ($dbuserinfo == 1) {
                     $userinfo = trim($newentry['userdetails']);
@@ -133,9 +133,12 @@ class EntriesController extends AppController
             $dbeditallowed = $db['editentry'];
 
             $dbuser = $this->fetchTable('Users')->findById($userid)->firstOrFail();
+
             if (
-                (!($dblocked) && $dbeditallowed && strcmp($dbuser['password'], $userpw) == 0) ||  // User changes own entry
-                (isset($adminid) && strcmp($dbadmid, $adminid) == 0)  // Admin changes user entry
+                ((!($dblocked) && $dbeditallowed && strcmp($dbuser['password'], $userpw) == 0) ||  // User changes own entry
+                    (isset($adminid) && strcmp($dbadmid, $adminid) == 0)) &&  // Admin changes user entry
+                (!$this->isNameAlreadyUsed($pollid, trim($editentry['name'])) ||  // New name not already used
+                    strcmp($dbuser['name'], trim($editentry['name'])) == 0)  // Or old and new name are the same
             ) {
                 // Change user
                 $userinfo = '';
@@ -235,7 +238,7 @@ class EntriesController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function isNewEntry($pollid, $username)
+    private function isNameAlreadyUsed($pollid, $username)
     {
         $query = $this->Entries->find(
             'all',
@@ -246,7 +249,7 @@ class EntriesController extends AppController
         );
         $number = $query->count();
 
-        return ($number == 0);
+        return !($number == 0);
     }
 
     //------------------------------------------------------------------------
