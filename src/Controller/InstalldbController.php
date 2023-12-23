@@ -25,15 +25,17 @@ class InstalldbController extends AppController
 {
     public function index(): void
     {
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PREFERendum database setup</title></head>';
-        echo '<body>';
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PREFERendum database setup</title>';
+        echo '<link rel="stylesheet" href="css/preferendum.css">';
+        echo '</head>';
+        echo '<body><p>Starting <strong>PREFERendum</strong> database setup...</p>';
 
         $this->checkEnvironment();
         $this->checkFilesystem();
         $dbconnection = $this->checkDatabase();
         $this->createTables($dbconnection);
 
-        echo '<p>DONE!</p>';
+        echo '<p class="success"><br>SETUP COMPLETED SUCCESSFULLY!</p>';
         echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';
         echo '</body></html>';
 
@@ -47,32 +49,32 @@ class InstalldbController extends AppController
         echo '<h4>Environment</h4>';
         echo '<ul>';
         if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
-            echo '<li>Your version of PHP is 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
+            echo '<li class="success">Your version of PHP is 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
         } else {
-            echo '<li><strong>Problem:</strong> Your version of PHP is too low. You need PHP 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP is too low. You need PHP 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
             die;
         }
 
         if (extension_loaded('mbstring')) {
-            echo '<li>Your version of PHP has the mbstring extension loaded.</li>';
+            echo '<li class="success">Your version of PHP has the mbstring extension loaded.</li>';
         } else {
-            echo '<li><strong>Problem:</strong> Your version of PHP does NOT have the mbstring extension loaded.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the mbstring extension loaded.</li>';
             die;
         }
 
         if (extension_loaded('openssl')) {
-            echo '<li>Your version of PHP has the openssl extension loaded.</li>';
+            echo '<li class="success">Your version of PHP has the openssl extension loaded.</li>';
         } elseif (extension_loaded('mcrypt')) {
-            echo '<li>Your version of PHP has the mcrypt extension loaded.</li>';
+            echo '<li class="success">Your version of PHP has the mcrypt extension loaded.</li>';
         } else {
-            echo '<li><strong>Problem:</strong> Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>';
             die;
         }
 
         if (extension_loaded('intl')) {
-            echo '<li>Your version of PHP has the intl extension loaded.</li>';
+            echo '<li class="success">Your version of PHP has the intl extension loaded.</li>';
         } else {
-            echo '<li><strong>Problem:</strong> Your version of PHP does NOT have the intl extension loaded.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the intl extension loaded.</li>';
             die;
         }
         echo '</ul>';
@@ -85,16 +87,16 @@ class InstalldbController extends AppController
         echo '<h4>Filesystem</h4>';
         echo '<ul>';
         if (is_writable(TMP)) {
-            echo '<li>Your tmp directory is writable.</li>';
+            echo '<li class="success">Your tmp directory is writable.</li>';
         } else {
-            echo '<li><strong>Problem:</strong> Your tmp directory is NOT writable.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your tmp directory is NOT writable.</li>';
             die;
         }
 
         if (is_writable(LOGS)) {
-            echo '<li>Your logs directory is writable.</li>';
+            echo '<li class="success">Your logs directory is writable.</li>';
         } else {
-            echo '<li><strong>Problem:</strong> Your logs directory is NOT writable.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your logs directory is NOT writable.</li>';
             die;
         }
 
@@ -102,7 +104,7 @@ class InstalldbController extends AppController
         if (!empty($settings)) {
             echo '<li>The <em>' . $settings["className"] . 'Engine</em> is being used for core caching. To change the config edit config/app.php</li>';
         } else {
-            echo '<li><strong>Problem:</strong> Your cache is NOT working. Please check the settings in config/app.php</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your cache is NOT working. Please check the settings in config/app.php</li>';
             die;
         }
         echo '</ul>';
@@ -129,9 +131,9 @@ class InstalldbController extends AppController
         }
 
         if ($connected) {
-            echo '<li>Database connection successful</li>';
+            echo '<li class="success">Database connection successful</li>';
         } else {
-            echo '<li><strong>Problem:</strong> NOT able to connect to the database.<br />' . $errorMsg . '</li>';
+            echo '<li class="fail"><strong>Problem:</strong> NOT able to connect to the database.<br />' . $errorMsg . '</li>';
             die;
         }
 
@@ -140,7 +142,7 @@ class InstalldbController extends AppController
             FROM INFORMATION_SCHEMA.TABLES
           WHERE TABLE_SCHEMA = "' . $connection->config()['database'] . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";')->fetchAll('assoc');
         if ($table[0]['exists']) {
-            echo '<li><strong>Attention:</strong> Install script was already executed - stopping execution!</li>';
+            echo '<li class="fail"><strong>Attention:</strong> Install script was already executed - stopping execution!</li>';
             die;
         }
         echo '</ul>';
@@ -155,7 +157,7 @@ class InstalldbController extends AppController
         echo '<ul>';
         echo '<li>Creating "comments" table</li>';
         $connection->execute('CREATE TABLE `comments` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             `poll_id` varchar(32) NOT NULL,
             `text` varchar(512) NOT NULL,
             `name` varchar(32) NOT NULL,
@@ -164,30 +166,30 @@ class InstalldbController extends AppController
 
         echo '<li>Creating "choices" table</li>';
         $connection->execute('CREATE TABLE `choices` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             `poll_id` varchar(32) NOT NULL,
             `option` varchar(32) NOT NULL,
-            `sort` tinyint(4) NOT NULL
+            `sort` tinyint(3) UNSIGNED NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
         echo '<li>Creating "entries" table</li>';
         $connection->execute('CREATE TABLE `entries` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
-            `choice_id` INT NOT NULL,
-            `user_id` INT NOT NULL,
-            `value` tinyint(4) NOT NULL
+            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `choice_id` INTEGER UNSIGNED NOT NULL,
+            `user_id` INTEGER UNSIGNED NOT NULL,
+            `value` tinyint(3) UNSIGNED NOT NULL
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
         echo '<li>Creating "users" table</li>';
         $connection->execute('CREATE TABLE `users` (
-            `id` INT AUTO_INCREMENT PRIMARY KEY,
+            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             `name` varchar(32) NOT NULL,
             `role` varchar(16) DEFAULT "",
             `password` varchar(255) DEFAULT "",
             `info` varchar(255) DEFAULT ""
           ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
-        echo '<ul><li>Creating default admin user</li></ul>';
+        echo '<li><ul><li>Creating default admin user</li></ul></li>';
         $connection->execute('INSERT INTO `users` (`name`, `role`, `password`) VALUES
         ("admin", "admin", "$2y$10$YW0XBpcu4RoiUR5tW/rImuChkO1h8LDyecm6F1/Cty5QhJrwP958e");');
 

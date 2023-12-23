@@ -23,12 +23,9 @@
 
 ## Requirements
 - PHP 7.4 or higher (including intl and mbstring extension)
-- One of the following databases:
+- A "MySql compatible" database:
   - MySql (5.6 or higher)
   - MariaDB (5.6 or higher)
-  - PostgreSQL (9.4 or higher)
-  - Microsoft SQL Server (2012 or higher)
-  - SQLite 3
 
 ## Installation
 - Create an empty MySql database on your server, note down the DB host address, user name and password
