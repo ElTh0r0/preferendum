@@ -133,6 +133,11 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['post', 'deleteBackendUser']);
 
+        if (self::DEMOMODE) {
+            $this->Flash->error(__('DEMO MODE enabled! User deletion is not possible!'));
+            return $this->redirect(['action' => 'index']);
+        }
+
         $currentUserRole = $this->Authentication->getIdentity();
         $currentUserRole = $currentUserRole->getOriginalData()['role'];
         if (strcmp($currentUserRole, self::ROLES[0]) == 0) {

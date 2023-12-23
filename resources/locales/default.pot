@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-12-22 18:47+0100\n"
+"POT-Creation-Date: 2023-12-23 16:00+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -67,7 +67,7 @@ msgstr ""
 #: ./src/Controller/EntriesController.php:32
 #: ./src/Controller/EntriesController.php:108
 #: ./src/Controller/EntriesController.php:122
-#: ./src/Controller/EntriesController.php:186
+#: ./src/Controller/EntriesController.php:189
 msgid "Unable to save your entry."
 msgstr ""
 
@@ -86,11 +86,11 @@ msgstr ""
 msgid "Copy link to clipboard!"
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:265
+#: ./src/Controller/EntriesController.php:268
 msgid "New entry in poll \"{0}\""
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:267
+#: ./src/Controller/EntriesController.php:270
 msgid "Updated entry in poll \"{0}\""
 msgstr ""
 
@@ -210,19 +210,23 @@ msgstr ""
 msgid "Unable to add the user."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:142
-msgid "User has been deleted."
+#: ./src/Controller/UsersController.php:137
+msgid "DEMO MODE enabled! User deletion is not possible!"
 msgstr ""
 
 #: ./src/Controller/UsersController.php:147
+msgid "User has been deleted."
+msgstr ""
+
+#: ./src/Controller/UsersController.php:152
 msgid "User {0} has NOT been deleted!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:168
+#: ./src/Controller/UsersController.php:173
 msgid "Entry has been deleted."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:173
+#: ./src/Controller/UsersController.php:178
 msgid "Entry has NOT been deleted!"
 msgstr ""
 
@@ -284,7 +288,7 @@ msgstr ""
 
 #: ./templates/Admin/index.php:130
 #: ./templates/element/poll/add-form.php:305
-#: ./templates/element/poll/edit-form.php:245
+#: ./templates/element/poll/edit-form.php:248
 msgid "Expiry date"
 msgstr ""
 
@@ -482,7 +486,7 @@ msgstr ""
 
 #: ./templates/element/choice/edit.php:136
 #: ./templates/element/comment/new.php:54
-#: ./templates/element/entry/edit.php:87
+#: ./templates/element/entry/edit.php:91
 #: ./templates/element/entry/new.php:59
 msgid "Save"
 msgstr ""
@@ -517,7 +521,7 @@ msgstr ""
 msgid "Your name?"
 msgstr ""
 
-#: ./templates/element/entry/edit.php:97
+#: ./templates/element/entry/edit.php:101
 #: ./templates/element/entry/new.php:69
 msgid "Optional: Contact info"
 msgstr ""
@@ -645,11 +649,12 @@ msgid "Email for receiving entry/comment/poll links"
 msgstr ""
 
 #: ./templates/element/poll/add-form.php:297
+#: ./templates/element/poll/edit-form.php:232
 msgid "Attention: If no admin link is used, the email address is visible for everyone!"
 msgstr ""
 
 #: ./templates/element/poll/add-form.php:316
-#: ./templates/element/poll/edit-form.php:256
+#: ./templates/element/poll/edit-form.php:259
 msgid "Poll is automatically locked on expiry date"
 msgstr ""
 
@@ -673,7 +678,7 @@ msgstr ""
 msgid "Email for receiving new entry/comment"
 msgstr ""
 
-#: ./templates/element/poll/edit-form.php:277
+#: ./templates/element/poll/edit-form.php:280
 msgid "Save changes"
 msgstr ""
 
