@@ -50,20 +50,24 @@ echo $this->Form->text(
 
 echo '</td>';
 
-foreach ($pollentries[$edituser] as $entry => $val) {
-    $value = 'maybe';
+for ($i = 0; $i < sizeof($pollchoices); $i++) {
+    $entry = $pollchoices[$i]->id;
+    $val = $pollentries[$edituser][$pollchoices[$i]->id];
+
+    $txtvalue = 'maybe';
     switch ($val) {
         case 0:
-            $value = 'no';
+            $txtvalue = 'no';
             break;
         case 1:
-            $value = 'yes';
+            $txtvalue = 'yes';
             break;
         case 2:
-            $value = 'maybe';
+            $txtvalue = 'maybe';
             break;
     }
-    echo '<td class="new-entry-box new-entry-choice new-entry-choice-' . $value . '">';
+
+    echo '<td class="new-entry-box new-entry-choice new-entry-choice-' . $txtvalue . '">';
     echo $this->Form->hidden(
         'va',
         [
