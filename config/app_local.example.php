@@ -51,6 +51,8 @@ return [
     'Datasources' => [
         'default' => [
             'host' => 'localhost',
+            // Use Mysql::class or Postgres::class
+            'driver' => Mysql::class,
             /*
              * CakePHP will use the default DB port based on the driver selected
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
@@ -110,6 +112,7 @@ return [
         ],
     ],
 
+    // Email address which is shown as "From" in sent emails
     'Email' => [
         'default' => [
             'from' => 'you@localhost',
