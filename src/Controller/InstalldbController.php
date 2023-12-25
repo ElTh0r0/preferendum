@@ -20,9 +20,13 @@ namespace App\Controller;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
+use Cake\Auth\DefaultPasswordHasher;
 
 class InstalldbController extends AppController
 {
+    const DEFAULT_ADMIN_USER = 'admin';
+    const DEFAULT_ADMIN_PW = 'admin';
+
     public function index(): void
     {
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PREFERendum database setup</title>';
@@ -32,8 +36,10 @@ class InstalldbController extends AppController
 
         $this->checkEnvironment();
         $this->checkFilesystem();
-        $dbconnection = $this->checkDatabase();
-        $this->createTables($dbconnection);
+        \Cake\Core\Configure::load('app_local');
+        $dbdriver = \Cake\Core\Configure::read('Datasources.default.driver');
+        $dbconnection = $this->checkDatabase($dbdriver);
+        $this->createTables($dbconnection, $dbdriver);
 
         echo '<p class="success"><br>SETUP COMPLETED SUCCESSFULLY!</p>';
         echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';
@@ -112,9 +118,17 @@ class InstalldbController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function checkDatabase()
+    private function checkDatabase($dbdriver)
     {
         echo '<h4>Database</h4>';
+        if (
+            strcmp(strtolower($dbdriver), 'mysql') != 0 &&
+            strcmp(strtolower($dbdriver), 'postgres') != 0
+        ) {
+            echo '<li class="fail"><strong>Problem:</strong> Invalid SQL database driver selected in "app_local.php!<br>Only "Mysql" (for MySQL and MariaDB) and "Postgres" supported.</li>';
+            die;
+        }
+
         echo '<ul>';
         try {
             $connection = ConnectionManager::get('default');
@@ -137,10 +151,25 @@ class InstalldbController extends AppController
             die;
         }
 
-        $table = $connection->execute('SELECT IF( EXISTS(
-            SELECT *
-            FROM INFORMATION_SCHEMA.TABLES
-          WHERE TABLE_SCHEMA = "' . $connection->config()['database'] . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";')->fetchAll('assoc');
+        if (strcmp(strtolower($dbdriver), 'mysql') == 0) {
+            $table = $connection->execute(
+                'SELECT IF( EXISTS(
+                SELECT *
+                FROM INFORMATION_SCHEMA.TABLES
+                WHERE TABLE_SCHEMA = "' . $connection->config()['database'] . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";'
+            )->fetchAll('assoc');
+        } else if (strcmp(strtolower($dbdriver), 'postgres') == 0) {
+            $table = $connection->execute(
+                'SELECT EXISTS (
+                SELECT 1
+                FROM information_schema.tables
+                WHERE table_catalog = \'' . $connection->config()['database'] . '\' AND TABLE_NAME = \'polls\') as exists;'
+            )->fetchAll('assoc');
+        } else {
+            echo '<li class="fail"><strong>Problem:</strong> Invalid DB driver selected!</li>';
+            die;
+        }
+
         if ($table[0]['exists']) {
             echo '<li class="fail"><strong>Attention:</strong> Install script was already executed - stopping execution!</li>';
             die;
@@ -152,47 +181,33 @@ class InstalldbController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function createTables($connection)
+    private function createTables($connection, $dbdriver)
     {
         echo '<ul>';
-        echo '<li>Creating "comments" table</li>';
-        $connection->execute('CREATE TABLE `comments` (
-            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            `poll_id` varchar(32) NOT NULL,
-            `text` varchar(512) NOT NULL,
-            `name` varchar(32) NOT NULL,
-            `created` DATETIME NOT NULL
-          ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
 
-        echo '<li>Creating "choices" table</li>';
-        $connection->execute('CREATE TABLE `choices` (
-            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            `poll_id` varchar(32) NOT NULL,
-            `option` varchar(32) NOT NULL,
-            `sort` tinyint(3) UNSIGNED NOT NULL
-          ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+        if (strcmp(strtolower($dbdriver), 'mysql') == 0) {
+            $this->createMySqlTables($connection);
+        } else if (strcmp(strtolower($dbdriver), 'postgres') == 0) {
+            $this->createPostgresTables($connection);
+        }
 
-        echo '<li>Creating "entries" table</li>';
-        $connection->execute('CREATE TABLE `entries` (
-            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            `choice_id` INTEGER UNSIGNED NOT NULL,
-            `user_id` INTEGER UNSIGNED NOT NULL,
-            `value` tinyint(3) UNSIGNED NOT NULL
-          ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+        echo '<li>Creating default admin user</li>';
+        $query = $this->fetchTable('Users')->insertQuery()
+            ->insert(['name', 'role', 'password'])
+            ->values([
+                'name' => self::DEFAULT_ADMIN_USER,
+                'role' => 'admin',
+                'password' => (new DefaultPasswordHasher)->hash(self::DEFAULT_ADMIN_PW)
+            ])->execute();
+        echo '<li><ul><li>If Admin Interface is used, please change the default password after first login!</li></ul></li>';
 
-        echo '<li>Creating "users" table</li>';
-        $connection->execute('CREATE TABLE `users` (
-            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-            `name` varchar(32) NOT NULL,
-            `role` varchar(16) DEFAULT "",
-            `password` varchar(255) DEFAULT "",
-            `info` varchar(255) DEFAULT ""
-          ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+        echo '</ul>';
+    }
 
-        echo '<li><ul><li>Creating default admin user</li></ul></li>';
-        $connection->execute('INSERT INTO `users` (`name`, `role`, `password`) VALUES
-        ("admin", "admin", "$2y$10$YW0XBpcu4RoiUR5tW/rImuChkO1h8LDyecm6F1/Cty5QhJrwP958e");');
+    //------------------------------------------------------------------------
 
+    private function createMySqlTables($connection)
+    {
         echo '<li>Creating "polls" table</li>';
         $connection->execute('CREATE TABLE `polls` (
             `id` varchar(32) PRIMARY KEY,
@@ -207,12 +222,46 @@ class InstalldbController extends AppController
             `comment` tinyint(1) NOT NULL DEFAULT 0,
             `hidevotes` tinyint(1) NOT NULL DEFAULT 0,
             `pwprotect` tinyint(1) NOT NULL DEFAULT 0,
-            `expiry` DATE NOT NULL DEFAULT "0000-00-00",
+            `expiry` DATE DEFAULT NULL,
             `locked` tinyint(1) NOT NULL DEFAULT 0,
             `modified` DATETIME NOT NULL
-          ) ENGINE=InnoDB DEFAULT CHARSET=utf8;');
+        );');
 
-        echo '<li>Creating keys</li>';
+        echo '<li>Creating "comments" table</li>';
+        $connection->execute('CREATE TABLE `comments` (
+            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `poll_id` varchar(32) NOT NULL,
+            `text` varchar(512) NOT NULL,
+            `name` varchar(32) NOT NULL,
+            `created` DATETIME NOT NULL
+        );');
+
+        echo '<li>Creating "choices" table</li>';
+        $connection->execute('CREATE TABLE `choices` (
+            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `poll_id` varchar(32) NOT NULL,
+            `option` varchar(32) NOT NULL,
+            `sort` tinyint(3) UNSIGNED NOT NULL
+        );');
+
+        echo '<li>Creating "entries" table</li>';
+        $connection->execute('CREATE TABLE `entries` (
+            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `choice_id` INTEGER UNSIGNED NOT NULL,
+            `user_id` INTEGER UNSIGNED NOT NULL,
+            `value` tinyint(3) UNSIGNED NOT NULL
+        );');
+
+        echo '<li>Creating "users" table</li>';
+        $connection->execute('CREATE TABLE `users` (
+            `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            `name` varchar(32) NOT NULL,
+            `role` varchar(16) DEFAULT "",
+            `password` varchar(255) DEFAULT "",
+            `info` varchar(255) DEFAULT ""
+        );');
+
+        echo '<li>Creating key/index</li>';
         $connection->execute('ALTER TABLE `comments`
             ADD KEY `poll_id` (`poll_id`);');
         $connection->execute('ALTER TABLE `choices`
@@ -222,7 +271,7 @@ class InstalldbController extends AppController
         $connection->execute('ALTER TABLE `entries`
             ADD KEY `user_id` (`user_id`);');
 
-        echo '<li>Creating contraints</li>';
+        echo '<li>Creating constraints</li>';
         $connection->execute('ALTER TABLE `comments`
             ADD CONSTRAINT `fk_comm_pollid` FOREIGN KEY (`poll_id`) REFERENCES `polls` (`id`);');
         $connection->execute('ALTER TABLE `choices`
@@ -231,7 +280,79 @@ class InstalldbController extends AppController
             ADD CONSTRAINT `fk_entr_choiceid` FOREIGN KEY (`choice_id`) REFERENCES `choices` (`id`);');
         $connection->execute('ALTER TABLE `entries`
             ADD CONSTRAINT `fk_entr_userid` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);');
+    }
 
-        echo '</ul>';
+    //------------------------------------------------------------------------
+
+    private function createPostgresTables($connection)
+    {
+        echo '<li>Creating "polls" table</li>';
+        $connection->execute("CREATE TABLE polls (
+            id varchar(32) PRIMARY KEY,
+            adminid varchar(32) NOT NULL,
+            title varchar(256) NOT NULL,
+            details varchar(512) DEFAULT '',
+            email varchar(32) DEFAULT '',
+            emailentry BOOLEAN NOT NULL DEFAULT false,
+            emailcomment BOOLEAN NOT NULL DEFAULT false,
+            userinfo BOOLEAN NOT NULL DEFAULT false,
+            editentry BOOLEAN NOT NULL DEFAULT false,
+            comment BOOLEAN NOT NULL DEFAULT false,
+            hidevotes BOOLEAN NOT NULL DEFAULT false,
+            pwprotect BOOLEAN NOT NULL DEFAULT false,
+            expiry DATE DEFAULT NULL,
+            locked BOOLEAN NOT NULL DEFAULT false,
+            modified TIMESTAMP NOT NULL
+        );");
+
+        echo '<li>Creating "comments" table</li>';
+        $connection->execute("CREATE TABLE comments (
+            id SERIAL PRIMARY KEY,
+            poll_id varchar(32) NOT NULL,
+            text varchar(512) NOT NULL,
+            name varchar(32) NOT NULL,
+            created TIMESTAMP NOT NULL
+        );");
+
+        echo '<li>Creating "choices" table</li>';
+        $connection->execute("CREATE TABLE choices (
+            id SERIAL PRIMARY KEY,
+            poll_id varchar(32) NOT NULL,
+            option varchar(32) NOT NULL,
+            sort SMALLINT NOT NULL
+        );");
+
+        echo '<li>Creating "entries" table</li>';
+        $connection->execute('CREATE TABLE entries (
+            id SERIAL PRIMARY KEY,
+            choice_id INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            value SMALLINT NOT NULL
+        );');
+
+        echo '<li>Creating "users" table</li>';
+        $connection->execute("CREATE TABLE users (
+            id SERIAL PRIMARY KEY,
+            name varchar(32) NOT NULL,
+            role varchar(16) DEFAULT '',
+            password varchar(255) DEFAULT '',
+            info varchar(255) DEFAULT ''
+        );");
+
+        echo '<li>Creating key/index</li>';
+        $connection->execute('CREATE INDEX comm_poll_id on comments (poll_id);');
+        $connection->execute('CREATE INDEX choi_poll_id on choices (poll_id);');
+        $connection->execute('CREATE INDEX entr_choice_id on entries (choice_id);');
+        $connection->execute('CREATE INDEX entr_user_id on entries (user_id);');
+
+        echo '<li>Creating constraints</li>';
+        $connection->execute('ALTER TABLE comments
+            ADD CONSTRAINT fk_comm_pollid FOREIGN KEY (poll_id) REFERENCES polls (id);');
+        $connection->execute('ALTER TABLE choices
+            ADD CONSTRAINT fk_choi_pollid FOREIGN KEY (poll_id) REFERENCES polls (id);');
+        $connection->execute('ALTER TABLE entries
+            ADD CONSTRAINT fk_entr_choiceid FOREIGN KEY (choice_id) REFERENCES choices (id);');
+        $connection->execute('ALTER TABLE entries
+            ADD CONSTRAINT fk_entr_userid FOREIGN KEY (user_id) REFERENCES users (id);');
     }
 }

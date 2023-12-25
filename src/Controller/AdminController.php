@@ -170,7 +170,7 @@ class AdminController extends AppController
             ->contain(['Choices', 'Users'])
             ->where(['Users.name like'  => '%' . $search . '%'])
             ->select(['poll_id' => 'Choices.poll_id'])
-            ->group(['Users.id']);
+            ->group(['Users.id', 'Choices.poll_id']);
         $searchusers = $searchusers->all()->extract('poll_id');
         $foundVoters = array();
         foreach ($searchusers as $pid) {
@@ -209,7 +209,7 @@ class AdminController extends AppController
         $dbnumentries = $this->fetchTable('Entries')->find()
             ->contain(['Choices'])
             ->select(['Choices.poll_id'])
-            ->group(['user_id']);
+            ->group(['user_id', 'Choices.poll_id']);
         $dbnumentries = $dbnumentries->all();
         $numentries = array();
         foreach ($dbnumentries as $entry) {
@@ -266,7 +266,7 @@ class AdminController extends AppController
                 ->set(['locked' => 1])
                 ->where([
                     'locked' => 0,
-                    'expiry >' => '0000-00-00',
+                    'expiry IS NOT' => null,
                     'expiry <=' => FrozenTime::now()
                 ])
                 ->execute();

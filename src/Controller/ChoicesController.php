@@ -179,7 +179,7 @@ class ChoicesController extends AppController
             ->where(['poll_id' => $pollid])
             ->contain(['Users', 'Choices'])
             ->select(['user_id' => 'Users.id'])
-            ->group(['user_id']);
+            ->group(['Users.id']);
 
         foreach ($dbentries as $user) {
             $dbentry = $this->fetchTable('Entries')->newEmptyEntity();

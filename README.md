@@ -23,9 +23,10 @@
 
 ## Requirements
 - PHP 7.4 or higher (including intl and mbstring extension)
-- A "MySql compatible" database:
+- One of the following databases:
   - MySql (5.6 or higher)
   - MariaDB (5.6 or higher)
+  - PostgreSQL (9.4 or higher)
 
 ## Installation
 - Create an empty MySql database on your server, note down the DB host address, user name and password
@@ -39,7 +40,7 @@
   - Download [Composer](https://getcomposer.org/download/)
   - Run `composer install --no-dev`. The install command will download all needed dependencies.
 - In `config/app_local.php` change the following entries:
-  - Datasources\Default: Set host, username, password, database according to your environment.
+  - Datasources\Default: Set host, driver ('**Mysql**' for MySql/MariaDB or '**Postgres**' for PostgreSQL) username, password, database according to your environment.
   - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).
 - In `config/preferendum_features.php` configure the features as needed.
 - Upload the `preferendum` directory to your web server (root-directory or somewhere else)

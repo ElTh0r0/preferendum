@@ -27,6 +27,7 @@ return [
 
     'preferendum' => [
         // Turn on(true)/off(false) admin interface
+        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/5-Admin-interface
         'adminInterface' => false,
         // Turn on(true)/off(false) that only 'admin' or 'polladmin' users can create polls
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
@@ -60,6 +61,7 @@ return [
         // Send an email after new poll entry/comment or email with poll links after poll creation
         // After enabling this feature, it can be dis-/enabled for each poll separately and receiver can be defined.
         // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
+        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/3.1-Email-setup
         'opt_SendEntryEmail' => false,
         'opt_SendCommentEmail' => false,
         'opt_SendPollCreationEmail' => false,
@@ -88,11 +90,13 @@ return [
         'dateformatComments' => 'Y-m-d h:i a',
 
         // Lifespan (in days) of expired polls (0 = disabled at all)
-        // (read README.md for further instructions if cronjob shall be used)
+        // See wiki for further instructions if cronjob shall be used:
+        // https://github.com/ElTh0r0/preferendum/wiki/3.2-Cronjob
         'deleteExpiredPollsAfter' => 0,
 
         // Lifespan (in days) of inactive polls (0 = disabled at all)
-        // (read README.md for further instructions if cronjob shall be used)
+        // See wiki for further instructions if cronjob shall be used:
+        // https://github.com/ElTh0r0/preferendum/wiki/3.2-Cronjob
         'deleteInactivePollsAfter' => 0,
 
         // Header Logo (set to true if you want to show header logo, false otherwise)

@@ -547,7 +547,7 @@ class PollsController extends AppController
             echo "This will delete every poll that has expired" . PHP_EOL . "since " . $minDateExpired . " (for at least " . $rmExpiredAfter . " days):" . PHP_EOL;
         }
         $trash = $this->Polls->find('all')->where([
-            'expiry >' => '0000-00-00', 'expiry <' => $minDateExpired
+            'expiry IS NOT' => null, 'expiry <' => $minDateExpired
         ]);
         $trash = $trash->all()->toArray();
 
@@ -589,7 +589,7 @@ class PollsController extends AppController
             ->where(['poll_id' => $poll->id])
             ->contain(['Users', 'Choices'])
             ->select(['user_id' => 'Users.id'])
-            ->group(['user_id'])->all();
+            ->group(['Users.id'])->all();
         $users = array();
         foreach ($dbusers as $usr) {
             $users[] = $usr['user_id'];
@@ -809,7 +809,8 @@ class PollsController extends AppController
             ->where(['poll_id' => $pollid])
             ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
             ->contain(['Users'])
-            ->select(['choice_id', 'value', 'name' => 'Users.name', 'user_id' => 'Users.id', 'user_pw' => 'Users.password', 'user_info' => 'Users.info']);
+            ->select(['choice_id', 'value', 'name' => 'Users.name', 'user_id' => 'Users.id', 'user_pw' => 'Users.password', 'user_info' => 'Users.info'])
+            ->order(['user_id' => 'ASC']);
 
         return $dbentries;
     }
@@ -844,7 +845,7 @@ class PollsController extends AppController
             // $poll->expiry <= FrozenTime::now() ||
             $poll->hasexp == 0
         ) {
-            $poll->expiry = '0000-00-00';
+            $poll->expiry = null;
         }
     }
 
@@ -860,7 +861,7 @@ class PollsController extends AppController
                     ->where([
                         'id' => $pollid,
                         'locked' => 0,
-                        'expiry >' => '0000-00-00',
+                        'expiry IS NOT' => null,
                         'expiry <=' => FrozenTime::now()
                     ])
                     ->execute();
