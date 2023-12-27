@@ -22,15 +22,15 @@ use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\Auth\DefaultPasswordHasher;
 
-class InstalldbController extends AppController
+class DbController extends AppController
 {
     const DEFAULT_ADMIN_USER = 'admin';
     const DEFAULT_ADMIN_PW = 'admin';
 
-    public function index(): void
+    public function install(): void
     {
         echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PREFERendum database setup</title>';
-        echo '<link rel="stylesheet" href="css/preferendum.css">';
+        echo '<link rel="stylesheet" href="../css/preferendum.css">';
         echo '</head>';
         echo '<body><p>Starting <strong>PREFERendum</strong> database setup...</p>';
 
@@ -38,22 +38,54 @@ class InstalldbController extends AppController
         $this->checkFilesystem();
         \Cake\Core\Configure::load('app_local');
         $dbdriver = \Cake\Core\Configure::read('Datasources.default.driver');
-        $dbconnection = $this->checkDatabase($dbdriver);
+        $dbconnection = $this->checkDbConnection($dbdriver);
+        if ($this->isAlreadyInstalled($dbconnection, $dbdriver)) {
+            echo '<ul><li class="fail"><strong>Attention:</strong> Install script was already executed - stopping execution!</li></ul>';
+            die;
+        }
         $this->createTables($dbconnection, $dbdriver);
 
         echo '<p class="success"><br>SETUP COMPLETED SUCCESSFULLY!</p>';
-        echo '<strong>!!! Please delete "src/Controller/InstalldbController.php" !!!</strong>';
+        echo '<strong>!!! Please delete "src/Controller/DbController.php" !!!</strong>';
         echo '</body></html>';
 
         $this->autoRender = false;
     }
 
     //------------------------------------------------------------------------
+    /*
+    public function update(): void
+    {
+        echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PREFERendum database update</title>';
+        echo '<link rel="stylesheet" href="../css/preferendum.css">';
+        echo '</head>';
+        echo '<body><p>Starting <strong>PREFERendum</strong> database update...</p>';
+
+        $this->checkEnvironment();
+        $this->checkFilesystem();
+        \Cake\Core\Configure::load('app_local');
+        $dbdriver = \Cake\Core\Configure::read('Datasources.default.driver');
+        $dbconnection = $this->checkDbConnection($dbdriver);
+        if (!$this->isAlreadyInstalled($dbconnection, $dbdriver)) {
+            echo '<ul><li class="fail"><strong>Attention:</strong> PREFERendum seems not to be installed - stopping execution!</li></ul>';
+            die;
+        }
+        //$this->updateTables($dbconnection, $dbdriver);
+
+        echo '<p class="success"><br>UPDATE COMPLETED SUCCESSFULLY!</p>';
+        echo '<strong>!!! Please delete "src/Controller/DbController.php" !!!</strong>';
+        echo '</body></html>';
+
+        $this->autoRender = false;
+    }
+    */
+    //------------------------------------------------------------------------
 
     private function checkEnvironment()
     {
         echo '<h4>Environment</h4>';
         echo '<ul>';
+
         if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
             echo '<li class="success">Your version of PHP is 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
         } else {
@@ -83,6 +115,7 @@ class InstalldbController extends AppController
             echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the intl extension loaded.</li>';
             die;
         }
+
         echo '</ul>';
     }
 
@@ -92,6 +125,7 @@ class InstalldbController extends AppController
     {
         echo '<h4>Filesystem</h4>';
         echo '<ul>';
+
         if (is_writable(TMP)) {
             echo '<li class="success">Your tmp directory is writable.</li>';
         } else {
@@ -113,12 +147,13 @@ class InstalldbController extends AppController
             echo '<li class="fail"><strong>Problem:</strong> Your cache is NOT working. Please check the settings in config/app.php</li>';
             die;
         }
+
         echo '</ul>';
     }
 
     //------------------------------------------------------------------------
 
-    private function checkDatabase($dbdriver)
+    private function checkDbConnection($dbdriver)
     {
         echo '<h4>Database</h4>';
         if (
@@ -151,19 +186,30 @@ class InstalldbController extends AppController
             die;
         }
 
+        echo '</ul>';
+        return $connection;
+    }
+
+    //------------------------------------------------------------------------
+
+    private function isAlreadyInstalled($connection, $dbdriver)
+    {
+        echo '<ul>';
+
+        $isInstalled = false;
         if (strcmp(strtolower($dbdriver), 'mysql') == 0) {
             $table = $connection->execute(
                 'SELECT IF( EXISTS(
-                SELECT *
-                FROM INFORMATION_SCHEMA.TABLES
-                WHERE TABLE_SCHEMA = "' . $connection->config()['database'] . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";'
+                    SELECT *
+                    FROM INFORMATION_SCHEMA.TABLES
+                    WHERE TABLE_SCHEMA = "' . $connection->config()['database'] . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";'
             )->fetchAll('assoc');
         } else if (strcmp(strtolower($dbdriver), 'postgres') == 0) {
             $table = $connection->execute(
                 'SELECT EXISTS (
-                SELECT 1
-                FROM information_schema.tables
-                WHERE table_catalog = \'' . $connection->config()['database'] . '\' AND TABLE_NAME = \'polls\') as exists;'
+                    SELECT 1
+                    FROM information_schema.tables
+                    WHERE table_catalog = \'' . $connection->config()['database'] . '\' AND TABLE_NAME = \'polls\') as exists;'
             )->fetchAll('assoc');
         } else {
             echo '<li class="fail"><strong>Problem:</strong> Invalid DB driver selected!</li>';
@@ -171,12 +217,11 @@ class InstalldbController extends AppController
         }
 
         if ($table[0]['exists']) {
-            echo '<li class="fail"><strong>Attention:</strong> Install script was already executed - stopping execution!</li>';
-            die;
+            $isInstalled = true;
         }
-        echo '</ul>';
 
-        return $connection;
+        echo '</ul>';
+        return $isInstalled;
     }
 
     //------------------------------------------------------------------------

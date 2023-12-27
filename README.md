@@ -44,8 +44,8 @@
   - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).
 - In `config/preferendum_features.php` configure the features as needed.
 - Upload the `preferendum` directory to your web server (root-directory or somewhere else)
-- Access `<your installation folder>/installdb` through your browser (e.g. `yourdomain.com/preferendum/installdb`)
-- Delete `src/Controller/InstalldbController.php` from your server
+- Access `<your installation folder>/Db/install` through your browser (e.g. `yourdomain.com/preferendum/Db/install`)
+- Delete `src/Controller/DbController.php` from your server
 - Enjoy!
 
 ## Configuration and customization
