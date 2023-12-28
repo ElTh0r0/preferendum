@@ -107,7 +107,7 @@ msgstr "Aktualisierter Eintrag in Umfrage \"{0}\""
 
 #: ./src/Controller/PollsController.php:41
 msgid "File \"src/Controller/DbController.php\" should be removed!"
-msgstr "Datei \\\"src/Controller/DbController.php\\\" sollte gelöscht werden!"
+msgstr "Datei \"src/Controller/DbController.php\" sollte gelöscht werden!"
 
 #: ./src/Controller/PollsController.php:118
 #: ./src/Controller/PollsController.php:129
