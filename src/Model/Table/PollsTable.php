@@ -88,11 +88,11 @@ class PollsTable extends Table
     public function beforeSave(EventInterface $event, $entity, $options)
     {
         if ($entity->isNew() && !$entity->id) {
-            $entity->id = hash("crc32", time() . $entity->title);
+            $entity->id = hash("crc32", time() . random_bytes(5) . $entity->title);
             if ($entity->adminid != true) {
                 $entity->adminid = "NA";
             } else {
-                $entity->adminid = hash("crc32", time() . $entity->title . "admin");
+                $entity->adminid = hash("crc32", time() . random_bytes(5) . $entity->title . "admin");
             }
         }
     }

@@ -32,13 +32,13 @@ class PollsController extends AppController
     {
         parent::initialize();
 
-        // Show warning on main page if InstallDb script still exists
+        // Show warning on main page if DB setup script still exists
         $base = $this->request->getUri()->getPath();
         if (
             $base == '/' &&
-            file_exists(APP . 'Controller/InstalldbController.php')
+            file_exists(APP . 'Controller/DbController.php')
         ) {
-            $this->Flash->error(__('File "src/Controller/InstalldbController.php" should be removed!'));
+            $this->Flash->error(__('File "src/Controller/DbController.php" should be removed!'));
         }
     }
 
@@ -62,6 +62,12 @@ class PollsController extends AppController
                 $newpoll->hidevotes = 0;
                 $newpoll->editentry = 0;
                 $newpoll->userinfo = 0;
+            }
+            if ($newpoll->anonymous) {
+                $newpoll->userinfo = 0;
+            }
+            if ($newpoll->userinfo) {
+                $newpoll->anonymous = 0;
             }
 
             $pollpw = '';

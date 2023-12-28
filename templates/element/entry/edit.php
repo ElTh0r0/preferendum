@@ -36,19 +36,24 @@ echo $this->Form->create(
         'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid]
     ]
 );
-echo '<td class="schedule-name-input">';
-echo $this->Form->text(
-    'name',
-    [
-        'id' => 'name-input',
-        'required' => 'true',
-        'maxlength' => '32',
-        'placeholder' => __('Your name?'),
-        'default' => $edituser,
-    ]
-);
 
-echo '</td>';
+if ($poll->anonymous) {
+    $editrow = array_search($userpw, array_values($usermap_pw)) + 1;
+    echo '<td class="schedule-names">' . __('Edit entry') . ' #' . $editrow . '</td>';
+} else {
+    echo '<td class="schedule-name-input">';
+    echo $this->Form->text(
+        'name',
+        [
+            'id' => 'name-input',
+            'required' => 'true',
+            'maxlength' => '32',
+            'placeholder' => __('Your name?'),
+            'default' => $edituser,
+        ]
+    );
+    echo '</td>';
+}
 
 for ($i = 0; $i < sizeof($pollchoices); $i++) {
     $entry = $pollchoices[$i]->id;

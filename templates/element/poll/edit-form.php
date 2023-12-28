@@ -97,7 +97,8 @@ if (
 if (
     $prefconf['opt_CollectUserinfo'] &&
     $prefconf['adminInterface'] &&
-    strcmp($poll->adminid, "NA") != 0
+    strcmp($poll->adminid, "NA") != 0 &&
+    !$poll->anonymous
 ) {
     echo '<li>';
     echo $this->Form->checkbox(

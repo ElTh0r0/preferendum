@@ -205,6 +205,9 @@
                         if ($poll->pwprotect) {
                             echo '<img src="img/icon-password.png" title="' . __('Poll is password protected') . '"> ';
                         }
+                        if ($poll->anonymous) {
+                            echo '<img src="img/icon-anon.png" title="' . __('Poll is anonymously') . '"> ';
+                        }
                         if ($poll->locked) {
                             echo '<img src="img/icon-locked.png" title="' . __('Poll locked') . '"> ';
                         }

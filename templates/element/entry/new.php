@@ -22,18 +22,22 @@ echo $this->Form->create(
         'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id]
     ]
 );
-echo '<td class="schedule-name-input">';
-echo $this->Form->text(
-    'name',
-    [
-        'id' => 'name-input',
-        'required' => 'true',
-        'maxlength' => '32',
-        'placeholder' => __('Your name?'),
-    ]
-);
 
-echo '</td>';
+if ($poll->anonymous) {
+    echo '<td class="schedule-blank"></td>';
+} else {
+    echo '<td class="schedule-name-input">';
+    echo $this->Form->text(
+        'name',
+        [
+            'id' => 'name-input',
+            'required' => 'true',
+            'maxlength' => '32',
+            'placeholder' => __('Your name?'),
+        ]
+    );
+    echo '</td>';
+}
 
 foreach ($pollchoices as $opt) {
     echo '<td class="new-entry-box new-entry-choice new-entry-choice-maybe">';

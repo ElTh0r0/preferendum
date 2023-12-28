@@ -21,7 +21,11 @@ $cnt = 0;
 foreach ($pollentries as $name => $entry) {
     $cnt++;
     echo '<tr class="valign-middle">';
-    echo '<td class="schedule-names">' . h($name) . '</td>';
+    if ($poll->anonymous) {
+        echo '<td class="schedule-names">' . $cnt . '</td>';
+    } else {
+        echo '<td class="schedule-names">' . h($name) . '</td>';
+    }
 
     for ($i = 0; $i < sizeof($pollchoices); $i++) {
         $value = 'maybe';

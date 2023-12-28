@@ -55,6 +55,9 @@ return [
         // (This feature can only be used, if 'adminInterface' is enabled and if admin link is used for the poll)
         'opt_CollectUserinfo' => false,
 
+        // Add (optional) field to make a poll with anonymous votes (no user name stored/shown)
+        'opt_AnonymousVotes' => false,
+
         // Add (optional) field to protect access to poll with a password
         'opt_PollPassword' => false,
 

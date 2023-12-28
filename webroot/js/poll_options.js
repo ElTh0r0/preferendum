@@ -43,6 +43,7 @@ var chkHideVotes = document.getElementById("hidevotesinput");
 var chkEditEntry = document.getElementById("editentryinput");
 var chkUserInfo = document.getElementById("userinfoinput");
 var emailWarning = document.getElementById("emailwarn");
+var chkAnonymous = document.getElementById("anonymousinput");
 function toggleAdminLinkInput() {
     if (chkHideVotes) {
         chkHideVotes.disabled = !chkAdminLink.checked;
@@ -66,6 +67,11 @@ function toggleAdminLinkInput() {
         if (chkUserInfo.disabled) {
             chkUserInfo.checked = false;
         }
+        if (chkAnonymous) {
+            if (!chkUserInfo.checked) {
+                chkAnonymous.disabled = false;
+            }
+        }
     }
 
     if (emailWarning) {
@@ -73,6 +79,17 @@ function toggleAdminLinkInput() {
             emailWarning.style.display = "block"
         } else {
             emailWarning.style.display = "none"
+        }
+    }
+}
+
+//enable/disable anonymous poll if collect user info is checked
+function toggleUserinfoInput() {
+    if (chkAnonymous) {
+        chkAnonymous.disabled = chkUserInfo.checked;
+
+        if (chkAnonymous.disabled) {
+            chkAnonymous.checked = false;
         }
     }
 }

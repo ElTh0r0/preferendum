@@ -33,13 +33,19 @@ class EntriesController extends AppController
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
-            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo', 'editentry'])->firstOrFail();
+            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo', 'anonymous', 'editentry'])->firstOrFail();
             $dbtitle = $db['title'];
             $dblocked = $db['locked'];
             $dbuserinfo = $db['userinfo'];
+            $dbanonymous = $db['anonymous'];
             $dbemail = $db['email'];
             $dbemailentry = $db['emailentry'];
             $dbeditentry = $db['editentry'];
+
+            if ($dbanonymous) {
+                // Temporary name; will be renamed to _UserID once user was saved
+                $newentry['name'] = 'Tmp_' . $pollid . '_' . hash("crc32", 'TEMP' . time() . '_' . random_bytes(10));
+            }
 
             if (!$this->isNameAlreadyUsed($pollid, trim($newentry['name'])) && !($dblocked)) {
                 $userinfo = '';
@@ -50,7 +56,7 @@ class EntriesController extends AppController
                 $new_user = $this->fetchTable('Users')->newEmptyEntity();
                 $new_user = $this->fetchTable('Users')->newEntity([
                     'name' => trim($newentry['name']),
-                    'password' => hash("crc32", trim($newentry['name']) . time() . trim($newentry['name'])),
+                    'password' => hash("crc32", trim($newentry['name']) . time() . random_bytes(5) . trim($newentry['name'])),
                     'info' => $userinfo
                 ]);
 
@@ -58,23 +64,28 @@ class EntriesController extends AppController
                 if ($this->fetchTable('Users')->save($new_user)) {
                     $success = true;
 
-                    // Save each entry
-                    for ($i = 0; $i < sizeof($newentry['choices']); $i++) {
-                        $dbentry = $this->Entries->newEmptyEntity();
-                        $dbentry = $this->Entries->newEntity(
-                            [
-                                'choice_id' => $newentry['choices'][$i],
-                                'user_id' => $new_user->id,
-                                'value' => trim($newentry['values'][$i])
-                            ]
-                        );
+                    if ($dbanonymous) {
+                        // Rename to Anon_PollID_UserID
+                        $this->fetchTable('Users')->patchEntity($new_user, ['name' => 'Anon_' . $pollid . '_' . $new_user->id]);
+                        $success = $this->fetchTable('Users')->save($new_user);
+                    }
 
-                        if (!$this->Entries->save($dbentry)) {
-                            // Rollback: Delete user and already created entries (by dependency)
-                            $this->fetchTable('Users')->delete($new_user);
+                    if ($success) {
+                        // Save each entry
+                        for ($i = 0; $i < sizeof($newentry['choices']); $i++) {
+                            $dbentry = $this->Entries->newEmptyEntity();
+                            $dbentry = $this->Entries->newEntity(
+                                [
+                                    'choice_id' => $newentry['choices'][$i],
+                                    'user_id' => $new_user->id,
+                                    'value' => trim($newentry['values'][$i])
+                                ]
+                            );
 
-                            $success = false;
-                            break;
+                            if (!$this->Entries->save($dbentry)) {
+                                $success = false;
+                                break;
+                            }
                         }
                     }
                 }
@@ -99,9 +110,14 @@ class EntriesController extends AppController
                                 ]
                             ]
                         );
+                    } else {
+                        $this->Flash->success(__('Your entry has been saved!'));
                     }
 
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+                } else {
+                    // Rollback: Delete user and already created entries (by dependency)
+                    $this->fetchTable('Users')->delete($new_user);
                 }
             }
         }
@@ -123,16 +139,20 @@ class EntriesController extends AppController
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
-            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'adminid', 'locked', 'email', 'emailentry', 'userinfo', 'editentry'])->firstOrFail();
+            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'adminid', 'locked', 'email', 'emailentry', 'userinfo', 'anonymous', 'editentry'])->firstOrFail();
             $dbtitle = $db['title'];
             $dbadmid = $db['adminid'];
             $dblocked = $db['locked'];
             $dbuserinfo = $db['userinfo'];
+            $dbanonymous = $db['anonymous'];
             $dbemail = $db['email'];
             $dbemailentry = $db['emailentry'];
             $dbeditallowed = $db['editentry'];
 
             $dbuser = $this->fetchTable('Users')->findById($userid)->firstOrFail();
+            if ($dbanonymous) {
+                $editentry['name'] = $dbuser['name'];
+            }
 
             if (
                 ((!($dblocked) && $dbeditallowed && strcmp($dbuser['password'], $userpw) == 0) ||  // User changes own entry

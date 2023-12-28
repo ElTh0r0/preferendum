@@ -156,9 +156,27 @@ if (
         [
             'value' => 'true',
             'id' => 'userinfoinput',
+            'onchange' => 'toggleUserinfoInput()',
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Collect user contact information') . '</span>';
+    echo '</li>';
+}
+
+// --------------------------------------------------------------
+// Anonymous vote
+if (
+    $prefconf['opt_AnonymousVotes']
+) {
+    echo '<li>';
+    echo $this->Form->checkbox(
+        'anonymous',
+        [
+            'value' => 'true',
+            'id' => 'anonymousinput',
+        ]
+    );
+    echo '<span style="font-size: 90%;">' . __('Anonymous poll (no user name stored/shown)') . '</span>';
     echo '</li>';
 }
 
