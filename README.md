@@ -29,7 +29,7 @@
   - PostgreSQL (9.4 or higher)
 
 ## Installation
-- Create an empty MySql database on your server, note down the DB host address, user name and password
+- Create an empty MariaDB/MySql/PostgreSQL database on your server, note down the DB host address, user name and password
 - Install option #1:
   - Download the latest PREFERendum release archive `preferendum_vX.X.X.zip` from [releases](https://github.com/ElTh0r0/preferendum/releases)
   - Extract the contents of the archive into a new directory (e.g. `preferendum` on your computer)
