@@ -18,7 +18,7 @@ echo __('From:') . ' ' . h($name) . "\r\n";
 echo __('Options:') . "\r\n";
 
 foreach ($entries as $entry) {
-    $val = '?';
+    $val = __('Maybe');
     if ($entry->value == 0) {
         $val = __('No');
     } else if ($entry->value == 1) {

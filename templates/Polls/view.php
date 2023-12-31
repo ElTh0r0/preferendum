@@ -25,6 +25,9 @@ echo 'var jspollid = ' . json_encode($poll->id) . ';';
 echo 'var jsadminid = ' . json_encode($adminid) . ';';
 echo 'var jsMini = ' . json_encode(__('Mini View')) . ';';
 echo 'var jsNormal = ' . json_encode(__('Normal View')) . ';';
+echo 'var jsNo = ' . json_encode(__('No')) . ';';
+echo 'var jsYes = ' . json_encode(__('Yes')) . ';';
+echo 'var jsMaybe = ' . json_encode(__('Maybe')) . ';';
 $this->Html->scriptEnd();
 ?>
 

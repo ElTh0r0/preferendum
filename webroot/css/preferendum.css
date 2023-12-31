@@ -9,7 +9,7 @@
     --color-font-secondary: #fff;
     --color-decorative: #a2a79e;
     --color-feedback-positive: #69b587;
-    --color-feedback-neutral: #aaa7a5;
+    --color-feedback-neutral: #c0a36d;
     --color-feedback-negative: #db5753;
     --poll-table-gutters: 2px;
     --border-radius-big: 6px;
@@ -605,7 +605,7 @@ td.schedule-entry-no {
 }
 
 td.schedule-entry-maybe {
-    background: var(--color-feedback-neutral) url(../img/icon-maybe.png)
+    background: var(--color-feedback-neutral) url(../img/icon-maybe2.png)
         no-repeat center center;
 }
 
@@ -799,7 +799,7 @@ tr.schedule-new td.new-entry-choice-yes {
 }
 
 tr.schedule-new td.new-entry-choice-maybe {
-    background: var(--color-feedback-neutral) url(../img/icon-maybe.png)
+    background: var(--color-feedback-neutral) url(../img/icon-maybe2.png)
         no-repeat center center;
 }
 

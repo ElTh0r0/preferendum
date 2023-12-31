@@ -403,7 +403,7 @@ class PollsController extends AppController
                                 $csvline[] = __('yes');
                                 break;
                             default:
-                                $csvline[] = '?';
+                                $csvline[] = __('maybe');
                         }
                     }
                     fputcsv($fp, $csvline);

@@ -60,19 +60,23 @@ for ($i = 0; $i < sizeof($pollchoices); $i++) {
     $val = $pollentries[$edituser][$pollchoices[$i]->id];
 
     $txtvalue = 'maybe';
+    $tdtitle = __('Maybe');
     switch ($val) {
         case 0:
             $txtvalue = 'no';
+            $tdtitle = __('No');
             break;
         case 1:
             $txtvalue = 'yes';
+            $tdtitle = __('Yes');
             break;
         case 2:
             $txtvalue = 'maybe';
+            $tdtitle = __('Maybe');
             break;
     }
 
-    echo '<td class="new-entry-box new-entry-choice new-entry-choice-' . $txtvalue . '">';
+    echo '<td class="new-entry-box new-entry-choice new-entry-choice-' . $txtvalue . '" title="' . $tdtitle . '">';
     echo $this->Form->hidden(
         'va',
         [

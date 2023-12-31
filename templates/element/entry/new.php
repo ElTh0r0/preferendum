@@ -40,12 +40,12 @@ if ($poll->anonymous) {
 }
 
 foreach ($pollchoices as $opt) {
-    echo '<td class="new-entry-box new-entry-choice new-entry-choice-maybe">';
+    echo '<td class="new-entry-box new-entry-choice new-entry-choice-no" title="' . __('No') . '">';
     echo $this->Form->hidden(
         'va',
         [
             'name' => 'values[]',
-            'value' => '2',
+            'value' => '0',
             'class' => 'entry-value',
         ]
     );
