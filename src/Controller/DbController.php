@@ -44,6 +44,7 @@ class DbController extends AppController
             die;
         }
         $this->createTables($dbconnection, $dbdriver);
+        $dbconnection->getDriver()->disconnect();
 
         echo '<p class="success"><br>SETUP COMPLETED SUCCESSFULLY!</p>';
         echo '<strong>!!! Please delete "src/Controller/DbController.php" !!!</strong>';
@@ -167,7 +168,7 @@ class DbController extends AppController
         echo '<ul>';
         try {
             $connection = ConnectionManager::get('default');
-            $connected = $connection->connect();
+            $connected = $connection->getDriver()->connect();
         } catch (Exception $connectionError) {
             $connected = false;
             $errorMsg = $connectionError->getMessage();

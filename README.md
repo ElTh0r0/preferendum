@@ -19,7 +19,7 @@
   - Poll **administration interface** for managing all the polls on the server
   - Simple user administration for admin interface
 
-![screenshot](https://user-images.githubusercontent.com/26674558/121807573-faaea200-cc54-11eb-838f-4d31639b0915.png)
+![Screenshot](https://github.com/ElTh0r0/preferendum/assets/26674558/8b45b2f3-7587-4784-8e7a-9255364492d1)
 
 ## Requirements
 - PHP 7.4 or higher (including intl and mbstring extension)
