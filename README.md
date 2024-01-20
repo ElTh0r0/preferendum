@@ -11,7 +11,9 @@
 - **Comments** section in every poll
 - **Mini View** feature (for very big poll tables)
 - **Customizable labels**: All the labels and texts can be set to custom strings, so you can even translate the interface to a language of your choice
-- **Customizable colors**: All the interface colors can easily be set to your preference (system-wide, that is, not for individual polls)
+- **Customizable colors**:
+  - All the interface colors can easily be set to your preference (system-wide, that is, not for individual polls)
+  - Toggle between light and dark color themes
 - Optional:
   - **Poll admin links** to restrict poll management to author
   - Receive email after new entry and/or comment
@@ -73,3 +75,4 @@ PREFERendum makes use of the following software/media and says **Thank you!** to
 - [/jquery/jquery](https://github.com/jquery/jquery)
 - [/zenorocha/clipboard.js](https://github.com/zenorocha/clipboard.js)
 - [Icons from iconmonstr.com](http://www.iconmonstr.com)
+- [JS light/dark theme toggle](https://whitep4nth3r.com/blog/best-light-dark-mode-theme-toggle-javascript/)

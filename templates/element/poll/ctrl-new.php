@@ -14,21 +14,6 @@
  */
 ?>
 
-<!-- MINI VIEW TOGGLE -->
-<button id="ctrl-mini-view" type="button" data-miniview="off">
-    <?php echo __('Mini View') ?>
-</button>
-<!-- EDIT POLL BUTTON -->
-<?php
-if (strcmp($poll->adminid, $adminid) == 0) {
-    echo $this->Html->link(
-        $this->Form->button(__('Edit'), ['type' => 'button', 'id' => 'ctrl-edit-poll']),
-        ['action' => 'edit', $poll->id, $adminid],
-        ['escape' => false]
-    );
-}
-?>
-
 <?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>
     <button type="button" class="themeToggle" data-theme-toggle>&nbsp;</button>
 <?php } ?>

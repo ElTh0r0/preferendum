@@ -58,4 +58,8 @@
         ['controller' => 'Admin', 'action' => 'logout'],
         ['escape' => false]
     ); ?>
+
+    <?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>
+        <button type="button" class="themeToggle" data-theme-toggle>&nbsp;</button>
+    <?php } ?>
 </div>

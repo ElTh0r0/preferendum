@@ -16,6 +16,9 @@
 
 <div>
     <?php echo $this->Flash->render() ?>
+    <?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>
+        <button type="button" class="themeToggle" data-theme-toggle>&nbsp;</button>
+    <?php } ?>
     <?php echo $this->Form->create() ?>
     <fieldset>
         <?php

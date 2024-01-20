@@ -39,6 +39,13 @@ $this->Html->scriptEnd();
     </div>
 <?php } ?>
 
+<!-- POLL CONTROLS -->
+<div id="poll-controls">
+    <div>
+        <?php echo $this->element('poll/ctrl-new'); ?>
+    </div>
+</div>
+
 <div class="center-box">
     <?php
     echo '<h1>' . __('Create a new poll ...') . '</h1>';

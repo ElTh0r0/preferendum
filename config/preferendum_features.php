@@ -102,6 +102,9 @@ return [
         // https://github.com/ElTh0r0/preferendum/wiki/3.2-Cronjob
         'deleteInactivePollsAfter' => 0,
 
+        // Enable switching light/dark theme
+        'toggleTheme' => true,
+
         // Header Logo (set to true if you want to show header logo, false otherwise)
         'headerLogo' => true,
         // Footer Text and Link

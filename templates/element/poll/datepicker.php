@@ -21,7 +21,7 @@ use Cake\I18n\I18n;
 $locale = I18n::getLocale();
 $locale = str_replace('_', '-', $locale);
 
-$this->Html->css('datepicker.min.css', ['block' => true]);
+$this->Html->css('datepicker.css', ['block' => true]);
 $this->Html->script('datepicker/datepicker.min.js', ['block' => true]);
 $this->Html->script('datepicker/datepicker.' . $locale . '.js', ['block' => true]);
 

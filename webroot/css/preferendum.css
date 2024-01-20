@@ -1,6 +1,13 @@
 /* ==== GLOBAL CSS CUSTOM PROPERTIES ==== */
 
 :root {
+    --poll-table-gutters: 2px;
+    --border-radius-big: 6px;
+    --border-radius-small: 3px;
+    --animation-duration: 0.1s;
+}
+  
+[data-theme="light"] {
     --color-background-primary: #fff;
     --color-background-secondary: #393e41;
     --color-background-secondary-hover: #575f63;
@@ -11,10 +18,19 @@
     --color-feedback-positive: #69b587;
     --color-feedback-neutral: #c0a36d;
     --color-feedback-negative: #db5753;
-    --poll-table-gutters: 2px;
-    --border-radius-big: 6px;
-    --border-radius-small: 3px;
-    --animation-duration: 0.1s;
+}
+
+[data-theme="dark"] {
+    --color-background-primary: #2b2b2b;
+    --color-background-secondary: #1f1f1f;
+    --color-background-secondary-hover: #575f63;
+    --color-background-comments: #393e41;
+    --color-font-primary: #fff;
+    --color-font-secondary: #e9e9e9;
+    --color-decorative: #a2a79e;
+    --color-feedback-positive: #69b587;
+    --color-feedback-neutral: #c0a36d;
+    --color-feedback-negative: #db5753;
 }
 
 /* ==== FONTS ==== */
@@ -100,31 +116,6 @@ em {
 
 .datepicker-container * {
     font-size: 16px;
-}
-
-.datepicker-top-left,
-.datepicker-top-right {
-    border-top-color: var(--color-decorative) !important;
-}
-
-.datepicker-top-left::before,
-.datepicker-top-right::before {
-    border-bottom-color: var(--color-decorative) !important;
-}
-
-.datepicker-panel > ul > li:hover {
-    background-color: #bbb !important;
-}
-
-.datepicker-panel > ul > li.picked,
-.datepicker-panel > ul > li.picked:hover {
-    color: var(--color-decorative) !important;
-}
-
-.datepicker-panel > ul > li.highlighted,
-.datepicker-panel > ul > li.highlighted:hover {
-    background-color: var(--color-decorative) !important;
-    color: var(--color-font-secondary) !important;
 }
 
 /* ==== TO BE CATEGORIZED AND SORTED ==== */
@@ -325,6 +316,15 @@ p.details {
     background-image: url("../img/icon-delete.png");
 }
 
+#poll-controls button.themeToggle {
+    background-image: url(../img/icon-moon.png);
+    background-position: center center !important;
+    padding: 8px 12px 8px 12px !important;
+}
+
+#poll-controls button.themeToggle--light {
+    background-image: url(../img/icon-sun.png);
+}
 
 #poll-container {
     overflow-x: auto;
