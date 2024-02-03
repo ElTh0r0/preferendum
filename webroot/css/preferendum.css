@@ -622,9 +622,18 @@ td.schedule-submit {
     height: 24px;
     border-top-right-radius: var(--border-radius-big);
     border-bottom-right-radius: var(--border-radius-big);
+    padding: 0 !important;
+}
+
+td.schedule-submit button {
+    height: 30px;
 }
 
 .schedule.mini td.schedule-submit {
+    height: 16px;
+}
+
+.schedule.mini td.schedule-submit button {
     height: 16px;
 }
 
