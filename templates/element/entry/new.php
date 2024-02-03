@@ -34,6 +34,7 @@ if ($poll->anonymous) {
             'required' => 'true',
             'maxlength' => '32',
             'placeholder' => __('Your name?'),
+            'autocomplete' => 'off',
         ]
     );
     echo '</td>';

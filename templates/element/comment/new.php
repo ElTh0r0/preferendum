@@ -37,6 +37,7 @@
             'maxlength' => '32',
             'type' => 'text',
             'label' => __('Your name') . ' *',
+            'autocomplete' => 'off',
         ]
     );
     echo $this->Form->control(

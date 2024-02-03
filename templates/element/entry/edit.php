@@ -50,6 +50,7 @@ if ($poll->anonymous) {
             'maxlength' => '32',
             'placeholder' => __('Your name?'),
             'default' => $edituser,
+            'autocomplete' => 'off',
         ]
     );
     echo '</td>';

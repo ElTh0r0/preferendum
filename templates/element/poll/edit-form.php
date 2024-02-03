@@ -227,6 +227,7 @@ if (
             'label' => '',
             'disabled' => (!$poll->emailentry && !$poll->emailcomment),
             'placeholder' => __('Email for receiving new entry/comment'),
+            'autocomplete' => 'email',
         ]
     );
     if (strcmp($poll->adminid, "NA") == 0) {

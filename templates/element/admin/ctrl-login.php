@@ -29,6 +29,7 @@
                 'label' => isset($pollid) ? '' : __('Name'),
                 'hidden' => isset($pollid),
                 'value' => isset($pollid) ? $pollid : '',
+                'autocomplete' => 'username',
             ]
         );
         ?>
@@ -37,7 +38,8 @@
             [
                 'required' => true,
                 'label' => __('Password'),
-                'type' => 'password'
+                'type' => 'password',
+                'autocomplete' => 'current-password',
             ]
         ); ?>
     </fieldset>

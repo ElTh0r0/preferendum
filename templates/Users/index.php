@@ -82,7 +82,8 @@
                 'name',
                 [
                     'required' => true,
-                    'label' => __('Name')
+                    'label' => __('Name'),
+                    'autocomplete' => 'off',
                 ]
             );
 

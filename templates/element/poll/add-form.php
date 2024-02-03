@@ -309,6 +309,7 @@ if (
             'label' => '',
             'disabled' => true,
             'placeholder' => __('Email for receiving entry/comment/poll links'),
+            'autocomplete' => 'email',
         ]
     );
     if (!$prefconf['alwaysUseAdminLinks']) {
