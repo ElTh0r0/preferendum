@@ -67,6 +67,9 @@ return function (RouteBuilder $routes): void {
         if (\Cake\Core\Configure::read('preferendum.exportCsv') == true) {
             $builder->connect('/polls/exportcsv/*', ['controller' => 'Polls', 'action' => 'exportcsv']);
         }
+        if (\Cake\Core\Configure::read('preferendum.opt_SendChangeEntryLink') == true) {
+            $builder->connect('/polls/sendpersonallink/*', ['controller' => 'Polls', 'action' => 'sendpersonallink']);
+        }
         $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
         $builder->connect('/polls/togglelock/*', ['controller' => 'Polls', 'action' => 'togglelock']);
         $builder->connect('/polls/update/*', ['controller' => 'Polls', 'action' => 'update']);

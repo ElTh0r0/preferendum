@@ -487,9 +487,24 @@ button.entry-copy-link {
     background-position: center center;
     border-top-right-radius: var(--border-radius-big);
     border-bottom-right-radius: var(--border-radius-big);
+    padding: 6px 15px 6px 15px !important;
 }
 
-.center-box input[type="text"] {
+button.entry-email-link {
+    margin-top: 0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-email2.png)
+        no-repeat;
+    background-position: center center;
+    border-top-right-radius: var(--border-radius-big);
+    border-bottom-right-radius: var(--border-radius-big);
+    padding: 6px 15px 6px 15px !important;
+}
+
+.center-box .message input[type="text"],
+.center-box .message input[type="email"] {
     font-size: inherit;
     height: 24px;
     white-space: nowrap;

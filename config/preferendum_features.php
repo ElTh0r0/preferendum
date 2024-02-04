@@ -42,6 +42,10 @@ return [
         // (This feature can only be used, if 'alwaysUseAdminLinks' OR 'opt_AdminLinks' is enabled and used, too.)
         'opt_AllowChangeEntry' => true,
 
+        // Turn on(true)/off(false) that users can send themselves their edit link by email
+        // (This feature can only be used, if 'opt_AllowChangeEntry' is used.)
+        'opt_SendChangeEntryLink' => false,
+
         // Turn on(true)/off(false) to allow comments for ALL polls.
         'alwaysAllowComments' => true,
         // If 'alwaysAllowComments' is disabled, turn on(true)/off(false) to allow comments optionally for each poll.
