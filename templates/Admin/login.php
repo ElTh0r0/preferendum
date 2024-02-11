@@ -20,3 +20,13 @@
         <?php echo $this->element('admin/ctrl-login'); ?>
     </div>
 </div>
+
+<?php
+if (isset($pollid)) { ?>
+    <div class="center-box">
+        <div class="message">
+            <?php echo __('This poll is password protected!') ?><br>
+            <?php echo __('Please enter the password and press "Login".') ?>
+        </div>
+    </div>
+<?php } ?>

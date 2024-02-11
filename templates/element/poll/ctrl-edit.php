@@ -64,6 +64,20 @@ echo $this->Form->postLink(
     ['action' => 'delete', $poll->id, $adminid],
     ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
 );
+
+if ($poll->pwprotect) {
+    echo $this->Form->postLink(
+        $this->Form->button(
+            __('Logout'),
+            [
+                'type' => 'button',
+                'id' => 'ctrl-logout',
+            ]
+        ),
+        ['controller' => 'Admin', 'action' => 'logout', $poll->id, $adminid],
+        ['escape' => false]
+    );
+}
 ?>
 
 <?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>

@@ -17,14 +17,12 @@
 <div id="header" class="right-to-left">
 
     <div id="info">
-        <!-- HEADER IS USED IN OTHER VIEW -->
-        <!-- On admin page $poll==Null / not set -->
         <?php
         $request = $this->request->getUri()->getPath();
-        if (str_contains($request, '/admin') || str_contains($request, '/users')) { ?>
+        if ((str_contains($request, '/admin') || str_contains($request, '/users')) && !isset($pollid)) { ?>
             <h1><?php echo __('Administration') ?></h1>
             <p class="details"></p>
-        <?php } elseif (!isset($poll) || $poll->isNew()) { ?>
+        <?php } else if (!isset($poll) || $poll->isNew() || isset($pollid)) { ?>
             <h1><?php echo __('PREFERendum') ?></h1>
             <p class="details"><?php echo __('scheduling polls') ?></p>
         <?php } else { ?>

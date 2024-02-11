@@ -27,6 +27,19 @@ if (strcmp($poll->adminid, $adminid) == 0) {
         ['escape' => false]
     );
 }
+if ($poll->pwprotect) {
+    echo $this->Form->postLink(
+        $this->Form->button(
+            __('Logout'),
+            [
+                'type' => 'button',
+                'id' => 'ctrl-logout',
+            ]
+        ),
+        ['controller' => 'Admin', 'action' => 'logout', $poll->id, $adminid],
+        ['escape' => false]
+    );
+}
 ?>
 
 <?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>

@@ -127,6 +127,10 @@ class AdminController extends AppController
         }
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
+            if (isset($pollid)) {
+                $this->Flash->error(__('Invalid poll password'));
+                return $this->redirect(['action' => 'login', $pollid, $polladmid]);
+            }
             $this->Flash->error(__('Invalid user or password'));
             return $this->redirect(['action' => 'login']);
         }
@@ -136,12 +140,15 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function logout()
+    public function logout($pollid = null, $polladmid = null)
     {
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             $this->Authentication->logout();
+        }
+        if (isset($pollid)) {
+            return $this->redirect(['action' => 'login', $pollid, $polladmid]);
         }
         return $this->redirect(['action' => 'login']);
     }
