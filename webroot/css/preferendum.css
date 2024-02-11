@@ -18,6 +18,16 @@
     --color-feedback-positive: #69b587;
     --color-feedback-neutral: #c0a36d;
     --color-feedback-negative: #db5753;
+
+    --color-background-flash-neutral: #eff8ff;
+    --color-border-flash-neutral: #6cb2eb;
+    --color-font-flash-neutral: #2779bd;
+    --color-background-flash-success: #e3fcec;
+    --color-border-flash-success: #51d88a;
+    --color-font-flash-success: #1f9d55;
+    --color-background-flash-error: #fcebea;
+    --color-border-flash-error: #ef5753;
+    --color-font-flash-error: #cc1f1a;
 }
 
 [data-theme="dark"] {
@@ -31,6 +41,16 @@
     --color-feedback-positive: #69b587;
     --color-feedback-neutral: #c0a36d;
     --color-feedback-negative: #db5753;
+
+    --color-background-flash-neutral: #eff8ff;
+    --color-border-flash-neutral: #6cb2eb;
+    --color-font-flash-neutral: #2779bd;
+    --color-background-flash-success: #e3fcec;
+    --color-border-flash-success: #51d88a;
+    --color-font-flash-success: #1f9d55;
+    --color-background-flash-error: #fcebea;
+    --color-border-flash-error: #ef5753;
+    --color-font-flash-error: #cc1f1a;
 }
 
 /* ==== FONTS ==== */
@@ -1113,10 +1133,10 @@ button.admin-view-userinfo {
 .message {
     padding: 1rem;
 
-    background: #eff8ff;
-    color: #2779bd;
+    background: var(--color-background-flash-neutral);
+    color: var(--color-font-flash-neutral);
 
-    border-color: #6cb2eb;
+    border-color: var(--color-border-flash-neutral);
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;
@@ -1128,13 +1148,13 @@ button.admin-view-userinfo {
 }
 
 .message.success {
-    background: #e3fcec;
-    color: #1f9d55;
-    border-color: #51d88a;
+    background: var(--color-background-flash-success);
+    color: var(--color-font-flash-success);
+    border-color: var(--color-border-flash-success);
 }
 
 .message.error {
-    background: #fcebea;
-    color: #cc1f1a;
-    border-color: #ef5753;
+    background: var(--color-background-flash-error);
+    color: var(--color-font-flash-error);
+    border-color: var(--color-border-flash-error);
 }
