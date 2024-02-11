@@ -15,8 +15,7 @@
 ?>
 <?php $this->assign('title', __('Poll administration')); ?>
 
-<!-- POLL CONTROLS -->
-<div id="poll-controls">
+<div id="control-elements">
     <div>
         <?php echo $this->element('admin/ctrl-logout'); ?>
     </div>

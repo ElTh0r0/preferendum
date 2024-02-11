@@ -33,8 +33,7 @@ echo 'var jsMaybe = ' . json_encode(__('Maybe')) . ';';
 $this->Html->scriptEnd();
 ?>
 
-<!-- POLL CONTROLS -->
-<div id="poll-controls">
+<div id="control-elements">
     <div>
         <?php echo $this->element('poll/ctrl-edit'); ?>
     </div>

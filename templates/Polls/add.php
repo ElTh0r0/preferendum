@@ -32,19 +32,18 @@ $this->Html->scriptEnd();
     \Cake\Core\Configure::read('preferendum.adminInterface') &&
     \Cake\Core\Configure::read('preferendum.restrictPollCreation')
 ) { ?>
-    <div id="poll-controls">
+    <div id="control-elements">
         <div>
             <?php echo $this->element('admin/ctrl-logout'); ?>
         </div>
     </div>
-<?php } ?>
-
-<!-- POLL CONTROLS -->
-<div id="poll-controls">
-    <div>
-        <?php echo $this->element('poll/ctrl-new'); ?>
+<?php } else { ?>
+    <div id="control-elements">
+        <div>
+            <?php echo $this->element('poll/ctrl-new'); ?>
+        </div>
     </div>
-</div>
+<?php } ?>
 
 <div class="center-box">
     <?php

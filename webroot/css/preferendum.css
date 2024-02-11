@@ -270,20 +270,20 @@ p.details {
     vertical-align: middle;
 }
 
-#poll-controls {
+#control-elements {
     margin-bottom: 0.5rem;
     text-align: right;
     border-top: 1.2rem solid var(--color-background-comments);
 }
 
-#poll-controls > div {
+#control-elements > div {
     display: inline-block;
     padding: 0 1.2rem 1.2rem 1.2rem;
     border-bottom-left-radius: var(--border-radius-big);
     background-color: var(--color-background-comments);
 }
 
-#poll-controls button {
+#control-elements button {
     margin: 0 0.5rem;
     cursor: pointer;
     background-color: var(--color-background-secondary);
@@ -292,37 +292,37 @@ p.details {
     padding-left: 36px;
 }
 
-#poll-controls button:hover {
+#control-elements button:hover {
     background-color: var(--color-background-secondary-hover);
 }
 
-#poll-controls button#ctrl-mini-view {
+#control-elements button#ctrl-mini-view {
     background-image: url("../img/icon-eye.png");
 }
 
-#poll-controls button#ctrl-edit-poll {
+#control-elements button#ctrl-edit-poll {
     background-image: url("../img/icon-pen.png");
 }
 
-#poll-controls button#ctrl-lock-poll {
+#control-elements button#ctrl-lock-poll {
     background-image: url("../img/icon-lock.png");
 }
 
-#poll-controls button#ctrl-export-poll {
+#control-elements button#ctrl-export-poll {
     background-image: url("../img/icon-download.png");
 }
 
-#poll-controls button#ctrl-delete-poll {
+#control-elements button#ctrl-delete-poll {
     background-image: url("../img/icon-delete.png");
 }
 
-#poll-controls button.themeToggle {
+#control-elements button.themeToggle {
     background-image: url(../img/icon-moon.png);
     background-position: center center !important;
     padding: 8px 12px 8px 12px !important;
 }
 
-#poll-controls button.themeToggle--light {
+#control-elements button.themeToggle--light {
     background-image: url(../img/icon-sun.png);
 }
 
@@ -971,15 +971,15 @@ button[type="button"]:disabled {
     padding: 4px 4px;
 }
 
-#poll-controls button#ctrl-usermanagement {
+#control-elements button#ctrl-usermanagement {
     background-image: url("../img/icon-user.png");
 }
 
-#poll-controls button#ctrl-logout {
+#control-elements button#ctrl-logout {
     background-image: url("../img/icon-logout.png");
 }
 
-#poll-controls button#ctrl-polls {
+#control-elements button#ctrl-polls {
     background-image: url("../img/icon-chart.png");
 }
 
