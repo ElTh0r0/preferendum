@@ -30,7 +30,7 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
-    public const ROLES = [
+    public const BACKENDROLES = [
         "admin",
         "polladmin",
         "viewer",

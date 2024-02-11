@@ -64,8 +64,8 @@ class AdminController extends AppController
         $numpolls = $this->fetchTable('Polls')->find('all')->count();
         $numentries = $this->getNumberOfEntries();
         $numcomments = $this->getNumberOfComments();
-        $adminRole = SELF::ROLES[0];
-        $polladmRole = SELF::ROLES[1];
+        $adminRole = SELF::BACKENDROLES[0];
+        $polladmRole = SELF::BACKENDROLES[1];
 
         $this->set(compact('polls', 'numpolls', 'numentries', 'numcomments', 'currentUserRole', 'adminRole', 'polladmRole'));
     }
@@ -105,7 +105,7 @@ class AdminController extends AppController
 
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            if (in_array($result->getData()['role'], self::ROLES)) {
+            if (in_array($result->getData()['role'], self::BACKENDROLES)) {
                 $this->checkExpiryAndLockPolls();  // ToDo: Move to cronjob ?!
 
                 // redirect after login success
@@ -154,7 +154,7 @@ class AdminController extends AppController
         $currentUserRole = $identity->getOriginalData()['role'];
 
         // Extra check needed since poll password using login credentials as well
-        if (!in_array($currentUserRole, self::ROLES)) {
+        if (!in_array($currentUserRole, self::BACKENDROLES)) {
             $this->Authentication->logout();
             return $this->redirect(['action' => 'login']);
         }

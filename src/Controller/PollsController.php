@@ -525,13 +525,13 @@ class PollsController extends AppController
         $this->loadComponent('Authentication.Authentication');
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
-            $adminRole = SELF::ROLES[0];
-            $polladmRole = SELF::ROLES[1];
+            $adminRole = SELF::BACKENDROLES[0];
+            $polladmRole = SELF::BACKENDROLES[1];
             $identity = $this->Authentication->getIdentity();
             $currentUserRole = $identity->getOriginalData()['role'];
 
             if (
-                in_array($currentUserRole, self::ROLES) &&
+                in_array($currentUserRole, self::BACKENDROLES) &&
                 (strcmp($currentUserRole, $adminRole) == 0 ||
                     strcmp($currentUserRole, $polladmRole) == 0)
             ) {
@@ -749,8 +749,8 @@ class PollsController extends AppController
             $this->loadComponent('Authentication.Authentication');
             $result = $this->Authentication->getResult();
             if ($result->isValid()) {
-                $adminRole = SELF::ROLES[0];
-                $polladmRole = SELF::ROLES[1];
+                $adminRole = SELF::BACKENDROLES[0];
+                $polladmRole = SELF::BACKENDROLES[1];
                 $identity = $this->Authentication->getIdentity();
                 $currentUserRole = $identity->getOriginalData()['role'];
 
@@ -785,7 +785,7 @@ class PollsController extends AppController
                 $currentUserRole = $identity->getOriginalData()['role'];
 
                 if (
-                    !in_array($currentUserRole, self::ROLES) &&
+                    !in_array($currentUserRole, self::BACKENDROLES) &&
                     (strcmp($currentUserName, $pollid) != 0 ||
                         strcmp($currentUserRole, $pollpwRole) != 0)
                 ) {
