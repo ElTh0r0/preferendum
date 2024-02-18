@@ -85,6 +85,9 @@ return function (RouteBuilder $routes): void {
             $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);
             $builder->connect('/users/*', ['controller' => 'Polls', 'action' => 'add']);
         }
+        if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') != true) {
+            $builder->connect('/users/forgot-password', ['controller' => 'Polls', 'action' => 'add']);
+        }
 
         /*
          * Connect catchall routes for all controllers.

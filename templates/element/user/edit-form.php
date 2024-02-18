@@ -22,45 +22,48 @@ if (strcmp($currentUserRole, $allroles[0]) != 0) {
     $editUserId = null;
 }
 
-echo $this->Form->create(
-    $user,
-    [
-        'type' => 'post',
-        'url' => ['action' => 'updateUser', $editUserId]
-    ]
-);
-
-echo '<fieldset>';
-if (strcmp($currentUserRole, $allroles[0]) == 0) {
-    echo $this->Form->control(
-        'name',
+if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUserRole, $allroles[0]) == 0) {
+    echo $this->Form->create(
+        $user,
         [
-            'required' => true,
-            'label' => __('Name'),
-            'value' => $editUserName,
-            'autocomplete' => 'off',
+            'type' => 'post',
+            'url' => ['action' => 'updateUser', $editUserId]
         ]
     );
+
+    echo '<fieldset>';
+    if (strcmp($currentUserRole, $allroles[0]) == 0) {
+        echo $this->Form->control(
+            'name',
+            [
+                'required' => true,
+                'label' => __('Name'),
+                'value' => $editUserName,
+                'autocomplete' => 'off',
+            ]
+        );
+    }
+
+    if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset')) {
+        echo $this->Form->control(
+            'email',
+            [
+                'label' => __('Email'),
+                'value' => $editEmail,
+                'autocomplete' => 'off',
+            ]
+        );
+    }
+
+    if (strcmp($currentUserRole, $allroles[0]) == 0) {
+        echo $this->Form->label('selectrole', __('Role'));
+        echo $this->Form->select('role', $allroles, ['value' => array_search($editUserRole, $allroles), 'empty' => false, 'id' => 'selectrole']);
+    }
+    echo '</fieldset><br>';
+    echo $this->Form->button(__('Update user'));
+    echo $this->Form->end();
+    echo '<br>';
 }
-
-echo $this->Form->control(
-    'email',
-    [
-        'label' => __('Email'),
-        'value' => $editEmail,
-        'autocomplete' => 'off',
-    ]
-);
-
-if (strcmp($currentUserRole, $allroles[0]) == 0) {
-    echo $this->Form->label('selectrole', __('Role'));
-    echo $this->Form->select('role', $allroles, ['value' => array_search($editUserRole, $allroles), 'empty' => false, 'id' => 'selectrole']);
-}
-echo '</fieldset><br>';
-echo $this->Form->button(__('Update user'));
-echo $this->Form->end();
-echo '<br>';
-
 ?>
 
 <?php echo $this->Form->create(

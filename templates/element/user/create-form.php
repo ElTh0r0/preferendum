@@ -36,13 +36,15 @@ echo $this->Form->create(
         ]
     );
 
-    echo $this->Form->control(
-        'email',
-        [
-            'label' => __('Email'),
-            'autocomplete' => 'off',
-        ]
-    );
+    if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset')) {
+        echo $this->Form->control(
+            'email',
+            [
+                'label' => __('Email'),
+                'autocomplete' => 'off',
+            ]
+        );
+    }
 
     echo $this->Form->label('selectrole', __('Role'));
     echo $this->Form->select('role', $allroles, ['value' => 0, 'empty' => false, 'id' => 'selectrole']);

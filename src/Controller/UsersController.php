@@ -87,9 +87,11 @@ class UsersController extends AppController
 
             $newUser = $this->Users->newEmptyEntity();
             $this->Users->patchEntity($newUser, $this->request->getData());
-            $newUser['info'] = $this->request->getData()['email'];
-            if (!filter_var($newUser['info'], FILTER_VALIDATE_EMAIL)) {
-                $newUser['info'] = '';
+            if (isset($this->request->getData()['email'])) {
+                $newUser['info'] = $this->request->getData()['email'];
+                if (!filter_var($newUser['info'], FILTER_VALIDATE_EMAIL)) {
+                    $newUser['info'] = '';
+                }
             }
 
             // Check if user/email already exists
@@ -201,9 +203,11 @@ class UsersController extends AppController
                 return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
             }
 
-            $updateUser['info'] = $this->request->getData()['email'];
-            if (!filter_var($updateUser['info'], FILTER_VALIDATE_EMAIL)) {
-                $updateUser['info'] = '';
+            if (isset($this->request->getData()['email'])) {
+                $updateUser['info'] = $this->request->getData()['email'];
+                if (!filter_var($updateUser['info'], FILTER_VALIDATE_EMAIL)) {
+                    $updateUser['info'] = '';
+                }
             }
             if (isset($updateUser['info']) && !empty($updateUser['info'])) {
                 $dbuser = $this->Users
