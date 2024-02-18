@@ -32,6 +32,8 @@ return [
 
         // Turn on(true)/off(false) that backend users can request password reset by email
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
+        // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
+        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/3.1-Email-setup
         'sendBackendUserPwReset' => false,
 
         // Turn on(true)/off(false) that only 'admin' or 'polladmin' users can create polls
@@ -49,6 +51,8 @@ return [
 
         // Turn on(true)/off(false) that users can send themselves their edit link by email
         // (This feature can only be used, if 'opt_AllowChangeEntry' is used.)
+        // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
+        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/3.1-Email-setup
         'opt_SendChangeEntryLink' => false,
 
         // Turn on(true)/off(false) to allow comments for ALL polls.
