@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Auth\DefaultPasswordHasher;
+use Cake\Mailer\Mailer;
 
 class UsersController extends AppController
 {
@@ -29,7 +30,7 @@ class UsersController extends AppController
         // Configure the login action to not require authentication, preventing
         // the infinite redirect loop issue
         $this->Authentication->allowUnauthenticated(
-            ['login', 'logout', 'deleteUserAndPollEntries',]
+            ['login', 'logout', 'forgotPassword', 'deleteUserAndPollEntries',]
         );
     }
 
@@ -57,7 +58,7 @@ class UsersController extends AppController
             return $this->redirect(['action' => 'edit']);
         }
 
-        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role'])->where(['role IN' => self::BACKENDROLES]);
+        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
         $backendusers = $backendusers->all()->toArray();
 
         $user = $this->Users->newEmptyEntity();
@@ -86,8 +87,12 @@ class UsersController extends AppController
 
             $newUser = $this->Users->newEmptyEntity();
             $this->Users->patchEntity($newUser, $this->request->getData());
+            $newUser['info'] = $this->request->getData()['email'];
+            if (!filter_var($newUser['info'], FILTER_VALIDATE_EMAIL)) {
+                $newUser['info'] = '';
+            }
 
-            // Check if user already exists
+            // Check if user/email already exists
             $dbuser = $this->Users
                 ->find()
                 ->where(['role IN' => self::BACKENDROLES, 'name' => trim($newUser['name'])])
@@ -95,6 +100,16 @@ class UsersController extends AppController
             if ($dbuser != null) {
                 $this->Flash->error(__('User with this name already exists!'));
                 return $this->redirect(['action' => 'management']);
+            }
+            if (isset($newUser['info']) && !empty($newUser['info'])) {
+                $dbuser = $this->Users
+                    ->find()
+                    ->where(['role IN' => self::BACKENDROLES, 'info' => trim($newUser['info'])])
+                    ->first();
+                if ($dbuser != null) {
+                    $this->Flash->error(__('User with this email already exists!'));
+                    return $this->redirect(['action' => 'management']);
+                }
             }
 
             $newUser['role'] = self::BACKENDROLES[$newUser['role']];
@@ -123,6 +138,7 @@ class UsersController extends AppController
         $identity = $this->Authentication->getIdentity();
         $currentUserRole = $identity->getOriginalData()['role'];
         $editUserName = '';
+        $editEmail = '';
         $editUserRole = null;
         if (!in_array($currentUserRole, self::BACKENDROLES)) {
             $this->Authentication->logout();
@@ -133,9 +149,10 @@ class UsersController extends AppController
         }
 
         if (isset($editUserId) && !empty($editUserId)) {
-            $dbEditUser = $this->Users->find()->select(['name', 'role'])->where(['id' => $editUserId])->firstOrFail();
+            $dbEditUser = $this->Users->find()->select(['name', 'role', 'info'])->where(['id' => $editUserId])->firstOrFail();
             $editUserName = $dbEditUser->name;
             $editUserRole = $dbEditUser->role;
+            $editEmail = $dbEditUser->info;
         }
 
         if (
@@ -147,19 +164,19 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
         }
 
-        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role'])->where(['role IN' => self::BACKENDROLES]);
+        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
         $backendusers = $backendusers->all()->toArray();
 
         $user = $this->Users->newEmptyEntity();
 
-        $this->set(compact('backendusers', 'allroles', 'currentUserRole', 'editUserId', 'editUserName', 'editUserRole', 'user'));
+        $this->set(compact('backendusers', 'allroles', 'currentUserRole', 'editUserId', 'editUserName', 'editUserRole', 'editEmail', 'user'));
     }
 
     //------------------------------------------------------------------------
 
-    public function updateNameRole($editUserId = null)
+    public function updateUser($editUserId = null)
     {
-        $this->request->allowMethod(['post', 'updateNameRole']);
+        $this->request->allowMethod(['post', 'updateUser']);
 
         if ($this->request->is('post', 'put')) {
             if (self::DEMOMODE) {
@@ -167,40 +184,67 @@ class UsersController extends AppController
                 return $this->redirect(['action' => 'management']);
             }
 
+            $updateUser = $this->request->getData();
             $identity = $this->Authentication->getIdentity();
             $currentUserRole = $identity->getOriginalData()['role'];
-            if (strcmp($currentUserRole, self::BACKENDROLES[0]) != 0) {
+            if (
+                !isset($editUserId) || empty($editUserId) ||
+                strcmp($currentUserRole, self::BACKENDROLES[0]) != 0  // If not admin, always take current user's Id
+            ) {
+                $updateUser['id'] = $identity->getOriginalData()['id'];
+            } else {
+                $updateUser['id'] = $editUserId;
+            }
+
+            if (!in_array($currentUserRole, self::BACKENDROLES)) {  // Filter for pollpw "users"
                 $this->Authentication->logout();
                 return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
             }
 
-            $updateUser = $this->request->getData();
-            $updateUser['role'] = self::BACKENDROLES[$updateUser['role']];
-            $dbUser = $this->Users->findById($editUserId)->firstOrFail();
-
-            // Check if user already exists
-            if (strcmp(trim($updateUser['name']), $dbUser['name']) != 0) {
+            $updateUser['info'] = $this->request->getData()['email'];
+            if (!filter_var($updateUser['info'], FILTER_VALIDATE_EMAIL)) {
+                $updateUser['info'] = '';
+            }
+            if (isset($updateUser['info']) && !empty($updateUser['info'])) {
                 $dbuser = $this->Users
                     ->find()
-                    ->where(['role IN' => self::BACKENDROLES, 'name' => trim($updateUser['name'])])
+                    ->where(['role IN' => self::BACKENDROLES, 'info' => trim($updateUser['info'])])
                     ->first();
                 if ($dbuser != null) {
-                    $this->Flash->error(__('User with this name already exists!'));
+                    $this->Flash->error(__('User with this email already exists!'));
                     return $this->redirect(['action' => 'management']);
                 }
             }
 
-            // Check if current user is the only admin and user tries to remove his own admin role
-            if (
-                strcmp(strval($identity->getOriginalData()['id']), $editUserId) == 0 &&
-                strcmp($currentUserRole, self::BACKENDROLES[0]) == 0 &&
-                strcmp($updateUser['role'], self::BACKENDROLES[0]) != 0
-            ) {
-                $cntAdmins = $this->Users->find('all')->where(['role' => self::BACKENDROLES[0]]);
-                $cntAdmins = $cntAdmins->count();
-                if ($cntAdmins == 1) {
-                    $this->Flash->error(__('User not updated - at least one administrator required!'));
-                    return $this->redirect(['action' => 'management']);
+            $dbUser = $this->Users->findById($updateUser['id'])->firstOrFail();
+
+            // Update name/role only if current user is admin
+            if (strcmp($currentUserRole, self::BACKENDROLES[0]) == 0) {
+                $updateUser['role'] = self::BACKENDROLES[$updateUser['role']];
+                // Check if user already exists
+                if (strcmp(trim($updateUser['name']), $dbUser['name']) != 0) {
+                    $dbuser = $this->Users
+                        ->find()
+                        ->where(['role IN' => self::BACKENDROLES, 'name' => trim($updateUser['name'])])
+                        ->first();
+                    if ($dbuser != null) {
+                        $this->Flash->error(__('User with this name already exists!'));
+                        return $this->redirect(['action' => 'management']);
+                    }
+                }
+
+                // Check if current user is the only admin and user tries to remove his own admin role
+                if (
+                    strcmp(strval($identity->getOriginalData()['id']), $updateUser['id']) == 0 &&
+                    strcmp($currentUserRole, self::BACKENDROLES[0]) == 0 &&
+                    strcmp($updateUser['role'], self::BACKENDROLES[0]) != 0
+                ) {
+                    $cntAdmins = $this->Users->find('all')->where(['role' => self::BACKENDROLES[0]]);
+                    $cntAdmins = $cntAdmins->count();
+                    if ($cntAdmins == 1) {
+                        $this->Flash->error(__('User not updated - at least one administrator required!'));
+                        return $this->redirect(['action' => 'management']);
+                    }
                 }
             }
 
@@ -287,6 +331,113 @@ class UsersController extends AppController
         }
         $this->Flash->error(__('User {0} has NOT been deleted!', $userid));
         return $this->redirect(['action' => 'management']);
+    }
+
+    //------------------------------------------------------------------------
+
+    public function forgotPassword()
+    {
+        if ($this->request->is('post')) {
+            $user = $this->request->getData();
+            $user['email'] = trim($user['email']);
+            if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {
+                $dbUser = $this->Users
+                    ->find()
+                    ->where(['role IN' => self::BACKENDROLES, 'info' => $user['email']])
+                    ->first();
+
+                if ($dbUser != null) {
+                    $newpassword = $this->generatePassword();
+                    $user['password'] = (new DefaultPasswordHasher)->hash($newpassword);
+
+                    $this->Users->patchEntity($dbUser, $user);
+                    if ($this->Users->save($dbUser)) {
+                        \Cake\Core\Configure::load('app_local');
+                        $from = \Cake\Core\Configure::read('Email.default.from');
+                        $mailer = new Mailer('default');
+                        $loginurl = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'admin/login';
+
+                        $subject = __('Password reset');
+                        $mailer->viewBuilder()->setTemplate('new_backend_pw')->setLayout('default');
+                        $mailer->setFrom($from)
+                            ->setTo($user['email'])
+                            ->setEmailFormat('text')
+                            ->setSubject($subject)
+                            ->setViewVars(
+                                [
+                                    'username' => $dbUser['name'],
+                                    'loginurl' => $loginurl,
+                                    'newpassword' => $newpassword,
+                                ]
+                            )
+                            ->deliver();
+                    } else {
+                        $this->Flash->error(__('Something went wrong!'));
+                    }
+                }
+            }
+            $this->Flash->success(__('If a user is registered with this email address, a new password will be sent.'));
+        }
+    }
+
+    //------------------------------------------------------------------------
+
+    private function generatePassword(): string
+    {
+        // Source: https://alexwebdevelop.com/php-generate-random-secure-password/
+        $letters = 'abcdefghijklmnopqrstuvwxyz';
+        $digits = '0123456789';
+        $special_chars = '!@#$%_+-=?';
+        $max_similatity_perc = 20;  // The maximum similarity percentage
+        $minLength = 10;  // The password minimum length
+        $maxLength = 15;  // The password maximum length
+
+        $diffStrings = $this->Users->find('all')->select(['name'])->where(['role IN' => self::BACKENDROLES]);
+        $diffStrings = array_column($diffStrings->all()->toArray(), 'name');
+
+        // List of usable characters
+        $chars = $letters . mb_strtoupper($letters) . $digits . $special_chars;
+        // Set to true when a valid password is generated
+        $passwordReady = false;
+
+        while (!$passwordReady) {
+            $password = '';
+
+            // Password requirements
+            $hasLowercase = false;
+            $hasUppercase = false;
+            $hasDigit = false;
+            $hasSpecialChar = false;
+
+            $length = random_int($minLength, $maxLength);  // A random password length
+
+            while ($length > 0) {
+                $length--;
+
+                // Choose a random character and add it to the password
+                $index = random_int(0, mb_strlen($chars) - 1);
+                $char = $chars[$index];
+                $password .= $char;
+
+                // Verify the requirements
+                $hasLowercase = $hasLowercase || (mb_strpos($letters, $char) !== false);
+                $hasUppercase = $hasUppercase || (mb_strpos(mb_strtoupper($letters), $char) !== false);
+                $hasDigit = $hasDigit || (mb_strpos($digits, $char) !== false);
+                $hasSpecialChar = $hasSpecialChar || (mb_strpos($special_chars, $char) !== false);
+            }
+
+            $passwordReady = ($hasLowercase && $hasUppercase && $hasDigit && $hasSpecialChar);
+
+            // If the new password is valid, check for similarity
+            if ($passwordReady) {
+                foreach ($diffStrings as $string) {
+                    similar_text($password, $string, $similarityPerc);
+                    $passwordReady = $passwordReady && ($similarityPerc < $max_similatity_perc);
+                }
+            }
+        }
+
+        return $password;
     }
 
     //------------------------------------------------------------------------

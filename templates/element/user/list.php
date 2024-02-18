@@ -23,11 +23,12 @@
             $cntAdmins = $cntAdmins + 1;
         }
     }
-    echo '<tr><td><em>Name</em></td><td><em>Role</em></td><td></td><td></td></tr>';
+    echo '<tr><td><em>' . __('Name') . '</em></td><td><em>' . __('Role') . '</em></td><td><em>' . __('Email') . '</em></td><td></td><td></td></tr>';
     foreach ($backendusers as $backuser) {
         echo '<tr>';
         echo '<td>' . $backuser['name'] . '</td>';
         echo '<td>' . $backuser['role'] . '</td>';
+        echo '<td>' . $backuser['info'] . '</td>';
         echo '<td><span style="font-size: 0.8em;">';
         echo $this->Form->postLink(
             __('Edit'),

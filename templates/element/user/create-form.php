@@ -21,7 +21,7 @@ echo $this->Form->create(
     $user,
     [
         'type' => 'post',
-        'url' => ['controller' => 'Users', 'action' => 'add']
+        'url' => ['action' => 'add']
     ]
 );
 ?>
@@ -32,6 +32,14 @@ echo $this->Form->create(
         [
             'required' => true,
             'label' => __('Name'),
+            'autocomplete' => 'off',
+        ]
+    );
+
+    echo $this->Form->control(
+        'email',
+        [
+            'label' => __('Email'),
             'autocomplete' => 'off',
         ]
     );

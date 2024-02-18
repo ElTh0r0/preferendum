@@ -15,19 +15,23 @@
 ?>
 
 <?php
-echo '<h1>' . __('Update user') . '</h1>';
+echo '<h1>' . __('Update user') . ' "' . $editUserName . '"</h1>';
 
+if (strcmp($currentUserRole, $allroles[0]) != 0) {
+    // If user us not admin, unset/hide ID
+    $editUserId = null;
+}
+
+echo $this->Form->create(
+    $user,
+    [
+        'type' => 'post',
+        'url' => ['action' => 'updateUser', $editUserId]
+    ]
+);
+
+echo '<fieldset>';
 if (strcmp($currentUserRole, $allroles[0]) == 0) {
-    echo $this->Form->create(
-        $user,
-        [
-            'type' => 'post',
-            'url' => ['controller' => 'Users', 'action' => 'updateNameRole', $editUserId]
-        ]
-    );
-
-    echo '<fieldset>';
-
     echo $this->Form->control(
         'name',
         [
@@ -37,21 +41,33 @@ if (strcmp($currentUserRole, $allroles[0]) == 0) {
             'autocomplete' => 'off',
         ]
     );
+}
+
+echo $this->Form->control(
+    'email',
+    [
+        'label' => __('Email'),
+        'value' => $editEmail,
+        'autocomplete' => 'off',
+    ]
+);
+
+if (strcmp($currentUserRole, $allroles[0]) == 0) {
     echo $this->Form->label('selectrole', __('Role'));
     echo $this->Form->select('role', $allroles, ['value' => array_search($editUserRole, $allroles), 'empty' => false, 'id' => 'selectrole']);
-
-    echo '</fieldset><br>';
-    echo $this->Form->button(__('Update user'));
-    echo $this->Form->end();
-    echo '<br>';
 }
+echo '</fieldset><br>';
+echo $this->Form->button(__('Update user'));
+echo $this->Form->end();
+echo '<br>';
+
 ?>
 
 <?php echo $this->Form->create(
     $user,
     [
         'type' => 'post',
-        'url' => ['controller' => 'Users', 'action' => 'updatePassword', $editUserId]
+        'url' => ['action' => 'updatePassword', $editUserId]
     ]
 );
 ?>

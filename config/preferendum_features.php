@@ -29,6 +29,11 @@ return [
         // Turn on(true)/off(false) admin interface
         // See wiki: https://github.com/ElTh0r0/preferendum/wiki/5-Admin-interface
         'adminInterface' => false,
+
+        // Turn on(true)/off(false) that backend users can request password reset by email
+        // (This feature can only be used, if 'adminInterface' is enabled, too.)
+        'sendBackendUserPwReset' => false,
+
         // Turn on(true)/off(false) that only 'admin' or 'polladmin' users can create polls
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
         'restrictPollCreation' => false,

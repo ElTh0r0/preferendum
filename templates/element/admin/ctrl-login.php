@@ -45,4 +45,13 @@
     </fieldset>
     <?php echo $this->Form->submit(__('Login')); ?>
     <?php echo $this->Form->end() ?>
+
+    <?php if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset')) {
+        echo '<span style="font-size: 0.8em;">';
+        echo $this->Html->link(
+            __('Forgot password'),
+            '/Users/forgotPassword',
+        );
+        echo '</span>';
+    } ?>
 </div>
