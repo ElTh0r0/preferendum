@@ -59,7 +59,7 @@ class ChoicesController extends AppController
                         );
 
                         if ($this->Choices->save($dbchoice)) {
-                            $success = $this->addMaybeToExisting($pollid, $dbchoice);
+                            $success = $this->addNoToExisting($pollid, $dbchoice);
                         }
                     }
                     if ($success) {
@@ -170,11 +170,11 @@ class ChoicesController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function addMaybeToExisting($pollid, $dbchoice)
+    private function addNoToExisting($pollid, $dbchoice)
     {
         $success = true;
 
-        // Add 'maybe' for all existing entries
+        // Add 'no' for all existing entries
         $dbentries = $this->fetchTable('Entries')->find()
             ->where(['poll_id' => $pollid])
             ->contain(['Users', 'Choices'])
@@ -186,7 +186,7 @@ class ChoicesController extends AppController
             $dbentry = $this->fetchTable('Entries')->newEntity([
                 'choice_id' => $dbchoice->id,
                 'user_id' => $user->user_id,
-                'value' => 2
+                'value' => 0
             ]);
 
             if (!$this->fetchTable('Entries')->save($dbentry)) {
