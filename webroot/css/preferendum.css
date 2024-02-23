@@ -1,6 +1,13 @@
 /* ==== GLOBAL CSS CUSTOM PROPERTIES ==== */
 
 :root {
+    --poll-table-gutters: 2px;
+    --border-radius-big: 6px;
+    --border-radius-small: 3px;
+    --animation-duration: 0.1s;
+}
+  
+[data-theme="light"] {
     --color-background-primary: #fff;
     --color-background-secondary: #393e41;
     --color-background-secondary-hover: #575f63;
@@ -9,12 +16,41 @@
     --color-font-secondary: #fff;
     --color-decorative: #a2a79e;
     --color-feedback-positive: #69b587;
-    --color-feedback-neutral: #aaa7a5;
+    --color-feedback-neutral: #c0a36d;
     --color-feedback-negative: #db5753;
-    --poll-table-gutters: 2px;
-    --border-radius-big: 6px;
-    --border-radius-small: 3px;
-    --animation-duration: 0.1s;
+
+    --color-background-flash-neutral: #eff8ff;
+    --color-border-flash-neutral: #6cb2eb;
+    --color-font-flash-neutral: #2779bd;
+    --color-background-flash-success: #e3fcec;
+    --color-border-flash-success: #51d88a;
+    --color-font-flash-success: #1f9d55;
+    --color-background-flash-error: #fcebea;
+    --color-border-flash-error: #ef5753;
+    --color-font-flash-error: #cc1f1a;
+}
+
+[data-theme="dark"] {
+    --color-background-primary: #2b2b2b;
+    --color-background-secondary: #1f1f1f;
+    --color-background-secondary-hover: #575f63;
+    --color-background-comments: #393e41;
+    --color-font-primary: #fff;
+    --color-font-secondary: #e9e9e9;
+    --color-decorative: #a2a79e;
+    --color-feedback-positive: #69b587;
+    --color-feedback-neutral: #c0a36d;
+    --color-feedback-negative: #db5753;
+
+    --color-background-flash-neutral: #eff8ff;
+    --color-border-flash-neutral: #6cb2eb;
+    --color-font-flash-neutral: #2779bd;
+    --color-background-flash-success: #e3fcec;
+    --color-border-flash-success: #51d88a;
+    --color-font-flash-success: #1f9d55;
+    --color-background-flash-error: #fcebea;
+    --color-border-flash-error: #ef5753;
+    --color-font-flash-error: #cc1f1a;
 }
 
 /* ==== FONTS ==== */
@@ -100,31 +136,6 @@ em {
 
 .datepicker-container * {
     font-size: 16px;
-}
-
-.datepicker-top-left,
-.datepicker-top-right {
-    border-top-color: var(--color-decorative) !important;
-}
-
-.datepicker-top-left::before,
-.datepicker-top-right::before {
-    border-bottom-color: var(--color-decorative) !important;
-}
-
-.datepicker-panel > ul > li:hover {
-    background-color: #bbb !important;
-}
-
-.datepicker-panel > ul > li.picked,
-.datepicker-panel > ul > li.picked:hover {
-    color: var(--color-decorative) !important;
-}
-
-.datepicker-panel > ul > li.highlighted,
-.datepicker-panel > ul > li.highlighted:hover {
-    background-color: var(--color-decorative) !important;
-    color: var(--color-font-secondary) !important;
 }
 
 /* ==== TO BE CATEGORIZED AND SORTED ==== */
@@ -279,20 +290,20 @@ p.details {
     vertical-align: middle;
 }
 
-#poll-controls {
+#control-elements {
     margin-bottom: 0.5rem;
     text-align: right;
     border-top: 1.2rem solid var(--color-background-comments);
 }
 
-#poll-controls > div {
+#control-elements > div {
     display: inline-block;
     padding: 0 1.2rem 1.2rem 1.2rem;
     border-bottom-left-radius: var(--border-radius-big);
     background-color: var(--color-background-comments);
 }
 
-#poll-controls button {
+#control-elements button {
     margin: 0 0.5rem;
     cursor: pointer;
     background-color: var(--color-background-secondary);
@@ -301,30 +312,39 @@ p.details {
     padding-left: 36px;
 }
 
-#poll-controls button:hover {
+#control-elements button:hover {
     background-color: var(--color-background-secondary-hover);
 }
 
-#poll-controls button#ctrl-mini-view {
+#control-elements button#ctrl-mini-view {
     background-image: url("../img/icon-eye.png");
 }
 
-#poll-controls button#ctrl-edit-poll {
+#control-elements button#ctrl-edit-poll {
     background-image: url("../img/icon-pen.png");
 }
 
-#poll-controls button#ctrl-lock-poll {
+#control-elements button#ctrl-lock-poll {
     background-image: url("../img/icon-lock.png");
 }
 
-#poll-controls button#ctrl-export-poll {
+#control-elements button#ctrl-export-poll {
     background-image: url("../img/icon-download.png");
 }
 
-#poll-controls button#ctrl-delete-poll {
+#control-elements button#ctrl-delete-poll {
     background-image: url("../img/icon-delete.png");
 }
 
+#control-elements button.themeToggle {
+    background-image: url(../img/icon-moon.png);
+    background-position: center center !important;
+    padding: 8px 12px 8px 12px !important;
+}
+
+#control-elements button.themeToggle--light {
+    background-image: url(../img/icon-sun.png);
+}
 
 #poll-container {
     overflow-x: auto;
@@ -487,9 +507,24 @@ button.entry-copy-link {
     background-position: center center;
     border-top-right-radius: var(--border-radius-big);
     border-bottom-right-radius: var(--border-radius-big);
+    padding: 6px 15px 6px 15px !important;
 }
 
-.center-box input[type="text"] {
+button.entry-email-link {
+    margin-top: 0;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-email2.png)
+        no-repeat;
+    background-position: center center;
+    border-top-right-radius: var(--border-radius-big);
+    border-bottom-right-radius: var(--border-radius-big);
+    padding: 6px 15px 6px 15px !important;
+}
+
+.center-box .message input[type="text"],
+.center-box .message input[type="email"] {
     font-size: inherit;
     height: 24px;
     white-space: nowrap;
@@ -605,7 +640,7 @@ td.schedule-entry-no {
 }
 
 td.schedule-entry-maybe {
-    background: var(--color-feedback-neutral) url(../img/icon-maybe.png)
+    background: var(--color-feedback-neutral) url(../img/icon-maybe2.png)
         no-repeat center center;
 }
 
@@ -622,9 +657,18 @@ td.schedule-submit {
     height: 24px;
     border-top-right-radius: var(--border-radius-big);
     border-bottom-right-radius: var(--border-radius-big);
+    padding: 0 !important;
+}
+
+td.schedule-submit button {
+    height: 30px;
 }
 
 .schedule.mini td.schedule-submit {
+    height: 16px;
+}
+
+.schedule.mini td.schedule-submit button {
     height: 16px;
 }
 
@@ -799,7 +843,7 @@ tr.schedule-new td.new-entry-choice-yes {
 }
 
 tr.schedule-new td.new-entry-choice-maybe {
-    background: var(--color-feedback-neutral) url(../img/icon-maybe.png)
+    background: var(--color-feedback-neutral) url(../img/icon-maybe2.png)
         no-repeat center center;
 }
 
@@ -947,15 +991,15 @@ button[type="button"]:disabled {
     padding: 4px 4px;
 }
 
-#poll-controls button#ctrl-usermanagement {
+#control-elements button#ctrl-usermanagement {
     background-image: url("../img/icon-user.png");
 }
 
-#poll-controls button#ctrl-logout {
+#control-elements button#ctrl-logout {
     background-image: url("../img/icon-logout.png");
 }
 
-#poll-controls button#ctrl-polls {
+#control-elements button#ctrl-polls {
     background-image: url("../img/icon-chart.png");
 }
 
@@ -1089,10 +1133,10 @@ button.admin-view-userinfo {
 .message {
     padding: 1rem;
 
-    background: #eff8ff;
-    color: #2779bd;
+    background: var(--color-background-flash-neutral);
+    color: var(--color-font-flash-neutral);
 
-    border-color: #6cb2eb;
+    border-color: var(--color-border-flash-neutral);
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;
@@ -1104,13 +1148,13 @@ button.admin-view-userinfo {
 }
 
 .message.success {
-    background: #e3fcec;
-    color: #1f9d55;
-    border-color: #51d88a;
+    background: var(--color-background-flash-success);
+    color: var(--color-font-flash-success);
+    border-color: var(--color-border-flash-success);
 }
 
 .message.error {
-    background: #fcebea;
-    color: #cc1f1a;
-    border-color: #ef5753;
+    background: var(--color-background-flash-error);
+    color: var(--color-font-flash-error);
+    border-color: var(--color-border-flash-error);
 }

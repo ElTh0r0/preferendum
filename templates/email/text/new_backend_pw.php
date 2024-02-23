@@ -13,13 +13,8 @@
  * @version   0.6.0
  */
 
-echo __('New poll "{0}" created', h($title)) . "\r\n\r\n";
-echo __('This email can be forwarded to any user who shall participated the poll!') . "\r\n";
+echo __('A password reset was requested for your account!') . "\r\n\r\n";
+echo __('Account name:') . ' ' . h($username) . "\r\n";
+echo __('New password:') . ' ' . h($newpassword) . "\r\n\r\n";
+echo __('Please change your password after the first login.') . "\r\n" . $loginurl;
 echo "\r\n";
-echo __('USER link:') . ' ' . $link . "\r\n";
-echo "\r\n";
-
-if (!empty($password)) {
-    echo __('For accessing the poll, following password is required:') . ' ' . $password . "\r\n";
-    echo "\r\n";
-}

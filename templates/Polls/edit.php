@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 ?>
 
@@ -27,11 +27,13 @@ $this->Html->scriptStart(['block' => true]);
 echo 'var jswebroot = ' . json_encode($this->request->getAttributes()['webroot']) . ';';
 echo 'var jspollid = ' . json_encode($poll->id) . ';';
 echo 'var jsadminid = ' . json_encode($adminid) . ';';
+echo 'var jsNo = ' . json_encode(__('No')) . ';';
+echo 'var jsYes = ' . json_encode(__('Yes')) . ';';
+echo 'var jsMaybe = ' . json_encode(__('Maybe')) . ';';
 $this->Html->scriptEnd();
 ?>
 
-<!-- POLL CONTROLS -->
-<div id="poll-controls">
+<div id="control-elements">
     <div>
         <?php echo $this->element('poll/ctrl-edit'); ?>
     </div>

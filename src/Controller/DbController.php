@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 declare(strict_types=1);
@@ -44,6 +44,7 @@ class DbController extends AppController
             die;
         }
         $this->createTables($dbconnection, $dbdriver);
+        $dbconnection->getDriver()->disconnect();
 
         echo '<p class="success"><br>SETUP COMPLETED SUCCESSFULLY!</p>';
         echo '<strong>!!! Please delete "src/Controller/DbController.php" !!!</strong>';
@@ -167,7 +168,7 @@ class DbController extends AppController
         echo '<ul>';
         try {
             $connection = ConnectionManager::get('default');
-            $connected = $connection->connect();
+            $connected = $connection->getDriver()->connect();
         } catch (Exception $connectionError) {
             $connected = false;
             $errorMsg = $connectionError->getMessage();

@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 ?>
 
@@ -34,18 +34,19 @@ if ($poll->anonymous) {
             'required' => 'true',
             'maxlength' => '32',
             'placeholder' => __('Your name?'),
+            'autocomplete' => 'off',
         ]
     );
     echo '</td>';
 }
 
 foreach ($pollchoices as $opt) {
-    echo '<td class="new-entry-box new-entry-choice new-entry-choice-maybe">';
+    echo '<td class="new-entry-box new-entry-choice new-entry-choice-no" title="' . __('No') . '">';
     echo $this->Form->hidden(
         'va',
         [
             'name' => 'values[]',
-            'value' => '2',
+            'value' => '0',
             'class' => 'entry-value',
         ]
     );

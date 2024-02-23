@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 ?>
 <?php
@@ -32,9 +32,15 @@ $this->Html->scriptEnd();
     \Cake\Core\Configure::read('preferendum.adminInterface') &&
     \Cake\Core\Configure::read('preferendum.restrictPollCreation')
 ) { ?>
-    <div id="poll-controls">
+    <div id="control-elements">
         <div>
             <?php echo $this->element('admin/ctrl-logout'); ?>
+        </div>
+    </div>
+<?php } else { ?>
+    <div id="control-elements">
+        <div>
+            <?php echo $this->element('poll/ctrl-new'); ?>
         </div>
     </div>
 <?php } ?>

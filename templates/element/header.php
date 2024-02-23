@@ -10,34 +10,21 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 ?>
 
 <div id="header" class="right-to-left">
 
     <div id="info">
-        <!-- HEADER IS USED IN OTHER VIEW -->
-        <!-- On admin page $poll==Null / not set -->
         <?php
         $request = $this->request->getUri()->getPath();
-        $base = basename($request);
-        if (
-            strcmp($base, 'admin') == 0 ||
-            strcmp($base, 'users') == 0 ||
-            (strcmp($base, '') == 0 &&
-                \Cake\Core\Configure::read('preferendum.adminInterface') &&
-                \Cake\Core\Configure::read('preferendum.restrictPollCreation'))
-        ) { ?>
+        if ((str_contains($request, '/admin') || str_contains($request, '/users')) && !isset($pollid)) { ?>
             <h1><?php echo __('Administration') ?></h1>
             <p class="details"></p>
-        <?php } elseif (!isset($poll)) { ?>
+        <?php } else if (!isset($poll) || $poll->isNew() || isset($pollid)) { ?>
             <h1><?php echo __('PREFERendum') ?></h1>
             <p class="details"><?php echo __('scheduling polls') ?></p>
-        <?php } elseif ($poll->isNew()) { ?>
-            <h1><?php echo __('PREFERendum') ?></h1>
-            <p class="details"><?php echo __('scheduling polls') ?></p>
-            <!-- HEADER IS USED IN POLL VIEW -->
         <?php } else { ?>
             <h1><?php echo h($poll->title) ?></h1>
             <p class="details"><?php echo h($poll->details) ?></p>

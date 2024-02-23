@@ -10,13 +10,12 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 ?>
 <?php $this->assign('title', __('Poll administration')); ?>
 
-<!-- POLL CONTROLS -->
-<div id="poll-controls">
+<div id="control-elements">
     <div>
         <?php echo $this->element('admin/ctrl-logout'); ?>
     </div>

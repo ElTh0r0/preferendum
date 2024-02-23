@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 ?>
 
@@ -64,4 +64,22 @@ echo $this->Form->postLink(
     ['action' => 'delete', $poll->id, $adminid],
     ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
 );
+
+if ($poll->pwprotect) {
+    echo $this->Form->postLink(
+        $this->Form->button(
+            __('Logout'),
+            [
+                'type' => 'button',
+                'id' => 'ctrl-logout',
+            ]
+        ),
+        ['controller' => 'Admin', 'action' => 'logout', $poll->id, $adminid],
+        ['escape' => false]
+    );
+}
 ?>
+
+<?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>
+    <button type="button" class="themeToggle" data-theme-toggle>&nbsp;</button>
+<?php } ?>

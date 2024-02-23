@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 ?>
 
@@ -19,21 +19,31 @@
     $base = $this->request->getUri()->getPath();
     $base = basename($base);
     if (strcmp($base, 'admin') == 0) {
-        $caption = __('User management');
         if (strcmp($currentUserRole, $adminRole) != 0) {
-            $caption = __('Change password');
+            echo $this->Html->link(
+                $this->Form->button(
+                    __('Update user'),
+                    [
+                        'type' => 'button',
+                        'id' => 'ctrl-usermanagement',
+                    ]
+                ),
+                ['controller' => 'Users', 'action' => 'edit'],
+                ['escape' => false]
+            );
+        } else {
+            echo $this->Html->link(
+                $this->Form->button(
+                    __('User management'),
+                    [
+                        'type' => 'button',
+                        'id' => 'ctrl-usermanagement',
+                    ]
+                ),
+                ['controller' => 'Users', 'action' => 'management'],
+                ['escape' => false]
+            );
         }
-        echo $this->Html->link(
-            $this->Form->button(
-                $caption,
-                [
-                    'type' => 'button',
-                    'id' => 'ctrl-usermanagement',
-                ]
-            ),
-            ['controller' => 'Users', 'action' => 'index'],
-            ['escape' => false]
-        );
     } else {
         echo $this->Html->link(
             $this->Form->button(
@@ -58,4 +68,8 @@
         ['controller' => 'Admin', 'action' => 'logout'],
         ['escape' => false]
     ); ?>
+
+    <?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>
+        <button type="button" class="themeToggle" data-theme-toggle>&nbsp;</button>
+    <?php } ?>
 </div>

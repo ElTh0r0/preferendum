@@ -14,16 +14,6 @@
  */
 ?>
 
-<!-- TABLE HEADER / DATES -->
-<tr>
-    <td class="schedule-blank"></td>
-    <?php foreach ($pollchoices as $choice) : ?>
-        <td class="schedule-header">
-            <div>
-                <div>
-                    <?php echo h($choice->option) ?>
-                </div>
-            </div>
-        </td>
-    <?php endforeach; ?>
-</tr>
+<?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>
+    <button type="button" class="themeToggle" data-theme-toggle>&nbsp;</button>
+<?php } ?>

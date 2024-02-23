@@ -11,7 +11,9 @@
 - **Comments** section in every poll
 - **Mini View** feature (for very big poll tables)
 - **Customizable labels**: All the labels and texts can be set to custom strings, so you can even translate the interface to a language of your choice
-- **Customizable colors**: All the interface colors can easily be set to your preference (system-wide, that is, not for individual polls)
+- **Customizable colors**:
+  - All the interface colors can easily be set to your preference (system-wide, that is, not for individual polls)
+  - Toggle between light and dark color themes
 - Optional:
   - **Poll admin links** to restrict poll management to author
   - Receive email after new entry and/or comment
@@ -19,7 +21,7 @@
   - Poll **administration interface** for managing all the polls on the server
   - Simple user administration for admin interface
 
-![screenshot](https://user-images.githubusercontent.com/26674558/121807573-faaea200-cc54-11eb-838f-4d31639b0915.png)
+![Screenshot](https://github.com/ElTh0r0/preferendum/assets/26674558/8b45b2f3-7587-4784-8e7a-9255364492d1)
 
 ## Requirements
 - PHP 7.4 or higher (including intl and mbstring extension)
@@ -73,3 +75,4 @@ PREFERendum makes use of the following software/media and says **Thank you!** to
 - [/jquery/jquery](https://github.com/jquery/jquery)
 - [/zenorocha/clipboard.js](https://github.com/zenorocha/clipboard.js)
 - [Icons from iconmonstr.com](http://www.iconmonstr.com)
+- [JS light/dark theme toggle](https://whitep4nth3r.com/blog/best-light-dark-mode-theme-toggle-javascript/)

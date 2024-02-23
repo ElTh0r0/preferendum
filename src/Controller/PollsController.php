@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 declare(strict_types=1);
@@ -351,6 +351,57 @@ class PollsController extends AppController
 
     //------------------------------------------------------------------------
 
+    public function sendpersonallink()
+    {
+        $this->request->allowMethod(['post', 'sendpersonallink']);
+
+        if ($this->request->is('post')) {
+            $data = $this->request->getData();
+            // debug($data);
+            // die;
+
+            if (isset($data) && !empty($data)) {
+                $pollname = $data['pollname'];
+                $name = $data['name'];
+                $email = $data['email'];
+                $link = $data['link'];
+                if (
+                    filter_var($email, FILTER_VALIDATE_EMAIL) &&
+                    isset($pollname) && !empty($pollname) &&
+                    isset($name) && !empty($name) &&
+                    isset($link) && !empty($link)
+                ) {
+                    \Cake\Core\Configure::load('app_local');
+                    $from = \Cake\Core\Configure::read('Email.default.from');
+                    $mailer = new Mailer('default');
+
+                    $subject = __('Your personal link for poll "{0}"', h($pollname));
+                    $mailer->viewBuilder()->setTemplate('personal_link')->setLayout('default');
+                    $mailer->setFrom($from)
+                        ->setTo($email)
+                        ->setEmailFormat('text')
+                        ->setSubject($subject)
+                        ->setViewVars(
+                            [
+                                'pollname' => $pollname,
+                                'name' => $name,
+                                'link' => $link,
+                            ]
+                        )
+                        ->deliver();
+
+                    $this->Flash->success(__('Email with personal link was sent to "{0}"', $email));
+                    return $this->redirect($this->referer());
+                }
+            }
+        }
+
+        $this->Flash->error(__('Email could not be sent!'));
+        return $this->redirect($this->referer());
+    }
+
+    //------------------------------------------------------------------------
+
     public function exportcsv($pollid = null, $adminid = null)
     {
         $this->request->allowMethod(['post', 'exportcsv']);
@@ -403,7 +454,7 @@ class PollsController extends AppController
                                 $csvline[] = __('yes');
                                 break;
                             default:
-                                $csvline[] = '?';
+                                $csvline[] = __('maybe');
                         }
                     }
                     fputcsv($fp, $csvline);
@@ -474,13 +525,13 @@ class PollsController extends AppController
         $this->loadComponent('Authentication.Authentication');
         $result = $this->Authentication->getResult();
         if ($result->isValid()) {
-            $adminRole = SELF::ROLES[0];
-            $polladmRole = SELF::ROLES[1];
+            $adminRole = SELF::BACKENDROLES[0];
+            $polladmRole = SELF::BACKENDROLES[1];
             $identity = $this->Authentication->getIdentity();
             $currentUserRole = $identity->getOriginalData()['role'];
 
             if (
-                in_array($currentUserRole, self::ROLES) &&
+                in_array($currentUserRole, self::BACKENDROLES) &&
                 (strcmp($currentUserRole, $adminRole) == 0 ||
                     strcmp($currentUserRole, $polladmRole) == 0)
             ) {
@@ -698,8 +749,8 @@ class PollsController extends AppController
             $this->loadComponent('Authentication.Authentication');
             $result = $this->Authentication->getResult();
             if ($result->isValid()) {
-                $adminRole = SELF::ROLES[0];
-                $polladmRole = SELF::ROLES[1];
+                $adminRole = SELF::BACKENDROLES[0];
+                $polladmRole = SELF::BACKENDROLES[1];
                 $identity = $this->Authentication->getIdentity();
                 $currentUserRole = $identity->getOriginalData()['role'];
 
@@ -734,7 +785,7 @@ class PollsController extends AppController
                 $currentUserRole = $identity->getOriginalData()['role'];
 
                 if (
-                    !in_array($currentUserRole, self::ROLES) &&
+                    !in_array($currentUserRole, self::BACKENDROLES) &&
                     (strcmp($currentUserName, $pollid) != 0 ||
                         strcmp($currentUserRole, $pollpwRole) != 0)
                 ) {

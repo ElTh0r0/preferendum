@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 /*
@@ -29,6 +29,13 @@ return [
         // Turn on(true)/off(false) admin interface
         // See wiki: https://github.com/ElTh0r0/preferendum/wiki/5-Admin-interface
         'adminInterface' => false,
+
+        // Turn on(true)/off(false) that backend users can request password reset by email
+        // (This feature can only be used, if 'adminInterface' is enabled, too.)
+        // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
+        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/3.1-Email-setup
+        'sendBackendUserPwReset' => false,
+
         // Turn on(true)/off(false) that only 'admin' or 'polladmin' users can create polls
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
         'restrictPollCreation' => false,
@@ -41,6 +48,12 @@ return [
         // Turn on(true)/off(false) that users can change their entry through a personal link
         // (This feature can only be used, if 'alwaysUseAdminLinks' OR 'opt_AdminLinks' is enabled and used, too.)
         'opt_AllowChangeEntry' => true,
+
+        // Turn on(true)/off(false) that users can send themselves their edit link by email
+        // (This feature can only be used, if 'opt_AllowChangeEntry' is used.)
+        // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
+        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/3.1-Email-setup
+        'opt_SendChangeEntryLink' => false,
 
         // Turn on(true)/off(false) to allow comments for ALL polls.
         'alwaysAllowComments' => true,
@@ -101,6 +114,9 @@ return [
         // See wiki for further instructions if cronjob shall be used:
         // https://github.com/ElTh0r0/preferendum/wiki/3.2-Cronjob
         'deleteInactivePollsAfter' => 0,
+
+        // Enable switching light/dark theme
+        'toggleTheme' => true,
 
         // Header Logo (set to true if you want to show header logo, false otherwise)
         'headerLogo' => true,

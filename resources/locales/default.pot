@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2023-12-28 18:00+0100\n"
+"POT-Creation-Date: 2023-12-31 14:35+0100\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -160,6 +160,10 @@ msgstr ""
 
 #: ./src/Controller/PollsController.php:403
 msgid "yes"
+msgstr ""
+
+#: ./src/Controller/PollsController.php:406
+msgid "maybe"
 msgstr ""
 
 #: ./src/Controller/PollsController.php:436
@@ -408,11 +412,38 @@ msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
 msgstr ""
 
 #: ./templates/Polls/edit.php:18
-#: ./templates/Polls/edit.php:42
+#: ./templates/Polls/edit.php:45
 msgid "Edit poll"
 msgstr ""
 
-#: ./templates/Polls/edit.php:51
+#: ./templates/Polls/edit.php:30
+#: ./templates/Polls/view.php:28
+#: ./templates/element/entry/edit.php:67
+#: ./templates/element/entry/new.php:43
+#: ./templates/element/poll/result-trend.php:21
+#: ./templates/email/text/new_entry.php:23
+msgid "No"
+msgstr ""
+
+#: ./templates/Polls/edit.php:31
+#: ./templates/Polls/view.php:29
+#: ./templates/element/entry/edit.php:71
+#: ./templates/element/poll/result-simple.php:19
+#: ./templates/element/poll/result-trend.php:19
+#: ./templates/email/text/new_entry.php:25
+msgid "Yes"
+msgstr ""
+
+#: ./templates/Polls/edit.php:32
+#: ./templates/Polls/view.php:30
+#: ./templates/element/entry/edit.php:63
+#: ./templates/element/entry/edit.php:75
+#: ./templates/element/poll/result-trend.php:20
+#: ./templates/email/text/new_entry.php:21
+msgid "Maybe"
+msgstr ""
+
+#: ./templates/Polls/edit.php:54
 msgid "Edit entries"
 msgstr ""
 
@@ -494,7 +525,7 @@ msgstr ""
 
 #: ./templates/element/choice/edit.php:139
 #: ./templates/element/comment/new.php:54
-#: ./templates/element/entry/edit.php:96
+#: ./templates/element/entry/edit.php:100
 #: ./templates/element/entry/new.php:63
 msgid "Save"
 msgstr ""
@@ -533,7 +564,7 @@ msgstr ""
 msgid "Your name?"
 msgstr ""
 
-#: ./templates/element/entry/edit.php:106
+#: ./templates/element/entry/edit.php:110
 #: ./templates/element/entry/new.php:73
 msgid "Optional: Contact info"
 msgstr ""
@@ -696,21 +727,6 @@ msgstr ""
 
 #: ./templates/element/poll/edit-form.php:281
 msgid "Save changes"
-msgstr ""
-
-#: ./templates/element/poll/result-simple.php:19
-#: ./templates/element/poll/result-trend.php:19
-#: ./templates/email/text/new_entry.php:25
-msgid "Yes"
-msgstr ""
-
-#: ./templates/element/poll/result-trend.php:20
-msgid "Maybe"
-msgstr ""
-
-#: ./templates/element/poll/result-trend.php:21
-#: ./templates/email/text/new_entry.php:23
-msgid "No"
 msgstr ""
 
 #: ./templates/email/text/new_comment.php:17

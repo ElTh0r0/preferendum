@@ -13,20 +13,20 @@
  * @version   0.6.0
  */
 ?>
-<?php $this->assign('title', __('Poll administration')); ?>
 
 <div id="control-elements">
     <div>
-        <?php echo $this->element('admin/ctrl-login'); ?>
+        <?php echo $this->element('admin/ctrl-logout'); ?>
     </div>
 </div>
 
-<?php
-if (isset($pollid)) { ?>
-    <div class="center-box">
-        <div class="message">
-            <?php echo __('This poll is password protected!') ?><br>
-            <?php echo __('Please enter the password and press "Login".') ?>
-        </div>
-    </div>
-<?php } ?>
+<div id="useradmin-page">
+    <?php
+    echo $this->Flash->render();
+
+    echo $this->element('user/list');
+    echo '<br />';
+    echo '<hr />';
+    echo $this->element('user/create-form');
+    ?>
+</div>

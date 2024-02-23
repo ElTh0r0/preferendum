@@ -67,6 +67,9 @@ return function (RouteBuilder $routes): void {
         if (\Cake\Core\Configure::read('preferendum.exportCsv') == true) {
             $builder->connect('/polls/exportcsv/*', ['controller' => 'Polls', 'action' => 'exportcsv']);
         }
+        if (\Cake\Core\Configure::read('preferendum.opt_SendChangeEntryLink') == true) {
+            $builder->connect('/polls/sendpersonallink/*', ['controller' => 'Polls', 'action' => 'sendpersonallink']);
+        }
         $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
         $builder->connect('/polls/togglelock/*', ['controller' => 'Polls', 'action' => 'togglelock']);
         $builder->connect('/polls/update/*', ['controller' => 'Polls', 'action' => 'update']);
@@ -81,6 +84,9 @@ return function (RouteBuilder $routes): void {
         if (\Cake\Core\Configure::read('preferendum.adminInterface') != true) {
             $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);
             $builder->connect('/users/*', ['controller' => 'Polls', 'action' => 'add']);
+        }
+        if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') != true) {
+            $builder->connect('/users/forgot-password', ['controller' => 'Polls', 'action' => 'add']);
         }
 
         /*

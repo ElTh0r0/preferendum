@@ -23,19 +23,21 @@ $(document).ready(function() {
 
     // iterate options on click (ugly, but works for now)
     $(".new-entry-box").click(function(){
-        console.log("yes")
         if ($(this).hasClass("new-entry-choice-maybe")) {
             $(this).removeClass("new-entry-choice-maybe");
-            $(this).addClass("new-entry-choice-yes");
-            $(this).children(".entry-value").attr("value", "1");
-        } else if ($(this).hasClass("new-entry-choice-yes")) {
-            $(this).removeClass("new-entry-choice-yes");
             $(this).addClass("new-entry-choice-no");
             $(this).children(".entry-value").attr("value", "0");
-        } else if ($(this).hasClass("new-entry-choice-no")) {
-            $(this).removeClass("new-entry-choice-no");
+            $(this).attr('title', jsNo);
+        } else if ($(this).hasClass("new-entry-choice-yes")) {
+            $(this).removeClass("new-entry-choice-yes");
             $(this).addClass("new-entry-choice-maybe");
             $(this).children(".entry-value").attr("value", "2");
+            $(this).attr('title', jsMaybe);
+        } else if ($(this).hasClass("new-entry-choice-no")) {
+            $(this).removeClass("new-entry-choice-no");
+            $(this).addClass("new-entry-choice-yes");
+            $(this).children(".entry-value").attr("value", "1");
+            $(this).attr('title', jsYes);
         }
     });
     

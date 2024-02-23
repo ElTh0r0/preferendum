@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 ?>
 
@@ -227,6 +227,7 @@ if (
             'label' => '',
             'disabled' => (!$poll->emailentry && !$poll->emailcomment),
             'placeholder' => __('Email for receiving new entry/comment'),
+            'autocomplete' => 'email',
         ]
     );
     if (strcmp($poll->adminid, "NA") == 0) {

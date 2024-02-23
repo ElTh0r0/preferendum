@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 declare(strict_types=1);
@@ -64,8 +64,8 @@ class AdminController extends AppController
         $numpolls = $this->fetchTable('Polls')->find('all')->count();
         $numentries = $this->getNumberOfEntries();
         $numcomments = $this->getNumberOfComments();
-        $adminRole = SELF::ROLES[0];
-        $polladmRole = SELF::ROLES[1];
+        $adminRole = SELF::BACKENDROLES[0];
+        $polladmRole = SELF::BACKENDROLES[1];
 
         $this->set(compact('polls', 'numpolls', 'numentries', 'numcomments', 'currentUserRole', 'adminRole', 'polladmRole'));
     }
@@ -105,7 +105,7 @@ class AdminController extends AppController
 
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
-            if (in_array($result->getData()['role'], self::ROLES)) {
+            if (in_array($result->getData()['role'], self::BACKENDROLES)) {
                 $this->checkExpiryAndLockPolls();  // ToDo: Move to cronjob ?!
 
                 // redirect after login success
@@ -127,6 +127,10 @@ class AdminController extends AppController
         }
         // display error if user submitted and authentication failed
         if ($this->request->is('post') && !$result->isValid()) {
+            if (isset($pollid)) {
+                $this->Flash->error(__('Invalid poll password'));
+                return $this->redirect(['action' => 'login', $pollid, $polladmid]);
+            }
             $this->Flash->error(__('Invalid user or password'));
             return $this->redirect(['action' => 'login']);
         }
@@ -136,12 +140,15 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function logout()
+    public function logout($pollid = null, $polladmid = null)
     {
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             $this->Authentication->logout();
+        }
+        if (isset($pollid)) {
+            return $this->redirect(['action' => 'login', $pollid, $polladmid]);
         }
         return $this->redirect(['action' => 'login']);
     }
@@ -154,7 +161,7 @@ class AdminController extends AppController
         $currentUserRole = $identity->getOriginalData()['role'];
 
         // Extra check needed since poll password using login credentials as well
-        if (!in_array($currentUserRole, self::ROLES)) {
+        if (!in_array($currentUserRole, self::BACKENDROLES)) {
             $this->Authentication->logout();
             return $this->redirect(['action' => 'login']);
         }
