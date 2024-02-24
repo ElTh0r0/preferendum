@@ -123,7 +123,7 @@ function showEditChoice(currentChoiceId, currentChoiceText) {
                     [
                         'label' => '',
                         'minlength' => '1',
-                        'maxlength' => '32',
+                        'maxlength' => '50',
                         'class' => 'dateInput field-long datepicker-here',
                         'required' => true,
                         'placeholder' => __('New option'),

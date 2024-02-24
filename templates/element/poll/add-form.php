@@ -49,7 +49,7 @@ echo $this->Form->control(
     'options',
     [
         'name' => 'choices[]',
-        'maxlength' => '32',
+        'maxlength' => '50',
         'class' => 'dateInput field-long datepicker-here',
         'required' => true,
         'label' => __('Options') . ' *',

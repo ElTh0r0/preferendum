@@ -103,7 +103,7 @@ class ChoicesTable extends Table
 
         $validator
             ->scalar('option')
-            ->maxLength('option', 32)
+            ->maxLength('option', 50)
             ->requirePresence('option', 'create')
             ->notEmptyString('option');
 

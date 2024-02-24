@@ -287,7 +287,7 @@ class DbController extends AppController
         $connection->execute('CREATE TABLE `choices` (
             `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             `poll_id` varchar(32) NOT NULL,
-            `option` varchar(32) NOT NULL,
+            `option` varchar(50) NOT NULL,
             `sort` tinyint(3) UNSIGNED NOT NULL
         );');
 
@@ -366,7 +366,7 @@ class DbController extends AppController
         $connection->execute("CREATE TABLE choices (
             id SERIAL PRIMARY KEY,
             poll_id varchar(32) NOT NULL,
-            option varchar(32) NOT NULL,
+            option varchar(50) NOT NULL,
             sort SMALLINT NOT NULL
         );");
 
