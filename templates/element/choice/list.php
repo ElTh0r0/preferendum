@@ -18,7 +18,7 @@
 <tr>
     <td class="schedule-blank"></td>
     <?php foreach ($pollchoices as $choice) : ?>
-        <td class="schedule-header">
+        <td class="schedule-header" title="<?php echo h($choice->option) ?>">
             <div>
                 <div>
                     <?php echo h($choice->option) ?>
