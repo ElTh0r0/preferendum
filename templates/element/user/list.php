@@ -47,7 +47,7 @@
             echo $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'deleteBackendUser', $backuser['id']],
-                ['escape' => false, 'confirm' => __('Are you sure to delete this user?')]
+                ['escape' => false, 'confirm' => __('Are you sure to delete user {0}?', h($backuser['name']))]
             );
             echo '</span></td>';
         } else {

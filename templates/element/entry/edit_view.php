@@ -69,7 +69,7 @@ foreach ($pollentries as $name => $entry) {
             ]
         ),
         ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],
-        ['escape' => false, 'confirm' => __('Are you sure to delete this entry?')]
+        ['escape' => false, 'confirm' => __('Are you sure to delete entry by {0}?', h($name))]
     );
     echo '</td>';
 

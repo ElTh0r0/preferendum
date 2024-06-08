@@ -317,7 +317,7 @@
                         echo $this->Form->postLink(
                             $this->Form->button('', ['type' => 'button', 'class' => 'admin-delete-poll']),
                             ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
-                            ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
+                            ['escape' => false, 'confirm' => __('Are you sure to delete poll {0}?',  h($poll->title))]
                         );
                         echo '</td>';
                     } ?>

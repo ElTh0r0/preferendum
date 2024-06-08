@@ -100,7 +100,7 @@ function showEditChoice(currentChoiceId, currentChoiceText) {
                         ]
                     ),
                     ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->id],
-                    ['escape' => false, 'confirm' => __('Are you sure to delete this option?')]
+                    ['escape' => false, 'confirm' => __('Are you sure to delete option {0}?', h($choice->option))]
                 );
             }
             ?>

@@ -29,7 +29,7 @@
                     <?php echo $this->Form->postLink(
                         $this->Form->button('', ['type' => 'button', 'class' => 'comment-delete']),
                         ['controller' => 'Comments', 'action' => 'delete', $poll->id, $adminid, $com->id],
-                        ['escape' => false, 'confirm' => __('Are you sure to delete this comment?')]
+                        ['escape' => false, 'confirm' => __('Are you sure to delete comment by {0}?', h($com->name))]
                     ); ?>
                 </div>
             </div>
