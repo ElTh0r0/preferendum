@@ -50,6 +50,11 @@
 - Delete `src/Controller/DbController.php` from your server
 - Enjoy!
 
+## Update
+Starting with **v0.7.0** database update scripts had been added to PREFERendum, so that one can keep the existing database & data. But this feature can be only used, if the **old database is on v0.6.0** (or newer)!
+
+Access <your installation folder>/Db/update through your browser (e.g. yourdomain.com/preferendum/Db/update) and select from which to which version your PREFERendum database shall be updated.
+
 ## Configuration and customization
 You can turn on/off and configure all the available features in `config/preferendum_features.php`. For a full list of the options see the [Wiki](https://github.com/ElTh0r0/preferendum/wiki).
 
