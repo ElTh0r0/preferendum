@@ -20,6 +20,7 @@
     var x = document.getElementById("divNewChoice");
     var y = document.getElementById("btnAddChoice");
     var z = document.getElementById("choice");
+    var maxInp = document.getElementById("max-entries");
     if (x.style.display === "none") {
         w.value = "";
         x.style.display = "block";
@@ -31,19 +32,26 @@
         x.style.display = "none";
         y.innerText = "+";
         z.placeholder = "' . __('New option') . '";
+        if (maxInp) {
+            maxInp.value = "0";
+        }
     }
 }
 
-function showEditChoice(currentChoiceId, currentChoiceText) {
+function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
     var w = document.getElementById("changechoiceid");
     var x = document.getElementById("divNewChoice");
     var y = document.getElementById("btnAddChoice");
     var z = document.getElementById("choice");
+    var maxInp = document.getElementById("max-entries");
     w.value = currentChoiceId;
     x.style.display = "block";
     y.innerText = "-";
     z.value = currentChoiceText;
     z.placeholder = currentChoiceText;
+    if (maxInp) {
+        maxInp.value = currentChoiceMax;
+    }
 }',
     ['block' => true]
 ); ?>
@@ -83,14 +91,25 @@ function showEditChoice(currentChoiceId, currentChoiceText) {
 <tr>
     <td class="schedule-blank"></td>
     <?php foreach ($pollchoices as $choice) : ?>
-        <td class="schedule-header" title="<?php echo h($choice->option) ?>">
+        <td class="schedule-header" title="
+        <?php
+        echo h($choice->option);
+        if ($poll->limitentry && $choice->max_entries > 0) {
+            echo __(' - {0} pers.', $choice->max_entries);
+        }
+        ?>">
             <div>
                 <div>
                     <?php echo h($choice->option) ?>
+                    <?php
+                    if ($poll->limitentry && $choice->max_entries > 0) {
+                        echo __(' - {0} pers.', $choice->max_entries);
+                    }
+                    ?>
                 </div>
             </div>
             <?php
-            echo '<button type="button" class="date-edit" onclick="showEditChoice(' . $choice->id . ', \'' . h($choice->option) . '\')"></button>';
+            echo '<button type="button" class="date-edit" onclick="showEditChoice(' . $choice->id . ', \'' . h($choice->option) . '\', ' . $choice->max_entries . ')"></button>';
             if (sizeof($pollchoices) > 1) {
                 echo $this->Form->postLink(
                     $this->Form->button(
@@ -129,6 +148,21 @@ function showEditChoice(currentChoiceId, currentChoiceText) {
                         'placeholder' => __('New option'),
                     ]
                 );
+                if ($poll->limitentry) {
+                    echo $this->Form->control(
+                        'max_entries',
+                        [
+                            'maxlength' => '3',
+                            'class' => 'maxEntryInput',
+                            'label' => false,
+                            'style' => 'margin-top: 3px; height: 25px; width: 50px;',
+                            'type' => 'number',
+                            'value' => '0',
+                            'min' => 0,
+                            'max' => 99,
+                        ]
+                    );
+                }
                 echo $this->Form->hidden(
                     'id',
                     [

@@ -18,10 +18,21 @@
 <tr>
     <td class="schedule-blank"></td>
     <?php foreach ($pollchoices as $choice) : ?>
-        <td class="schedule-header" title="<?php echo h($choice->option) ?>">
+        <td class="schedule-header" title="
+        <?php
+        echo h($choice->option);
+        if ($poll->limitentry && $choice->max_entries > 0) {
+            echo __(' - {0} pers.', $choice->max_entries);
+        }
+        ?>">
             <div>
                 <div>
                     <?php echo h($choice->option) ?>
+                    <?php
+                    if ($poll->limitentry && $choice->max_entries > 0) {
+                        echo __(' - {0} pers.', $choice->max_entries);
+                    }
+                    ?>
                 </div>
             </div>
         </td>

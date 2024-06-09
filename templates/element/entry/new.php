@@ -40,8 +40,31 @@ if ($poll->anonymous) {
     echo '</td>';
 }
 
+$availableYes = array();
+if ($poll->limitentry) {
+    for ($i = 0; $i < sizeof($pollchoices); $i++) {
+        $yes = 0;
+        foreach ($pollentries as $ent) {
+            if ($ent[$pollchoices[$i]->id] == 1 || $ent[$pollchoices[$i]->id] == 2) {
+                $yes++;
+            }
+        }
+        $availableYes[] = $yes;
+    }
+}
+
+$j = 0;
 foreach ($pollchoices as $opt) {
-    echo '<td class="new-entry-box new-entry-choice new-entry-choice-no" title="' . __('No') . '">';
+    $clickableOrFull = 'new-entry-box new-entry-choice new-entry-choice-no';
+    $textNoFull = __('No');
+    if ($poll->limitentry && $opt->max_entries > 0) {
+        if ($availableYes[$j] >= $opt->max_entries) {
+            $clickableOrFull = 'new-entry-choice-full';
+            $textNoFull = __('Max. reached!');
+        }
+    }
+    echo '<td class="' . $clickableOrFull . '" title="' . $textNoFull . '">';
+
     echo $this->Form->hidden(
         'va',
         [
@@ -59,6 +82,7 @@ foreach ($pollchoices as $opt) {
         ]
     );
     echo '</td>';
+    $j++;
 }
 echo '<td class="schedule-submit">';
 echo $this->Form->button(__('Save'));

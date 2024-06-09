@@ -86,6 +86,9 @@ return [
         // Defined value will be used as default offset from today during poll creation, but date can be freely chosen by creator
         'opt_PollExpirationAfter' => 0,
 
+        // Optionally define maximum number of entries per option
+        'opt_MaxEntriesPerOption' => false,
+
         // Show vote result visualization. Current options:
         // 'trend': Showing kind of trend visualization weighting 'yes' and 'maybe'
         // 'simple': Just showing sum of 'yes' votes

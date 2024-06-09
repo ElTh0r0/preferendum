@@ -93,6 +93,13 @@ class PollsController extends AppController
             if ($this->Polls->save($newpoll)) {
                 $success = true;
                 $choices = $this->request->getData('choices');
+                $max_entries = [];
+                if (
+                    $newpoll->limitentry &&
+                    \Cake\Core\Configure::read('preferendum.opt_MaxEntriesPerOption')
+                ) {
+                    $max_entries = $this->request->getData('max_entries');
+                }
                 for ($i = 0; $i < sizeof($choices); $i++) {
                     $dbchoice = $this->fetchTable('Choices')->newEmptyEntity();
                     $dbchoice = $this->fetchTable('Choices')->newEntity(
@@ -102,6 +109,13 @@ class PollsController extends AppController
                             'sort' => $i + 1
                         ]
                     );
+                    if (sizeof($choices) == sizeof($max_entries)) {
+                        if (is_numeric($max_entries[$i])) {
+                            $dbchoice['max_entries'] = $max_entries[$i];
+                        } else {
+                            $dbchoice['max_entries'] = 0;
+                        }
+                    }
                     if (!$this->fetchTable('Choices')->save($dbchoice)) {
                         $success = false;
                         break;
@@ -852,7 +866,7 @@ class PollsController extends AppController
     {
         $dbchoices = $this->fetchTable('Choices')->find()
             ->where(['poll_id' => $pollid])
-            ->select(['id', 'option'])
+            ->select(['id', 'option', 'max_entries'])
             ->order(['sort' => 'ASC']);
 
         return $dbchoices->toArray();
@@ -896,6 +910,9 @@ class PollsController extends AppController
         }
         if (!(\Cake\Core\Configure::read('preferendum.opt_PollPassword'))) {
             $poll->pwprotect = 0;
+        }
+        if (!(\Cake\Core\Configure::read('preferendum.opt_MaxEntriesPerOption'))) {
+            $poll->limitentry = 0;
         }
         if (
             \Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') == 0 ||

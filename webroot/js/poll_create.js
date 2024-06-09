@@ -19,6 +19,8 @@ $(document).ready(function () {
         $(".dateInput").last().focus();
         $(".dateInput").last().select();
         $(".dateInput").last().datepicker(datepickerOptions);
+        $(".maxEntryInput").last().after($(".maxEntryInput").last().clone());
+        $(".maxEntryInput").last().val($(".maxEntryInput:nth-last-child(2)").val());
         $("#btnLess").prop("disabled", false);
         $("#btnLess").css("cursor", "pointer");
     });
@@ -30,6 +32,8 @@ $(document).ready(function () {
         $(".dateInput").last().focus();
         $(".dateInput").last().select();
         $(".dateInput").last().datepicker(datepickerOptions);
+        $(".maxEntryInput").not(":first").last().datepicker("destroy");
+        $(".maxEntryInput").not(":first").last().detach();
         if ($(".dateInput").length == 1) {
             $("#btnLess").prop("disabled", true);
             $("#btnLess").css("cursor", "default");

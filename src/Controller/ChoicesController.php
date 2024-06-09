@@ -38,22 +38,28 @@ class ChoicesController extends AppController
                     ->firstOrFail();
                 $dbadminid = $poll->adminid;
 
-                if (
-                    strcmp($dbadminid, $adminid) == 0 &&
-                    $this->isNewChoice($pollid, $choicestring)  // Independent if creating new or editing existing choice
-                ) {
+                if (strcmp($dbadminid, $adminid) == 0) {
+                    $choicemax = 0;
+                    if ($poll->limitentry) {
+                        $choicemax = trim($choicedata['max_entries']);
+                        if (!is_numeric($choicemax)) {
+                            $choicemax = 0;
+                        }
+                    }
+
                     if (isset($choiceid) && !empty($choiceid)) {  // Edit existing choice
                         if ($this->isValidExisting($pollid, $choiceid)) {
                             $dbchoice = $this->Choices->findById($choiceid)->firstOrFail();
-                            $this->Choices->patchEntity($dbchoice, ['option' => trim($choicestring)]);
+                            $this->Choices->patchEntity($dbchoice, ['option' => trim($choicestring), 'max_entries' => $choicemax]);
                             $success = $this->Choices->save($dbchoice);
                         }
-                    } else {  // New choice
+                    } else if ($this->isNewChoice($pollid, $choicestring)) {  // New choice
                         $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
                         $dbchoice = $this->Choices->newEntity(
                             [
                                 'poll_id' => $poll->id,
                                 'option' => trim($choicestring),
+                                'max_entries' => $choicemax,
                                 'sort' => $nextsort
                             ]
                         );

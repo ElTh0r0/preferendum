@@ -29,7 +29,7 @@ class DbController extends AppController
 
     public function install(): void
     {
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PREFERendum database setup</title>';
+        echo '<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="utf-8"><title>PREFERendum database setup</title>';
         echo '<link rel="stylesheet" href="../css/preferendum.css">';
         echo '</head>';
         echo '<body><p>Starting <strong>PREFERendum</strong> database setup...</p>';
@@ -54,32 +54,46 @@ class DbController extends AppController
     }
 
     //------------------------------------------------------------------------
-    /*
-    public function update(): void
-    {
-        echo '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>PREFERendum database update</title>';
-        echo '<link rel="stylesheet" href="../css/preferendum.css">';
-        echo '</head>';
-        echo '<body><p>Starting <strong>PREFERendum</strong> database update...</p>';
 
-        $this->checkEnvironment();
-        $this->checkFilesystem();
+    public function update($version = null): void
+    {
+        echo '<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="utf-8"><title>PREFERendum database update</title>';
+        if (!isset($version) || empty($version)) {
+            echo '<link rel="stylesheet" href="../css/preferendum.css">';
+        } else {
+            echo '<link rel="stylesheet" href="../../css/preferendum.css">';
+        }
+        echo '</head>';
+        echo '<body><p><strong>PREFERendum</strong> database update...</p>';
+
         \Cake\Core\Configure::load('app_local');
         $dbdriver = \Cake\Core\Configure::read('Datasources.default.driver');
-        $dbconnection = $this->checkDbConnection($dbdriver);
-        if (!$this->isAlreadyInstalled($dbconnection, $dbdriver)) {
-            echo '<ul><li class="fail"><strong>Attention:</strong> PREFERendum seems not to be installed - stopping execution!</li></ul>';
-            die;
-        }
-        //$this->updateTables($dbconnection, $dbdriver);
+        $connection = $this->checkDbConnection($dbdriver);
 
-        echo '<p class="success"><br>UPDATE COMPLETED SUCCESSFULLY!</p>';
-        echo '<strong>!!! Please delete "src/Controller/DbController.php" !!!</strong>';
+        if (!isset($version) || empty($version)) {
+            $this->checkEnvironment();
+            $this->checkFilesystem();
+            if (!$this->isAlreadyInstalled($connection, $dbdriver)) {
+                echo '<ul><li class="fail"><strong>Attention:</strong> PREFERendum seems not to be installed - stopping execution!</li></ul>';
+                die;
+            }
+
+            echo '<p><br>Select update:</p><ul>';
+            echo '<li><u><a href="update/06-07">Version 0.6.x -> 0.7.x</li></u></a>';
+            echo '</ul>';
+        } else {
+            if (strcmp('06-07', $version) == 0) {
+                $this->update06_07($connection, $dbdriver);
+                echo '<p class="success"><br>Update from version 0.6 to 0.7 completed successfully!</p>';
+            }
+        }
+
+        echo '<strong>Please delete "src/Controller/DbController.php" after the update!</strong>';
         echo '</body></html>';
 
         $this->autoRender = false;
     }
-    */
+
     //------------------------------------------------------------------------
 
     private function checkEnvironment()
@@ -269,6 +283,7 @@ class DbController extends AppController
             `hidevotes` tinyint(1) NOT NULL DEFAULT 0,
             `anonymous` tinyint(1) NOT NULL DEFAULT 0,
             `pwprotect` tinyint(1) NOT NULL DEFAULT 0,
+            `limitentry` tinyint(1) NOT NULL DEFAULT 0,
             `expiry` DATE DEFAULT NULL,
             `locked` tinyint(1) NOT NULL DEFAULT 0,
             `modified` DATETIME NOT NULL
@@ -288,6 +303,7 @@ class DbController extends AppController
             `id` INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
             `poll_id` varchar(32) NOT NULL,
             `option` varchar(50) NOT NULL,
+            `max_entries` tinyint(3) UNSIGNED NOT NULL DEFAULT 0,
             `sort` tinyint(3) UNSIGNED NOT NULL
         );');
 
@@ -348,6 +364,7 @@ class DbController extends AppController
             hidevotes BOOLEAN NOT NULL DEFAULT false,
             anonymous BOOLEAN NOT NULL DEFAULT false,
             pwprotect BOOLEAN NOT NULL DEFAULT false,
+            limitentry BOOLEAN NOT NULL DEFAULT false,
             expiry DATE DEFAULT NULL,
             locked BOOLEAN NOT NULL DEFAULT false,
             modified TIMESTAMP NOT NULL
@@ -367,6 +384,7 @@ class DbController extends AppController
             id SERIAL PRIMARY KEY,
             poll_id varchar(32) NOT NULL,
             option varchar(50) NOT NULL,
+            max_entries SMALLINT NOT NULL DEFAULT 0,
             sort SMALLINT NOT NULL
         );");
 
@@ -402,5 +420,23 @@ class DbController extends AppController
             ADD CONSTRAINT fk_entr_choiceid FOREIGN KEY (choice_id) REFERENCES choices (id);');
         $connection->execute('ALTER TABLE entries
             ADD CONSTRAINT fk_entr_userid FOREIGN KEY (user_id) REFERENCES users (id);');
+    }
+
+    //------------------------------------------------------------------------
+    //------------------------------------------------------------------------
+
+    private function update06_07($connection, $dbdriver)
+    {
+        if (strcmp(strtolower($dbdriver), 'mysql') == 0) {
+            $connection->execute('ALTER TABLE `polls`
+                ADD `limitentry` tinyint(1) NOT NULL DEFAULT 0 AFTER `pwprotect`;');
+            $connection->execute('ALTER TABLE `choices`
+                ADD `max_entries` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 AFTER `option`;');
+        } else if (strcmp(strtolower($dbdriver), 'postgres') == 0) {
+            $connection->execute('ALTER TABLE polls
+                ADD limitentry BOOLEAN NOT NULL DEFAULT false;');
+            $connection->execute('ALTER TABLE choices
+                ADD max_entries SMALLINT NOT NULL DEFAULT 0;');
+        }
     }
 }

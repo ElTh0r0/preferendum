@@ -94,6 +94,20 @@ function toggleUserinfoInput() {
     }
 }
 
+//enable/disable max entry input
+var inpLimit = document.getElementById("limitinput");
+function toggleMaxEntryInput() {
+    if (inpLimit) {
+        var inpMaxEntryBoxes = document.getElementsByClassName("maxEntryInput");
+        for (var i = 0; i < inpMaxEntryBoxes.length; i++) { 
+            inpMaxEntryBoxes[i].disabled = !inpLimit.checked;
+            if (!inpLimit.checked) {
+                inpMaxEntryBoxes[i].value = "0";
+            }
+        }
+    }
+}
+
 //enable/disable password input
 var chkPwProtect = document.getElementById("pwprotectinput");
 var inpPassword = document.getElementById("passwordinput");

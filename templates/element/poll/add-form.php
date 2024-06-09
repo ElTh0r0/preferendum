@@ -45,6 +45,18 @@ echo $this->Form->control(
     ]
 );
 // Choices
+$inputstyle = '';
+if ($prefconf['opt_MaxEntriesPerOption']) {
+    echo '<br>' . $this->Form->checkbox(
+        'limitentry',
+        [
+            'id' => 'limitinput',
+            'onchange' => 'toggleMaxEntryInput()',
+        ]
+    );
+    echo '<span style="font-size: 90%;">' . __('Define max. number of entries/option (0 = unrestricted)') . '</span>';
+    $inputstyle = ' float: left; margin-right: 8px; width: 342px';
+}
 echo $this->Form->control(
     'options',
     [
@@ -54,9 +66,27 @@ echo $this->Form->control(
         'required' => true,
         'label' => __('Options') . ' *',
         'placeholder' => __('Type whatever you want or pick a date!'),
-        'style' => 'margin-bottom: 8px;',
+        'style' => 'margin-bottom: 8px;' . $inputstyle,
     ]
 );
+if ($prefconf['opt_MaxEntriesPerOption']) {
+    echo $this->Form->control(
+        'max_entries',
+        [
+            'name' => 'max_entries[]',
+            'maxlength' => '3',
+            'class' => 'maxEntryInput',
+            'id' => 'max-entriesinput',
+            'label' => false,
+            'style' => 'margin-bottom: 8px; width: 50px;',
+            'type' => 'number',
+            'value' => '0',
+            'min' => 0,
+            'max' => 99,
+            'disabled' => true,
+        ]
+    );
+}
 echo '<div class="content-right">';
 echo $this->Form->button(
     '',

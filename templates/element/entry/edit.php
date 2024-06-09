@@ -56,6 +56,19 @@ if ($poll->anonymous) {
     echo '</td>';
 }
 
+$availableYes = array();
+if ($poll->limitentry) {
+    for ($i = 0; $i < sizeof($pollchoices); $i++) {
+        $yes = 0;
+        foreach ($pollentries as $ent) {
+            if ($ent[$pollchoices[$i]->id] == 1 || $ent[$pollchoices[$i]->id] == 2) {
+                $yes++;
+            }
+        }
+        $availableYes[] = $yes;
+    }
+}
+
 for ($i = 0; $i < sizeof($pollchoices); $i++) {
     $entry = $pollchoices[$i]->id;
     $val = $pollentries[$edituser][$pollchoices[$i]->id];
@@ -77,7 +90,14 @@ for ($i = 0; $i < sizeof($pollchoices); $i++) {
             break;
     }
 
-    echo '<td class="new-entry-box new-entry-choice new-entry-choice-' . $txtvalue . '" title="' . $tdtitle . '">';
+    $clickableOrFull = 'new-entry-box new-entry-choice new-entry-choice-' . $txtvalue;
+    if ($poll->limitentry && $pollchoices[$i]->max_entries > 0) {
+        if ($availableYes[$i] >= $pollchoices[$i]->max_entries && $val == 0) {
+            $clickableOrFull = 'new-entry-choice-full';
+            $tdtitle = __('Max. reached!');
+        }
+    }
+    echo '<td class="' . $clickableOrFull . '" title="' . $tdtitle . '">';
     echo $this->Form->hidden(
         'va',
         [

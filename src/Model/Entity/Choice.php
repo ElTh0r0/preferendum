@@ -25,6 +25,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $poll_id
  * @property string $option
+ * @property int $max_entries
  * @property int $sort
  *
  * @property \App\Model\Entity\Poll $poll
@@ -44,6 +45,7 @@ class Choice extends Entity
     protected $_accessible = [
         'poll_id' => true,
         'option' => true,
+        'max_entries' => true,
         'sort' => true,
         'poll' => true,
         'entries' => true,
