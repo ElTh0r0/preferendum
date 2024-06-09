@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 declare(strict_types=1);
@@ -31,7 +31,13 @@ use Cake\ORM\Entity;
  * @property bool $emailcomment
  * @property bool $userinfo
  * @property bool $hidevotes
+ * @property bool $anonymous
  * @property bool $locked
+ * @property bool $expiry
+ * @property bool $modified
+ * @property bool $pwprotect
+ * @property bool $limitentry
+ * 
  * @property \Cake\I18n\FrozenTime $modified
  *
  * @property \App\Model\Entity\Choice[] $choices
@@ -68,5 +74,7 @@ class Poll extends Entity
         'choices' => true,
         'comments' => true,
         'pwprotect' => true,
+        'limitentry' => true,
+        'max_entries' => true,
     ];
 }

@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // show poll url
-    var pollUrl = window.location.protocol + "/" +
+    var pollUrl = window.location.protocol + "//" +
                   window.location.hostname +
                   jswebroot + "polls/" + jspollid;
     $("#public-url-field").val(pollUrl);

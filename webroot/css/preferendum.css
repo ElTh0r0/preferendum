@@ -18,6 +18,7 @@
     --color-feedback-positive: #69b587;
     --color-feedback-neutral: #c0a36d;
     --color-feedback-negative: #db5753;
+    --color-feedback-full: #575f63;
 
     --color-background-flash-neutral: #eff8ff;
     --color-border-flash-neutral: #6cb2eb;
@@ -41,6 +42,7 @@
     --color-feedback-positive: #69b587;
     --color-feedback-neutral: #c0a36d;
     --color-feedback-negative: #db5753;
+    --color-feedback-full: #575f63;
 
     --color-background-flash-neutral: #eff8ff;
     --color-border-flash-neutral: #6cb2eb;
@@ -851,6 +853,12 @@ tr.schedule-new td.new-entry-choice-no {
     background: var(--color-feedback-negative) url(../img/icon-no.png) no-repeat
         center center;
 }
+
+tr.schedule-new td.new-entry-choice-full {
+    background: var(--color-feedback-full) url(../img/icon-no.png) no-repeat
+        center center;
+}
+
 
 tr.table-spacer-row > td {
     padding: 0;

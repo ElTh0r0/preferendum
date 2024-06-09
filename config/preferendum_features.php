@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 /*
@@ -85,6 +85,9 @@ return [
         // Optionally lock poll automatically at a certain date (0 = disabled at all)
         // Defined value will be used as default offset from today during poll creation, but date can be freely chosen by creator
         'opt_PollExpirationAfter' => 0,
+
+        // Optionally define maximum number of entries per option
+        'opt_MaxEntriesPerOption' => false,
 
         // Show vote result visualization. Current options:
         // 'trend': Showing kind of trend visualization weighting 'yes' and 'maybe'

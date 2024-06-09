@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 declare(strict_types=1);
@@ -108,14 +108,14 @@ class EntriesController extends AppController
                                 '<input type="hidden" name="pollname" autocomplete="off" value="' . $dbtitle . '">' .
                                 '<input type="hidden" name="name" autocomplete="off" value="' . $new_user->name . '">' .
                                 '<input type="hidden" name="link" autocomplete="off" value="' . $link . $new_user->password . '">' .
-                                '<input type="email" name="email" id="user-edit-url" required="required" placeholder="' . __('Email for receiving your personal link') . '" size="33" autocomplete="email"> ' .
+                                '<input type="email" name="email" id="user-edit-url" required="required" placeholder="' . __('Email for receiving your personal link') . '" size="31" autocomplete="email"> ' .
                                 '<button type="submit" class="entry-email-link" title="' . __('Send email') . '"></button>' .
                                 '</form>';
                         }
 
                         $this->Flash->default(
                             __('Your entry has been saved, but please note: If you want to edit your entry, you must keep this personalised link.') . '<br>' .
-                                '<input type="text" id="user-edit-url" title="' . __('Copy the link and store it on your device!') . '" value="' . $link . $new_user->password . '" size="33" readonly /> ' .
+                                '<input type="text" id="user-edit-url" title="' . __('Copy the link and store it on your device!') . '" value="' . $link . $new_user->password . '" size="31" readonly /> ' .
                                 '<button type="button" class="copy-trigger entry-copy-link" data-clipboard-target="#user-edit-url" title="' . __('Copy link to clipboard!') . '"></button>' . $sendLink,
                             [
                                 'params' => [

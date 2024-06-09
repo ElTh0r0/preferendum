@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 ?>
 
@@ -69,7 +69,7 @@ foreach ($pollentries as $name => $entry) {
             ]
         ),
         ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],
-        ['escape' => false, 'confirm' => __('Are you sure to delete this entry?')]
+        ['escape' => false, 'confirm' => __('Are you sure to delete entry by {0}?', h($name))]
     );
     echo '</td>';
 

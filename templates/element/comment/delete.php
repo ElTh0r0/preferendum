@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 ?>
 
@@ -29,7 +29,7 @@
                     <?php echo $this->Form->postLink(
                         $this->Form->button('', ['type' => 'button', 'class' => 'comment-delete']),
                         ['controller' => 'Comments', 'action' => 'delete', $poll->id, $adminid, $com->id],
-                        ['escape' => false, 'confirm' => __('Are you sure to delete this comment?')]
+                        ['escape' => false, 'confirm' => __('Are you sure to delete comment by {0}?', h($com->name))]
                     ); ?>
                 </div>
             </div>

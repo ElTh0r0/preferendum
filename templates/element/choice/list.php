@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 ?>
 
@@ -18,10 +18,21 @@
 <tr>
     <td class="schedule-blank"></td>
     <?php foreach ($pollchoices as $choice) : ?>
-        <td class="schedule-header">
+        <td class="schedule-header" title="
+        <?php
+        echo h($choice->option);
+        if ($poll->limitentry && $choice->max_entries > 0) {
+            echo __(' - {0} pers.', $choice->max_entries);
+        }
+        ?>">
             <div>
                 <div>
                     <?php echo h($choice->option) ?>
+                    <?php
+                    if ($poll->limitentry && $choice->max_entries > 0) {
+                        echo __(' - {0} pers.', $choice->max_entries);
+                    }
+                    ?>
                 </div>
             </div>
         </td>

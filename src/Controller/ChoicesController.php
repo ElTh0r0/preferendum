@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 declare(strict_types=1);
@@ -38,28 +38,34 @@ class ChoicesController extends AppController
                     ->firstOrFail();
                 $dbadminid = $poll->adminid;
 
-                if (
-                    strcmp($dbadminid, $adminid) == 0 &&
-                    $this->isNewChoice($pollid, $choicestring)  // Independent if creating new or editing existing choice
-                ) {
+                if (strcmp($dbadminid, $adminid) == 0) {
+                    $choicemax = 0;
+                    if ($poll->limitentry) {
+                        $choicemax = trim($choicedata['max_entries']);
+                        if (!is_numeric($choicemax)) {
+                            $choicemax = 0;
+                        }
+                    }
+
                     if (isset($choiceid) && !empty($choiceid)) {  // Edit existing choice
                         if ($this->isValidExisting($pollid, $choiceid)) {
                             $dbchoice = $this->Choices->findById($choiceid)->firstOrFail();
-                            $this->Choices->patchEntity($dbchoice, ['option' => trim($choicestring)]);
+                            $this->Choices->patchEntity($dbchoice, ['option' => trim($choicestring), 'max_entries' => $choicemax]);
                             $success = $this->Choices->save($dbchoice);
                         }
-                    } else {  // New choice
+                    } else if ($this->isNewChoice($pollid, $choicestring)) {  // New choice
                         $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
                         $dbchoice = $this->Choices->newEntity(
                             [
                                 'poll_id' => $poll->id,
                                 'option' => trim($choicestring),
+                                'max_entries' => $choicemax,
                                 'sort' => $nextsort
                             ]
                         );
 
                         if ($this->Choices->save($dbchoice)) {
-                            $success = $this->addMaybeToExisting($pollid, $dbchoice);
+                            $success = $this->addNoToExisting($pollid, $dbchoice);
                         }
                     }
                     if ($success) {
@@ -170,11 +176,11 @@ class ChoicesController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function addMaybeToExisting($pollid, $dbchoice)
+    private function addNoToExisting($pollid, $dbchoice)
     {
         $success = true;
 
-        // Add 'maybe' for all existing entries
+        // Add 'no' for all existing entries
         $dbentries = $this->fetchTable('Entries')->find()
             ->where(['poll_id' => $pollid])
             ->contain(['Users', 'Choices'])
@@ -186,7 +192,7 @@ class ChoicesController extends AppController
             $dbentry = $this->fetchTable('Entries')->newEntity([
                 'choice_id' => $dbchoice->id,
                 'user_id' => $user->user_id,
-                'value' => 2
+                'value' => 0
             ]);
 
             if (!$this->fetchTable('Entries')->save($dbentry)) {

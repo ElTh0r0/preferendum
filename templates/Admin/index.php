@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 ?>
 <?php $this->assign('title', __('Poll administration')); ?>
@@ -317,7 +317,7 @@
                         echo $this->Form->postLink(
                             $this->Form->button('', ['type' => 'button', 'class' => 'admin-delete-poll']),
                             ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
-                            ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
+                            ['escape' => false, 'confirm' => __('Are you sure to delete poll {0}?',  h($poll->title))]
                         );
                         echo '</td>';
                     } ?>

@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 declare(strict_types=1);
@@ -25,6 +25,7 @@ use Cake\ORM\Entity;
  * @property int $id
  * @property string $poll_id
  * @property string $option
+ * @property int $max_entries
  * @property int $sort
  *
  * @property \App\Model\Entity\Poll $poll
@@ -44,6 +45,7 @@ class Choice extends Entity
     protected $_accessible = [
         'poll_id' => true,
         'option' => true,
+        'max_entries' => true,
         'sort' => true,
         'poll' => true,
         'entries' => true,

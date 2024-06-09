@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 declare(strict_types=1);
@@ -103,7 +103,7 @@ class ChoicesTable extends Table
 
         $validator
             ->scalar('option')
-            ->maxLength('option', 32)
+            ->maxLength('option', 50)
             ->requirePresence('option', 'create')
             ->notEmptyString('option');
 
