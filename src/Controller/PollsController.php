@@ -432,6 +432,18 @@ class PollsController extends AppController
                 $filename = str_replace(' ', '_', $filename);
                 $choices = $this->getPollChoices($pollid);
                 $headerline = array_column($choices, 'option');
+
+                if ($poll->limitentry) {
+                    $maxentries = array_column($choices, 'max_entries');
+                    if (sizeof($headerline) == sizeof($maxentries)) {
+                        for ($i = 0; $i < sizeof($headerline); $i++) {
+                            if ($maxentries[$i] > 0) {
+                                $headerline[$i] .= __(' - {0} pers.', $maxentries[$i]);
+                            }
+                        }
+                    }
+                }
+
                 if ($poll->userinfo) {
                     array_unshift($headerline, __('Contact info'));
                 }

@@ -20,6 +20,13 @@
   - Collect user contact information with a poll entry
   - Poll **administration interface** for managing all the polls on the server
   - Simple user administration for admin interface
+  - Restrict poll creation to backend users only
+  - Allow users to change their entry through a personal links
+  - Make votes only visible for admin
+  - Create anonymous votes (no user name stored/shown)
+  - Lock poll automatically at a certain date
+  - Define maximum number of entries per option
+  - Protect poll by a password
 
 ![Screenshot](https://github.com/ElTh0r0/preferendum/assets/26674558/8b45b2f3-7587-4784-8e7a-9255364492d1)
 
