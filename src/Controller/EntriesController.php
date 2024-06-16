@@ -18,6 +18,7 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Mailer\Mailer;
+use Cake\Collection\Collection;
 
 class EntriesController extends AppController
 {
@@ -33,23 +34,16 @@ class EntriesController extends AppController
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
-            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo', 'anonymous', 'editentry'])->firstOrFail();
-            $dbtitle = $db['title'];
-            $dblocked = $db['locked'];
-            $dbuserinfo = $db['userinfo'];
-            $dbanonymous = $db['anonymous'];
-            $dbemail = $db['email'];
-            $dbemailentry = $db['emailentry'];
-            $dbeditentry = $db['editentry'];
+            $poll = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'locked', 'email', 'emailentry', 'userinfo', 'anonymous', 'editentry', 'limitentry'])->firstOrFail();
 
-            if ($dbanonymous) {
+            if ($poll->anonymous) {
                 // Temporary name; will be renamed to _UserID once user was saved
                 $newentry['name'] = 'Tmp_' . $pollid . '_' . hash("crc32", 'TEMP' . time() . '_' . random_bytes(10));
             }
 
-            if (!$this->isNameAlreadyUsed($pollid, trim($newentry['name'])) && !($dblocked)) {
+            if (!$this->isNameAlreadyUsed($pollid, trim($newentry['name'])) && !($poll->locked)) {
                 $userinfo = '';
-                if ($dbuserinfo == 1) {
+                if ($poll->userinfo) {
                     $userinfo = trim($newentry['userdetails']);
                 }
                 // Create new user and save
@@ -64,15 +58,35 @@ class EntriesController extends AppController
                 if ($this->fetchTable('Users')->save($new_user)) {
                     $success = true;
 
-                    if ($dbanonymous) {
+                    if ($poll->anonymous) {
                         // Rename to Anon_PollID_UserID
                         $this->fetchTable('Users')->patchEntity($new_user, ['name' => 'Anon_' . $pollid . '_' . $new_user->id]);
                         $success = $this->fetchTable('Users')->save($new_user);
                     }
 
+                    $max_entries = [];
+                    $already_yes = [];
+                    if ($poll->limitentry) {
+                        $max_entries = $this->fetchTable('Choices')->findByPollId($pollid)->select(['id', 'max_entries']);
+                        $max_entries = (new Collection($max_entries))->combine('id', 'max_entries')->toArray();
+                        $already_yes = $this->getNumOfYesEntries($pollid);
+                    }
+
                     if ($success) {
                         // Save each entry
                         for ($i = 0; $i < sizeof($newentry['choices']); $i++) {
+                            if (
+                                $poll->limitentry &&
+                                sizeof($max_entries) == sizeof($newentry['choices']) &&
+                                sizeof($already_yes) == sizeof($newentry['choices'])
+                            ) {
+                                if (
+                                    $already_yes[$newentry['choices'][$i]] >= $max_entries[$newentry['choices'][$i]] &&
+                                    $max_entries[$newentry['choices'][$i]] != 0
+                                ) {
+                                    $newentry['values'][$i] = '0';
+                                }
+                            }
                             $dbentry = $this->Entries->newEmptyEntity();
                             $dbentry = $this->Entries->newEntity(
                                 [
@@ -91,11 +105,11 @@ class EntriesController extends AppController
                 }
 
                 if ($success) {
-                    if ($dbemailentry && !empty($dbemail)) {
-                        $this->sendEntryEmail($pollid, $dbemail, $dbtitle, $new_user->id, $new_user->name);
+                    if ($poll->emailentry && !empty($poll->email)) {
+                        $this->sendEntryEmail($pollid, $poll->email, $poll->title, $new_user->id, $new_user->name);
                     }
 
-                    if ($dbeditentry) {
+                    if ($poll->editentry) {
                         $link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $this->request->getAttributes()['webroot'] . 'polls/' . $pollid . '/NA/';
                         //debug($link . $new_user->password);
 
@@ -105,7 +119,7 @@ class EntriesController extends AppController
                             $sendLink = '<br><br>' . __('Optionally, you can receive your personalised link by email:') . '<br>' .
                                 '<form method="post" action="sendpersonallink">' .
                                 '<input type="hidden" name="_csrfToken" autocomplete="off" value="' . $this->request->getAttribute('csrfToken') . '">' .
-                                '<input type="hidden" name="pollname" autocomplete="off" value="' . $dbtitle . '">' .
+                                '<input type="hidden" name="pollname" autocomplete="off" value="' . $poll->title . '">' .
                                 '<input type="hidden" name="name" autocomplete="off" value="' . $new_user->name . '">' .
                                 '<input type="hidden" name="link" autocomplete="off" value="' . $link . $new_user->password . '">' .
                                 '<input type="email" name="email" id="user-edit-url" required="required" placeholder="' . __('Email for receiving your personal link') . '" size="31" autocomplete="email"> ' .
@@ -154,30 +168,22 @@ class EntriesController extends AppController
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
 
-            $db = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'adminid', 'locked', 'email', 'emailentry', 'userinfo', 'anonymous', 'editentry'])->firstOrFail();
-            $dbtitle = $db['title'];
-            $dbadmid = $db['adminid'];
-            $dblocked = $db['locked'];
-            $dbuserinfo = $db['userinfo'];
-            $dbanonymous = $db['anonymous'];
-            $dbemail = $db['email'];
-            $dbemailentry = $db['emailentry'];
-            $dbeditallowed = $db['editentry'];
+            $poll = $this->fetchTable('Polls')->findById($pollid)->select(['title', 'adminid', 'locked', 'email', 'emailentry', 'userinfo', 'anonymous', 'editentry', 'limitentry'])->firstOrFail();
 
             $dbuser = $this->fetchTable('Users')->findById($userid)->firstOrFail();
-            if ($dbanonymous) {
+            if ($poll->anonymous) {
                 $editentry['name'] = $dbuser['name'];
             }
 
             if (
-                ((!($dblocked) && $dbeditallowed && strcmp($dbuser['password'], $userpw) == 0) ||  // User changes own entry
-                    (isset($adminid) && strcmp($dbadmid, $adminid) == 0)) &&  // Admin changes user entry
+                ((!($poll->locked) && $poll->editentry && strcmp($dbuser['password'], $userpw) == 0) ||  // User changes own entry
+                    (isset($adminid) && strcmp($poll->adminid, $adminid) == 0)) &&  // Admin changes user entry
                 (!$this->isNameAlreadyUsed($pollid, trim($editentry['name'])) ||  // New name not already used
                     strcmp($dbuser['name'], trim($editentry['name'])) == 0)  // Or old and new name are the same
             ) {
                 // Change user
                 $userinfo = '';
-                if ($dbuserinfo == 1) {
+                if ($poll->userinfo) {
                     $userinfo = trim($editentry['userdetails']);
                 }
                 $edituser = [
@@ -190,9 +196,31 @@ class EntriesController extends AppController
                 if ($this->fetchTable('Users')->save($dbuser)) {
                     $success = true;
 
+                    $max_entries = [];
+                    $already_yes = [];
+                    if ($poll->limitentry) {
+                        $max_entries = $this->fetchTable('Choices')->findByPollId($pollid)->select(['id', 'max_entries']);
+                        $max_entries = (new Collection($max_entries))->combine('id', 'max_entries')->toArray();
+                        $already_yes = $this->getNumOfYesEntries($pollid);
+                    }
+
                     // Save each entry
                     for ($i = 0; $i < sizeof($editentry['choices']); $i++) {
                         $dbentry = $this->fetchTable('Entries')->findByChoiceId($editentry['choices'][$i])->where(['user_id' => $userid])->firstOrFail();
+
+                        if (
+                            $poll->limitentry &&
+                            sizeof($max_entries) == sizeof($editentry['choices']) &&
+                            sizeof($already_yes) == sizeof($editentry['choices'])
+                        ) {
+                            if (
+                                $already_yes[$editentry['choices'][$i]] >= $max_entries[$editentry['choices'][$i]] &&
+                                $max_entries[$editentry['choices'][$i]] != 0
+                            ) {
+                                $editentry['values'][$i] = '0';
+                            }
+                        }
+
                         $changedentry = [
                             'value' => trim($editentry['values'][$i]),
                         ];
@@ -209,8 +237,8 @@ class EntriesController extends AppController
                 }
 
                 if ($success) {
-                    if ($dbemailentry && !empty($dbemail)) {
-                        $this->sendEntryEmail($pollid, $dbemail, $dbtitle, $dbuser->id, $dbuser->name, true);
+                    if ($poll->emailentry && !empty($poll->email)) {
+                        $this->sendEntryEmail($pollid, $poll->email, $poll->title, $dbuser->id, $dbuser->name, true);
                     }
 
                     if (isset($adminid)) {
@@ -285,6 +313,28 @@ class EntriesController extends AppController
         $number = $query->count();
 
         return !($number == 0);
+    }
+
+    //------------------------------------------------------------------------
+
+    private function getNumOfYesEntries($pollid)
+    {
+        $dbentries = $this->Entries->find()
+            ->where(['poll_id' => $pollid])
+            ->contain(['Choices'])
+            ->contain(['Users'])
+            ->select(['choice_id', 'value']);
+
+        $yesentries = array();
+        foreach ($dbentries as $entry) {
+            if (!isset($yesentries[$entry->choice_id])) {
+                $yesentries[$entry->choice_id] = 0;
+            }
+            if ($entry->value == 1 || $entry->value == 2) {
+                $yesentries[$entry->choice_id] += 1;
+            }
+        }
+        return $yesentries;
     }
 
     //------------------------------------------------------------------------
