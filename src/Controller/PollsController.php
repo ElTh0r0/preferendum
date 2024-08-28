@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.0
+ * @version   0.7.1
  */
 
 declare(strict_types=1);
@@ -432,6 +432,18 @@ class PollsController extends AppController
                 $filename = str_replace(' ', '_', $filename);
                 $choices = $this->getPollChoices($pollid);
                 $headerline = array_column($choices, 'option');
+
+                if ($poll->limitentry) {
+                    $maxentries = array_column($choices, 'max_entries');
+                    if (sizeof($headerline) == sizeof($maxentries)) {
+                        for ($i = 0; $i < sizeof($headerline); $i++) {
+                            if ($maxentries[$i] > 0) {
+                                $headerline[$i] .= __(' - {0} pers.', $maxentries[$i]);
+                            }
+                        }
+                    }
+                }
+
                 if ($poll->userinfo) {
                     array_unshift($headerline, __('Contact info'));
                 }
@@ -618,7 +630,8 @@ class PollsController extends AppController
             echo "This will delete every poll that has expired" . PHP_EOL . "since " . $minDateExpired . " (for at least " . $rmExpiredAfter . " days):" . PHP_EOL;
         }
         $trash = $this->Polls->find('all')->where([
-            'expiry IS NOT' => null, 'expiry <' => $minDateExpired
+            'expiry IS NOT' => null,
+            'expiry <' => $minDateExpired
         ]);
         $trash = $trash->all()->toArray();
 

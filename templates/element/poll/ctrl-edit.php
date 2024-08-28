@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.0
+ * @version   0.7.1
  */
 ?>
 
@@ -20,7 +20,8 @@ echo $this->Html->link(
     $this->Form->button(
         __('View Poll'),
         [
-            'type' => 'button', 'id' => 'ctrl-mini-view'
+            'type' => 'button',
+            'id' => 'ctrl-mini-view'
         ]
     ),
     ['action' => 'view', $poll->id, $adminid],
@@ -32,7 +33,8 @@ echo $this->Form->postLink(
     $this->Form->button(
         __('Un-/Lock'),
         [
-            'type' => 'button', 'id' => 'ctrl-lock-poll'
+            'type' => 'button',
+            'id' => 'ctrl-lock-poll'
         ]
     ),
     ['action' => 'togglelock', $poll->id, $adminid],
@@ -45,7 +47,8 @@ if (\Cake\Core\Configure::read('preferendum.exportCsv')) {
         $this->Form->button(
             __('CSV export'),
             [
-                'type' => 'button', 'id' => 'ctrl-export-poll'
+                'type' => 'button',
+                'id' => 'ctrl-export-poll'
             ]
         ),
         ['action' => 'exportcsv', $poll->id, $adminid],
@@ -58,7 +61,8 @@ echo $this->Form->postLink(
     $this->Form->button(
         __('Delete'),
         [
-            'type' => 'button', 'id' => 'ctrl-delete-poll'
+            'type' => 'button',
+            'id' => 'ctrl-delete-poll'
         ]
     ),
     ['action' => 'delete', $poll->id, $adminid],
