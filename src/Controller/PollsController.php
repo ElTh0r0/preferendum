@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.0
+ * @version   0.7.1
  */
 
 declare(strict_types=1);
@@ -630,7 +630,8 @@ class PollsController extends AppController
             echo "This will delete every poll that has expired" . PHP_EOL . "since " . $minDateExpired . " (for at least " . $rmExpiredAfter . " days):" . PHP_EOL;
         }
         $trash = $this->Polls->find('all')->where([
-            'expiry IS NOT' => null, 'expiry <' => $minDateExpired
+            'expiry IS NOT' => null,
+            'expiry <' => $minDateExpired
         ]);
         $trash = $trash->all()->toArray();
 

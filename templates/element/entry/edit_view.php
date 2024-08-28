@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.0
+ * @version   0.7.1
  */
 ?>
 
@@ -54,7 +54,8 @@ foreach ($pollentries as $name => $entry) {
         $this->Form->button(
             '',
             [
-                'type' => 'button', 'class' => 'entry-edit'
+                'type' => 'button',
+                'class' => 'entry-edit'
             ]
         ),
         ['controller' => 'Polls', 'action' => 'edit', $poll->id, $adminid, $usermap_pw[$name]],
@@ -65,7 +66,8 @@ foreach ($pollentries as $name => $entry) {
         $this->Form->button(
             '',
             [
-                'type' => 'button', 'class' => 'schedule-delete'
+                'type' => 'button',
+                'class' => 'schedule-delete'
             ]
         ),
         ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],
