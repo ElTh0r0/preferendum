@@ -42,7 +42,7 @@ class Choice extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'poll_id' => true,
         'option' => true,
         'max_entries' => true,

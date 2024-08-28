@@ -20,7 +20,7 @@ namespace App\Controller;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 
 class DbController extends AppController
 {
@@ -101,10 +101,10 @@ class DbController extends AppController
         echo '<h4>Environment</h4>';
         echo '<ul>';
 
-        if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
-            echo '<li class="success">Your version of PHP is 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
+        if (version_compare(PHP_VERSION, '8.1.0', '>=')) {
+            echo '<li class="success">Your version of PHP is 8.1.0 or higher (detected ' . PHP_VERSION . ').</li>';
         } else {
-            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP is too low. You need PHP 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP is too low. You need PHP 8.1.0 or higher (detected ' . PHP_VERSION . ').</li>';
             die;
         }
 

@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\Mailer\Mailer;
 
 class UsersController extends AppController

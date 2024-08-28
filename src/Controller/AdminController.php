@@ -17,9 +17,6 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Auth\DefaultPasswordHasher;
-use Cake\I18n\FrozenTime;
-
 class AdminController extends AppController
 {
     public function beforeFilter(\Cake\Event\EventInterface $event)
@@ -177,7 +174,7 @@ class AdminController extends AppController
             ->contain(['Choices', 'Users'])
             ->where(['Users.name like'  => '%' . $search . '%'])
             ->select(['poll_id' => 'Choices.poll_id'])
-            ->group(['Users.id', 'Choices.poll_id']);
+            ->groupBy(['Users.id', 'Choices.poll_id']);
         $searchusers = $searchusers->all()->extract('poll_id');
         $foundVoters = array();
         foreach ($searchusers as $pid) {
@@ -187,7 +184,7 @@ class AdminController extends AppController
         $searchcmtusers = $this->fetchTable('Comments')->find()
             ->where(['name like' => '%' . $search . '%'])
             ->select(['poll_id'])
-            ->group(['poll_id']);
+            ->groupBy(['poll_id']);
         $searchcmtusers = $searchcmtusers->all()->extract('poll_id');
         $foundCmtUsers = array();
         foreach ($searchcmtusers as $pid) {
@@ -216,7 +213,7 @@ class AdminController extends AppController
         $dbnumentries = $this->fetchTable('Entries')->find()
             ->contain(['Choices'])
             ->select(['Choices.poll_id'])
-            ->group(['user_id', 'Choices.poll_id']);
+            ->groupBy(['user_id', 'Choices.poll_id']);
         $dbnumentries = $dbnumentries->all();
         $numentries = array();
         foreach ($dbnumentries as $entry) {
@@ -239,7 +236,7 @@ class AdminController extends AppController
         ) {
             $dbnumcomments = $this->fetchTable('Comments')->find()
                 ->select(['poll_id', 'count' => 'COUNT(*)'])
-                ->group(['poll_id']);
+                ->groupBy(['poll_id']);
             $dbnumcomments = $dbnumcomments->all();
             $numcomments = array();
             foreach ($dbnumcomments as $comm) {
@@ -258,7 +255,7 @@ class AdminController extends AppController
             ->contain(['Choices', 'Users'])
             ->where(['Choices.poll_id' => $pollid, 'Users.info !=' => ''])
             ->select(['name' => 'Users.name', 'info' => 'Users.info'])
-            ->group(['Users.id']);
+            ->groupBy(['Users.id']);
 
         return $dbuserinfos->toArray();
     }
@@ -269,12 +266,11 @@ class AdminController extends AppController
     {
         if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
             $expiredpolls = $this->fetchTable('Polls')->UpdateQuery();
-            $expiredpolls->update()
-                ->set(['locked' => 1])
+            $expiredpolls->set(['locked' => 1])
                 ->where([
                     'locked' => 0,
                     'expiry IS NOT' => null,
-                    'expiry <=' => FrozenTime::now()
+                    'expiry <=' => \Cake\I18n\DateTime::now()
                 ])
                 ->execute();
         }

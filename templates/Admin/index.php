@@ -123,15 +123,15 @@
         <!-- EXISTING POLLS -->
         <?php
         if (sizeof($polls) > 0) {
-            $curSortDir = ($this->Paginator->sortDir() == 'asc') ? "&uarr;" : "&darr;";
+            $curSortDir = ($this->Paginator->param('direction') == 'asc') ? "&uarr;" : "&darr;";
             $sTitle = __('Title');
             $sModi = __('Last change');
             $sExp = __('Expiry date');
-            if ($this->Paginator->sortKey() == 'title') {
+            if ($this->Paginator->param('sort') == 'title') {
                 $sTitle = '<em>' . $sTitle . ' ' . $curSortDir . '</em>';
-            } else if ($this->Paginator->sortKey() == 'modified') {
+            } else if ($this->Paginator->param('sort') == 'modified') {
                 $sModi = '<em>' . $sModi . ' ' . $curSortDir . '</em>';
-            } else if ($this->Paginator->sortKey() == 'expiry') {
+            } else if ($this->Paginator->param('sort') == 'expiry') {
                 $sExp = '<em>' . $sExp . ' ' . $curSortDir . '</em>';
             }
 

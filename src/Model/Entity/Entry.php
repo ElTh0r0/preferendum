@@ -41,7 +41,7 @@ class Entry extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'choice_id' => true,
         'user_id' => true,
         'value' => true,

@@ -37,8 +37,8 @@ use Cake\ORM\Entity;
  * @property bool $modified
  * @property bool $pwprotect
  * @property bool $limitentry
- * 
- * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \Cake\I18n\DateTime $modified
  *
  * @property \App\Model\Entity\Choice[] $choices
  * @property \App\Model\Entity\Comment[] $comments
@@ -54,7 +54,7 @@ class Poll extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'adminid' => true,
         'title' => true,
         'details' => true,

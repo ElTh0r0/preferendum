@@ -31,18 +31,18 @@
 ![Screenshot](https://github.com/ElTh0r0/preferendum/assets/26674558/8b45b2f3-7587-4784-8e7a-9255364492d1)
 
 ## Requirements
-- PHP 7.4 or higher (including intl and mbstring extension)
+- PHP 8.1 or higher (including intl and mbstring extension)
 - One of the following databases:
-  - MySql (5.6 or higher)
-  - MariaDB (5.6 or higher)
-  - PostgreSQL (9.4 or higher)
+  - MySql (5.7 or higher)
+  - MariaDB (10.1 or higher)
+  - PostgreSQL (9.6 or higher)
 
 ## Installation
 - Create an empty MariaDB/MySql/PostgreSQL database on your server, note down the DB host address, user name and password
 - Install option #1:
   - Download the latest PREFERendum release archive `preferendum_vX.X.X.zip` from [releases](https://github.com/ElTh0r0/preferendum/releases)
   - Extract the contents of the archive into a new directory (e.g. `preferendum` on your computer)
-  - Take care of proper folder permissions, see [CakePHP permissions](https://book.cakephp.org/4/en/installation.html#permissions)
+  - Take care of proper folder permissions, see [CakePHP permissions](https://book.cakephp.org/5/en/installation.html#permissions)
   - Copy `config/app_local.example.php` and rename it to `config/app_local.php`.
 - Install option #2:
   - Download **source code** from latest release

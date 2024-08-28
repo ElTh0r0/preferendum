@@ -27,7 +27,7 @@ use Cake\ORM\Entity;
  * @property string $poll_id
  * @property string $text
  * @property string $name
- * @property \Cake\I18n\FrozenTime $created
+ * @property \Cake\I18n\DateTime $created
  *
  * @property \App\Model\Entity\Poll $poll
  */
@@ -42,7 +42,7 @@ class Comment extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'poll_id' => true,
         'text' => true,
         'name' => true,

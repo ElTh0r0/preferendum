@@ -20,8 +20,8 @@ namespace App\Controller;
 use App\Model\Entity\Choice;
 use App\Model\Entity\Entry;
 use App\Model\Entity\Comment;
-use Cake\Auth\DefaultPasswordHasher;
-use Cake\I18n\FrozenTime;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
+use Cake\I18n\DateTime;
 use Cake\Mailer\Mailer;
 
 class PollsController extends AppController
@@ -673,7 +673,7 @@ class PollsController extends AppController
             ->where(['poll_id' => $poll->id])
             ->contain(['Users', 'Choices'])
             ->select(['user_id' => 'Users.id'])
-            ->group(['Users.id'])->all();
+            ->groupBy(['Users.id'])->all();
         $users = array();
         foreach ($dbusers as $usr) {
             $users[] = $usr['user_id'];
@@ -880,7 +880,7 @@ class PollsController extends AppController
         $dbchoices = $this->fetchTable('Choices')->find()
             ->where(['poll_id' => $pollid])
             ->select(['id', 'option', 'max_entries'])
-            ->order(['sort' => 'ASC']);
+            ->orderBy(['sort' => 'ASC']);
 
         return $dbchoices->toArray();
     }
@@ -894,7 +894,7 @@ class PollsController extends AppController
             ->contain(['Choices' => ['sort' => ['Choices.sort' => 'ASC']]])
             ->contain(['Users'])
             ->select(['choice_id', 'value', 'name' => 'Users.name', 'user_id' => 'Users.id', 'user_pw' => 'Users.password', 'user_info' => 'Users.info'])
-            ->order(['user_id' => 'ASC']);
+            ->orderBy(['user_id' => 'ASC']);
 
         return $dbentries;
     }
@@ -929,7 +929,7 @@ class PollsController extends AppController
         }
         if (
             \Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') == 0 ||
-            // $poll->expiry <= FrozenTime::now() ||
+            // $poll->expiry <= \Cake\I18n\DateTime::now() ||
             $poll->hasexp == 0
         ) {
             $poll->expiry = null;
@@ -943,13 +943,12 @@ class PollsController extends AppController
         if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
             if (isset($pollid) && !empty($pollid)) {
                 $expired = $this->Polls->UpdateQuery();
-                $expired->update()
-                    ->set(['locked' => 1])
+                $expired->set(['locked' => 1])
                     ->where([
                         'id' => $pollid,
                         'locked' => 0,
                         'expiry IS NOT' => null,
-                        'expiry <=' => FrozenTime::now()
+                        'expiry <=' => \Cake\I18n\DateTime::now()
                     ])
                     ->execute();
             }

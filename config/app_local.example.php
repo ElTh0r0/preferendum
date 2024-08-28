@@ -86,7 +86,7 @@ return [
             'password' => 'secret',
             'database' => 'test_myapp',
             //'schema' => 'myapp',
-            'url' => env('DATABASE_TEST_URL', null),
+            'url' => env('DATABASE_TEST_URL', 'sqlite://127.0.0.1/tmp/tests.sqlite'),
         ],
     ],
 
@@ -96,7 +96,7 @@ return [
      * Host and credential configuration in case you are using SmtpTransport
      *
      * See app.php for more configuration options.
-     * See https://book.cakephp.org/4/en/core-libraries/email.html#configuring-transports
+     * See https://book.cakephp.org/5/en/core-libraries/email.html#configuring-transports
      */
     'EmailTransport' => [
         'default' => [
