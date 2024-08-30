@@ -151,13 +151,9 @@ class ChoicesController extends AppController
     {
         $query = $this->Choices->find(
             'all',
-            [
-                'conditions' => ['poll_id' => $pollid, 'option' => $newchoice]
-            ]
+            conditions: ['poll_id' => $pollid, 'option' => $newchoice]
         );
-        $number = $query->count();  // Check that choice with same name doesn't exist
-
-        return ($number == 0);
+        return ($query->all()->isEmpty());  // Check that choice with same name doesn't exist
     }
 
     //------------------------------------------------------------------------
@@ -166,12 +162,9 @@ class ChoicesController extends AppController
     {
         $query = $this->Choices->find(
             'all',
-            [
-                'conditions' => ['id' => $choiceid, 'poll_id' => $pollid]
-            ]
+            conditions: ['id' => $choiceid, 'poll_id' => $pollid]
         );
-
-        return (!$query->isEmpty());
+        return (!$query->all()->isEmpty());
     }
 
     //------------------------------------------------------------------------

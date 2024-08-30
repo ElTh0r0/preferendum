@@ -58,7 +58,10 @@ class UsersController extends AppController
             return $this->redirect(['action' => 'edit']);
         }
 
-        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
+        $backendusers = $this->Users->find(
+            'all',
+            order: ['name' => 'ASC']
+        )->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
         $backendusers = $backendusers->all()->toArray();
 
         $user = $this->Users->newEmptyEntity();
@@ -166,7 +169,10 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
         }
 
-        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
+        $backendusers = $this->Users->find(
+            'all',
+            order: ['name' => 'ASC']
+        )->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
         $backendusers = $backendusers->all()->toArray();
 
         $user = $this->Users->newEmptyEntity();

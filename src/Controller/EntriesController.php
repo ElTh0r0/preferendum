@@ -286,10 +286,8 @@ class EntriesController extends AppController
         if (isset($userid)) {
             $query = $this->Entries->find(
                 'all',
-                [
-                    'contain' => ['Choices'],
-                    'conditions' => ['poll_id' => $pollid, 'user_id' => $userid]
-                ]
+                contain: ['Choices'],
+                conditions: ['poll_id' => $pollid, 'user_id' => $userid]
             );
             if ($query->count() != sizeof($validchoices)) {
                 $isValid = false;
@@ -305,10 +303,8 @@ class EntriesController extends AppController
     {
         $query = $this->Entries->find(
             'all',
-            [
-                'contain' => ['Users', 'Choices'],
-                'conditions' => ['poll_id' => $pollid, 'Users.name' => $username]
-            ]
+            contain: ['Users', 'Choices'],
+            conditions: ['poll_id' => $pollid, 'Users.name' => $username]
         );
         $number = $query->count();
 
