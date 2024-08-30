@@ -218,7 +218,11 @@ class UsersController extends AppController
             if (isset($updateUser['info']) && !empty($updateUser['info'])) {
                 $dbuser = $this->Users
                     ->find()
-                    ->where(['role IN' => self::BACKENDROLES, 'info' => trim($updateUser['info'])])
+                    ->where([
+                        'role IN' => self::BACKENDROLES,
+                        'info' => trim($updateUser['info']),
+                        'id !=' => $updateUser['id']
+                    ])
                     ->first();
                 if ($dbuser != null) {
                     $this->Flash->error(__('User with this email already exists!'));
