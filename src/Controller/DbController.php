@@ -155,7 +155,7 @@ class DbController extends AppController
             die;
         }
 
-        $settings = Cache::getConfig('_cake_core_');
+        $settings = Cache::getConfig('_cake_translations_');
         if (!empty($settings)) {
             echo '<li>The <em>' . $settings["className"] . 'Engine</em> is being used for core caching. To change the config edit config/app.php</li>';
         } else {
@@ -180,9 +180,11 @@ class DbController extends AppController
         }
 
         echo '<ul>';
+        $errorMsg = '';
         try {
             $connection = ConnectionManager::get('default');
-            $connected = $connection->getDriver()->connect();
+            $connection->getDriver()->connect();
+            $connected = $connection->getDriver()->isConnected();
         } catch (Exception $connectionError) {
             $connected = false;
             $errorMsg = $connectionError->getMessage();
