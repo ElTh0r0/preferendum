@@ -19,7 +19,6 @@ namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
 
-
 /**
  * Comment Entity
  *

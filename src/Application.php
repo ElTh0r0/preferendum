@@ -18,6 +18,10 @@ declare(strict_types=1);
 
 namespace App;
 
+use Authentication\AuthenticationService; // Authentication
+use Authentication\AuthenticationServiceInterface; // Authentication
+use Authentication\AuthenticationServiceProviderInterface; // Authentication
+use Authentication\Middleware\AuthenticationMiddleware; // Authentication
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
@@ -29,14 +33,8 @@ use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
-
-// Authentication
-use Authentication\AuthenticationService;
-use Authentication\AuthenticationServiceInterface;
-use Authentication\AuthenticationServiceProviderInterface;
-use Authentication\Middleware\AuthenticationMiddleware;
-use Psr\Http\Message\ServerRequestInterface;
-use Cake\Routing\Router;
+use Cake\Routing\Router; // Authentication
+use Psr\Http\Message\ServerRequestInterface; // Authentication
 
 /**
  * Application setup class.
@@ -46,8 +44,7 @@ use Cake\Routing\Router;
  *
  * @extends \Cake\Http\BaseApplication<\App\Application>
  */
-class Application extends BaseApplication
-implements AuthenticationServiceProviderInterface
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface
 {
     /**
      * Load all the application configuration and bootstrap logic.
@@ -118,9 +115,7 @@ implements AuthenticationServiceProviderInterface
      * @return void
      * @link https://book.cakephp.org/5/en/development/dependency-injection.html#dependency-injection
      */
-    public function services(ContainerInterface $container): void
-    {
-    }
+    public function services(ContainerInterface $container): void {}
 
     // =============== AUTHENTICATION =============== //
 
