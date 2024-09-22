@@ -19,7 +19,7 @@ namespace App\Controller;
 
 class ChoicesController extends AppController
 {
-    public function addedit($pollid = null, $adminid = null)
+    public function addedit(?string $pollid = null, ?string $adminid = null): object
     {
         if ($this->request->is('post')) {
             $choicedata = $this->request->getData();
@@ -47,20 +47,23 @@ class ChoicesController extends AppController
                         }
                     }
 
-                    if (isset($choiceid) && !empty($choiceid)) {  // Edit existing choice
+                    if (isset($choiceid) && !empty($choiceid)) { // Edit existing choice
                         if ($this->isValidExisting($pollid, $choiceid)) {
                             $dbchoice = $this->Choices->findById($choiceid)->firstOrFail();
-                            $this->Choices->patchEntity($dbchoice, ['option' => trim($choicestring), 'max_entries' => $choicemax]);
+                            $this->Choices->patchEntity($dbchoice, [
+                                'option' => trim($choicestring),
+                                'max_entries' => $choicemax,
+                            ]);
                             $success = $this->Choices->save($dbchoice);
                         }
-                    } else if ($this->isNewChoice($pollid, $choicestring)) {  // New choice
-                        $nextsort = $poll->choices[sizeof($poll->choices) - 1]['sort'] + 1;
+                    } elseif ($this->isNewChoice($pollid, $choicestring)) { // New choice
+                        $nextsort = $poll->choices[count($poll->choices) - 1]['sort'] + 1;
                         $dbchoice = $this->Choices->newEntity(
                             [
                                 'poll_id' => $poll->id,
                                 'option' => trim($choicestring),
                                 'max_entries' => $choicemax,
-                                'sort' => $nextsort
+                                'sort' => $nextsort,
                             ]
                         );
 
@@ -70,18 +73,20 @@ class ChoicesController extends AppController
                     }
                     if ($success) {
                         $this->Flash->success(__('Option has been saved.'));
+
                         return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
                     }
                 }
             }
         }
         $this->Flash->error(__('Option has NOT been saved!'));
+
         return $this->redirect($this->referer());
     }
 
     //------------------------------------------------------------------------
 
-    public function swap($pollid = null, $adminid = null, $id1 = null, $id2 = null)
+    public function swap(?string $pollid = null, ?string $adminid = null, ?int $id1 = null, ?int $id2 = null): object
     {
         $this->request->allowMethod(['post', 'swap']);
         if (
@@ -106,6 +111,7 @@ class ChoicesController extends AppController
                 if ($this->Choices->save($choices[$id1])) {
                     if ($this->Choices->save($choices[$id2])) {
                         $this->Flash->success(__('Order has been updated.'));
+
                         return $this->redirect($this->referer());
                     }
                 }
@@ -113,12 +119,13 @@ class ChoicesController extends AppController
         }
 
         $this->Flash->error(__('Order has NOT been updated!'));
+
         return $this->redirect($this->referer());
     }
 
     //------------------------------------------------------------------------
 
-    public function delete($pollid = null, $adminid = null, $choiceid = null)
+    public function delete(?string $pollid = null, ?string $adminid = null, ?int $choiceid = null): object
     {
         $this->request->allowMethod(['post', 'delete']);
 
@@ -137,39 +144,43 @@ class ChoicesController extends AppController
                 // Entries are deleted by dependency
                 if ($this->Choices->delete($this->Choices->get($choiceid))) {
                     $this->Flash->success(__('Option has been deleted.'));
+
                     return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
                 }
             }
         }
         $this->Flash->error(__('Option has NOT been deleted!'));
+
         return $this->redirect($this->referer());
     }
 
     //------------------------------------------------------------------------
 
-    private function isNewChoice($pollid, $newchoice)
+    private function isNewChoice(string $pollid, string $newchoice): bool
     {
         $query = $this->Choices->find(
             'all',
             conditions: ['poll_id' => $pollid, 'option' => $newchoice]
         );
-        return ($query->all()->isEmpty());  // Check that choice with same name doesn't exist
+
+        return $query->all()->isEmpty(); // Check that choice with same name doesn't exist
     }
 
     //------------------------------------------------------------------------
 
-    private function isValidExisting($pollid, $choiceid)
+    private function isValidExisting(string $pollid, string $choiceid): bool
     {
         $query = $this->Choices->find(
             'all',
             conditions: ['id' => $choiceid, 'poll_id' => $pollid]
         );
-        return (!$query->all()->isEmpty());
+
+        return !$query->all()->isEmpty();
     }
 
     //------------------------------------------------------------------------
 
-    private function addNoToExisting($pollid, $dbchoice)
+    private function addNoToExisting(string $pollid, object $dbchoice): bool
     {
         $success = true;
 
@@ -185,7 +196,7 @@ class ChoicesController extends AppController
             $dbentry = $this->fetchTable('Entries')->newEntity([
                 'choice_id' => $dbchoice->id,
                 'user_id' => $user->user_id,
-                'value' => 0
+                'value' => 0,
             ]);
 
             if (!$this->fetchTable('Entries')->save($dbentry)) {
