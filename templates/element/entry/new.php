@@ -19,7 +19,7 @@ echo $this->Form->create(
     $newentry,
     [
         'type' => 'post',
-        'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id]
+        'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id],
     ]
 );
 
@@ -40,9 +40,10 @@ if ($poll->anonymous) {
     echo '</td>';
 }
 
-$availableYes = array();
+$availableYes = [];
 if ($poll->limitentry) {
-    for ($i = 0; $i < sizeof($pollchoices); $i++) {
+    $numChoices = count($pollchoices);
+    for ($i = 0; $i < $numChoices; $i++) {
         $yes = 0;
         foreach ($pollentries as $ent) {
             if ($ent[$pollchoices[$i]->id] == 1 || $ent[$pollchoices[$i]->id] == 2) {
@@ -101,4 +102,3 @@ if ($poll->userinfo == 1) {
     echo '</td></tr>';
 }
 echo $this->Form->end();
-?>

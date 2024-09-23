@@ -21,7 +21,7 @@ foreach ($entries as $entry) {
     $val = __('Maybe');
     if ($entry->value == 0) {
         $val = __('No');
-    } else if ($entry->value == 1) {
+    } elseif ($entry->value == 1) {
         $val = __('Yes');
     }
     echo ' - ' . h($entry->choice->option) . ': ' . $val . "\r\n";

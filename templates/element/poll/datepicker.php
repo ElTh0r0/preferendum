@@ -12,12 +12,12 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
+use Cake\I18n\I18n;
 ?>
 
 <?php
-
-use Cake\I18n\I18n;
-
 $locale = I18n::getLocale();
 $locale = str_replace('_', '-', $locale);
 
@@ -28,9 +28,5 @@ $this->Html->script('datepicker/datepicker.' . $locale . '.js', ['block' => true
 $this->Html->scriptStart(['block' => true]);
 // Datepicker localizations
 echo 'var jslocale = ' . json_encode($locale) . ';';
-echo 'var jsdateformat = ' . json_encode(
-    \Cake\Core\Configure::read('preferendum.datepickerFormat')
-) . ';';
+echo 'var jsdateformat = ' . json_encode(Configure::read('preferendum.datepickerFormat')) . ';';
 $this->Html->scriptEnd();
-
-?>

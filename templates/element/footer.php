@@ -12,9 +12,11 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
-<?php if (\Cake\Core\Configure::read('preferendum.footerLink')) { ?>
+<?php if (Configure::read('preferendum.footerLink')) { ?>
     <div id="footer">
         <em>PREFERendum</em> open source scheduling polls.
         <a href="https://github.com/ElTh0r0/preferendum" target="_blank">

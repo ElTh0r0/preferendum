@@ -25,7 +25,7 @@
         $newcomment,
         [
             'type' => 'post',
-            'url' => ['controller' => 'Comments', 'action' => 'add', $poll->id]
+            'url' => ['controller' => 'Comments', 'action' => 'add', $poll->id],
         ]
     );
     echo $this->Form->control(

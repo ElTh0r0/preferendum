@@ -12,7 +12,11 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\App;
+use Cake\Core\Configure;
 ?>
+
 <?php $this->assign('title', __('Poll') . ' - ' . $poll->title); ?>
 
 <?php $this->Html->script('poll_view.js', ['block' => 'scriptBottom']); ?>
@@ -49,7 +53,7 @@ $this->Html->scriptEnd();
         } ?>
 
         <!-- SPACER ROW -->
-        <?php echo '<tr class="table-spacer-row"><td colspan="' . (sizeof($pollchoices) + 1) . '"></td></tr>'; ?>
+        <?php echo '<tr class="table-spacer-row"><td colspan="' . (count($pollchoices) + 1) . '"></td></tr>'; ?>
 
         <!-- NEW ENTRY FORM ROW -->
         <?php if ($poll->locked == 0) {
@@ -61,14 +65,15 @@ $this->Html->scriptEnd();
             }
             echo '</tr>';
 
-            echo '<tr class="table-spacer-row table-spacer-row-big"><td colspan="' . (sizeof($pollchoices) + 1) . '"></td></tr>';
+            echo '<tr class="table-spacer-row table-spacer-row-big">
+            <td colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
         } ?>
 
         <!-- RESULTS -->
         <?php if ($poll->hidevotes == 0) {
-            $resultVisual = \Cake\Core\Configure::read('preferendum.resultVisualization');
-            if (0 != strcmp('none', $resultVisual)) {
-                if (file_exists(Cake\Core\App::path('templates')[0] . 'element/poll/result-' . $resultVisual . '.php')) {
+            $resultVisual = Configure::read('preferendum.resultVisualization');
+            if (strcmp('none', $resultVisual) != 0) {
+                if (file_exists(App::path('templates')[0] . 'element/poll/result-' . $resultVisual . '.php')) {
                     echo $this->element('poll/result-' . $resultVisual);
                 }
             }
@@ -77,8 +82,8 @@ $this->Html->scriptEnd();
 </div>
 
 <?php if (
-    \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-    || (\Cake\Core\Configure::read('preferendum.opt_Comments') && $poll->comment)
+    Configure::read('preferendum.alwaysAllowComments') ||
+    (Configure::read('preferendum.opt_Comments') && $poll->comment)
 ) {
     echo '<div id="comments-wrapper">';
     if ($poll->hidevotes == 0) {

@@ -23,21 +23,22 @@
     </td>
     <?php
     $maxTotal = 0;
-    $entriesCount = sizeof($pollentries);
+    $entriesCount = count($pollentries);
 
-    $displayDates = array();
+    $displayDates = [];
     $count = 0;
     foreach ($pollchoices as $date) {
-        $displayDates[$count++] = array(
+        $displayDates[$count++] = [
             'date' => $date->id,
             'yes' => 0,
             'maybe' => 0,
             'no' => 0,
-            'total' => 0
-        );
+            'total' => 0,
+        ];
     }
 
-    for ($i = 0; $i < sizeof($pollchoices); $i++) {
+    $numChoices = count($pollchoices);
+    for ($i = 0; $i < $numChoices; $i++) {
         foreach ($pollentries as $ent) {
             if ($ent[$pollchoices[$i]->id] == 1) {
                 $displayDates[$i]['yes']++;
@@ -58,13 +59,14 @@
     }
 
     foreach ($displayDates as $date) {
-        $date['score'] = $entriesCount > 0 ? ($date['total'] / ($entriesCount * 2)) : 0;
-        $date['score'] = $maxTotal > 0 ? ($date['score'] / $maxTotal) : 0;
+        $date['score'] = $entriesCount > 0 ? $date['total'] / ($entriesCount * 2) : 0;
+        $date['score'] = $maxTotal > 0 ? $date['score'] / $maxTotal : 0;
         $dateDynStyles = 'opacity: ' . $date['score'] . '; ';
-        $size = (($date['score'] * 100) - 10);
+        $size = ($date['score'] * 100) - 10;
         $size = $size < 0 ? 0 : $size;
         $dateDynStyles .= 'background-size: ' . $size . '%; ';
-        $dateDynStyles .= $date['score'] == 1 ? "background-image: url('" . $this->request->getAttributes()['webroot'] . "img/icon-heart.png');" : '';
+        $dateDynStyles .= $date['score'] == 1 ? "background-image: url('" .
+            $this->request->getAttributes()['webroot'] . "img/icon-heart.png');" : '';
     ?>
         <td class="results-cell">
             <div class="r r-yes"><?php echo $date['yes'] ?></div>

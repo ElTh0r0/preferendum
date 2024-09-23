@@ -12,10 +12,12 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <?php
-$prefconf = \Cake\Core\Configure::read('preferendum');
+$prefconf = Configure::read('preferendum');
 
 echo $this->Form->create(
     $poll,
@@ -23,7 +25,7 @@ echo $this->Form->create(
         'class' => 'form',
         'id' => 'form-new-poll',
         'type' => 'post',
-        'url' => ['controller' => 'Polls', 'action' => 'update', $poll->id, $adminid]
+        'url' => ['controller' => 'Polls', 'action' => 'update', $poll->id, $adminid],
     ]
 );
 // Poll title
@@ -72,7 +74,7 @@ if ($prefconf['opt_MaxEntriesPerOption']) {
 // Hide poll votes
 if (
     $prefconf['opt_HidePollVotes'] &&
-    strcmp($poll->adminid, "NA") != 0
+    strcmp($poll->adminid, 'NA') != 0
 ) {
     echo '<li>';
     echo $this->Form->checkbox(
@@ -90,7 +92,7 @@ if (
 // Allow to change entry
 if (
     $prefconf['opt_AllowChangeEntry'] &&
-    strcmp($poll->adminid, "NA") != 0
+    strcmp($poll->adminid, 'NA') != 0
 ) {
     echo '<li>';
     echo $this->Form->checkbox(
@@ -109,7 +111,7 @@ if (
 if (
     $prefconf['opt_CollectUserinfo'] &&
     $prefconf['adminInterface'] &&
-    strcmp($poll->adminid, "NA") != 0 &&
+    strcmp($poll->adminid, 'NA') != 0 &&
     !$poll->anonymous
 ) {
     echo '<li>';
@@ -198,7 +200,8 @@ if (
             'id' => 'emailcommentinput',
             'checked' => $poll->emailcomment,
             'onchange' => 'toggleEmailInput()',
-            'disabled' => (!$prefconf['alwaysAllowComments'] && $prefconf['opt_Comments']) && ($prefconf['opt_Comments'] && !($poll->comment)),
+            'disabled' => (!$prefconf['alwaysAllowComments'] && $prefconf['opt_Comments']) &&
+                ($prefconf['opt_Comments'] && !$poll->comment),
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
@@ -242,8 +245,9 @@ if (
             'autocomplete' => 'email',
         ]
     );
-    if (strcmp($poll->adminid, "NA") == 0) {
-        echo '<div class="fail"><p><span style="font-size: 80%;">' . __('Attention: If no admin link is used, the email address is visible for everyone!') . '</span></p></div>';
+    if (strcmp($poll->adminid, 'NA') == 0) {
+        echo '<div class="fail"><p><span style="font-size: 80%;">' .
+            __('Attention: If no admin link is used, the email address is visible for everyone!') . '</span></p></div>';
     }
     echo '</li>';
 }
@@ -252,9 +256,9 @@ if (
 // Poll expiry date
 if ($prefconf['opt_PollExpirationAfter'] > 0) {
     $exp = $poll->expiry;
-    $hasdate = true;
+    $hasDate = true;
     if (!$exp) {
-        $hasdate = false;
+        $hasDate = false;
         $exp = new DateTime('NOW');
         $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
     }
@@ -264,7 +268,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0) {
     echo $this->Form->checkbox(
         'hasexp',
         [
-            'checked' => $hasdate,
+            'checked' => $hasDate,
             'value' => 'true',
             'id' => 'hasexpinput',
             'onchange' => 'toggleExpiryInput()',
@@ -281,7 +285,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0) {
             'id' => 'expinput',
             'value' => $exp,
             'label' => '',
-            'disabled' => (!$hasdate),
+            'disabled' => !$hasDate,
             'style' => 'margin-bottom: 8px;',
         ]
     );
@@ -294,4 +298,3 @@ echo '<div class="content-right">';
 echo $this->Form->button(__('Save changes'));
 echo '</div>';
 echo $this->Form->end();
-?>

@@ -12,10 +12,12 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <?php
-$prefconf = \Cake\Core\Configure::read('preferendum');
+$prefconf = Configure::read('preferendum');
 
 echo $this->Form->create(
     $poll,
@@ -105,7 +107,6 @@ echo $this->Form->button(
     ]
 );
 echo '</div>';
-
 
 // No 'Poll options' caption, if none of 'opt_*' configuration parameters is true
 $filtered = array_filter($prefconf, function ($k) {
@@ -343,7 +344,8 @@ if (
         ]
     );
     if (!$prefconf['alwaysUseAdminLinks']) {
-        echo '<div id="emailwarn" class="fail" style="display: none;"><p><span style="font-size: 80%;">' . __('Attention: If no admin link is used, the email address is visible for everyone!') . '</span></p></div>';
+        echo '<div id="emailwarn" class="fail" style="display: none;"><p><span style="font-size: 80%;">' .
+            __('Attention: If no admin link is used, the email address is visible for everyone!') . '</span></p></div>';
     }
     echo '</li>';
 }
@@ -387,4 +389,3 @@ echo '<div class="content-right">';
 echo $this->Form->button(__('Create poll'));
 echo '</div>';
 echo $this->Form->end();
-?>

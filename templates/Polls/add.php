@@ -12,7 +12,10 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
+
 <?php
 $this->assign('title', __('Create poll'));
 
@@ -22,15 +25,13 @@ echo $this->element('poll/datepicker');
 
 $this->Html->scriptStart(['block' => true]);
 // Maximum number of options
-echo 'var jsmaxoptions = ' . json_encode(
-    \Cake\Core\Configure::read('preferendum.maxPollOptions')
-) . ';';
+echo 'var jsmaxoptions = ' . json_encode(Configure::read('preferendum.maxPollOptions')) . ';';
 $this->Html->scriptEnd();
 ?>
 
 <?php if (
-    \Cake\Core\Configure::read('preferendum.adminInterface') &&
-    \Cake\Core\Configure::read('preferendum.restrictPollCreation')
+    Configure::read('preferendum.adminInterface') &&
+    Configure::read('preferendum.restrictPollCreation')
 ) { ?>
     <div id="control-elements">
         <div>
@@ -52,7 +53,7 @@ $this->Html->scriptEnd();
 
     echo $this->element('poll/add-form');
 
-    $deleteInactive = \Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter');
+    $deleteInactive = Configure::read('preferendum.deleteInactivePollsAfter');
     if ($deleteInactive > 0) {
         echo '<p><br /><span class="pale">';
         echo __('Attention! Inactive polls will be deleted automatically after {0} days!', $deleteInactive);

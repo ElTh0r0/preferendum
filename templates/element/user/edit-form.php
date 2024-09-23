@@ -12,6 +12,8 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <?php
@@ -22,12 +24,12 @@ if (strcmp($currentUserRole, $allroles[0]) != 0) {
     $editUserId = null;
 }
 
-if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUserRole, $allroles[0]) == 0) {
+if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUserRole, $allroles[0]) == 0) {
     echo $this->Form->create(
         $user,
         [
             'type' => 'post',
-            'url' => ['action' => 'updateUser', $editUserId]
+            'url' => ['action' => 'updateUser', $editUserId],
         ]
     );
 
@@ -44,7 +46,7 @@ if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') || strcmp($
         );
     }
 
-    if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset')) {
+    if (Configure::read('preferendum.sendBackendUserPwReset')) {
         echo $this->Form->control(
             'email',
             [
@@ -57,7 +59,11 @@ if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') || strcmp($
 
     if (strcmp($currentUserRole, $allroles[0]) == 0) {
         echo $this->Form->label('selectrole', __('Role'));
-        echo $this->Form->select('role', $allroles, ['value' => array_search($editUserRole, $allroles), 'empty' => false, 'id' => 'selectrole']);
+        echo $this->Form->select(
+            'role',
+            $allroles,
+            ['value' => array_search($editUserRole, $allroles), 'empty' => false, 'id' => 'selectrole']
+        );
     }
     echo '</fieldset><br>';
     echo $this->Form->button(__('Update user'));
@@ -70,7 +76,7 @@ if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') || strcmp($
     $user,
     [
         'type' => 'post',
-        'url' => ['action' => 'updatePassword', $editUserId]
+        'url' => ['action' => 'updatePassword', $editUserId],
     ]
 );
 ?>
@@ -81,7 +87,7 @@ if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') || strcmp($
         [
             'required' => true,
             'label' => __('Password'),
-            'type' => 'password'
+            'type' => 'password',
         ]
     );
     echo $this->Form->control(
@@ -89,7 +95,7 @@ if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') || strcmp($
         [
             'required' => true,
             'label' => __('Confirm password'),
-            'type' => 'password'
+            'type' => 'password',
         ]
     );
     ?>

@@ -12,6 +12,8 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <h1><?php echo __('Available users') ?></h1>
@@ -24,7 +26,7 @@
         }
     }
     echo '<tr><td><em>' . __('Name') . '</em></td><td><em>' . __('Role') . '</em></td>';
-    if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset')) {
+    if (Configure::read('preferendum.sendBackendUserPwReset')) {
         echo '<td><em>' . __('Email') . '</em></td>';
     }
     echo '<td></td><td></td></tr>';
@@ -32,7 +34,7 @@
         echo '<tr>';
         echo '<td>' . $backuser['name'] . '</td>';
         echo '<td>' . $backuser['role'] . '</td>';
-        if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset')) {
+        if (Configure::read('preferendum.sendBackendUserPwReset')) {
             echo '<td>' . $backuser['info'] . '</td>';
         }
         echo '<td><span style="font-size: 0.8em;">';

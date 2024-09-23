@@ -16,7 +16,8 @@
 
 <!-- EXISTING ENTRIES -->
 <?php
-$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]" . $this->request->getAttributes()['webroot'] . 'polls/' . $poll->id . '/NA/';
+$link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] .
+    $this->request->getAttributes()['webroot'] . 'polls/' . $poll->id . '/NA/';
 $cnt = 0;
 foreach ($pollentries as $name => $entry) {
     $cnt++;
@@ -27,7 +28,8 @@ foreach ($pollentries as $name => $entry) {
         echo '<td class="schedule-names">' . h($name) . '</td>';
     }
 
-    for ($i = 0; $i < sizeof($pollchoices); $i++) {
+    $numChoices = count($pollchoices);
+    for ($i = 0; $i < $numChoices; $i++) {
         $value = 'maybe';
         switch ($entry[$pollchoices[$i]->id]) {
             case 0:
@@ -46,8 +48,10 @@ foreach ($pollentries as $name => $entry) {
 
     echo '<td>';
     if ($poll->editentry) {
-        echo '<div style="position: absolute; left: -99999px;"><input type="text" id="entry-link-' . $cnt . '" value="' . $link . $usermap_pw[$name] . '" readonly /></div>';
-        echo '<button type="button" class="copy-trigger entry-copy-link" data-clipboard-target="#entry-link-' . $cnt . '" title="' . __('Copy entry edit link to clipboard') . '"></button>';
+        echo '<div style="position: absolute; left: -99999px;"><input type="text" id="entry-link-' . $cnt .
+            '" value="' . $link . $usermap_pw[$name] . '" readonly /></div>';
+        echo '<button type="button" class="copy-trigger entry-copy-link" data-clipboard-target="#entry-link-' . $cnt .
+            '" title="' . __('Copy entry edit link to clipboard') . '"></button>';
         echo ' ';
     }
     echo $this->Form->postLink(
@@ -55,7 +59,7 @@ foreach ($pollentries as $name => $entry) {
             '',
             [
                 'type' => 'button',
-                'class' => 'entry-edit'
+                'class' => 'entry-edit',
             ]
         ),
         ['controller' => 'Polls', 'action' => 'edit', $poll->id, $adminid, $usermap_pw[$name]],
@@ -67,7 +71,7 @@ foreach ($pollentries as $name => $entry) {
             '',
             [
                 'type' => 'button',
-                'class' => 'schedule-delete'
+                'class' => 'schedule-delete',
             ]
         ),
         ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],

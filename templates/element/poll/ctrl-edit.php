@@ -12,6 +12,8 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <?php
@@ -21,7 +23,7 @@ echo $this->Html->link(
         __('View Poll'),
         [
             'type' => 'button',
-            'id' => 'ctrl-mini-view'
+            'id' => 'ctrl-mini-view',
         ]
     ),
     ['action' => 'view', $poll->id, $adminid],
@@ -34,7 +36,7 @@ echo $this->Form->postLink(
         __('Un-/Lock'),
         [
             'type' => 'button',
-            'id' => 'ctrl-lock-poll'
+            'id' => 'ctrl-lock-poll',
         ]
     ),
     ['action' => 'togglelock', $poll->id, $adminid],
@@ -42,13 +44,13 @@ echo $this->Form->postLink(
 );
 
 // Export CSV button
-if (\Cake\Core\Configure::read('preferendum.exportCsv')) {
+if (Configure::read('preferendum.exportCsv')) {
     echo $this->Form->postLink(
         $this->Form->button(
             __('CSV export'),
             [
                 'type' => 'button',
-                'id' => 'ctrl-export-poll'
+                'id' => 'ctrl-export-poll',
             ]
         ),
         ['action' => 'exportcsv', $poll->id, $adminid],
@@ -62,7 +64,7 @@ echo $this->Form->postLink(
         __('Delete'),
         [
             'type' => 'button',
-            'id' => 'ctrl-delete-poll'
+            'id' => 'ctrl-delete-poll',
         ]
     ),
     ['action' => 'delete', $poll->id, $adminid],
@@ -84,6 +86,6 @@ if ($poll->pwprotect) {
 }
 ?>
 
-<?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>
+<?php if (Configure::read('preferendum.toggleTheme')) { ?>
     <button type="button" class="themeToggle" data-theme-toggle>&nbsp;</button>
 <?php } ?>

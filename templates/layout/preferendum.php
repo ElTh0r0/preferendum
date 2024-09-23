@@ -12,10 +12,12 @@
  * @link      https://github.com/ElTh0r0/preferendum
  * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <!DOCTYPE html>
-<html lang="<?php echo str_replace('_', '-', \Cake\Core\Configure::read('App.defaultLocale')) ?>" data-theme="light">
+<html lang="<?php echo str_replace('_', '-', Configure::read('App.defaultLocale')) ?>" data-theme="light">
 
 <head>
     <?php echo $this->Html->charset() ?>
@@ -28,8 +30,8 @@
     <?php echo $this->Html->meta('icon') ?>
 
     <?php echo $this->Html->css(['reset', 'preferendum']) ?>
-    <?php echo $this->Html->script('jquery-3.6.3.min.js', array('inline' => false)) ?>
-    <?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) {
+    <?php echo $this->Html->script('jquery-3.6.3.min.js', ['inline' => false]) ?>
+    <?php if (Configure::read('preferendum.toggleTheme')) {
         echo $this->Html->script('theme_toggle.js', ['block' => 'scriptBottom']);
     } ?>
 

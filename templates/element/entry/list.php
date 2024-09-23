@@ -26,7 +26,8 @@ foreach ($pollentries as $name => $entry) {
         echo '<td class="schedule-names">' . h($name) . '</td>';
     }
 
-    for ($i = 0; $i < sizeof($pollchoices); $i++) {
+    $numChoices = count($pollchoices);
+    for ($i = 0; $i < $numChoices; $i++) {
         $value = 'maybe';
         switch ($entry[$pollchoices[$i]->id]) {
             case 0:

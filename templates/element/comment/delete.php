@@ -18,7 +18,7 @@
     <h1><?php echo __('Delete comments') ?></h1>
     <br>
     <?php
-    if (sizeof($poll->comments) > 0) {
+    if (count($poll->comments) > 0) {
         foreach ($poll->comments as $com) {
     ?>
             <div class="comment-container">

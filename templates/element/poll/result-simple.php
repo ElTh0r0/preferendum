@@ -17,33 +17,18 @@
 <tr class="schedule-results valign-middle">
     <td>
         <div class="r r-legend r-yes"><?php echo __('Yes') . ':' ?></div>
-        <!--<div class="r r-legend r-maybe">--><?php //echo __('Maybe') . ':' 
-                                                ?><!--</div>-->
-        <!--<div class="r r-legend r-no">--><?php //echo __('No') . ':' 
-                                            ?><!--</div>-->
     </td>
     <?php
-    for ($i = 0; $i < sizeof($pollchoices); $i++) {
-        $no = 0;
+    $numChoices = count($pollchoices);
+    for ($i = 0; $i < $numChoices; $i++) {
         $yes = 0;
-        $maybe = 0;
         foreach ($pollentries as $ent) {
-            switch ($ent[$pollchoices[$i]->id]) {
-                case 0:
-                    $no++;
-                    break;
-                case 1:
-                    $yes++;
-                    break;
-                case 2:
-                    $maybe++;
-                    break;
+            if ($ent[$pollchoices[$i]->id] == 1) {
+                $yes++;
             }
         }
         echo '<td class="results-cell">';
         echo '<div class="r r-yes">' . $yes . '</div>';
-        // echo '<div class="r r-maybe">' . $maybe . '</div>';
-        // echo '<div class="r r-no">' . $no . '</div>';
         echo '</td>';
     }
     ?>
