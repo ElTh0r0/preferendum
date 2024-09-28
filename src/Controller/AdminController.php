@@ -23,7 +23,7 @@ use Cake\I18n\DateTime;
 
 class AdminController extends AppController
 {
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         // Configure the login action to not require authentication, preventing
@@ -43,7 +43,7 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function index()
+    public function index(): void
     {
         // Extra check needed since poll password using login credentials as well
         $currentUserRole = $this->recheckAdminPermissions();
@@ -81,7 +81,7 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function userinfo(?string $pollid = null)
+    public function userinfo(?string $pollid = null): void
     {
         // Extra check needed since poll password using login credentials as well
         $this->recheckAdminPermissions();
@@ -282,7 +282,7 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function checkExpiryAndLockPolls()
+    private function checkExpiryAndLockPolls(): void
     {
         if (Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
             $expiredpolls = $this->fetchTable('Polls')->UpdateQuery();

@@ -26,7 +26,7 @@ class UsersController extends AppController
 {
     private const DEMOMODE = false;
 
-    public function beforeFilter(EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         // Configure the login action to not require authentication, preventing
@@ -396,7 +396,7 @@ class UsersController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function forgotPassword()
+    public function forgotPassword(): void
     {
         if ($this->request->is('post')) {
             $user = $this->request->getData();

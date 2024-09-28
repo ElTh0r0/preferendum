@@ -82,7 +82,7 @@ class CommentsController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function sendCommentEmail(string $email, string $title, object $comment)
+    private function sendCommentEmail(string $email, string $title, object $comment): void
     {
         $link = $this->request->scheme() . '://' .
             $this->request->domain() . $this->request->getAttributes()['webroot'] . 'polls/' . $comment->poll_id;
