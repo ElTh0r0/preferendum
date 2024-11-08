@@ -352,13 +352,14 @@ if (
 
 // --------------------------------------------------------------
 // Poll expiry date
-if ($prefconf['opt_PollExpirationAfter'] > 0) {
+if ($prefconf['opt_PollExpirationAfter'] > 0 || $prefconf['demoMode']) {
     echo '<li>' . $this->Form->label('hasexpinput', __('Expiry date')) . '</li>';
     echo '<li>';
     echo $this->Form->checkbox(
         'hasexp',
         [
             'checked' => true,
+            'disabled' => $prefconf['demoMode'],
             'value' => 'true',
             'id' => 'hasexpinput',
             'onchange' => 'toggleExpiryInput()',
@@ -368,13 +369,18 @@ if ($prefconf['opt_PollExpirationAfter'] > 0) {
     echo '</li>';
 
     $exp = new DateTime('NOW');
-    $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
+    if ($prefconf['demoMode']) {
+        $exp->modify('+1 days');
+    } else {
+        $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
+    }
     echo '<li>';
     echo $this->Form->control(
         'expiry',
         [
             'class' => 'field-long',
             'id' => 'expinput',
+            'disabled' => $prefconf['demoMode'],
             'value' => $exp,
             'label' => '',
             'style' => 'margin-bottom: 8px;',

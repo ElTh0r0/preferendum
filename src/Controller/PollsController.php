@@ -19,6 +19,7 @@ namespace App\Controller;
 
 use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\Core\Configure;
+use Cake\I18n\Date;
 use Cake\I18n\DateTime;
 use Cake\Mailer\Mailer;
 
@@ -47,6 +48,13 @@ class PollsController extends AppController
         if ($this->isPollCreationRestriced()) {
             return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
         }
+        if (Configure::read('preferendum.demoMode')) {
+            $this->Flash->default(__('DEMO mode is enabled - some features may be limited!'), [
+                'params' => [
+                    'permanent' => true,
+                ],
+            ]);
+        }
 
         $newpoll = $this->Polls->newEmptyEntity();
         if ($this->request->is('post') && $this->request->getData('choices') !== null) {
@@ -74,6 +82,11 @@ class PollsController extends AppController
             }
             if (strcmp($pollpw, '') == 0) {
                 $newpoll->pwprotect = 0;
+            }
+
+            if (Configure::read('preferendum.demoMode')) {
+                $newpoll->hasexp = true;
+                $newpoll->expiry = new Date('NOW +1 day');
             }
 
             // Temporary save email in separate variable before calling validateSettings(), if poll links shall be sent
@@ -246,6 +259,13 @@ class PollsController extends AppController
     public function edit(?string $pollid = null, string $adminid = 'NA', string $userpw = ''): ?object
     {
         $this->checkExpiryAndLock($pollid);
+        if (Configure::read('preferendum.demoMode')) {
+            $this->Flash->default(__('DEMO mode is enabled - some features may be limited!'), [
+                'params' => [
+                    'permanent' => true,
+                ],
+            ]);
+        }
 
         $poll = $this->getPollAndComments($pollid);
         if (!strcmp($poll->adminid, $adminid) == 0) {
@@ -316,7 +336,9 @@ class PollsController extends AppController
             $wasPwProtected = $poll->pwprotect;
             $dbadminid = $poll->adminid;
             if (strcmp($dbadminid, $adminid) == 0) {
+                $pollexp = $poll->expiry; // Store temporary to prevent manipulation
                 $this->Polls->patchEntity($poll, $this->request->getData());
+                $poll->expiry = $pollexp;
 
                 $pollpw = '';
                 if ($poll->pwprotect && isset($this->request->getData()['password'])) {
@@ -987,9 +1009,9 @@ class PollsController extends AppController
             $poll->limitentry = 0;
         }
         if (
-            Configure::read('preferendum.opt_PollExpirationAfter') == 0 ||
-            // $poll->expiry <= DateTime::now() ||
-            $poll->hasexp == 0
+            (Configure::read('preferendum.opt_PollExpirationAfter') == 0 ||
+                // $poll->expiry <= DateTime::now() ||
+                $poll->hasexp == 0) && !Configure::read('preferendum.demoMode')
         ) {
             $poll->expiry = null;
         }

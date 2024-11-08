@@ -254,13 +254,17 @@ if (
 
 // --------------------------------------------------------------
 // Poll expiry date
-if ($prefconf['opt_PollExpirationAfter'] > 0) {
+if ($prefconf['opt_PollExpirationAfter'] > 0 || $prefconf['demoMode']) {
     $exp = $poll->expiry;
     $hasDate = true;
     if (!$exp) {
         $hasDate = false;
         $exp = new DateTime('NOW');
-        $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
+        if ($prefconf['demoMode']) {
+            $exp->modify('+1 days');
+        } else {
+            $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
+        }
     }
 
     echo '<li>' . $this->Form->label('hasexpinput', __('Expiry date')) . '</li>';
@@ -270,6 +274,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0) {
         [
             'checked' => $hasDate,
             'value' => 'true',
+            'disabled' => $prefconf['demoMode'],
             'id' => 'hasexpinput',
             'onchange' => 'toggleExpiryInput()',
         ]
@@ -285,7 +290,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0) {
             'id' => 'expinput',
             'value' => $exp,
             'label' => '',
-            'disabled' => !$hasDate,
+            'disabled' => !$hasDate || $prefconf['demoMode'],
             'style' => 'margin-bottom: 8px;',
         ]
     );

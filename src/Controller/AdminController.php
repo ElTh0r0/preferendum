@@ -48,6 +48,14 @@ class AdminController extends AppController
         // Extra check needed since poll password using login credentials as well
         $currentUserRole = $this->recheckAdminPermissions();
 
+        if (Configure::read('preferendum.demoMode')) {
+            $this->Flash->default(__('DEMO mode is enabled - some features may be limited!'), [
+                'params' => [
+                    'permanent' => true,
+                ],
+            ]);
+        }
+
         $search = $this->request->getQuery('search');
         if ($search) {
             $query = $this->getSearchQuery($search);

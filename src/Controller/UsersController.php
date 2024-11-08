@@ -24,7 +24,7 @@ use Cake\Mailer\Mailer;
 
 class UsersController extends AppController
 {
-    private const DEMOMODE = false;
+    private bool $DEMOMODE = false; // Updated in initialize() based on feature configuration
 
     public function beforeFilter(EventInterface $event): void
     {
@@ -39,6 +39,10 @@ class UsersController extends AppController
     public function initialize(): void
     {
         parent::initialize();
+
+        if (Configure::read('preferendum.demoMode')) {
+            $this->DEMOMODE = true;
+        }
 
         // Add this line to check authentication result and lock your site
         $this->loadComponent('Authentication.Authentication');
@@ -89,7 +93,7 @@ class UsersController extends AppController
         }
 
         if ($this->request->is('post', 'put')) {
-            if (self::DEMOMODE) {
+            if ($this->DEMOMODE) {
                 $this->Flash->error(__('DEMO MODE enabled! User creation not possible!'));
 
                 return $this->redirect(['action' => 'management']);
@@ -214,7 +218,7 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'updateUser']);
 
         if ($this->request->is('post', 'put')) {
-            if (self::DEMOMODE) {
+            if ($this->DEMOMODE) {
                 $this->Flash->error(__('DEMO MODE enabled! Editing users is not possible!'));
 
                 return $this->redirect(['action' => 'management']);
@@ -313,7 +317,7 @@ class UsersController extends AppController
         $this->request->allowMethod(['post', 'updatePassword']);
 
         if ($this->request->is('post', 'put')) {
-            if (self::DEMOMODE) {
+            if ($this->DEMOMODE) {
                 $this->Flash->error(__('DEMO MODE enabled! Changing the password not possible!'));
 
                 return $this->redirect(['action' => 'edit']);
@@ -371,7 +375,7 @@ class UsersController extends AppController
     {
         $this->request->allowMethod(['post', 'deleteBackendUser']);
 
-        if (self::DEMOMODE) {
+        if ($this->DEMOMODE) {
             $this->Flash->error(__('DEMO MODE enabled! User deletion is not possible!'));
 
             return $this->redirect(['action' => 'management']);
