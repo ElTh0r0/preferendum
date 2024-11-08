@@ -254,13 +254,18 @@ if (
 
 // --------------------------------------------------------------
 // Poll expiry date
-if ($prefconf['opt_PollExpirationAfter'] > 0 || $prefconf['demoMode']) {
+$demoMode = false;
+if (Configure::read('preferendum.demoMode')) {
+    $demoMode = true;
+}
+
+if ($prefconf['opt_PollExpirationAfter'] > 0 || $demoMode) {
     $exp = $poll->expiry;
     $hasDate = true;
     if (!$exp) {
         $hasDate = false;
         $exp = new DateTime('NOW');
-        if ($prefconf['demoMode']) {
+        if ($demoMode) {
             $exp->modify('+1 days');
         } else {
             $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
@@ -274,7 +279,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0 || $prefconf['demoMode']) {
         [
             'checked' => $hasDate,
             'value' => 'true',
-            'disabled' => $prefconf['demoMode'],
+            'disabled' => $demoMode,
             'id' => 'hasexpinput',
             'onchange' => 'toggleExpiryInput()',
         ]
@@ -290,7 +295,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0 || $prefconf['demoMode']) {
             'id' => 'expinput',
             'value' => $exp,
             'label' => '',
-            'disabled' => !$hasDate || $prefconf['demoMode'],
+            'disabled' => !$hasDate || $demoMode,
             'style' => 'margin-bottom: 8px;',
         ]
     );
