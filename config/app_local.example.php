@@ -103,7 +103,7 @@ return [
             // Use 'Smtp' (together with host, username, password) or 'Mail' (using PHP mail() function)
             'className' => 'Smtp',
             'host' => 'localhost',
-            'port' => 25,
+            'port' => 587, // Could also be 465 or 25; check with your email provider.
             'username' => null,
             'password' => null,
             'client' => null,
