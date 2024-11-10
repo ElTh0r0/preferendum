@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 ?>
 
@@ -18,7 +18,7 @@
     <h1><?php echo __('Delete comments') ?></h1>
     <br>
     <?php
-    if (sizeof($poll->comments) > 0) {
+    if (count($poll->comments) > 0) {
         foreach ($poll->comments as $com) {
     ?>
             <div class="comment-container">

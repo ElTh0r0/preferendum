@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
@@ -37,8 +37,8 @@ use Cake\ORM\Entity;
  * @property bool $modified
  * @property bool $pwprotect
  * @property bool $limitentry
- * 
- * @property \Cake\I18n\FrozenTime $modified
+ *
+ * @property \Cake\I18n\DateTime $modified
  *
  * @property \App\Model\Entity\Choice[] $choices
  * @property \App\Model\Entity\Comment[] $comments
@@ -54,21 +54,21 @@ class Poll extends Entity
      *
      * @var array<string, bool>
      */
-    protected $_accessible = [
+    protected array $_accessible = [
         'adminid' => true,
         'title' => true,
         'details' => true,
         'email' => true,
         'emailentry' => true,
         'emailcomment' => true,
-        'emailpoll' => true,  // Not stored in DB, but send from form to Controller
+        'emailpoll' => true, // Not stored in DB, but send from form to Controller
         'userinfo' => true,
         'editentry' => true,
         'comment' => true,
         'hidevotes' => true,
         'anonymous' => true,
         'locked' => true,
-        'hasexp' => true,  // Not stored in DB, but send from form to Controller
+        'hasexp' => true, // Not stored in DB, but send from form to Controller
         'expiry' => true,
         'modified' => true,
         'choices' => true,

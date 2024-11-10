@@ -10,9 +10,12 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
+
 <?php $this->assign('title', __('Poll administration')); ?>
 
 <div id="control-elements">
@@ -25,30 +28,31 @@
     <?php
     echo $this->Flash->render();
     $today = new DateTime();
+    $today = $today->format('Y-m-d');
 
     // ToDo: Replace ugly table layout
-    $colsleft = 4;  // Default columns: Title, Icons, Votes, Last Change
+    $colsleft = 4; // Default columns: Title, Icons, Votes, Last Change
     if (
-        \Cake\Core\Configure::read('preferendum.alwaysAllowComments') ||
-        \Cake\Core\Configure::read('preferendum.opt_Comments')
+        Configure::read('preferendum.alwaysAllowComments') ||
+        Configure::read('preferendum.opt_Comments')
     ) {
         $colsleft += 1;
     }
-    if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+    if (Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
         $colsleft += 1;
     }
-    if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo')) {
+    if (Configure::read('preferendum.opt_CollectUserinfo')) {
         $colsleft += 1;
     }
 
-    $colsright = 1;  // Default: View button
+    $colsright = 1; // Default: View button
     // Add buttons for admins
     if (
         strcmp($currentUserRole, $adminRole) == 0 ||
         strcmp($currentUserRole, $polladmRole) == 0
     ) {
         // Export button
-        if (\Cake\Core\Configure::read('preferendum.exportCsv')) {
+        if (Configure::read('preferendum.exportCsv')) {
             $colsright += 1;
         }
         // Edit and deletion buttons
@@ -67,21 +71,33 @@
             <?php echo '<td colspan="' . ($allcols - 3) . '">'; ?>
             <?php
             if (strcmp($currentUserRole, $adminRole) == 0 || strcmp($currentUserRole, $polladmRole) == 0) {
-                $rmInactiveAfter = \Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter');
-                $rmExpiredAfter = \Cake\Core\Configure::read('preferendum.deleteExpiredPollsAfter');
+                $rmInactiveAfter = Configure::read('preferendum.deleteInactivePollsAfter');
+                $rmExpiredAfter = Configure::read('preferendum.deleteExpiredPollsAfter');
 
-                if (($rmExpiredAfter > 0) && (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0)) {
+                if (($rmExpiredAfter > 0) && (Configure::read('preferendum.opt_PollExpirationAfter') > 0)) {
                     echo $this->Html->link(
                         $this->Form->button(__('Expired'), ['type' => 'button', 'class' => 'admin-delexpired-polls']),
-                        ['controller' => 'Polls', 'action' => 'cleanupmanually', 1],
-                        ['escape' => false, 'confirm' => __('Are you sure to delete expired polls (expired since >{0} days)?', $rmExpiredAfter)]
+                        ['controller' => 'Polls', 'action' => 'cleanupmanually', true],
+                        [
+                            'escape' => false,
+                            'confirm' => __(
+                                'Are you sure to delete expired polls (expired since >{0} days)?',
+                                $rmExpiredAfter
+                            ),
+                        ]
                     );
                 }
                 if ($rmInactiveAfter > 0) {
                     echo $this->Html->link(
                         $this->Form->button(__('Inactive'), ['type' => 'button', 'class' => 'admin-delinactive-polls']),
-                        ['controller' => 'Polls', 'action' => 'cleanupmanually', 0],
-                        ['escape' => false, 'confirm' => __('Are you sure to delete inactive poll (inactive since >{0} days)?', $rmInactiveAfter)]
+                        ['controller' => 'Polls', 'action' => 'cleanupmanually', false],
+                        [
+                            'escape' => false,
+                            'confirm' => __(
+                                'Are you sure to delete inactive poll (inactive since >{0} days)?',
+                                $rmInactiveAfter
+                            ),
+                        ]
                     );
                 }
                 echo $this->Html->link(
@@ -97,7 +113,12 @@
             <?php echo '<td colspan="' . $allcols . '">'; ?>
             <?php
             echo $this->Form->create(null, ['type' => 'get', 'id' => 'search_form']);
-            echo $this->Form->control('search', ['label' => '', 'value' => $this->request->getQuery('search'), 'id' => 'search_input', 'placeholder' => __('Search poll or user'),]);
+            echo $this->Form->control('search', [
+                'label' => '',
+                'value' => $this->request->getQuery('search'),
+                'id' => 'search_input',
+                'placeholder' => __('Search poll or user'),
+            ]);
             echo $this->Html->link(
                 $this->Form->button(__('Clear filter'), ['type' => 'button', 'id' => 'search_clear']),
                 ['controller' => 'admin', 'action' => 'index'],
@@ -111,7 +132,7 @@
         <?php if ($this->request->getQuery('search')) { ?>
             <tr>
                 <?php echo '<td colspan="' . $allcols . '">'; ?>
-                <?php echo __('Filtered polls') . ': ' . $this->Paginator->param('count'); ?>
+                <?php echo __('Filtered polls') . ': ' . $this->Paginator->counter('{{count}}'); ?>
                 </td>
             </tr>
         <?php } ?>
@@ -122,16 +143,16 @@
         </tr>
         <!-- EXISTING POLLS -->
         <?php
-        if (sizeof($polls) > 0) {
-            $curSortDir = ($this->Paginator->sortDir() == 'asc') ? "&uarr;" : "&darr;";
+        if (count($polls) > 0) {
+            $curSortDir = $this->Paginator->param('direction') == 'asc' ? '&uarr;' : '&darr;';
             $sTitle = __('Title');
             $sModi = __('Last change');
             $sExp = __('Expiry date');
-            if ($this->Paginator->sortKey() == 'title') {
+            if ($this->Paginator->param('sort') == 'title') {
                 $sTitle = '<em>' . $sTitle . ' ' . $curSortDir . '</em>';
-            } else if ($this->Paginator->sortKey() == 'modified') {
+            } elseif ($this->Paginator->param('sort') == 'modified') {
                 $sModi = '<em>' . $sModi . ' ' . $curSortDir . '</em>';
-            } else if ($this->Paginator->sortKey() == 'expiry') {
+            } elseif ($this->Paginator->param('sort') == 'expiry') {
                 $sExp = '<em>' . $sExp . ' ' . $curSortDir . '</em>';
             }
 
@@ -144,19 +165,19 @@
             echo '<td>' . __('Votes') . '</td>';
             // Comments
             if (
-                \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-                || \Cake\Core\Configure::read('preferendum.opt_Comments')
+                Configure::read('preferendum.alwaysAllowComments') ||
+                Configure::read('preferendum.opt_Comments')
             ) {
                 echo '<td>' . __('Comments') . '</td>';
             }
             // Expiry date
-            if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+            if (Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
                 echo '<td>' . $this->Paginator->sort('expiry', $sExp, ['escape' => false]) . '</td>';
             }
             // Last change
             echo '<td>' . $this->Paginator->sort('modified', $sModi, ['escape' => false]) . '</td>';
             // User infos
-            if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo')) {
+            if (Configure::read('preferendum.opt_CollectUserinfo')) {
                 echo '<td></td>';
             }
             // Buttons
@@ -173,12 +194,13 @@
                         <?php
                         // Icons
                         if (strcmp($poll->adminid, 'NA') == 0) {
-                            echo '<img src="img/icon-no-key.png" title="' . __('Poll not protected by admin link') . '"> ';
+                            echo '<img src="img/icon-no-key.png" title="' .
+                                __('Poll not protected by admin link') . '"> ';
                         }
-                        if ($poll->emailentry or $poll->emailcomment) {
-                            if ($poll->emailentry and $poll->emailcomment) {
+                        if ($poll->emailentry || $poll->emailcomment) {
+                            if ($poll->emailentry && $poll->emailcomment) {
                                 $text = __('Email after new comment/entry');
-                            } else if ($poll->emailentry) {
+                            } elseif ($poll->emailentry) {
                                 $text = __('Email after new entry');
                             } else {
                                 $text = __('Email after new comment');
@@ -189,9 +211,9 @@
                             echo '<img src="img/icon-user-info.png" title="' . __('Collect user info') . '"> ';
                         }
                         if (
-                            \Cake\Core\Configure::read('preferendum.opt_Comments')
-                            && !($poll->comment)
-                            && !(\Cake\Core\Configure::read('preferendum.alwaysAllowComments'))
+                            Configure::read('preferendum.opt_Comments') &&
+                            !$poll->comment &&
+                            !Configure::read('preferendum.alwaysAllowComments')
                         ) {
                             echo '<img src="img/icon-no-comment.png" title="' . __('No comments allowed') . '"> ';
                         }
@@ -225,8 +247,8 @@
                     <?php
                     // Number of comments
                     if (
-                        \Cake\Core\Configure::read('preferendum.alwaysAllowComments') ||
-                        \Cake\Core\Configure::read('preferendum.opt_Comments')
+                        Configure::read('preferendum.alwaysAllowComments') ||
+                        Configure::read('preferendum.opt_Comments')
                     ) {
                         echo '<td>';
                         if (array_key_exists($poll->id, $numcomments)) {
@@ -239,14 +261,14 @@
                     ?>
                     <?php
                     // Expiry date
-                    if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+                    if (Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
                         $exp = '-';
                         $style = '';
                         if ($poll->expiry) {
-                            if ($poll->expiry < $today) {
+                            $exp = $poll->expiry->format('Y-m-d');
+                            if ($exp < $today) {
                                 $style = 'class="fail"';
                             }
-                            $exp = $poll->expiry->format('Y-m-d');
                         }
                         echo '<td><span ' . $style . ' style="font-size:0.8em;">' . $exp . '</span></td>';
                     }
@@ -256,7 +278,7 @@
                     </td>
                     <?php
                     // User infos
-                    if (\Cake\Core\Configure::read('preferendum.opt_CollectUserinfo')) {
+                    if (Configure::read('preferendum.opt_CollectUserinfo')) {
                         echo '<td>';
                         if ($poll->userinfo) {
                             echo $this->Html->link(
@@ -295,7 +317,7 @@
                     <?php
                     // CSV export button
                     if (
-                        \Cake\Core\Configure::read('preferendum.exportCsv') &&
+                        Configure::read('preferendum.exportCsv') &&
                         (strcmp($currentUserRole, $adminRole) == 0 ||
                             strcmp($currentUserRole, $polladmRole) == 0)
                     ) {
@@ -317,7 +339,7 @@
                         echo $this->Form->postLink(
                             $this->Form->button('', ['type' => 'button', 'class' => 'admin-delete-poll']),
                             ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
-                            ['escape' => false, 'confirm' => __('Are you sure to delete poll {0}?',  h($poll->title))]
+                            ['escape' => false, 'confirm' => __('Are you sure to delete poll {0}?', h($poll->title))]
                         );
                         echo '</td>';
                     } ?>
@@ -326,11 +348,14 @@
             }
             // ------ End of poll rows ------
 
-            echo '<tr><td colspan="' . $allcols . '" class="pagination" style="text-align:center"><ul>' . $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() . $this->Paginator->next('>') . $this->Paginator->last('>>') . '</ul></td></tr>';
+            echo '<tr><td colspan="' . $allcols . '" class="pagination" style="text-align:center"><ul>' .
+                $this->Paginator->first('<<') . $this->Paginator->prev('<') . $this->Paginator->numbers() .
+                $this->Paginator->next('>') . $this->Paginator->last('>>') . '</ul></td></tr>';
         } else {
             ?>
             <tr>
-                <?php echo '<td height="24" colspan="' . $allcols . '">' . __('No polls found in database!') . '</td>'; ?>
+                <?php echo '<td height="24" colspan="' . $allcols . '">' .
+                    __('No polls found in database!') . '</td>'; ?>
             </tr>
         <?php } ?>
 

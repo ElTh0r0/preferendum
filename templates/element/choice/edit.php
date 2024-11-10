@@ -10,8 +10,10 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <?php $this->Html->scriptBlock(
@@ -57,17 +59,19 @@ function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
 ); ?>
 
 <!-- TABLE HEADER / Swap choices -->
-<?php if (count($pollchoices) > 1) {
+<?php
+$numChoices = count($pollchoices);
+if ($numChoices > 1) {
     echo '<tr>';
     echo '<td class="schedule-blank"></td>';
-    for ($i = 0; $i < count($pollchoices); $i++) {
+    for ($i = 0; $i < $numChoices; $i++) {
         echo '<td style="text-align: center;">';
-        if (0 === $i) {
+        if ($i === 0) {
             echo $this->Form->postLink(
                 '>',
                 ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1]
             );
-        } else if ($i === count($pollchoices) - 1) {
+        } elseif ($i === $numChoices - 1) {
             echo $this->Form->postLink(
                 '<',
                 ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i]
@@ -109,14 +113,15 @@ function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
                 </div>
             </div>
             <?php
-            echo '<button type="button" class="date-edit" onclick="showEditChoice(' . $choice->id . ', \'' . h($choice->option) . '\', ' . $choice->max_entries . ')"></button>';
-            if (sizeof($pollchoices) > 1) {
+            echo '<button type="button" class="date-edit" onclick="showEditChoice(' .
+                $choice->id . ', \'' . h($choice->option) . '\', ' . $choice->max_entries . ')"></button>';
+            if ($numChoices > 1) {
                 echo $this->Form->postLink(
                     $this->Form->button(
                         '',
                         [
                             'type' => 'button',
-                            'class' => 'date-delete'
+                            'class' => 'date-delete',
                         ]
                     ),
                     ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->id],
@@ -127,7 +132,7 @@ function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
         </td>
     <?php endforeach; ?>
     <td>
-        <?php if (sizeof($pollchoices) < \Cake\Core\Configure::read('preferendum.maxPollOptions')) { ?>
+        <?php if ($numChoices < Configure::read('preferendum.maxPollOptions')) { ?>
             <button class="schedule-add" id="btnAddChoice" onclick="showAddChoice()">+</button>
             <div id="divNewChoice" style="display: none;">
                 <?php
@@ -135,7 +140,7 @@ function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
                     $newchoice,
                     [
                         'type' => 'post',
-                        'url' => ['controller' => 'Choices', 'action' => 'addedit', $poll->id, $adminid]
+                        'url' => ['controller' => 'Choices', 'action' => 'addedit', $poll->id, $adminid],
                     ]
                 );
                 echo $this->Form->control(

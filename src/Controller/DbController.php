@@ -10,77 +10,79 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
 
 namespace App\Controller;
 
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
-use Cake\Auth\DefaultPasswordHasher;
 
 class DbController extends AppController
 {
-    const DEFAULT_ADMIN_USER = 'admin';
-    const DEFAULT_ADMIN_PW = 'admin';
+    private const DEFAULT_ADMIN_USER = 'admin';
+    private const DEFAULT_ADMIN_PW = 'admin';
 
     public function install(): void
     {
-        echo '<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="utf-8"><title>PREFERendum database setup</title>';
-        echo '<link rel="stylesheet" href="../css/preferendum.css">';
-        echo '</head>';
-        echo '<body><p>Starting <strong>PREFERendum</strong> database setup...</p>';
+        echo '<!DOCTYPE html><html lang="en" data-theme="light">
+        <head><meta charset="utf-8"><title>PREFERendum database setup</title>
+        <link rel="stylesheet" href="../css/preferendum.css"></head>
+        <body><p>Starting <strong>PREFERendum</strong> database setup...</p>';
 
         $this->checkEnvironment();
         $this->checkFilesystem();
-        \Cake\Core\Configure::load('app_local');
-        $dbdriver = \Cake\Core\Configure::read('Datasources.default.driver');
+        Configure::load('app_local');
+        $dbdriver = Configure::read('Datasources.default.driver');
         $dbconnection = $this->checkDbConnection($dbdriver);
         if ($this->isAlreadyInstalled($dbconnection, $dbdriver)) {
-            echo '<ul><li class="fail"><strong>Attention:</strong> Install script was already executed - stopping execution!</li></ul>';
+            echo '<ul><li class="fail"><strong>Attention:</strong> 
+            Install script was already executed - stopping execution!</li></ul>';
             die;
         }
         $this->createTables($dbconnection, $dbdriver);
         $dbconnection->getDriver()->disconnect();
 
-        echo '<p class="success"><br>SETUP COMPLETED SUCCESSFULLY!</p>';
-        echo '<strong>!!! Please delete "src/Controller/DbController.php" !!!</strong>';
-        echo '</body></html>';
+        echo '<p class="success"><br>SETUP COMPLETED SUCCESSFULLY!</p>
+        <strong>!!! Please delete "src/Controller/DbController.php" !!!</strong>
+        </body></html>';
 
         $this->autoRender = false;
     }
 
     //------------------------------------------------------------------------
 
-    public function update($version = null): void
+    public function update(?string $version = null): void
     {
-        echo '<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="utf-8"><title>PREFERendum database update</title>';
+        echo '<!DOCTYPE html><html lang="en" data-theme="light">
+        <head><meta charset="utf-8"><title>PREFERendum database update</title>';
         if (!isset($version) || empty($version)) {
             echo '<link rel="stylesheet" href="../css/preferendum.css">';
         } else {
             echo '<link rel="stylesheet" href="../../css/preferendum.css">';
         }
-        echo '</head>';
-        echo '<body><p><strong>PREFERendum</strong> database update...</p>';
+        echo '</head><body><p><strong>PREFERendum</strong> database update...</p>';
 
-        \Cake\Core\Configure::load('app_local');
-        $dbdriver = \Cake\Core\Configure::read('Datasources.default.driver');
+        Configure::load('app_local');
+        $dbdriver = Configure::read('Datasources.default.driver');
         $connection = $this->checkDbConnection($dbdriver);
 
         if (!isset($version) || empty($version)) {
             $this->checkEnvironment();
             $this->checkFilesystem();
             if (!$this->isAlreadyInstalled($connection, $dbdriver)) {
-                echo '<ul><li class="fail"><strong>Attention:</strong> PREFERendum seems not to be installed - stopping execution!</li></ul>';
+                echo '<ul><li class="fail"><strong>Attention:</strong> 
+                PREFERendum seems not to be installed - stopping execution!</li></ul>';
                 die;
             }
 
-            echo '<p><br>Select update:</p><ul>';
-            echo '<li><u><a href="update/06-07">Version 0.6.x -> 0.7.x</li></u></a>';
-            echo '</ul>';
+            echo '<p><br>Select update:</p><ul>
+            <li><u><a href="update/06-07">Version 0.6.x -> 0.7.x</li></u></a>
+            </ul>';
         } else {
             if (strcmp('06-07', $version) == 0) {
                 $this->update06_07($connection, $dbdriver);
@@ -88,30 +90,32 @@ class DbController extends AppController
             }
         }
 
-        echo '<strong>Please delete "src/Controller/DbController.php" after the update!</strong>';
-        echo '</body></html>';
+        echo '<strong>Please delete "src/Controller/DbController.php" after the update!</strong>
+        </body></html>';
 
         $this->autoRender = false;
     }
 
     //------------------------------------------------------------------------
 
-    private function checkEnvironment()
+    private function checkEnvironment(): void
     {
-        echo '<h4>Environment</h4>';
-        echo '<ul>';
+        echo '<h4>Environment</h4>
+        <ul>';
 
-        if (version_compare(PHP_VERSION, '7.4.0', '>=')) {
-            echo '<li class="success">Your version of PHP is 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
+        if (version_compare(PHP_VERSION, '8.1.0', '>=')) {
+            echo '<li class="success">Your version of PHP is 8.1.0 or higher (detected ' . PHP_VERSION . ').</li>';
         } else {
-            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP is too low. You need PHP 7.4.0 or higher (detected ' . PHP_VERSION . ').</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP is too low. 
+            You need PHP 8.1.0 or higher (detected ' . PHP_VERSION . ').</li>';
             die;
         }
 
         if (extension_loaded('mbstring')) {
             echo '<li class="success">Your version of PHP has the mbstring extension loaded.</li>';
         } else {
-            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the mbstring extension loaded.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the 
+            mbstring extension loaded.</li>';
             die;
         }
 
@@ -120,14 +124,16 @@ class DbController extends AppController
         } elseif (extension_loaded('mcrypt')) {
             echo '<li class="success">Your version of PHP has the mcrypt extension loaded.</li>';
         } else {
-            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the openssl or mcrypt extension loaded.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the 
+            openssl or mcrypt extension loaded.</li>';
             die;
         }
 
         if (extension_loaded('intl')) {
             echo '<li class="success">Your version of PHP has the intl extension loaded.</li>';
         } else {
-            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the intl extension loaded.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the 
+            intl extension loaded.</li>';
             die;
         }
 
@@ -136,7 +142,7 @@ class DbController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function checkFilesystem()
+    private function checkFilesystem(): void
     {
         echo '<h4>Filesystem</h4>';
         echo '<ul>';
@@ -155,11 +161,13 @@ class DbController extends AppController
             die;
         }
 
-        $settings = Cache::getConfig('_cake_core_');
+        $settings = Cache::getConfig('_cake_translations_');
         if (!empty($settings)) {
-            echo '<li>The <em>' . $settings["className"] . 'Engine</em> is being used for core caching. To change the config edit config/app.php</li>';
+            echo '<li>The <em>' . $settings['className'] . 'Engine</em> is being used for core caching. 
+            To change the config edit config/app.php</li>';
         } else {
-            echo '<li class="fail"><strong>Problem:</strong> Your cache is NOT working. Please check the settings in config/app.php</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Your cache is NOT working. 
+            Please check the settings in config/app.php</li>';
             die;
         }
 
@@ -168,21 +176,24 @@ class DbController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function checkDbConnection($dbdriver)
+    private function checkDbConnection(string $dbdriver): object
     {
         echo '<h4>Database</h4>';
         if (
             strcmp(strtolower($dbdriver), 'mysql') != 0 &&
             strcmp(strtolower($dbdriver), 'postgres') != 0
         ) {
-            echo '<li class="fail"><strong>Problem:</strong> Invalid SQL database driver selected in "app_local.php!<br>Only "Mysql" (for MySQL and MariaDB) and "Postgres" supported.</li>';
+            echo '<li class="fail"><strong>Problem:</strong> Invalid SQL database driver selected in 
+            "app_local.php!<br>Only "Mysql" (for MySQL and MariaDB) and "Postgres" supported.</li>';
             die;
         }
 
         echo '<ul>';
+        $errorMsg = '';
         try {
             $connection = ConnectionManager::get('default');
-            $connected = $connection->getDriver()->connect();
+            $connection->getDriver()->connect();
+            $connected = $connection->getDriver()->isConnected();
         } catch (Exception $connectionError) {
             $connected = false;
             $errorMsg = $connectionError->getMessage();
@@ -197,34 +208,36 @@ class DbController extends AppController
         if ($connected) {
             echo '<li class="success">Database connection successful</li>';
         } else {
-            echo '<li class="fail"><strong>Problem:</strong> NOT able to connect to the database.<br />' . $errorMsg . '</li>';
+            echo '<li class="fail"><strong>Problem:</strong> NOT able to connect to the 
+            database.<br />' . $errorMsg . '</li>';
             die;
         }
-
         echo '</ul>';
+
         return $connection;
     }
 
     //------------------------------------------------------------------------
 
-    private function isAlreadyInstalled($connection, $dbdriver)
+    private function isAlreadyInstalled(object $connection, string $dbdriver): bool
     {
         echo '<ul>';
 
         $isInstalled = false;
+        $DbName = $connection->config()['database'];
         if (strcmp(strtolower($dbdriver), 'mysql') == 0) {
             $table = $connection->execute(
                 'SELECT IF( EXISTS(
                     SELECT *
                     FROM INFORMATION_SCHEMA.TABLES
-                    WHERE TABLE_SCHEMA = "' . $connection->config()['database'] . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";'
+                    WHERE TABLE_SCHEMA = "' . $DbName . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";'
             )->fetchAll('assoc');
-        } else if (strcmp(strtolower($dbdriver), 'postgres') == 0) {
+        } elseif (strcmp(strtolower($dbdriver), 'postgres') == 0) {
             $table = $connection->execute(
                 'SELECT EXISTS (
                     SELECT 1
                     FROM information_schema.tables
-                    WHERE table_catalog = \'' . $connection->config()['database'] . '\' AND TABLE_NAME = \'polls\') as exists;'
+                    WHERE table_catalog = \'' . $DbName . '\' AND TABLE_NAME = \'polls\') as exists;'
             )->fetchAll('assoc');
         } else {
             echo '<li class="fail"><strong>Problem:</strong> Invalid DB driver selected!</li>';
@@ -234,39 +247,40 @@ class DbController extends AppController
         if ($table[0]['exists']) {
             $isInstalled = true;
         }
-
         echo '</ul>';
+
         return $isInstalled;
     }
 
     //------------------------------------------------------------------------
 
-    private function createTables($connection, $dbdriver)
+    private function createTables(object $connection, string $dbdriver): void
     {
         echo '<ul>';
 
         if (strcmp(strtolower($dbdriver), 'mysql') == 0) {
             $this->createMySqlTables($connection);
-        } else if (strcmp(strtolower($dbdriver), 'postgres') == 0) {
+        } elseif (strcmp(strtolower($dbdriver), 'postgres') == 0) {
             $this->createPostgresTables($connection);
         }
 
         echo '<li>Creating default admin user</li>';
-        $query = $this->fetchTable('Users')->insertQuery()
+        $this->fetchTable('Users')->insertQuery()
             ->insert(['name', 'role', 'password'])
             ->values([
                 'name' => self::DEFAULT_ADMIN_USER,
                 'role' => 'admin',
-                'password' => (new DefaultPasswordHasher)->hash(self::DEFAULT_ADMIN_PW)
+                'password' => (new DefaultPasswordHasher())->hash(self::DEFAULT_ADMIN_PW),
             ])->execute();
-        echo '<li><ul><li>If Admin Interface is used, please change the default password after first login!</li></ul></li>';
+        echo '<li><ul><li>If Admin Interface is used, please change the default 
+        password after first login!</li></ul></li>';
 
         echo '</ul>';
     }
 
     //------------------------------------------------------------------------
 
-    private function createMySqlTables($connection)
+    private function createMySqlTables(object $connection): void
     {
         echo '<li>Creating "polls" table</li>';
         $connection->execute('CREATE TABLE `polls` (
@@ -347,7 +361,7 @@ class DbController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function createPostgresTables($connection)
+    private function createPostgresTables(object $connection): void
     {
         echo '<li>Creating "polls" table</li>';
         $connection->execute("CREATE TABLE polls (
@@ -425,14 +439,14 @@ class DbController extends AppController
     //------------------------------------------------------------------------
     //------------------------------------------------------------------------
 
-    private function update06_07($connection, $dbdriver)
+    private function update06_07(object $connection, string $dbdriver): void
     {
         if (strcmp(strtolower($dbdriver), 'mysql') == 0) {
             $connection->execute('ALTER TABLE `polls`
                 ADD `limitentry` tinyint(1) NOT NULL DEFAULT 0 AFTER `pwprotect`;');
             $connection->execute('ALTER TABLE `choices`
                 ADD `max_entries` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 AFTER `option`;');
-        } else if (strcmp(strtolower($dbdriver), 'postgres') == 0) {
+        } elseif (strcmp(strtolower($dbdriver), 'postgres') == 0) {
             $connection->execute('ALTER TABLE polls
                 ADD limitentry BOOLEAN NOT NULL DEFAULT false;');
             $connection->execute('ALTER TABLE choices

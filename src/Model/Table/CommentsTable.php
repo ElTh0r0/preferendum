@@ -10,25 +10,24 @@
  * @copyright 2019-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Event\EventInterface;
 use Cake\Validation\Validator;
-use ArrayObject;
 
 /**
  * Comments Model
  *
  * @property \App\Model\Table\PollsTable&\Cake\ORM\Association\BelongsTo $Polls
- *
  * @method \App\Model\Entity\Comment newEmptyEntity()
  * @method \App\Model\Entity\Comment newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Comment[] newEntities(array $data, array $options = [])
@@ -42,7 +41,6 @@ use ArrayObject;
  * @method \App\Model\Entity\Comment[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method \App\Model\Entity\Comment[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Comment[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class CommentsTable extends Table
@@ -59,9 +57,9 @@ class CommentsTable extends Table
             [
                 'events' => [
                     'Model.beforeSave' => [
-                        'created' => 'new'
-                    ]
-                ]
+                        'created' => 'new',
+                    ],
+                ],
             ]
         );
 
@@ -71,7 +69,7 @@ class CommentsTable extends Table
         ]);
     }
 
-    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         // Trim all strings before saving
         foreach ($data as $key => $value) {
@@ -81,7 +79,7 @@ class CommentsTable extends Table
         }
     }
 
-    public function afterSave(EventInterface $event, $entity, $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // Update timestamp in polls table
         $updatePollTimestamp = $this->Polls->get($entity->poll_id);
@@ -89,7 +87,7 @@ class CommentsTable extends Table
         $this->Polls->save($updatePollTimestamp);
     }
 
-    public function afterDelete(EventInterface $event, $entity, $options)
+    public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // Update timestamp in polls table
         $updatePollTimestamp = $this->Polls->get($entity->poll_id);

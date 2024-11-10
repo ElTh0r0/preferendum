@@ -10,12 +10,14 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <?php
-$prefconf = \Cake\Core\Configure::read('preferendum');
+$prefconf = Configure::read('preferendum');
 
 echo $this->Form->create(
     $poll,
@@ -105,7 +107,6 @@ echo $this->Form->button(
     ]
 );
 echo '</div>';
-
 
 // No 'Poll options' caption, if none of 'opt_*' configuration parameters is true
 $filtered = array_filter($prefconf, function ($k) {
@@ -343,20 +344,27 @@ if (
         ]
     );
     if (!$prefconf['alwaysUseAdminLinks']) {
-        echo '<div id="emailwarn" class="fail" style="display: none;"><p><span style="font-size: 80%;">' . __('Attention: If no admin link is used, the email address is visible for everyone!') . '</span></p></div>';
+        echo '<div id="emailwarn" class="fail" style="display: none;"><p><span style="font-size: 80%;">' .
+            __('Attention: If no admin link is used, the email address is visible for everyone!') . '</span></p></div>';
     }
     echo '</li>';
 }
 
 // --------------------------------------------------------------
 // Poll expiry date
-if ($prefconf['opt_PollExpirationAfter'] > 0) {
+$demoMode = false;
+if (Configure::read('preferendum.demoMode')) {
+    $demoMode = true;
+}
+
+if ($prefconf['opt_PollExpirationAfter'] > 0 || $demoMode) {
     echo '<li>' . $this->Form->label('hasexpinput', __('Expiry date')) . '</li>';
     echo '<li>';
     echo $this->Form->checkbox(
         'hasexp',
         [
             'checked' => true,
+            'disabled' => $demoMode,
             'value' => 'true',
             'id' => 'hasexpinput',
             'onchange' => 'toggleExpiryInput()',
@@ -366,13 +374,18 @@ if ($prefconf['opt_PollExpirationAfter'] > 0) {
     echo '</li>';
 
     $exp = new DateTime('NOW');
-    $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
+    if ($demoMode) {
+        $exp->modify('+1 days');
+    } else {
+        $exp->modify('+' . $prefconf['opt_PollExpirationAfter'] . ' days');
+    }
     echo '<li>';
     echo $this->Form->control(
         'expiry',
         [
             'class' => 'field-long',
             'id' => 'expinput',
+            'disabled' => $demoMode,
             'value' => $exp,
             'label' => '',
             'style' => 'margin-bottom: 8px;',
@@ -387,4 +400,3 @@ echo '<div class="content-right">';
 echo $this->Form->button(__('Create poll'));
 echo '</div>';
 echo $this->Form->end();
-?>

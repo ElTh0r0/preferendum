@@ -10,19 +10,20 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Auth\DefaultPasswordHasher;
-use Cake\I18n\FrozenTime;
+use Cake\Core\Configure;
+use Cake\Event\EventInterface;
+use Cake\I18n\DateTime;
 
 class AdminController extends AppController
 {
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         // Configure the login action to not require authentication, preventing
@@ -42,10 +43,18 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function index()
+    public function index(): void
     {
         // Extra check needed since poll password using login credentials as well
         $currentUserRole = $this->recheckAdminPermissions();
+
+        if (Configure::read('preferendum.demoMode')) {
+            $this->Flash->default(__('DEMO mode is enabled - some features may be limited!'), [
+                'params' => [
+                    'permanent' => true,
+                ],
+            ]);
+        }
 
         $search = $this->request->getQuery('search');
         if ($search) {
@@ -64,15 +73,23 @@ class AdminController extends AppController
         $numpolls = $this->fetchTable('Polls')->find('all')->count();
         $numentries = $this->getNumberOfEntries();
         $numcomments = $this->getNumberOfComments();
-        $adminRole = SELF::BACKENDROLES[0];
-        $polladmRole = SELF::BACKENDROLES[1];
+        $adminRole = self::BACKENDROLES[0];
+        $polladmRole = self::BACKENDROLES[1];
 
-        $this->set(compact('polls', 'numpolls', 'numentries', 'numcomments', 'currentUserRole', 'adminRole', 'polladmRole'));
+        $this->set(compact(
+            'polls',
+            'numpolls',
+            'numentries',
+            'numcomments',
+            'currentUserRole',
+            'adminRole',
+            'polladmRole'
+        ));
     }
 
     //------------------------------------------------------------------------
 
-    public function userinfo($pollid = null)
+    public function userinfo(?string $pollid = null): void
     {
         // Extra check needed since poll password using login credentials as well
         $this->recheckAdminPermissions();
@@ -85,7 +102,7 @@ class AdminController extends AppController
         if ($poll->userinfo) {
             $userinfos = $this->getUserInfos($pollid);
         } else {
-            $userinfos = array();
+            $userinfos = [];
         }
         // debug($userinfos);
         // die;
@@ -95,7 +112,7 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function login($pollid = null, $polladmid = null)
+    public function login(?string $pollid = null, ?string $polladmid = null): ?object
     {
         $this->request->allowMethod(['get', 'post']);
         $result = $this->Authentication->getResult();
@@ -106,22 +123,24 @@ class AdminController extends AppController
         // regardless of POST or GET, redirect if user is logged in
         if ($result->isValid()) {
             if (in_array($result->getData()['role'], self::BACKENDROLES)) {
-                $this->checkExpiryAndLockPolls();  // ToDo: Move to cronjob ?!
-
+                $this->checkExpiryAndLockPolls(); // ToDo: Move to cronjob ?!
                 // redirect after login success
                 $target = $this->Authentication->getLoginRedirect() ?? '/admin';
+
                 return $this->redirect($target);
-            } else if (
+            } elseif (
                 strcmp($result->getData()['role'], self::POLLPWROLE) == 0 &&
                 isset($pollid)
             ) {
                 if (isset($pollid) && isset($polladmid)) {
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid, $polladmid]);
                 }
+
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             } else {
                 $this->Flash->error(__('Invalid user or password'));
                 $this->Authentication->logout();
+
                 return $this->redirect(['action' => 'login']);
             }
         }
@@ -129,18 +148,22 @@ class AdminController extends AppController
         if ($this->request->is('post') && !$result->isValid()) {
             if (isset($pollid)) {
                 $this->Flash->error(__('Invalid poll password'));
+
                 return $this->redirect(['action' => 'login', $pollid, $polladmid]);
             }
             $this->Flash->error(__('Invalid user or password'));
+
             return $this->redirect(['action' => 'login']);
         }
 
         $this->set(compact('pollid'));
+
+        return null;
     }
 
     //------------------------------------------------------------------------
 
-    public function logout($pollid = null, $polladmid = null)
+    public function logout(?string $pollid = null, ?string $polladmid = null): object
     {
         $result = $this->Authentication->getResult();
         // regardless of POST or GET, redirect if user is logged in
@@ -150,12 +173,13 @@ class AdminController extends AppController
         if (isset($pollid)) {
             return $this->redirect(['action' => 'login', $pollid, $polladmid]);
         }
+
         return $this->redirect(['action' => 'login']);
     }
 
     //------------------------------------------------------------------------
 
-    private function recheckAdminPermissions()
+    private function recheckAdminPermissions(): mixed
     {
         $identity = $this->Authentication->getIdentity();
         $currentUserRole = $identity->getOriginalData()['role'];
@@ -163,6 +187,7 @@ class AdminController extends AppController
         // Extra check needed since poll password using login credentials as well
         if (!in_array($currentUserRole, self::BACKENDROLES)) {
             $this->Authentication->logout();
+
             return $this->redirect(['action' => 'login']);
         }
 
@@ -171,15 +196,15 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function getSearchQuery($search)
+    private function getSearchQuery(string $search): object
     {
         $searchusers = $this->fetchTable('Entries')->find()
             ->contain(['Choices', 'Users'])
-            ->where(['Users.name like'  => '%' . $search . '%'])
+            ->where(['Users.name like' => '%' . $search . '%'])
             ->select(['poll_id' => 'Choices.poll_id'])
-            ->group(['Users.id', 'Choices.poll_id']);
+            ->groupBy(['Users.id', 'Choices.poll_id']);
         $searchusers = $searchusers->all()->extract('poll_id');
-        $foundVoters = array();
+        $foundVoters = [];
         foreach ($searchusers as $pid) {
             $foundVoters[] = $pid;
         }
@@ -187,9 +212,9 @@ class AdminController extends AppController
         $searchcmtusers = $this->fetchTable('Comments')->find()
             ->where(['name like' => '%' . $search . '%'])
             ->select(['poll_id'])
-            ->group(['poll_id']);
+            ->groupBy(['poll_id']);
         $searchcmtusers = $searchcmtusers->all()->extract('poll_id');
-        $foundCmtUsers = array();
+        $foundCmtUsers = [];
         foreach ($searchcmtusers as $pid) {
             $foundCmtUsers[] = $pid;
         }
@@ -202,7 +227,7 @@ class AdminController extends AppController
             $query = $this->fetchTable('Polls')->find('all')
                 ->where(['Or' => [
                     'title like' => '%' . $search . '%',
-                    'id in' => $found
+                    'id in' => $found,
                 ]]);
         }
 
@@ -211,14 +236,14 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function getNumberOfEntries()
+    private function getNumberOfEntries(): array
     {
         $dbnumentries = $this->fetchTable('Entries')->find()
             ->contain(['Choices'])
             ->select(['Choices.poll_id'])
-            ->group(['user_id', 'Choices.poll_id']);
+            ->groupBy(['user_id', 'Choices.poll_id']);
         $dbnumentries = $dbnumentries->all();
-        $numentries = array();
+        $numentries = [];
         foreach ($dbnumentries as $entry) {
             $numentries[] = $entry->choice->poll_id;
         }
@@ -229,19 +254,19 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function getNumberOfComments()
+    private function getNumberOfComments(): array
     {
-        $numcomments = array();
+        $numcomments = [];
 
         if (
-            \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-            || \Cake\Core\Configure::read('preferendum.opt_Comments')
+            Configure::read('preferendum.alwaysAllowComments') ||
+            Configure::read('preferendum.opt_Comments')
         ) {
             $dbnumcomments = $this->fetchTable('Comments')->find()
                 ->select(['poll_id', 'count' => 'COUNT(*)'])
-                ->group(['poll_id']);
+                ->groupBy(['poll_id']);
             $dbnumcomments = $dbnumcomments->all();
-            $numcomments = array();
+            $numcomments = [];
             foreach ($dbnumcomments as $comm) {
                 $numcomments[$comm->poll_id] = $comm->count;
             }
@@ -252,29 +277,28 @@ class AdminController extends AppController
 
     //------------------------------------------------------------------------
 
-    private function getUserInfos($pollid = null)
+    private function getUserInfos(?string $pollid = null): array
     {
         $dbuserinfos = $this->fetchTable('Entries')->find()
             ->contain(['Choices', 'Users'])
             ->where(['Choices.poll_id' => $pollid, 'Users.info !=' => ''])
             ->select(['name' => 'Users.name', 'info' => 'Users.info'])
-            ->group(['Users.id']);
+            ->groupBy(['Users.id']);
 
         return $dbuserinfos->toArray();
     }
 
     //------------------------------------------------------------------------
 
-    private function checkExpiryAndLockPolls()
+    private function checkExpiryAndLockPolls(): void
     {
-        if (\Cake\Core\Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
+        if (Configure::read('preferendum.opt_PollExpirationAfter') > 0) {
             $expiredpolls = $this->fetchTable('Polls')->UpdateQuery();
-            $expiredpolls->update()
-                ->set(['locked' => 1])
+            $expiredpolls->set(['locked' => 1])
                 ->where([
                     'locked' => 0,
                     'expiry IS NOT' => null,
-                    'expiry <=' => FrozenTime::now()
+                    'expiry <=' => DateTime::now(),
                 ])
                 ->execute();
         }

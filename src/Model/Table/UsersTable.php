@@ -10,25 +10,23 @@
  * @copyright 2019-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use ArrayObject;
+use Cake\Event\EventInterface;
 use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\Event\EventInterface;
-use ArrayObject;
 
 /**
  * Users Model
  *
  * @property \App\Model\Table\EntriesTable&\Cake\ORM\Association\HasMany $Entries
- *
  * @method \App\Model\Entity\User newEmptyEntity()
  * @method \App\Model\Entity\User newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\User[] newEntities(array $data, array $options = [])
@@ -58,7 +56,7 @@ class UsersTable extends Table
         ])->setDependent(true);
     }
 
-    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         // Trim all strings before saving
         foreach ($data as $key => $value) {
@@ -68,7 +66,7 @@ class UsersTable extends Table
         }
     }
 
-    public function findFilteredBackendUsers(\Cake\ORM\Query $query)
+    public function findFilteredBackendUsers(Query $query): Query
     {
         // Pre-filter users at login and remove users without role (= poll users)
         // Otherwise there might be collisions with poll users with same name as backend user

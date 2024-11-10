@@ -10,8 +10,11 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
+
+use Cake\Core\App;
+use Cake\Core\Configure;
 ?>
 
 <?php
@@ -56,11 +59,12 @@ $this->Html->scriptEnd();
         <?php
         echo $this->element('choice/edit');
         echo $this->element('entry/edit_view');
-        echo '<tr class="table-spacer-row table-spacer-row-big"><td colspan="' . (sizeof($pollchoices) + 2) . '"></td></tr>';
+        echo '<tr class="table-spacer-row table-spacer-row-big">
+        <td colspan="' . (count($pollchoices) + 2) . '"></td></tr>';
 
-        $resultVisual = \Cake\Core\Configure::read('preferendum.resultVisualization');
-        if (0 != strcmp('none', $resultVisual)) {
-            if (file_exists(Cake\Core\App::path('templates')[0] . 'element/poll/result-' . $resultVisual . '.php')) {
+        $resultVisual = Configure::read('preferendum.resultVisualization');
+        if (strcmp('none', $resultVisual) != 0) {
+            if (file_exists(App::path('templates')[0] . 'element/poll/result-' . $resultVisual . '.php')) {
                 echo $this->element('poll/result-' . $resultVisual);
             }
         }
@@ -69,8 +73,8 @@ $this->Html->scriptEnd();
 </div>
 
 <?php if (
-    \Cake\Core\Configure::read('preferendum.alwaysAllowComments')
-    || (\Cake\Core\Configure::read('preferendum.opt_Comments') && $poll->comment)
+    Configure::read('preferendum.alwaysAllowComments') ||
+    (Configure::read('preferendum.opt_Comments') && $poll->comment)
 ) {
     echo '<div id="comments-wrapper">';
     echo $this->element('comment/delete');

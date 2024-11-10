@@ -22,13 +22,14 @@
  * @license       https://opensource.org/licenses/mit-license.php MIT License
  */
 
+use Cake\Core\Configure;
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
 
 /*
  * This file is loaded in the context of the `Application` class.
-  * So you can use  `$this` to reference the application class instance
-  * if required.
+ * So you can use `$this` to reference the application class instance
+ * if required.
  */
 
 return function (RouteBuilder $routes): void {
@@ -55,8 +56,9 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/', ['controller' => 'Polls', 'action' => 'add']);
         $builder->connect('/polls', ['controller' => 'Polls', 'action' => 'add']);
 
-        if ((\Cake\Core\Configure::read('preferendum.deleteExpiredPollsAfter') == 0) &&
-            (\Cake\Core\Configure::read('preferendum.deleteInactivePollsAfter') == 0)
+        if (
+            Configure::read('preferendum.deleteExpiredPollsAfter') == 0 &&
+            Configure::read('preferendum.deleteInactivePollsAfter') == 0
         ) {
             $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'add']);
             $builder->connect('/polls/cleanupmanually/*', ['controller' => 'Polls', 'action' => 'add']);
@@ -64,10 +66,10 @@ return function (RouteBuilder $routes): void {
             $builder->connect('/polls/cleanup', ['controller' => 'Polls', 'action' => 'cleanup']);
             $builder->connect('/polls/cleanupmanually/*', ['controller' => 'Polls', 'action' => 'cleanupmanually']);
         }
-        if (\Cake\Core\Configure::read('preferendum.exportCsv') == true) {
+        if (Configure::read('preferendum.exportCsv') == true) {
             $builder->connect('/polls/exportcsv/*', ['controller' => 'Polls', 'action' => 'exportcsv']);
         }
-        if (\Cake\Core\Configure::read('preferendum.opt_SendChangeEntryLink') == true) {
+        if (Configure::read('preferendum.opt_SendChangeEntryLink') == true) {
             $builder->connect('/polls/sendpersonallink/*', ['controller' => 'Polls', 'action' => 'sendpersonallink']);
         }
         $builder->connect('/polls/edit/*', ['controller' => 'Polls', 'action' => 'edit']);
@@ -77,15 +79,15 @@ return function (RouteBuilder $routes): void {
         $builder->connect('/polls/*', ['controller' => 'Polls', 'action' => 'View']);
 
         // Allow route to login mask, needed for using poll password
-        if (\Cake\Core\Configure::read('preferendum.opt_PollPassword') == true) {
+        if (Configure::read('preferendum.opt_PollPassword') == true) {
             $builder->connect('/admin/login/*', ['controller' => 'Admin', 'action' => 'login']);
             $builder->connect('/admin/logout/*', ['controller' => 'Admin', 'action' => 'logout']);
         }
-        if (\Cake\Core\Configure::read('preferendum.adminInterface') != true) {
+        if (Configure::read('preferendum.adminInterface') != true) {
             $builder->connect('/admin/*', ['controller' => 'Polls', 'action' => 'add']);
             $builder->connect('/users/*', ['controller' => 'Polls', 'action' => 'add']);
         }
-        if (\Cake\Core\Configure::read('preferendum.sendBackendUserPwReset') != true) {
+        if (Configure::read('preferendum.sendBackendUserPwReset') != true) {
             $builder->connect('/users/forgot-password', ['controller' => 'Polls', 'action' => 'add']);
         }
 
@@ -99,8 +101,8 @@ return function (RouteBuilder $routes): void {
          * $builder->connect('/{controller}/{action}/*', []);
          * ```
          *
-         * You can remove these routes once you've connected the
-         * routes you want in your application.
+         * It is NOT recommended to use fallback routes after your initial prototyping phase!
+         * See https://book.cakephp.org/5/en/development/routing.html#fallbacks-method for more information
          */
         $builder->fallbacks();
     });

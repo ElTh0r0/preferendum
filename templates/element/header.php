@@ -10,8 +10,10 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <div id="header" class="right-to-left">
@@ -22,7 +24,7 @@
         if ((str_contains($request, '/admin') || str_contains($request, '/users')) && !isset($pollid)) { ?>
             <h1><?php echo __('Administration') ?></h1>
             <p class="details"></p>
-        <?php } else if (!isset($poll) || $poll->isNew() || isset($pollid)) { ?>
+        <?php } elseif (!isset($poll) || $poll->isNew() || isset($pollid)) { ?>
             <h1><?php echo __('PREFERendum') ?></h1>
             <p class="details"><?php echo __('scheduling polls') ?></p>
         <?php } else { ?>
@@ -43,7 +45,7 @@
                     <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
                 </div>
             <?php } ?>
-            <?php if (strcmp($poll->adminid, "NA") != 0 && strcmp($poll->adminid, $adminid) == 0) { ?>
+            <?php if (strcmp($poll->adminid, 'NA') != 0 && strcmp($poll->adminid, $adminid) == 0) { ?>
                 <div class="poll-url-container">
                     <span class="fail"><em><?php echo __('Admin link') . ':' ?></em></span>
                     <input type="text" id="admin-url-field" title="<?php echo __('Save this admin link, you need it to manage your poll!') ?>" readonly />
@@ -55,7 +57,7 @@
 
     </div>
 
-    <?php if (\Cake\Core\Configure::read('preferendum.headerLogo')) { ?>
+    <?php if (Configure::read('preferendum.headerLogo')) { ?>
         <div id="logo">
             <a href="<?php echo $this->request->getAttributes()['webroot'] ?>" title="<?php echo __('Create a new poll ...') ?>">
                 <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/logo.png' ?> alt="">

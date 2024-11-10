@@ -10,26 +10,25 @@
  * @copyright 2019-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\Event\EventInterface;
-use ArrayObject;
 
 /**
  * Entries Model
  *
  * @property \App\Model\Table\ChoicesTable&\Cake\ORM\Association\BelongsTo $Choices
  * @property \App\Model\Table\UsersTable&\Cake\ORM\Association\BelongsTo $Users
- *
  * @method \App\Model\Entity\Entry newEmptyEntity()
  * @method \App\Model\Entity\Entry newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Entry[] newEntities(array $data, array $options = [])
@@ -65,7 +64,7 @@ class EntriesTable extends Table
         ]);
     }
 
-    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         // Trim all strings before saving
         foreach ($data as $key => $value) {
@@ -75,7 +74,7 @@ class EntriesTable extends Table
         }
     }
 
-    public function afterSave(EventInterface $event, $entity, $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         $db = $this->findById($entity->id)
             ->contain(['Choices'])
@@ -88,7 +87,7 @@ class EntriesTable extends Table
         $this->Choices->Polls->save($updatePollTimestamp);
     }
 
-    public function afterDelete(EventInterface $event, $entity, $options)
+    public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         $db = $this->findById($entity->id)
             ->contain(['Choices'])

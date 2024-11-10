@@ -10,25 +10,24 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
+use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\Event\EventInterface;
-use ArrayObject;
 
 /**
  * Choices Model
  *
  * @property \App\Model\Table\PollsTable&\Cake\ORM\Association\BelongsTo $Polls
- *
  * @method \App\Model\Entity\Choice newEmptyEntity()
  * @method \App\Model\Entity\Choice newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Choice[] newEntities(array $data, array $options = [])
@@ -62,7 +61,7 @@ class ChoicesTable extends Table
         ])->setDependent(true);
     }
 
-    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         // Trim all strings before saving
         foreach ($data as $key => $value) {
@@ -72,7 +71,7 @@ class ChoicesTable extends Table
         }
     }
 
-    public function afterSave(EventInterface $event, $entity, $options)
+    public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // Update timestamp in polls table
         $updatePollTimestamp = $this->Polls->get($entity->poll_id);
@@ -80,7 +79,7 @@ class ChoicesTable extends Table
         $this->Polls->save($updatePollTimestamp);
     }
 
-    public function afterDelete(EventInterface $event, $entity, $options)
+    public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // Update timestamp in polls table
         $updatePollTimestamp = $this->Polls->get($entity->poll_id);

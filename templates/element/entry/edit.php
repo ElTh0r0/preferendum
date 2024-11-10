@@ -10,7 +10,7 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 ?>
 
@@ -33,7 +33,7 @@ echo $this->Form->create(
     $newentry,
     [
         'type' => 'post',
-        'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid]
+        'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid],
     ]
 );
 
@@ -56,9 +56,10 @@ if ($poll->anonymous) {
     echo '</td>';
 }
 
-$availableYes = array();
+$availableYes = [];
+$numChoices = count($pollchoices);
 if ($poll->limitentry) {
-    for ($i = 0; $i < sizeof($pollchoices); $i++) {
+    for ($i = 0; $i < $numChoices; $i++) {
         $yes = 0;
         foreach ($pollentries as $ent) {
             if ($ent[$pollchoices[$i]->id] == 1 || $ent[$pollchoices[$i]->id] == 2) {
@@ -69,7 +70,7 @@ if ($poll->limitentry) {
     }
 }
 
-for ($i = 0; $i < sizeof($pollchoices); $i++) {
+for ($i = 0; $i < $numChoices; $i++) {
     $entry = $pollchoices[$i]->id;
     $val = $pollentries[$edituser][$pollchoices[$i]->id];
 
@@ -135,4 +136,3 @@ if ($poll->userinfo == 1) {
     echo '</td></tr>';
 }
 echo $this->Form->end();
-?>

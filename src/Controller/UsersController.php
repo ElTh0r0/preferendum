@@ -10,21 +10,23 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\Auth\DefaultPasswordHasher;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
+use Cake\Core\Configure;
+use Cake\Event\EventInterface;
 use Cake\Mailer\Mailer;
 
 class UsersController extends AppController
 {
-    const DEMOMODE = false;
+    private bool $DEMOMODE = false; // Updated in initialize() based on feature configuration
 
-    public function beforeFilter(\Cake\Event\EventInterface $event)
+    public function beforeFilter(EventInterface $event): void
     {
         parent::beforeFilter($event);
         // Configure the login action to not require authentication, preventing
@@ -38,13 +40,17 @@ class UsersController extends AppController
     {
         parent::initialize();
 
+        if (Configure::read('preferendum.demoMode')) {
+            $this->DEMOMODE = true;
+        }
+
         // Add this line to check authentication result and lock your site
         $this->loadComponent('Authentication.Authentication');
     }
 
     //------------------------------------------------------------------------
 
-    public function management()
+    public function management(): ?object
     {
         $allroles = self::BACKENDROLES;
         $identity = $this->Authentication->getIdentity();
@@ -53,22 +59,28 @@ class UsersController extends AppController
         // Extra check needed since poll password using login credentials as well
         if (!in_array($currentUserRole, self::BACKENDROLES)) {
             $this->Authentication->logout();
+
             return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
-        } else if (strcmp($currentUserRole, self::BACKENDROLES[0]) != 0) {
+        } elseif (strcmp($currentUserRole, self::BACKENDROLES[0]) != 0) {
             return $this->redirect(['action' => 'edit']);
         }
 
-        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
+        $backendusers = $this->Users->find(
+            'all',
+            order: ['name' => 'ASC']
+        )->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
         $backendusers = $backendusers->all()->toArray();
 
         $user = $this->Users->newEmptyEntity();
 
         $this->set(compact('backendusers', 'allroles', 'user'));
+
+        return null;
     }
 
     //------------------------------------------------------------------------
 
-    public function add()
+    public function add(): object
     {
         $this->request->allowMethod(['post', 'add']);
 
@@ -76,12 +88,14 @@ class UsersController extends AppController
         $currentUserRole = $identity->getOriginalData()['role'];
         if (strcmp($currentUserRole, self::BACKENDROLES[0]) != 0) {
             $this->Authentication->logout();
+
             return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
         }
 
         if ($this->request->is('post', 'put')) {
-            if (self::DEMOMODE) {
+            if ($this->DEMOMODE) {
                 $this->Flash->error(__('DEMO MODE enabled! User creation not possible!'));
+
                 return $this->redirect(['action' => 'management']);
             }
 
@@ -101,6 +115,7 @@ class UsersController extends AppController
                 ->first();
             if ($dbuser != null) {
                 $this->Flash->error(__('User with this name already exists!'));
+
                 return $this->redirect(['action' => 'management']);
             }
             if (isset($newUser['info']) && !empty($newUser['info'])) {
@@ -110,6 +125,7 @@ class UsersController extends AppController
                     ->first();
                 if ($dbuser != null) {
                     $this->Flash->error(__('User with this email already exists!'));
+
                     return $this->redirect(['action' => 'management']);
                 }
             }
@@ -117,24 +133,27 @@ class UsersController extends AppController
             $newUser['role'] = self::BACKENDROLES[$newUser['role']];
             $confirmedPassword = trim($this->request->getData()['confirmpassword']);
             if (strlen(trim($newUser['password'])) > 0 && strcmp(trim($newUser['password']), $confirmedPassword) == 0) {
-                $newUser['password'] = (new DefaultPasswordHasher)->hash(trim($newUser['password']));
+                $newUser['password'] = (new DefaultPasswordHasher())->hash(trim($newUser['password']));
             } else {
                 $this->Flash->error(__('Unable to add the user - password / confirmation not correct!'));
+
                 return $this->redirect(['action' => 'management']);
             }
 
             if ($this->Users->save($newUser)) {
                 $this->Flash->success(__('The user has been created.'));
+
                 return $this->redirect(['action' => 'management']);
             }
             $this->Flash->error(__('Unable to add the user!'));
-            return $this->redirect(['action' => 'management']);
         }
+
+        return $this->redirect(['action' => 'management']);
     }
 
     //------------------------------------------------------------------------
 
-    public function edit($editUserId = null)
+    public function edit(?int $editUserId = null): ?object
     {
         $allroles = self::BACKENDROLES;
         $identity = $this->Authentication->getIdentity();
@@ -144,14 +163,17 @@ class UsersController extends AppController
         $editUserRole = null;
         if (!in_array($currentUserRole, self::BACKENDROLES)) {
             $this->Authentication->logout();
+
             return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
-        } else if (strcmp($currentUserRole, self::BACKENDROLES[0]) != 0) {
+        } elseif (strcmp($currentUserRole, self::BACKENDROLES[0]) != 0) {
             // If current user is not admin, always overwrite $editUserId with current user's ID
             $editUserId = $identity->getOriginalData()['id'];
         }
 
         if (isset($editUserId) && !empty($editUserId)) {
-            $dbEditUser = $this->Users->find()->select(['name', 'role', 'info'])->where(['id' => $editUserId])->firstOrFail();
+            $dbEditUser = $this->Users->find()->select(
+                ['name', 'role', 'info']
+            )->where(['id' => $editUserId])->firstOrFail();
             $editUserName = $dbEditUser->name;
             $editUserRole = $dbEditUser->role;
             $editEmail = $dbEditUser->info;
@@ -160,29 +182,45 @@ class UsersController extends AppController
         if (
             !isset($editUserId) || empty($editUserId) ||
             !isset($editUserRole) || empty($editUserRole) ||
-            !in_array($editUserRole, self::BACKENDROLES)  // Filter for pollpw "users"
+            !in_array($editUserRole, self::BACKENDROLES) // Filter for pollpw "users"
         ) {
             $this->Flash->error(__('Invalid action - something went wrong!'));
+
             return $this->redirect(['controller' => 'Admin', 'action' => 'index']);
         }
 
-        $backendusers = $this->Users->find('all', ['order' => ['name' => 'ASC']])->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
+        $backendusers = $this->Users->find(
+            'all',
+            order: ['name' => 'ASC']
+        )->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
         $backendusers = $backendusers->all()->toArray();
 
         $user = $this->Users->newEmptyEntity();
 
-        $this->set(compact('backendusers', 'allroles', 'currentUserRole', 'editUserId', 'editUserName', 'editUserRole', 'editEmail', 'user'));
+        $this->set(compact(
+            'backendusers',
+            'allroles',
+            'currentUserRole',
+            'editUserId',
+            'editUserName',
+            'editUserRole',
+            'editEmail',
+            'user'
+        ));
+
+        return null;
     }
 
     //------------------------------------------------------------------------
 
-    public function updateUser($editUserId = null)
+    public function updateUser(?int $editUserId = null): object
     {
         $this->request->allowMethod(['post', 'updateUser']);
 
         if ($this->request->is('post', 'put')) {
-            if (self::DEMOMODE) {
+            if ($this->DEMOMODE) {
                 $this->Flash->error(__('DEMO MODE enabled! Editing users is not possible!'));
+
                 return $this->redirect(['action' => 'management']);
             }
 
@@ -191,15 +229,16 @@ class UsersController extends AppController
             $currentUserRole = $identity->getOriginalData()['role'];
             if (
                 !isset($editUserId) || empty($editUserId) ||
-                strcmp($currentUserRole, self::BACKENDROLES[0]) != 0  // If not admin, always take current user's Id
+                strcmp($currentUserRole, self::BACKENDROLES[0]) != 0 // If not admin, always take current user's Id
             ) {
                 $updateUser['id'] = $identity->getOriginalData()['id'];
             } else {
                 $updateUser['id'] = $editUserId;
             }
 
-            if (!in_array($currentUserRole, self::BACKENDROLES)) {  // Filter for pollpw "users"
+            if (!in_array($currentUserRole, self::BACKENDROLES)) { // Filter for pollpw "users"
                 $this->Authentication->logout();
+
                 return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
             }
 
@@ -212,10 +251,15 @@ class UsersController extends AppController
             if (isset($updateUser['info']) && !empty($updateUser['info'])) {
                 $dbuser = $this->Users
                     ->find()
-                    ->where(['role IN' => self::BACKENDROLES, 'info' => trim($updateUser['info'])])
+                    ->where([
+                        'role IN' => self::BACKENDROLES,
+                        'info' => trim($updateUser['info']),
+                        'id !=' => $updateUser['id'],
+                    ])
                     ->first();
                 if ($dbuser != null) {
                     $this->Flash->error(__('User with this email already exists!'));
+
                     return $this->redirect(['action' => 'management']);
                 }
             }
@@ -233,13 +277,14 @@ class UsersController extends AppController
                         ->first();
                     if ($dbuser != null) {
                         $this->Flash->error(__('User with this name already exists!'));
+
                         return $this->redirect(['action' => 'management']);
                     }
                 }
 
                 // Check if current user is the only admin and user tries to remove his own admin role
                 if (
-                    strcmp(strval($identity->getOriginalData()['id']), $updateUser['id']) == 0 &&
+                    $identity->getOriginalData()['id'] === $updateUser['id'] &&
                     strcmp($currentUserRole, self::BACKENDROLES[0]) == 0 &&
                     strcmp($updateUser['role'], self::BACKENDROLES[0]) != 0
                 ) {
@@ -247,6 +292,7 @@ class UsersController extends AppController
                     $cntAdmins = $cntAdmins->count();
                     if ($cntAdmins == 1) {
                         $this->Flash->error(__('User not updated - at least one administrator required!'));
+
                         return $this->redirect(['action' => 'management']);
                     }
                 }
@@ -255,22 +301,25 @@ class UsersController extends AppController
             $this->Users->patchEntity($dbUser, $updateUser);
             if ($this->Users->save($dbUser)) {
                 $this->Flash->success(__('The user has been updated.'));
+
                 return $this->redirect(['action' => 'management']);
             }
             $this->Flash->error(__('Unable to update the user.'));
-            return $this->redirect(['action' => 'management']);
         }
+
+        return $this->redirect(['action' => 'management']);
     }
 
     //------------------------------------------------------------------------
 
-    public function updatePassword($editUserId = null)
+    public function updatePassword(?int $editUserId = null): object
     {
         $this->request->allowMethod(['post', 'updatePassword']);
 
         if ($this->request->is('post', 'put')) {
-            if (self::DEMOMODE) {
+            if ($this->DEMOMODE) {
                 $this->Flash->error(__('DEMO MODE enabled! Changing the password not possible!'));
+
                 return $this->redirect(['action' => 'edit']);
             }
 
@@ -279,23 +328,28 @@ class UsersController extends AppController
             $currentUserRole = $identity->getOriginalData()['role'];
             if (
                 !isset($editUserId) || empty($editUserId) ||
-                strcmp($currentUserRole, self::BACKENDROLES[0]) != 0  // If not admin, always take current user's Id
+                strcmp($currentUserRole, self::BACKENDROLES[0]) != 0 // If not admin, always take current user's Id
             ) {
                 $updateUser['id'] = $identity->getOriginalData()['id'];
             } else {
                 $updateUser['id'] = $editUserId;
             }
 
-            if (!in_array($currentUserRole, self::BACKENDROLES)) {  // Filter for pollpw "users"
+            if (!in_array($currentUserRole, self::BACKENDROLES)) { // Filter for pollpw "users"
                 $this->Authentication->logout();
+
                 return $this->redirect(['controller' => 'Admin', 'action' => 'login']);
             }
 
             $confirmedPassword = trim($this->request->getData()['confirmpassword']);
-            if (strlen(trim($updateUser['password'])) > 0 && strcmp(trim($updateUser['password']), $confirmedPassword) == 0) {
-                $updateUser['password'] = (new DefaultPasswordHasher)->hash(trim($updateUser['password']));
+            if (
+                strlen(trim($updateUser['password'])) > 0 &&
+                strcmp(trim($updateUser['password']), $confirmedPassword) == 0
+            ) {
+                $updateUser['password'] = (new DefaultPasswordHasher())->hash(trim($updateUser['password']));
             } else {
                 $this->Flash->error(__('Unable to update the password / confirmation not correct.'));
+
                 return $this->redirect(['action' => 'edit', $updateUser['id']]);
             }
 
@@ -304,21 +358,26 @@ class UsersController extends AppController
 
             if ($this->Users->save($dbUser)) {
                 $this->Flash->success(__('The password has been updated.'));
+
                 return $this->redirect(['action' => 'edit', $updateUser['id']]);
             }
             $this->Flash->error(__('Unable to save the new password!'));
+
             return $this->redirect(['action' => 'edit', $updateUser['id']]);
         }
+
+        return $this->redirect(['action' => 'edit']);
     }
 
     //------------------------------------------------------------------------
 
-    public function deleteBackendUser($userid = null)
+    public function deleteBackendUser(?int $userid = null): object
     {
         $this->request->allowMethod(['post', 'deleteBackendUser']);
 
-        if (self::DEMOMODE) {
+        if ($this->DEMOMODE) {
             $this->Flash->error(__('DEMO MODE enabled! User deletion is not possible!'));
+
             return $this->redirect(['action' => 'management']);
         }
 
@@ -329,17 +388,19 @@ class UsersController extends AppController
                 $dbuser = $this->Users->findById($userid)->firstOrFail();
                 if ($this->Users->delete($dbuser)) {
                     $this->Flash->success(__('User has been deleted.'));
+
                     return $this->redirect(['action' => 'management']);
                 }
             }
         }
         $this->Flash->error(__('User {0} has NOT been deleted!', $userid));
+
         return $this->redirect(['action' => 'management']);
     }
 
     //------------------------------------------------------------------------
 
-    public function forgotPassword()
+    public function forgotPassword(): void
     {
         if ($this->request->is('post')) {
             $user = $this->request->getData();
@@ -352,14 +413,15 @@ class UsersController extends AppController
 
                 if ($dbUser != null) {
                     $newpassword = $this->generatePassword();
-                    $user['password'] = (new DefaultPasswordHasher)->hash($newpassword);
+                    $user['password'] = (new DefaultPasswordHasher())->hash($newpassword);
 
                     $this->Users->patchEntity($dbUser, $user);
                     if ($this->Users->save($dbUser)) {
-                        \Cake\Core\Configure::load('app_local');
-                        $from = \Cake\Core\Configure::read('Email.default.from');
+                        Configure::load('app_local');
+                        $from = Configure::read('Email.default.from');
                         $mailer = new Mailer('default');
-                        $loginurl = $this->request->scheme() . '://' . $this->request->domain() . $this->request->getAttributes()['webroot'] . 'admin/login';
+                        $loginurl = $this->request->scheme() . '://' . $this->request->domain() .
+                            $this->request->getAttributes()['webroot'] . 'admin/login';
 
                         $subject = __('Password reset');
                         $mailer->viewBuilder()->setTemplate('new_backend_pw')->setLayout('default');
@@ -392,9 +454,9 @@ class UsersController extends AppController
         $letters = 'abcdefghijklmnopqrstuvwxyz';
         $digits = '0123456789';
         $special_chars = '!@#$%_+-=?';
-        $max_similatity_perc = 20;  // The maximum similarity percentage
-        $minLength = 10;  // The password minimum length
-        $maxLength = 15;  // The password maximum length
+        $max_similatity_perc = 20; // The maximum similarity percentage
+        $minLength = 10; // The password minimum length
+        $maxLength = 15; // The password maximum length
 
         $diffStrings = $this->Users->find('all')->select(['name'])->where(['role IN' => self::BACKENDROLES]);
         $diffStrings = array_column($diffStrings->all()->toArray(), 'name');
@@ -413,7 +475,7 @@ class UsersController extends AppController
             $hasDigit = false;
             $hasSpecialChar = false;
 
-            $length = random_int($minLength, $maxLength);  // A random password length
+            $length = random_int($minLength, $maxLength); // A random password length
 
             while ($length > 0) {
                 $length--;
@@ -446,8 +508,11 @@ class UsersController extends AppController
 
     //------------------------------------------------------------------------
 
-    public function deleteUserAndPollEntries($pollid = null, $adminid = null, $userid = null)
-    {
+    public function deleteUserAndPollEntries(
+        ?string $pollid = null,
+        ?string $adminid = null,
+        ?int $userid = null
+    ): object {
         $this->request->allowMethod(['post', 'deleteUserAndPollEntries']);
 
         if (
@@ -462,11 +527,13 @@ class UsersController extends AppController
                 // Entries are deleted by dependency
                 if ($this->Users->delete($this->Users->get($userid))) {
                     $this->Flash->success(__('Entry has been deleted.'));
+
                     return $this->redirect(['controller' => 'Polls', 'action' => 'edit', $pollid, $adminid]);
                 }
             }
         }
         $this->Flash->error(__('Entry has NOT been deleted!'));
+
         return $this->redirect($this->referer());
     }
 }

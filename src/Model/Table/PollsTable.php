@@ -10,18 +10,17 @@
  * @copyright 2019-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 declare(strict_types=1);
 
 namespace App\Model\Table;
 
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
-use Cake\ORM\Table;
-use Cake\Event\EventInterface;
 use ArrayObject;
+use Cake\Datasource\EntityInterface;
+use Cake\Event\EventInterface;
+use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
@@ -29,7 +28,6 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ChoicesTable&\Cake\ORM\Association\HasMany $Choices
  * @property \App\Model\Table\CommentsTable&\Cake\ORM\Association\HasMany $Comments
- *
  * @method \App\Model\Entity\Poll newEmptyEntity()
  * @method \App\Model\Entity\Poll newEntity(array $data, array $options = [])
  * @method \App\Model\Entity\Poll[] newEntities(array $data, array $options = [])
@@ -43,7 +41,6 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Poll[]|\Cake\Datasource\ResultSetInterface saveManyOrFail(iterable $entities, $options = [])
  * @method \App\Model\Entity\Poll[]|\Cake\Datasource\ResultSetInterface|false deleteMany(iterable $entities, $options = [])
  * @method \App\Model\Entity\Poll[]|\Cake\Datasource\ResultSetInterface deleteManyOrFail(iterable $entities, $options = [])
- *
  * @mixin \Cake\ORM\Behavior\TimestampBehavior
  */
 class PollsTable extends Table
@@ -61,9 +58,9 @@ class PollsTable extends Table
             [
                 'events' => [
                     'Model.beforeSave' => [
-                        'modified' => 'always'
-                    ]
-                ]
+                        'modified' => 'always',
+                    ],
+                ],
             ]
         );
 
@@ -75,7 +72,7 @@ class PollsTable extends Table
         ])->setDependent(true);
     }
 
-    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options)
+    public function beforeMarshal(EventInterface $event, ArrayObject $data, ArrayObject $options): void
     {
         // Trim all strings before saving
         foreach ($data as $key => $value) {
@@ -85,14 +82,14 @@ class PollsTable extends Table
         }
     }
 
-    public function beforeSave(EventInterface $event, $entity, $options)
+    public function beforeSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         if ($entity->isNew() && !$entity->id) {
-            $entity->id = hash("crc32", time() . random_bytes(5) . $entity->title);
+            $entity->id = hash('crc32', time() . random_bytes(5) . $entity->title);
             if ($entity->adminid != true) {
-                $entity->adminid = "NA";
+                $entity->adminid = 'NA';
             } else {
-                $entity->adminid = hash("crc32", time() . random_bytes(5) . $entity->title . "admin");
+                $entity->adminid = hash('crc32', time() . random_bytes(5) . $entity->title . 'admin');
             }
         }
     }

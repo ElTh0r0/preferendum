@@ -10,8 +10,10 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
+
+use Cake\Core\Configure;
 ?>
 
 <!-- MINI VIEW TOGGLE -->
@@ -42,6 +44,6 @@ if ($poll->pwprotect) {
 }
 ?>
 
-<?php if (\Cake\Core\Configure::read('preferendum.toggleTheme')) { ?>
+<?php if (Configure::read('preferendum.toggleTheme')) { ?>
     <button type="button" class="themeToggle" data-theme-toggle>&nbsp;</button>
 <?php } ?>

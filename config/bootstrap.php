@@ -35,8 +35,6 @@ require CORE_PATH . 'config' . DS . 'bootstrap.php';
 use Cake\Cache\Cache;
 use Cake\Core\Configure;
 use Cake\Core\Configure\Engine\PhpConfig;
-use Cake\Database\Type\StringType;
-use Cake\Database\TypeFactory;
 use Cake\Datasource\ConnectionManager;
 use Cake\Error\ErrorTrap;
 use Cake\Error\ExceptionTrap;
@@ -46,6 +44,11 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
+
+/**
+ * Load global functions.
+ */
+require CAKE . 'functions.php';
 
 /*
  * See https://github.com/josegonzalez/php-dotenv for API details.
@@ -77,7 +80,6 @@ use Cake\Utility\Security;
  * idea to create multiple configuration files, and separate the configuration
  * that changes from configuration that does not. This makes deployment simpler.
  */
-
 try {
     Configure::config('default', new PhpConfig());
     Configure::load('app', 'default', false);
@@ -100,7 +102,7 @@ if (file_exists(CONFIG . 'app_local.php')) {
  */
 if (Configure::read('debug')) {
     Configure::write('Cache._cake_model_.duration', '+2 minutes');
-    Configure::write('Cache._cake_core_.duration', '+2 minutes');
+    Configure::write('Cache._cake_translations_.duration', '+2 minutes');
     // disable router cache during development
     Configure::write('Cache._cake_routes_.duration', '+2 seconds');
 }
@@ -147,7 +149,7 @@ if (!$fullBaseUrl) {
      * you can enable `$trustProxy` to rely on the `X-Forwarded-Proto`
      * header to determine whether to generate URLs using `https`.
      *
-     * See also https://book.cakephp.org/4/en/controllers/request-response.html#trusting-proxy-headers
+     * See also https://book.cakephp.org/5/en/controllers/request-response.html#trusting-proxy-headers
      */
     $trustProxy = false;
 
@@ -157,7 +159,7 @@ if (!$fullBaseUrl) {
     }
 
     $httpHost = env('HTTP_HOST');
-    if (isset($httpHost)) {
+    if ($httpHost) {
         $fullBaseUrl = 'http' . $s . '://' . $httpHost;
     }
     unset($httpHost, $s);
@@ -194,7 +196,7 @@ ServerRequest::addDetector('tablet', function ($request) {
  * You can enable default locale format parsing by adding calls
  * to `useLocaleParser()`. This enables the automatic conversion of
  * locale specific date formats. For details see
- * @link https://book.cakephp.org/4/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
+ * @link https://book.cakephp.org/5/en/core-libraries/internationalization-and-localization.html#parsing-localized-datetime-data
  */
 // \Cake\Database\TypeFactory::build('time')
 //    ->useLocaleParser();
@@ -213,9 +215,6 @@ ServerRequest::addDetector('tablet', function ($request) {
 // \Cake\Database\TypeFactory::build('timestamptimezone')
 //    ->useLocaleParser();
 
-// There is no time-specific type in Cake
-TypeFactory::map('time', StringType::class);
-
 /*
  * Custom Inflector rules, can be set to correctly pluralize or singularize
  * table, model, controller names or whatever other string is passed to the
@@ -226,7 +225,7 @@ TypeFactory::map('time', StringType::class);
 //Inflector::rules('uninflected', ['dontinflectme']);
 
 // set a custom date and time format
-// see https://book.cakephp.org/4/en/core-libraries/time.html#setting-the-default-locale-and-format-string
+// see https://book.cakephp.org/5/en/core-libraries/time.html#setting-the-default-locale-and-format-string
 // and https://unicode-org.github.io/icu/userguide/format_parse/datetime/#datetime-format-syntax
-//\Cake\I18n\FrozenDate::setToStringFormat('dd.MM.yyyy');
-//\Cake\I18n\FrozenTime::setToStringFormat('dd.MM.yyyy HH:mm');
+//\Cake\I18n\Date::setToStringFormat('dd.MM.yyyy');
+//\Cake\I18n\Time::setToStringFormat('dd.MM.yyyy HH:mm');

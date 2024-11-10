@@ -10,7 +10,7 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.7.1
+ * @version   0.8.0
  */
 
 echo __('Entry in poll "{0}"', h($title)) . "\r\n\r\n";
@@ -21,7 +21,7 @@ foreach ($entries as $entry) {
     $val = __('Maybe');
     if ($entry->value == 0) {
         $val = __('No');
-    } else if ($entry->value == 1) {
+    } elseif ($entry->value == 1) {
         $val = __('Yes');
     }
     echo ' - ' . h($entry->choice->option) . ': ' . $val . "\r\n";
