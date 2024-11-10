@@ -66,7 +66,7 @@ Access `<your installation folder>/Db/update` through your browser (e.g. `yourdo
 You can turn on/off and configure all the available features in `config/preferendum_features.php`. For a full list of the options see the [Wiki](https://github.com/ElTh0r0/preferendum/wiki).
 
 ### Poll administration interface (off by default)
-If you want to use the optional admin interface (to view and delete any polls on your server via a web interface at `yourdomain.com/preferendum/admin`) you have to enable this in `config/preferendum_features.php` ('adminInterface')! See [Admin Interface](https://github.com/ElTh0r0/preferendum/wiki/5-Admin-interface) for more information.
+If you want to use the optional admin interface (to view and delete any polls on your server via a web interface at `yourdomain.com/preferendum/admin`) you have to enable this in `config/preferendum_features.php` ('adminInterface')! See [Admin Interface](https://github.com/ElTh0r0/preferendum/wiki/6-Admin-interface) for more information.
 
 ## Contribution
 This is my first project using [CakePHP](https://cakephp.org), so there might exist many code sections, which could be implemented much more elegant with the build-in CakePHP features. I'm open for any optimization, just send a (well documented) **pull request**! Same for suggestions for additional features or if you are running into problems setting up PREFERendum, please write an [issue](https://github.com/ElTh0r0/preferendum/issues).
