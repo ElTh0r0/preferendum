@@ -121,11 +121,9 @@ class DbController extends AppController
 
         if (extension_loaded('openssl')) {
             echo '<li class="success">Your version of PHP has the openssl extension loaded.</li>';
-        } elseif (extension_loaded('mcrypt')) {
-            echo '<li class="success">Your version of PHP has the mcrypt extension loaded.</li>';
         } else {
             echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the 
-            openssl or mcrypt extension loaded.</li>';
+            openssl extension loaded.</li>';
             die;
         }
 

@@ -91,7 +91,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // See https://github.com/CakeDC/cakephp-cached-routing
             ->add(new RoutingMiddleware($this))
 
-            // add Authentication after RoutingMiddleware
+            // Add Authentication after RoutingMiddleware
             ->add(new AuthenticationMiddleware($this))
 
             // Parse various types of encoded request bodies so that they are
