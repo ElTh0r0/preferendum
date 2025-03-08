@@ -336,9 +336,11 @@ class PollsController extends AppController
             $wasPwProtected = $poll->pwprotect;
             $dbadminid = $poll->adminid;
             if (strcmp($dbadminid, $adminid) == 0) {
-                $pollexp = $poll->expiry; // Store temporary to prevent manipulation
+                $pollexp = $poll->expiry; // Store temporary to prevent manipulation, if demo mode is enabled
                 $this->Polls->patchEntity($poll, $this->request->getData());
-                $poll->expiry = $pollexp;
+                if (Configure::read('preferendum.demoMode')) {
+                    $poll->expiry = $pollexp;
+                }
 
                 $pollpw = '';
                 if ($poll->pwprotect && isset($this->request->getData()['password'])) {
