@@ -26,8 +26,8 @@
 
     if (strcmp($currentUserRole, $allroles[0]) == 0) {
         echo $this->element('user/list');
-        echo '<br />';
-        echo '<hr />';
+        echo '<br>';
+        echo '<hr>';
 
         echo $this->Form->postLink(
             '&larr; ' . __('Back to user creation'),

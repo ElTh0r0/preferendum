@@ -34,21 +34,21 @@ use Cake\Core\Configure;
             <?php if (stripos($request, 'polls/edit') > 0) { ?>
                 <div class="poll-url-container">
                     <span class="success"><em><?php echo __('Public link') . ':' ?></em></span>
-                    <input type="text" id="public-url-field" title="<?php echo __('Give this public link to the participants of your poll!') ?>" readonly />
+                    <input type="text" id="public-url-field" title="<?php echo __('Give this public link to the participants of your poll!') ?>" readonly>
                     <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
                     <span class="pale">&nbsp;&larr; <?php echo __('Give this public link to the participants of your poll!') ?></span>
                 </div>
             <?php } else { ?>
                 <div class="poll-url-container">
                     <span class="success"><em><?php echo __('Public link') . ':' ?></em></span>
-                    <input type="text" id="public-url-field" readonly />
+                    <input type="text" id="public-url-field" readonly>
                     <button type="button" class="copy-trigger" data-clipboard-target="#public-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
                 </div>
             <?php } ?>
             <?php if (strcmp($poll->adminid, 'NA') != 0 && strcmp($poll->adminid, $adminid) == 0) { ?>
                 <div class="poll-url-container">
                     <span class="fail"><em><?php echo __('Admin link') . ':' ?></em></span>
-                    <input type="text" id="admin-url-field" title="<?php echo __('Save this admin link, you need it to manage your poll!') ?>" readonly />
+                    <input type="text" id="admin-url-field" title="<?php echo __('Save this admin link, you need it to manage your poll!') ?>" readonly>
                     <button type="button" class="copy-trigger" data-clipboard-target="#admin-url-field" title="<?php echo __('Copy link to clipboard!') ?>"></button>
                     <span class="pale">&nbsp;&larr; <?php echo __('Save this admin link, you need it to manage your poll!') ?></span>
                 </div>

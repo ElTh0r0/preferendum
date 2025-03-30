@@ -198,7 +198,7 @@ class DbController extends AppController
             if (method_exists($connectionError, 'getAttributes')) {
                 $attributes = $connectionError->getAttributes();
                 if (isset($errorMsg['message'])) {
-                    $errorMsg .= '<br />' . $attributes['message'];
+                    $errorMsg .= '<br>' . $attributes['message'];
                 }
             }
         }
@@ -207,7 +207,7 @@ class DbController extends AppController
             echo '<li class="success">Database connection successful</li>';
         } else {
             echo '<li class="fail"><strong>Problem:</strong> NOT able to connect to the 
-            database.<br />' . $errorMsg . '</li>';
+            database.<br>' . $errorMsg . '</li>';
             die;
         }
         echo '</ul>';

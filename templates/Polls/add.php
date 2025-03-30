@@ -55,7 +55,7 @@ $this->Html->scriptEnd();
 
     $deleteInactive = Configure::read('preferendum.deleteInactivePollsAfter');
     if ($deleteInactive > 0) {
-        echo '<p><br /><span class="pale">';
+        echo '<p><br><span class="pale">';
         echo __('Attention! Inactive polls will be deleted automatically after {0} days!', $deleteInactive);
         echo '</span></p>';
     }

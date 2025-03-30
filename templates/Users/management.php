@@ -25,8 +25,8 @@
     echo $this->Flash->render();
 
     echo $this->element('user/list');
-    echo '<br />';
-    echo '<hr />';
+    echo '<br>';
+    echo '<hr>';
     echo $this->element('user/create-form');
     ?>
 </div>
