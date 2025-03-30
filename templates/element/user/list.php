@@ -37,21 +37,26 @@ use Cake\Core\Configure;
         if (Configure::read('preferendum.sendBackendUserPwReset')) {
             echo '<td>' . $backuser['info'] . '</td>';
         }
-        echo '<td><span style="font-size: 0.8em;">';
+        echo '<td>';
         echo $this->Form->postLink(
             __('Edit'),
-            ['action' => 'edit', $backuser['id']]
+            ['action' => 'edit', $backuser['id']],
+            ['style' => 'font-size: 0.8em;']
         );
-        echo '</span></td>';
+        echo '</td>';
 
         if ($cntAdmins > 1 || strcmp($backuser['role'], $allroles[0]) != 0) {
-            echo '<td><span style="font-size: 0.8em;">';
+            echo '<td>';
             echo $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'deleteBackendUser', $backuser['id']],
-                ['escape' => false, 'confirm' => __('Are you sure to delete user {0}?', h($backuser['name']))]
+                [
+                    'escape' => false,
+                    'confirm' => __('Are you sure to delete user {0}?', h($backuser['name'])),
+                    'style' => 'font-size: 0.8em;'
+                ]
             );
-            echo '</span></td>';
+            echo '</td>';
         } else {
             echo '<td></td>';
         }

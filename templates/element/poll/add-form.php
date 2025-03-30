@@ -76,7 +76,6 @@ if ($prefconf['opt_MaxEntriesPerOption']) {
         'max_entries',
         [
             'name' => 'max_entries[]',
-            'maxlength' => '3',
             'class' => 'maxEntryInput',
             'id' => 'max-entriesinput',
             'label' => false,

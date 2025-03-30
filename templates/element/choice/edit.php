@@ -158,7 +158,6 @@ if ($numChoices > 1) {
                     echo $this->Form->control(
                         'max_entries',
                         [
-                            'maxlength' => '3',
                             'class' => 'maxEntryInput',
                             'label' => false,
                             'style' => 'margin-top: 3px; height: 25px; width: 50px;',
