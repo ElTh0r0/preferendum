@@ -23,52 +23,45 @@ use Cake\Core\Configure;
     if (strcmp($base, 'admin') == 0) {
         if (strcmp($currentUserRole, $adminRole) != 0) {
             echo $this->Html->link(
-                $this->Form->button(
-                    __('Update user'),
-                    [
-                        'type' => 'button',
-                        'id' => 'ctrl-usermanagement',
-                    ]
-                ),
+                __('Update user'),
                 ['controller' => 'Users', 'action' => 'edit'],
-                ['escape' => false]
+                [
+                    'class' => 'button',
+                    'id' => 'ctrl-usermanagement',
+                    'escape' => false,
+                ]
             );
         } else {
             echo $this->Html->link(
-                $this->Form->button(
-                    __('User management'),
-                    [
-                        'type' => 'button',
-                        'id' => 'ctrl-usermanagement',
-                    ]
-                ),
+
+                __('User management'),
                 ['controller' => 'Users', 'action' => 'management'],
-                ['escape' => false]
+                [
+                    'class' => 'button',
+                    'id' => 'ctrl-usermanagement',
+                    'escape' => false,
+                ]
             );
         }
     } else {
         echo $this->Html->link(
-            $this->Form->button(
-                __('Poll administration'),
-                [
-                    'type' => 'button',
-                    'id' => 'ctrl-polls',
-                ]
-            ),
+            __('Poll administration'),
             ['controller' => 'Admin', 'action' => 'index'],
-            ['escape' => false]
+            [
+                'class' => 'button',
+                'id' => 'ctrl-polls',
+                'escape' => false,
+            ]
         );
     }
     echo $this->Form->postLink(
-        $this->Form->button(
-            __('Logout'),
-            [
-                'type' => 'button',
-                'id' => 'ctrl-logout',
-            ]
-        ),
+        __('Logout'),
         ['controller' => 'Admin', 'action' => 'logout'],
-        ['escape' => false]
+        [
+            'class' => 'button',
+            'id' => 'ctrl-logout',
+            'escape' => false,
+        ]
     ); ?>
 
     <?php if (Configure::read('preferendum.toggleTheme')) { ?>

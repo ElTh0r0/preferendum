@@ -134,10 +134,102 @@ em {
     opacity: 0.6;
 }
 
-/* DATEPICKER COLORS */
-
 .datepicker-container * {
     font-size: 16px;
+}
+
+/* ==== CONTROL-ELEMENTS ==== */
+
+#control-elements {
+    margin-bottom: 0.5rem;
+    text-align: right;
+    border-top: 1.2rem solid var(--color-background-comments);
+}
+
+#control-elements > div {
+    display: inline-block;
+    padding: 0 1.2rem 1.2rem 1.2rem;
+    border-bottom-left-radius: var(--border-radius-big);
+    background-color: var(--color-background-comments);
+}
+
+#control-elements a.button {
+    background-color: var(--color-background-secondary);
+    background-repeat: no-repeat;
+    background-position: 10px 45%;
+    border: none;
+    border-radius: var(--border-radius-small);
+    color: var(--color-font-secondary);
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 0 0.5rem;
+    padding: 8px 15px 8px 36px;  
+}
+
+#control-elements a.button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+/* POLL EDIT control-elements */
+#control-elements a#ctrl-edit-poll {
+    background-image: url("../img/icon-pen.png");
+}
+
+#control-elements a#ctrl-view-poll {
+    background-image: url("../img/icon-eye.png");
+}
+
+#control-elements a#ctrl-lock-poll {
+    background-image: url("../img/icon-lock.png");
+}
+
+#control-elements a#ctrl-export-poll {
+    background-image: url("../img/icon-download.png");
+}
+
+#control-elements a#ctrl-delete-poll {
+    background-image: url("../img/icon-delete.png");
+}
+
+/* ADMIN control-elements */
+#control-elements a#ctrl-usermanagement {
+    background-image: url("../img/icon-user.png");
+}
+
+#control-elements a#ctrl-logout {
+    background-image: url("../img/icon-logout.png");
+}
+
+#control-elements a#ctrl-polls {
+    background-image: url("../img/icon-chart.png");
+}
+
+/* VIEW POLL Light/dark toggle and mini-view buttons*/
+#control-elements button {
+    margin: 0 0.5rem;
+    cursor: pointer;
+    background-color: var(--color-background-secondary);
+    background-repeat: no-repeat;
+    background-position: 10px 45%;
+    padding-left: 36px;
+}
+
+#control-elements button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+#control-elements button#ctrl-mini-view {
+    background-image: url("../img/icon-eye.png");
+}
+
+#control-elements button.themeToggle {
+    background-image: url(../img/icon-moon.png);
+    background-position: center center !important;
+    padding: 8px 12px 8px 12px !important;
+}
+
+#control-elements button.themeToggle--light {
+    background-image: url(../img/icon-sun.png);
 }
 
 /* ==== TO BE CATEGORIZED AND SORTED ==== */
@@ -290,62 +382,6 @@ p.details {
 
 #footer img {
     vertical-align: middle;
-}
-
-#control-elements {
-    margin-bottom: 0.5rem;
-    text-align: right;
-    border-top: 1.2rem solid var(--color-background-comments);
-}
-
-#control-elements > div {
-    display: inline-block;
-    padding: 0 1.2rem 1.2rem 1.2rem;
-    border-bottom-left-radius: var(--border-radius-big);
-    background-color: var(--color-background-comments);
-}
-
-#control-elements button {
-    margin: 0 0.5rem;
-    cursor: pointer;
-    background-color: var(--color-background-secondary);
-    background-repeat: no-repeat;
-    background-position: 10px 45%;
-    padding-left: 36px;
-}
-
-#control-elements button:hover {
-    background-color: var(--color-background-secondary-hover);
-}
-
-#control-elements button#ctrl-mini-view {
-    background-image: url("../img/icon-eye.png");
-}
-
-#control-elements button#ctrl-edit-poll {
-    background-image: url("../img/icon-pen.png");
-}
-
-#control-elements button#ctrl-lock-poll {
-    background-image: url("../img/icon-lock.png");
-}
-
-#control-elements button#ctrl-export-poll {
-    background-image: url("../img/icon-download.png");
-}
-
-#control-elements button#ctrl-delete-poll {
-    background-image: url("../img/icon-delete.png");
-}
-
-#control-elements button.themeToggle {
-    background-image: url(../img/icon-moon.png);
-    background-position: center center !important;
-    padding: 8px 12px 8px 12px !important;
-}
-
-#control-elements button.themeToggle--light {
-    background-image: url(../img/icon-sun.png);
 }
 
 #poll-container {
@@ -997,18 +1033,6 @@ button[type="button"]:disabled {
 }
 #admin-page td {
     padding: 4px 4px;
-}
-
-#control-elements button#ctrl-usermanagement {
-    background-image: url("../img/icon-user.png");
-}
-
-#control-elements button#ctrl-logout {
-    background-image: url("../img/icon-logout.png");
-}
-
-#control-elements button#ctrl-polls {
-    background-image: url("../img/icon-chart.png");
 }
 
 button.admin-new-poll {

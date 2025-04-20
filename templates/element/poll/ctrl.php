@@ -24,22 +24,24 @@ use Cake\Core\Configure;
 <?php
 if (strcmp($poll->adminid, $adminid) == 0) {
     echo $this->Html->link(
-        $this->Form->button(__('Edit'), ['type' => 'button', 'id' => 'ctrl-edit-poll']),
+        __('Edit'),
         ['action' => 'edit', $poll->id, $adminid],
-        ['escape' => false]
+        [
+            'class' => 'button',
+            'id' => 'ctrl-edit-poll',
+            'escape' => false
+        ]
     );
 }
 if ($poll->pwprotect) {
     echo $this->Form->postLink(
-        $this->Form->button(
-            __('Logout'),
-            [
-                'type' => 'button',
-                'id' => 'ctrl-logout',
-            ]
-        ),
+        __('Logout'),
         ['controller' => 'Admin', 'action' => 'logout', $poll->id, $adminid],
-        ['escape' => false]
+        [
+            'class' => 'button',
+            'id' => 'ctrl-logout',
+            'escape' => false,
+        ]
     );
 }
 ?>

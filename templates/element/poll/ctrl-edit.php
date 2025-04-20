@@ -19,69 +19,60 @@ use Cake\Core\Configure;
 <?php
 // Go back to poll view
 echo $this->Html->link(
-    $this->Form->button(
-        __('View Poll'),
-        [
-            'type' => 'button',
-            'id' => 'ctrl-mini-view',
-        ]
-    ),
+    __('View Poll'),
     ['action' => 'view', $poll->id, $adminid],
-    ['escape' => false]
+    [
+        'class' => 'button',
+        'id' => 'ctrl-view-poll',
+        'escape' => false,
+    ]
 );
 
 // Un-/lock poll button
 echo $this->Form->postLink(
-    $this->Form->button(
-        __('Un-/Lock'),
-        [
-            'type' => 'button',
-            'id' => 'ctrl-lock-poll',
-        ]
-    ),
+    __('Un-/Lock'),
     ['action' => 'togglelock', $poll->id, $adminid],
-    ['escape' => false]
+    [
+        'class' => 'button',
+        'id' => 'ctrl-lock-poll',
+        'escape' => false,
+    ]
 );
 
 // Export CSV button
 if (Configure::read('preferendum.exportCsv')) {
     echo $this->Form->postLink(
-        $this->Form->button(
-            __('CSV export'),
-            [
-                'type' => 'button',
-                'id' => 'ctrl-export-poll',
-            ]
-        ),
+        __('CSV export'),
         ['action' => 'exportcsv', $poll->id, $adminid],
-        ['escape' => false]
+        [
+            'class' => 'button',
+            'id' => 'ctrl-export-poll',
+            'escape' => false,
+        ]
     );
 }
 
 // Delete poll button
 echo $this->Form->postLink(
-    $this->Form->button(
-        __('Delete'),
-        [
-            'type' => 'button',
-            'id' => 'ctrl-delete-poll',
-        ]
-    ),
+    __('Delete'),
     ['action' => 'delete', $poll->id, $adminid],
-    ['escape' => false, 'confirm' => __('Are you sure to delete this poll?')]
+    [
+        'class' => 'button',
+        'id' => 'ctrl-delete-poll',
+        'confirm' => __('Are you sure to delete this poll?'),
+        'escape' => false,
+    ]
 );
 
 if ($poll->pwprotect) {
     echo $this->Form->postLink(
-        $this->Form->button(
-            __('Logout'),
-            [
-                'type' => 'button',
-                'id' => 'ctrl-logout',
-            ]
-        ),
+        __('Logout'),
         ['controller' => 'Admin', 'action' => 'logout', $poll->id, $adminid],
-        ['escape' => false]
+        [
+            'class' => 'button',
+            'id' => 'ctrl-logout',
+            'escape' => false,
+        ]
     );
 }
 ?>
