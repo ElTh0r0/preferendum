@@ -122,6 +122,41 @@ a:focus {
     outline: none;
 }
 
+/* Links styled as button */
+a.button {
+    background-color: var(--color-background-secondary);
+    background-repeat: no-repeat;
+    background-position: 10px 45%;
+    border: none;
+    border-radius: var(--border-radius-small);
+    color: var(--color-font-secondary);
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 0 0.5rem;
+    padding: 8px 15px 8px 36px;  
+}
+
+a.button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+/* Links styled as icon-buttons */
+a.icon-button {
+    background-color: var(--color-background-secondary);
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+
+a.icon-button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
 button::-moz-focus-inner {
     border: 0;
 }
@@ -151,23 +186,6 @@ em {
     padding: 0 1.2rem 1.2rem 1.2rem;
     border-bottom-left-radius: var(--border-radius-big);
     background-color: var(--color-background-comments);
-}
-
-#control-elements a.button {
-    background-color: var(--color-background-secondary);
-    background-repeat: no-repeat;
-    background-position: 10px 45%;
-    border: none;
-    border-radius: var(--border-radius-small);
-    color: var(--color-font-secondary);
-    cursor: pointer;
-    font-size: 0.8rem;
-    margin: 0 0.5rem;
-    padding: 8px 15px 8px 36px;  
-}
-
-#control-elements a.button:hover {
-    background-color: var(--color-background-secondary-hover);
 }
 
 /* POLL EDIT control-elements */
@@ -1026,6 +1044,8 @@ button[type="button"]:disabled {
 
 #search_clear {
     float:right;
+    margin: 0;
+    padding: 10px 15px 10px 15px;
 }
 
 #admin-page table {
@@ -1035,89 +1055,49 @@ button[type="button"]:disabled {
     padding: 4px 4px;
 }
 
-button.admin-new-poll {
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-plus.png)
-        no-repeat;
-    background-position: 10px 45%;
+a#admin-new-poll {
+    background-image: url(../img/icon-plus.png);
     float: right;
-    padding-left: 36px;
-    margin-left: 10px;
+    margin-right: 0px;
 }
 
-button.admin-delinactive-polls {
-    cursor: pointer;
-    background: var(--color-feedback-negative) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: 10px 45%;
+a#admin-delinactive-polls {
+    background-color: var(--color-feedback-negative);
+    background-image: url(../img/icon-delete.png);
     float: right;
-    padding-left: 36px;
-    margin-left: 10px;
-}
-button.admin-delinactive-polls[type="button"]:hover {
-    background-color: var(--color-feedback-negative);
+    margin-right: 0px;
 }
 
-button.admin-delexpired-polls {
-    cursor: pointer;
-    background: var(--color-feedback-negative) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: 10px 45%;
+a#admin-delexpired-polls {
+    background-color: var(--color-feedback-negative);
+    background-image: url(../img/icon-delete.png);
     float: right;
-    padding-left: 36px;
-    margin-left: 10px;
+    margin-right: 0px;
 }
-button.admin-delexpired-polls[type="button"]:hover {
+
+a.admin-view-userinfo {
+    background-image: url(../img/icon-user-info2.png);
+}
+
+a.admin-view-poll {
+    background-image: url(../img/icon-eye.png);
+}
+
+a.admin-edit-poll {
+    background-image: url(../img/icon-pen.png);
+}
+
+a.admin-export-poll {
+    background-image: url(../img/icon-download.png);
+}
+
+a.admin-delete-poll {
     background-color: var(--color-feedback-negative);
+    background-image: url(../img/icon-delete.png);
 }
 
-button.admin-view-poll {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-eye.png)
-        no-repeat;
-    background-position: center center;
-}
-
-button.admin-edit-poll {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-pen.png)
-        no-repeat;
-    background-position: center center;
-}
-
-button.admin-export-poll {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-download.png)
-        no-repeat;
-    background-position: center center;
-}
-
-button.admin-delete-poll {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-feedback-negative) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: center center;
-}
-
-button.admin-delete-poll[type="button"]:hover {
+a.admin-delete-poll:hover {
     background-color: var(--color-feedback-negative);
-}
-
-button.admin-view-userinfo {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-user-info2.png)
-        no-repeat;
-    background-position: center center;
 }
 
 /* ==== User admin page ==== */

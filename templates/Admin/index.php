@@ -76,34 +76,42 @@ use Cake\Core\Configure;
 
                 if (($rmExpiredAfter > 0) && (Configure::read('preferendum.opt_PollExpirationAfter') > 0)) {
                     echo $this->Html->link(
-                        $this->Form->button(__('Expired'), ['type' => 'button', 'class' => 'admin-delexpired-polls']),
+                        __('Expired'),
                         ['controller' => 'Polls', 'action' => 'cleanupmanually', true],
                         [
-                            'escape' => false,
+                            'class' => 'button',
+                            'id' => 'admin-delexpired-polls',
                             'confirm' => __(
                                 'Are you sure to delete expired polls (expired since >{0} days)?',
                                 $rmExpiredAfter
                             ),
-                        ]
+                            'escape' => false,
+                        ],
                     );
                 }
                 if ($rmInactiveAfter > 0) {
                     echo $this->Html->link(
-                        $this->Form->button(__('Inactive'), ['type' => 'button', 'class' => 'admin-delinactive-polls']),
+                        __('Inactive'),
                         ['controller' => 'Polls', 'action' => 'cleanupmanually', false],
                         [
-                            'escape' => false,
+                            'class' => 'button',
+                            'id' => 'admin-delinactive-polls',
                             'confirm' => __(
                                 'Are you sure to delete inactive poll (inactive since >{0} days)?',
                                 $rmInactiveAfter
                             ),
+                            'escape' => false,
                         ]
                     );
                 }
                 echo $this->Html->link(
-                    $this->Form->button(__('New poll'), ['type' => 'button', 'class' => 'admin-new-poll']),
+                    __('New poll'),
                     ['controller' => 'Polls', 'action' => 'add'],
-                    ['escape' => false]
+                    [
+                        'class' => 'button',
+                        'id' => 'admin-new-poll',
+                        'escape' => false,
+                    ]
                 );
             }
             ?>
@@ -120,9 +128,13 @@ use Cake\Core\Configure;
                 'placeholder' => __('Search poll or user'),
             ]);
             echo $this->Html->link(
-                $this->Form->button(__('Clear filter'), ['type' => 'button', 'id' => 'search_clear']),
+                __('Clear filter'),
                 ['controller' => 'admin', 'action' => 'index'],
-                ['escape' => false]
+                [
+                    'class' => 'button',
+                    'id' => 'search_clear',
+                    'escape' => false,
+                ]
             );
             echo $this->Form->submit(__('Search'), ['id' => 'search_submit']);
             echo $this->Form->end();
@@ -282,9 +294,13 @@ use Cake\Core\Configure;
                         echo '<td>';
                         if ($poll->userinfo) {
                             echo $this->Html->link(
-                                $this->Form->button('', ['type' => 'button', 'class' => 'admin-view-userinfo']),
+                                '&nbsp;',
                                 ['action' => 'userinfo', $poll->id],
-                                ['target' => '_blank', 'escape' => false]
+                                [
+                                    'class' => 'icon-button admin-view-userinfo',
+                                    'target' => '_blank',
+                                    'escape' => false,
+                                ]
                             );
                         }
                         echo '</td>';
@@ -294,9 +310,13 @@ use Cake\Core\Configure;
                         <?php
                         // View button
                         echo $this->Html->link(
-                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-view-poll']),
+                            '&nbsp;',
                             ['controller' => 'Polls', 'action' => 'view', $poll->id],
-                            ['target' => '_blank', 'escape' => false]
+                            [
+                                'class' => 'icon-button admin-view-poll',
+                                'target' => '_blank',
+                                'escape' => false,
+                            ]
                         );
                         ?>
                     </td>
@@ -308,9 +328,13 @@ use Cake\Core\Configure;
                     ) {
                         echo '<td>';
                         echo $this->Html->link(
-                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-edit-poll']),
+                            '&nbsp;',
                             ['controller' => 'Polls', 'action' => 'edit', $poll->id, $poll->adminid],
-                            ['target' => '_blank', 'escape' => false]
+                            [
+                                'class' => 'icon-button admin-edit-poll',
+                                'target' => '_blank',
+                                'escape' => false,
+                            ]
                         );
                         echo '</td>';
                     } ?>
@@ -323,9 +347,12 @@ use Cake\Core\Configure;
                     ) {
                         echo '<td>';
                         echo $this->Form->postLink(
-                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-export-poll']),
+                            '&nbsp;',
                             ['controller' => 'Polls', 'action' => 'exportcsv', $poll->id, $poll->adminid],
-                            ['escape' => false]
+                            [
+                                'class' => 'icon-button admin-export-poll',
+                                'escape' => false,
+                            ]
                         );
                         echo '</td>';
                     } ?>
@@ -337,9 +364,13 @@ use Cake\Core\Configure;
                     ) {
                         echo '<td>';
                         echo $this->Form->postLink(
-                            $this->Form->button('', ['type' => 'button', 'class' => 'admin-delete-poll']),
+                            '&nbsp;',
                             ['controller' => 'Polls', 'action' => 'delete', $poll->id, $poll->adminid],
-                            ['escape' => false, 'confirm' => __('Are you sure to delete poll {0}?', h($poll->title))]
+                            [
+                                'class' => 'icon-button admin-delete-poll',
+                                'confirm' => __('Are you sure to delete poll {0}?', h($poll->title)),
+                                'escape' => false,
+                            ]
                         );
                         echo '</td>';
                     } ?>
