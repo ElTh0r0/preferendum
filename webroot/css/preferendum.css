@@ -488,14 +488,10 @@ td.schedule-header > div {
     margin: 5px 0;
 }
 
-td.schedule-header .date-delete {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: center center;
+td.schedule-header a.date-delete {
+    background-image: url(../img/icon-delete.png);
 }
+
 td.schedule-header .date-edit {
     width: 24px;
     height: 24px;
@@ -609,26 +605,16 @@ table.schedule button.copy-fail:hover {
     background-color: var(--color-feedback-negative);
 }
 
-button.entry-edit {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-pen.png)
-        no-repeat;
-    background-position: center center;
-    border-top-right-radius: var(--border-radius-big);
-    border-bottom-right-radius: var(--border-radius-big);
+a.entry-edit {
+    background-image: url(../img/icon-pen.png);
+    float: right;
+    margin-left: 5px;
 }
 
-button.schedule-delete {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: center center;
-    border-top-right-radius: var(--border-radius-big);
-    border-bottom-right-radius: var(--border-radius-big);
+a.schedule-delete {
+    background-image: url(../img/icon-delete.png);
+    float: right;
+    margin-left: 5px;
 }
 
 table.schedule.mini td.schedule-delete {
@@ -858,28 +844,29 @@ input#choice[type="text"] {
     border-bottom: dotted 1px #ccc;
 }
 
+.comment-head {
+    display: block;
+    height: 24px;
+}
+
 .comment-name {
     font-weight: bold;
+    float: left;
 }
 
 .comment-date {
-    float: right;
     color: #666;
+    float: right;
 }
 
-.comment-delete {
-    background: url(../img/icon-delete.png) no-repeat;
-    background-position: center center;
-    background-origin: content-box;
-    cursor: pointer;
-    margin-top: 0.2em;
-    margin-bottom: -1em;
-    height: 24px;
-    width: 24px;
+a.comment-delete {
+    background-image: url(../img/icon-delete.png);
+    float: right;
+    margin-left: 5px;
 }
 
 .comment-text {
-    margin-top: 8px;
+    margin-top: 2px;
     line-height: 110%;
 }
 

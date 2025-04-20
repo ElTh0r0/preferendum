@@ -61,6 +61,7 @@ echo '<ul>';
 // --------------------------------------------------------------
 // Define max. number of entries per poll
 if ($prefconf['opt_MaxEntriesPerOption']) {
+    echo '<li>';
     echo $this->Form->checkbox(
         'limitentry',
         [
@@ -69,6 +70,7 @@ if ($prefconf['opt_MaxEntriesPerOption']) {
         ]
     );
     echo '<span style="font-size: 90%;">' . __('Define max. number of entries/option (0 = unrestricted)') . '</span>';
+    echo '<li>';
 }
 // --------------------------------------------------------------
 // Hide poll votes

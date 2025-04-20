@@ -117,15 +117,13 @@ if ($numChoices > 1) {
                 $choice->id . ', \'' . h($choice->option) . '\', ' . $choice->max_entries . ')"></button>';
             if ($numChoices > 1) {
                 echo $this->Form->postLink(
-                    $this->Form->button(
-                        '',
-                        [
-                            'type' => 'button',
-                            'class' => 'date-delete',
-                        ]
-                    ),
+                    '',
                     ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->id],
-                    ['escape' => false, 'confirm' => __('Are you sure to delete option {0}?', h($choice->option))]
+                    [
+                        'class' => 'icon-button date-delete',
+                        'confirm' => __('Are you sure to delete option {0}?', h($choice->option)),
+                        'escape' => false,
+                    ]
                 );
             }
             ?>
