@@ -37,4 +37,5 @@
             </div>
         </td>
     <?php endforeach; ?>
+    <td class="schedule-blank"></td>
 </tr>

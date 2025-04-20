@@ -53,7 +53,7 @@ $this->Html->scriptEnd();
         } ?>
 
         <!-- SPACER ROW -->
-        <?php echo '<tr class="table-spacer-row"><td colspan="' . (count($pollchoices) + 1) . '"></td></tr>'; ?>
+        <?php echo '<tr class="table-spacer-row"><td colspan="' . (count($pollchoices) + 2) . '"></td></tr>'; ?>
 
         <!-- NEW ENTRY FORM ROW -->
         <?php if ($poll->locked == 0) {
@@ -66,7 +66,7 @@ $this->Html->scriptEnd();
             echo '</tr>';
 
             echo '<tr class="table-spacer-row table-spacer-row-big">
-            <td colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
+            <td colspan="' . (count($pollchoices) + 2) . '"></td></tr>';
         } ?>
 
         <!-- RESULTS -->

@@ -77,4 +77,5 @@
             </div>
         </td>
     <?php } ?>
+    <td class="schedule-blank"></td>
 </tr>

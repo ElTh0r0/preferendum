@@ -88,7 +88,7 @@ if ($numChoices > 1) {
         }
         echo '</td>';
     }
-    echo '<td></td>';
+    echo '<td class="schedule-blank"></td>';
     echo '</tr>';
 } ?>
 <!-- DATES -->

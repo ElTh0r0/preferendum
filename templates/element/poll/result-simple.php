@@ -32,4 +32,5 @@
         echo '</td>';
     }
     ?>
+    <td class="schedule-blank"></td>
 </tr>

@@ -78,7 +78,6 @@ foreach ($pollentries as $name => $entry) {
         ['escape' => false, 'confirm' => __('Are you sure to delete entry by {0}?', h($name))]
     );
     echo '</td>';
-
     echo '</tr>';
 }
 
@@ -86,7 +85,5 @@ if (in_array($userpw, $usermap_pw)) {
     echo '<tr class="schedule-new valign-middle">';
     echo $this->element('entry/edit');
     echo '</tr>';
-
-    echo '<tr class="table-spacer-row table-spacer-row-big"><td></td></tr>';
 }
 ?>

@@ -133,6 +133,6 @@ if ($poll->userinfo == 1) {
             'default' => $editinfo,
         ]
     );
-    echo '</td></tr>';
+    echo '</td><td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
 }
 echo $this->Form->end();

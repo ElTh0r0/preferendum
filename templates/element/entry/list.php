@@ -44,6 +44,7 @@ foreach ($pollentries as $name => $entry) {
         echo '<td class="schedule-entry schedule-entry-' . $value . '"></td>';
     }
 
+    echo '<td class="schedule-blank"></td>';
     echo '</tr>';
 }
 ?>
