@@ -64,7 +64,7 @@ class ChoicesController extends AppController
                                 'option' => trim($choicestring),
                                 'max_entries' => $choicemax,
                                 'sort' => $nextsort,
-                            ]
+                            ],
                         );
 
                         if ($this->Choices->save($dbchoice)) {
@@ -160,7 +160,7 @@ class ChoicesController extends AppController
     {
         $query = $this->Choices->find(
             'all',
-            conditions: ['poll_id' => $pollid, 'option' => $newchoice]
+            conditions: ['poll_id' => $pollid, 'option' => $newchoice],
         );
 
         return $query->all()->isEmpty(); // Check that choice with same name doesn't exist
@@ -172,7 +172,7 @@ class ChoicesController extends AppController
     {
         $query = $this->Choices->find(
             'all',
-            conditions: ['id' => $choiceid, 'poll_id' => $pollid]
+            conditions: ['id' => $choiceid, 'poll_id' => $pollid],
         );
 
         return !$query->all()->isEmpty();

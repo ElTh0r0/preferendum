@@ -29,8 +29,8 @@ if (strcmp($poll->adminid, $adminid) == 0) {
         [
             'class' => 'button',
             'id' => 'ctrl-edit-poll',
-            'escape' => false
-        ]
+            'escape' => false,
+        ],
     );
 }
 if ($poll->pwprotect) {
@@ -41,7 +41,7 @@ if ($poll->pwprotect) {
             'class' => 'button',
             'id' => 'ctrl-logout',
             'escape' => false,
-        ]
+        ],
     );
 }
 ?>

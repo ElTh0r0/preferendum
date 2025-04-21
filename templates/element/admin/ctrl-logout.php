@@ -29,18 +29,17 @@ use Cake\Core\Configure;
                     'class' => 'button',
                     'id' => 'ctrl-usermanagement',
                     'escape' => false,
-                ]
+                ],
             );
         } else {
             echo $this->Html->link(
-
                 __('User management'),
                 ['controller' => 'Users', 'action' => 'management'],
                 [
                     'class' => 'button',
                     'id' => 'ctrl-usermanagement',
                     'escape' => false,
-                ]
+                ],
             );
         }
     } else {
@@ -51,7 +50,7 @@ use Cake\Core\Configure;
                 'class' => 'button',
                 'id' => 'ctrl-polls',
                 'escape' => false,
-            ]
+            ],
         );
     }
     echo $this->Form->postLink(
@@ -61,7 +60,7 @@ use Cake\Core\Configure;
             'class' => 'button',
             'id' => 'ctrl-logout',
             'escape' => false,
-        ]
+        ],
     ); ?>
 
     <?php if (Configure::read('preferendum.toggleTheme')) { ?>

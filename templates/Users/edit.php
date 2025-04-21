@@ -32,7 +32,7 @@
         echo $this->Html->link(
             '&larr; ' . __('Back to user creation'),
             ['action' => 'management'],
-            ['escape' => false]
+            ['escape' => false],
         );
     }
 

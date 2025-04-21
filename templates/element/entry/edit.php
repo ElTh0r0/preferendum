@@ -22,13 +22,6 @@ if (in_array($userpw, $usermap_pw)) {
     $editinfo = $usermap_info[$edituser];
 }
 
-if (
-    !isset($adminid) ||
-    (!strcmp($poll->adminid, $adminid) == 0)
-) {
-    $adminid = null;
-}
-
 echo '<tr class="schedule-new valign-middle">';
 
 if ($poll->anonymous) {
@@ -46,7 +39,7 @@ if ($poll->anonymous) {
             'placeholder' => __('Your name?'),
             'default' => $edituser,
             'autocomplete' => 'off',
-        ]
+        ],
     );
     echo '</td>';
 }
@@ -101,7 +94,7 @@ for ($i = 0; $i < $numChoices; $i++) {
             'form' => 'entry_form',
             'value' => $val,
             'class' => 'entry-value',
-        ]
+        ],
     );
     echo $this->Form->hidden(
         'op',
@@ -110,7 +103,7 @@ for ($i = 0; $i < $numChoices; $i++) {
             'form' => 'entry_form',
             'value' => $entry,
             'class' => 'entry-date',
-        ]
+        ],
     );
     echo '</td>';
 }
@@ -130,7 +123,7 @@ if ($poll->userinfo == 1) {
             'maxlength' => '50',
             'placeholder' => __('Optional: Contact info'),
             'default' => $editinfo,
-        ]
+        ],
     );
     echo '</td><td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
 }

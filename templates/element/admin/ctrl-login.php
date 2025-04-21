@@ -32,7 +32,7 @@ use Cake\Core\Configure;
                 'hidden' => isset($pollid),
                 'value' => $pollid ?? '', // same as: isset($pollid) ? $pollid : '',
                 'autocomplete' => 'username',
-            ]
+            ],
         );
         ?>
         <?php echo $this->Form->control(
@@ -42,7 +42,7 @@ use Cake\Core\Configure;
                 'label' => __('Password'),
                 'type' => 'password',
                 'autocomplete' => 'current-password',
-            ]
+            ],
         ); ?>
     </fieldset>
     <?php echo $this->Form->submit(__('Login')); ?>

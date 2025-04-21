@@ -26,7 +26,7 @@
         [
             'type' => 'post',
             'url' => ['controller' => 'Comments', 'action' => 'add', $poll->id],
-        ]
+        ],
     );
     echo $this->Form->control(
         'name',
@@ -38,7 +38,7 @@
             'type' => 'text',
             'label' => __('Your name') . ' *',
             'autocomplete' => 'off',
-        ]
+        ],
     );
     echo $this->Form->control(
         'text',
@@ -49,7 +49,7 @@
             'minlength' => '3',
             'maxlength' => '512',
             'label' => __('Your comment') . ' *',
-        ]
+        ],
     );
     echo '<div class="content-right">';
     echo $this->Form->button(__('Save'));

@@ -100,7 +100,7 @@ class CommentsController extends AppController
                     'title' => $title,
                     'link' => $link,
                     'comment' => $comment,
-                ]
+                ],
             )
             ->deliver();
     }

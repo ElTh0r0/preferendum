@@ -24,8 +24,8 @@ use Cake\Datasource\ConnectionManager;
 
 class DbController extends AppController
 {
-    private const DEFAULT_ADMIN_USER = 'admin';
-    private const DEFAULT_ADMIN_PW = 'admin';
+    private const string DEFAULT_ADMIN_USER = 'admin';
+    private const string DEFAULT_ADMIN_PW = 'admin';
 
     public function install(): void
     {
@@ -228,14 +228,14 @@ class DbController extends AppController
                 'SELECT IF( EXISTS(
                     SELECT *
                     FROM INFORMATION_SCHEMA.TABLES
-                    WHERE TABLE_SCHEMA = "' . $DbName . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";'
+                    WHERE TABLE_SCHEMA = "' . $DbName . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";',
             )->fetchAll('assoc');
         } elseif (strcmp(strtolower($dbdriver), 'postgres') == 0) {
             $table = $connection->execute(
                 'SELECT EXISTS (
                     SELECT 1
                     FROM information_schema.tables
-                    WHERE table_catalog = \'' . $DbName . '\' AND TABLE_NAME = \'polls\') as exists;'
+                    WHERE table_catalog = \'' . $DbName . '\' AND TABLE_NAME = \'polls\') as exists;',
             )->fetchAll('assoc');
         } else {
             echo '<li class="fail"><strong>Problem:</strong> Invalid DB driver selected!</li>';

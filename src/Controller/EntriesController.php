@@ -63,7 +63,7 @@ class EntriesController extends AppController
                     'name' => trim($newentry['name']),
                     'password' => hash(
                         'crc32',
-                        trim($newentry['name']) . time() . random_bytes(5) . trim($newentry['name'])
+                        trim($newentry['name']) . time() . random_bytes(5) . trim($newentry['name']),
                     ),
                     'info' => $userinfo,
                 ]);
@@ -76,7 +76,7 @@ class EntriesController extends AppController
                         // Rename to Anon_PollID_UserID
                         $this->fetchTable('Users')->patchEntity(
                             $new_user,
-                            ['name' => 'Anon_' . $pollid . '_' . $new_user->id]
+                            ['name' => 'Anon_' . $pollid . '_' . $new_user->id],
                         );
                         $success = $this->fetchTable('Users')->save($new_user);
                     }
@@ -113,7 +113,7 @@ class EntriesController extends AppController
                                     'choice_id' => $newentry['choices'][$i],
                                     'user_id' => $new_user->id,
                                     'value' => trim($newentry['values'][$i]),
-                                ]
+                                ],
                             );
 
                             if (!$this->Entries->save($dbentry)) {
@@ -170,7 +170,7 @@ class EntriesController extends AppController
                                     'permanent' => true,
                                     'escape' => false,
                                 ],
-                            ]
+                            ],
                         );
                     } else {
                         $this->Flash->success(__('Your entry has been saved!'));
@@ -338,7 +338,7 @@ class EntriesController extends AppController
             $query = $this->Entries->find(
                 'all',
                 contain: ['Choices'],
-                conditions: ['poll_id' => $pollid, 'user_id' => $userid]
+                conditions: ['poll_id' => $pollid, 'user_id' => $userid],
             );
             if ($query->count() != count($validchoices)) {
                 $isValid = false;
@@ -355,7 +355,7 @@ class EntriesController extends AppController
         $query = $this->Entries->find(
             'all',
             contain: ['Users', 'Choices'],
-            conditions: ['poll_id' => $pollid, 'Users.name' => $username]
+            conditions: ['poll_id' => $pollid, 'Users.name' => $username],
         );
         $number = $query->count();
 
@@ -393,7 +393,7 @@ class EntriesController extends AppController
         string $title,
         int $userid,
         string $username,
-        bool $changedentry = false
+        bool $changedentry = false,
     ): void {
         $dbentries = $this->Entries->find()
             ->where(['poll_id' => $pollid, 'user_id' => $userid])
@@ -422,7 +422,7 @@ class EntriesController extends AppController
                     'link' => $link,
                     'name' => $username,
                     'entries' => $dbentries,
-                ]
+                ],
             )
             ->deliver();
     }

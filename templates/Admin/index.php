@@ -83,7 +83,7 @@ use Cake\Core\Configure;
                             'id' => 'admin-delexpired-polls',
                             'confirm' => __(
                                 'Are you sure to delete expired polls (expired since >{0} days)?',
-                                $rmExpiredAfter
+                                $rmExpiredAfter,
                             ),
                             'escape' => false,
                         ],
@@ -98,10 +98,10 @@ use Cake\Core\Configure;
                             'id' => 'admin-delinactive-polls',
                             'confirm' => __(
                                 'Are you sure to delete inactive poll (inactive since >{0} days)?',
-                                $rmInactiveAfter
+                                $rmInactiveAfter,
                             ),
                             'escape' => false,
-                        ]
+                        ],
                     );
                 }
                 echo $this->Html->link(
@@ -111,7 +111,7 @@ use Cake\Core\Configure;
                         'class' => 'button',
                         'id' => 'admin-new-poll',
                         'escape' => false,
-                    ]
+                    ],
                 );
             }
             ?>
@@ -134,7 +134,7 @@ use Cake\Core\Configure;
                     'class' => 'button',
                     'id' => 'search_clear',
                     'escape' => false,
-                ]
+                ],
             );
             echo $this->Form->submit(__('Search'), ['id' => 'search_submit']);
             echo $this->Form->end();
@@ -300,7 +300,7 @@ use Cake\Core\Configure;
                                     'class' => 'icon-button admin-view-userinfo',
                                     'target' => '_blank',
                                     'escape' => false,
-                                ]
+                                ],
                             );
                         }
                         echo '</td>';
@@ -316,7 +316,7 @@ use Cake\Core\Configure;
                                 'class' => 'icon-button admin-view-poll',
                                 'target' => '_blank',
                                 'escape' => false,
-                            ]
+                            ],
                         );
                         ?>
                     </td>
@@ -334,7 +334,7 @@ use Cake\Core\Configure;
                                 'class' => 'icon-button admin-edit-poll',
                                 'target' => '_blank',
                                 'escape' => false,
-                            ]
+                            ],
                         );
                         echo '</td>';
                     } ?>
@@ -352,7 +352,7 @@ use Cake\Core\Configure;
                             [
                                 'class' => 'icon-button admin-export-poll',
                                 'escape' => false,
-                            ]
+                            ],
                         );
                         echo '</td>';
                     } ?>
@@ -370,7 +370,7 @@ use Cake\Core\Configure;
                                 'class' => 'icon-button admin-delete-poll',
                                 'confirm' => __('Are you sure to delete poll {0}?', h($poll->title)),
                                 'escape' => false,
-                            ]
+                            ],
                         );
                         echo '</td>';
                     } ?>

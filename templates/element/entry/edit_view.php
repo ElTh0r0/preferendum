@@ -59,7 +59,7 @@ foreach ($pollentries as $name => $entry) {
         [
             'class' => 'icon-button entry-edit',
             'escape' => false,
-        ]
+        ],
     );
     echo $this->Form->postLink(
         '',
@@ -68,7 +68,7 @@ foreach ($pollentries as $name => $entry) {
             'class' => 'icon-button schedule-delete',
             'confirm' => __('Are you sure to delete entry by {0}?', h($name)),
             'escape' => false,
-        ]
+        ],
     );
     echo '</td>';
     echo '</tr>';

@@ -60,7 +60,7 @@ class CommentsTable extends Table
                         'created' => 'new',
                     ],
                 ],
-            ]
+            ],
         );
 
         $this->belongsTo('Polls', [

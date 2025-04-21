@@ -36,7 +36,7 @@ use Cake\Core\Configure;
         [
             'type' => 'post',
             'url' => ['action' => 'forgotPassword'],
-        ]
+        ],
     );
 
     echo '<fieldset>';
@@ -47,7 +47,7 @@ use Cake\Core\Configure;
             'label' => '',
             'value' => '',
             'autocomplete' => 'email',
-        ]
+        ],
     );
     echo '</fieldset><br>';
 

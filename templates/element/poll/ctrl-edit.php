@@ -25,7 +25,7 @@ echo $this->Html->link(
         'class' => 'button',
         'id' => 'ctrl-view-poll',
         'escape' => false,
-    ]
+    ],
 );
 
 // Un-/lock poll button
@@ -36,7 +36,7 @@ echo $this->Form->postLink(
         'class' => 'button',
         'id' => 'ctrl-lock-poll',
         'escape' => false,
-    ]
+    ],
 );
 
 // Export CSV button
@@ -48,7 +48,7 @@ if (Configure::read('preferendum.exportCsv')) {
             'class' => 'button',
             'id' => 'ctrl-export-poll',
             'escape' => false,
-        ]
+        ],
     );
 }
 
@@ -61,7 +61,7 @@ echo $this->Form->postLink(
         'id' => 'ctrl-delete-poll',
         'confirm' => __('Are you sure to delete this poll?'),
         'escape' => false,
-    ]
+    ],
 );
 
 if ($poll->pwprotect) {
@@ -72,7 +72,7 @@ if ($poll->pwprotect) {
             'class' => 'button',
             'id' => 'ctrl-logout',
             'escape' => false,
-        ]
+        ],
     );
 }
 ?>

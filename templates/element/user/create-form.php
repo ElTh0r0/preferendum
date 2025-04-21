@@ -24,7 +24,7 @@ echo $this->Form->create(
     [
         'type' => 'post',
         'url' => ['action' => 'add'],
-    ]
+    ],
 );
 ?>
 <fieldset>
@@ -35,7 +35,7 @@ echo $this->Form->create(
             'required' => true,
             'label' => __('Name'),
             'autocomplete' => 'off',
-        ]
+        ],
     );
 
     if (Configure::read('preferendum.sendBackendUserPwReset')) {
@@ -44,7 +44,7 @@ echo $this->Form->create(
             [
                 'label' => __('Email'),
                 'autocomplete' => 'off',
-            ]
+            ],
         );
     }
 
@@ -57,7 +57,7 @@ echo $this->Form->create(
             'required' => true,
             'label' => __('Password'),
             'type' => 'password',
-        ]
+        ],
     );
     echo $this->Form->control(
         'confirmpassword',
@@ -65,7 +65,7 @@ echo $this->Form->create(
             'required' => true,
             'label' => __('Confirm password'),
             'type' => 'password',
-        ]
+        ],
     );
     ?>
 </fieldset>

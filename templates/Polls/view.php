@@ -17,12 +17,19 @@ use Cake\Core\App;
 use Cake\Core\Configure;
 ?>
 
-<?php $this->assign('title', __('Poll') . ' - ' . $poll->title); ?>
-
-<?php $this->Html->script('poll_view.js', ['block' => 'scriptBottom']); ?>
-<?php $this->Html->script('clipboard.min.js', ['block' => true]); ?>
-
 <?php
+$this->assign('title', __('Poll') . ' - ' . $poll->title);
+
+if (
+    !isset($adminid) ||
+    (!strcmp($poll->adminid, $adminid) == 0)
+) {
+    $adminid = null;
+}
+
+$this->Html->script('poll_view.js', ['block' => 'scriptBottom']);
+$this->Html->script('clipboard.min.js', ['block' => true]);
+
 $this->Html->scriptStart(['block' => true]);
 echo 'var jswebroot = ' . json_encode($this->request->getAttributes()['webroot']) . ';';
 echo 'var jspollid = ' . json_encode($poll->id) . ';';
@@ -49,10 +56,8 @@ $this->Html->scriptEnd();
     <?php if ($poll->locked == 0) {
         if (isset($userpw) && $poll->editentry == 1) { // Edit entry
             $edituser = '';
-            $editinfo = '';
             if (in_array($userpw, $usermap_pw)) {
                 $edituser = array_search($userpw, $usermap_pw);
-                $editinfo = $usermap_info[$edituser];
             }
 
             echo $this->Form->create(
@@ -61,7 +66,7 @@ $this->Html->scriptEnd();
                     'type' => 'post',
                     'id' => 'entry_form',
                     'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid],
-                ]
+                ],
             );
         } else { // New entry
             echo $this->Form->create(
@@ -70,7 +75,7 @@ $this->Html->scriptEnd();
                     'type' => 'post',
                     'id' => 'entry_form',
                     'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id],
-                ]
+                ],
             );
         }
     } ?>

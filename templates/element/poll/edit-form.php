@@ -26,7 +26,7 @@ echo $this->Form->create(
         'id' => 'form-new-poll',
         'type' => 'post',
         'url' => ['controller' => 'Polls', 'action' => 'update', $poll->id, $adminid],
-    ]
+    ],
 );
 // Poll title
 echo $this->Form->control(
@@ -36,7 +36,7 @@ echo $this->Form->control(
         'required' => 'true',
         'label' => __('Title') . ' *',
         'placeholder' => __('Title for your poll'),
-    ]
+    ],
 );
 // Poll description
 echo $this->Form->control(
@@ -46,7 +46,7 @@ echo $this->Form->control(
         'class' => 'field-long field-textarea',
         'label' => __('Description'),
         'placeholder' => __('Short description of what this poll is all about'),
-    ]
+    ],
 );
 
 // No 'Poll options' caption, if none of 'opt_*' configuration parameters is true
@@ -67,7 +67,7 @@ if ($prefconf['opt_MaxEntriesPerOption']) {
         [
             'id' => 'limitinput',
             'checked' => $poll->limitentry,
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Define max. number of entries/option (0 = unrestricted)') . '</span>';
     echo '<li>';
@@ -84,7 +84,7 @@ if (
         [
             'value' => 'true',
             'checked' => $poll->hidevotes,
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Hide poll votes for users (only admin can see the votes)') . '</span>';
     echo '</li>';
@@ -102,7 +102,7 @@ if (
         [
             'value' => 'true',
             'checked' => $poll->editentry,
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Users can modify their entry with a personal link') . '</span>';
     echo '</li>';
@@ -122,7 +122,7 @@ if (
         [
             'value' => 'true',
             'checked' => $poll->userinfo,
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Collect user contact information') . '</span>';
     echo '</li>';
@@ -139,7 +139,7 @@ if ($prefconf['opt_PollPassword']) {
             'checked' => $poll->pwprotect,
             'id' => 'pwprotectinput',
             'onchange' => 'togglePasswordInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Protect poll access with a password') . '</span>';
     echo '</li>';
@@ -151,7 +151,7 @@ if ($prefconf['opt_PollPassword']) {
             'id' => 'passwordinput',
             'disabled' => !$poll->pwprotect,
             'placeholder' => __('Password'),
-        ]
+        ],
     );
     echo '</li>';
 }
@@ -170,7 +170,7 @@ if (
             'id' => 'commentinput',
             'checked' => $poll->comment,
             'onchange' => 'toggleEmailInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Allow users to add a comment') . '</span>';
     echo '</li>';
@@ -204,7 +204,7 @@ if (
             'onchange' => 'toggleEmailInput()',
             'disabled' => (!$prefconf['alwaysAllowComments'] && $prefconf['opt_Comments']) &&
                 ($prefconf['opt_Comments'] && !$poll->comment),
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
     echo '</li>';
@@ -221,7 +221,7 @@ if ($prefconf['opt_SendEntryEmail']) {
             'id' => 'emailentryinput',
             'checked' => $poll->emailentry,
             'onchange' => 'toggleEmailInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
     echo '</li>';
@@ -245,7 +245,7 @@ if (
             'disabled' => (!$poll->emailentry && !$poll->emailcomment),
             'placeholder' => __('Email for receiving new entry/comment'),
             'autocomplete' => 'email',
-        ]
+        ],
     );
     if (strcmp($poll->adminid, 'NA') == 0) {
         echo '<div class="fail"><p><span style="font-size: 80%;">' .
@@ -284,7 +284,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0 || $demoMode) {
             'disabled' => $demoMode,
             'id' => 'hasexpinput',
             'onchange' => 'toggleExpiryInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Poll is automatically locked on expiry date') . '</span>';
     echo '</li>';
@@ -299,7 +299,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0 || $demoMode) {
             'label' => '',
             'disabled' => !$hasDate || $demoMode,
             'style' => 'margin-bottom: 8px;',
-        ]
+        ],
     );
     echo '</li>';
 }

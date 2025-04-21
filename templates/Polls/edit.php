@@ -20,6 +20,13 @@ use Cake\Core\Configure;
 <?php
 $this->assign('title', __('Edit poll') . ' - ' . $poll->title);
 
+if (
+    !isset($adminid) ||
+    (!strcmp($poll->adminid, $adminid) == 0)
+) {
+    $adminid = null;
+}
+
 echo $this->element('poll/datepicker');
 $this->Html->script('poll_create.js', ['block' => 'scriptBottom']);
 $this->Html->script('poll_options.js', ['block' => 'scriptBottom']);
@@ -57,10 +64,8 @@ $this->Html->scriptEnd();
     </div>
     <?php
     $edituser = '';
-    $editinfo = '';
     if (in_array($userpw, $usermap_pw)) {
         $edituser = array_search($userpw, $usermap_pw);
-        $editinfo = $usermap_info[$edituser];
     }
 
     if (!empty($edituser)) {
@@ -70,7 +75,7 @@ $this->Html->scriptEnd();
                 'type' => 'post',
                 'id' => 'entry_form',
                 'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid],
-            ]
+            ],
         );
     }
     ?>

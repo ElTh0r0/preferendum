@@ -61,7 +61,7 @@ class PollsTable extends Table
                         'modified' => 'always',
                     ],
                 ],
-            ]
+            ],
         );
 
         $this->hasMany('Choices', [

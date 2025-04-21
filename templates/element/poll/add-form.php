@@ -24,7 +24,7 @@ echo $this->Form->create(
     [
         'class' => 'form',
         'id' => 'form-new-poll',
-    ]
+    ],
 );
 // Poll title
 echo $this->Form->control(
@@ -34,7 +34,7 @@ echo $this->Form->control(
         'required' => true,
         'label' => __('Title') . ' *',
         'placeholder' => __('Title for your poll'),
-    ]
+    ],
 );
 // Poll description
 echo $this->Form->control(
@@ -44,7 +44,7 @@ echo $this->Form->control(
         'class' => 'field-long field-textarea',
         'label' => __('Description'),
         'placeholder' => __('Short description of what this poll is all about'),
-    ]
+    ],
 );
 // Choices
 $inputstyle = '';
@@ -54,7 +54,7 @@ if ($prefconf['opt_MaxEntriesPerOption']) {
         [
             'id' => 'limitinput',
             'onchange' => 'toggleMaxEntryInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Define max. number of entries/option (0 = unrestricted)') . '</span>';
     $inputstyle = ' float: left; margin-right: 8px; width: 342px';
@@ -69,7 +69,7 @@ echo $this->Form->control(
         'label' => __('Options') . ' *',
         'placeholder' => __('Type whatever you want or pick a date!'),
         'style' => 'margin-bottom: 8px;' . $inputstyle,
-    ]
+    ],
 );
 if ($prefconf['opt_MaxEntriesPerOption']) {
     echo $this->Form->control(
@@ -85,7 +85,7 @@ if ($prefconf['opt_MaxEntriesPerOption']) {
             'min' => 0,
             'max' => 99,
             'disabled' => true,
-        ]
+        ],
     );
 }
 echo '<div class="content-right">';
@@ -94,7 +94,7 @@ echo $this->Form->button(
     [
         'type' => 'button',
         'id' => 'btnMore',
-    ]
+    ],
 );
 echo ' ';
 echo $this->Form->button(
@@ -103,7 +103,7 @@ echo $this->Form->button(
         'type' => 'button',
         'id' => 'btnLess',
         'disabled' => true,
-    ]
+    ],
 );
 echo '</div>';
 
@@ -130,7 +130,7 @@ if (
             'id' => 'admininput',
             'onchange' => 'toggleAdminLinkInput()',
             'checked' => true,
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Edit/deleting poll/entries only with admin link') . '</span>';
     echo '</li>';
@@ -149,7 +149,7 @@ if (
         [
             'value' => 'true',
             'id' => 'hidevotesinput',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Hide poll votes for users (only admin can see the votes)') . '</span>';
     echo '</li>';
@@ -168,7 +168,7 @@ if (
         [
             'value' => 'true',
             'id' => 'editentryinput',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Users can modify their entry with a personal link') . '</span>';
     echo '</li>';
@@ -187,7 +187,7 @@ if (
             'value' => 'true',
             'id' => 'userinfoinput',
             'onchange' => 'toggleUserinfoInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Collect user contact information') . '</span>';
     echo '</li>';
@@ -204,7 +204,7 @@ if (
         [
             'value' => 'true',
             'id' => 'anonymousinput',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Anonymous poll (no user name stored/shown)') . '</span>';
     echo '</li>';
@@ -220,7 +220,7 @@ if ($prefconf['opt_PollPassword']) {
             'value' => 'true',
             'id' => 'pwprotectinput',
             'onchange' => 'togglePasswordInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Protect poll access with a password') . '</span>';
     echo '</li>';
@@ -232,7 +232,7 @@ if ($prefconf['opt_PollPassword']) {
             'id' => 'passwordinput',
             'disabled' => true,
             'placeholder' => __('Password'),
-        ]
+        ],
     );
     echo '</li>';
 }
@@ -250,7 +250,7 @@ if (
             'value' => 'true',
             'id' => 'commentinput',
             'onchange' => 'toggleEmailInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Allow users to add a comment') . '</span>';
     echo '</li>';
@@ -283,7 +283,7 @@ if (
             'id' => 'emailcommentinput',
             'onchange' => 'toggleEmailInput()',
             'disabled' => (!$prefconf['alwaysAllowComments'] && $prefconf['opt_Comments']),
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Receive email after new comment') . '</span>';
     echo '</li>';
@@ -299,7 +299,7 @@ if ($prefconf['opt_SendEntryEmail']) {
             'value' => 'true',
             'id' => 'emailentryinput',
             'onchange' => 'toggleEmailInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Receive email after new entry') . '</span>';
     echo '</li>';
@@ -315,7 +315,7 @@ if ($prefconf['opt_SendPollCreationEmail']) {
             'value' => 'true',
             'id' => 'emailpollinput',
             'onchange' => 'toggleEmailInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Receive email after poll creation with poll links') . '</span>';
     echo '</li>';
@@ -340,7 +340,7 @@ if (
             'disabled' => true,
             'placeholder' => __('Email for receiving entry/comment/poll links'),
             'autocomplete' => 'email',
-        ]
+        ],
     );
     if (!$prefconf['alwaysUseAdminLinks']) {
         echo '<div id="emailwarn" class="fail" style="display: none;"><p><span style="font-size: 80%;">' .
@@ -367,7 +367,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0 || $demoMode) {
             'value' => 'true',
             'id' => 'hasexpinput',
             'onchange' => 'toggleExpiryInput()',
-        ]
+        ],
     );
     echo '<span style="font-size: 90%;">' . __('Poll is automatically locked on expiry date') . '</span>';
     echo '</li>';
@@ -388,7 +388,7 @@ if ($prefconf['opt_PollExpirationAfter'] > 0 || $demoMode) {
             'value' => $exp,
             'label' => '',
             'style' => 'margin-bottom: 8px;',
-        ]
+        ],
     );
     echo '</li>';
 }

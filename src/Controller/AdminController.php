@@ -29,7 +29,7 @@ class AdminController extends AppController
         // Configure the login action to not require authentication, preventing
         // the infinite redirect loop issue
         $this->Authentication->allowUnauthenticated(
-            ['login', 'logout',]
+            ['login', 'logout',],
         );
     }
 
@@ -67,7 +67,7 @@ class AdminController extends AppController
             $query,
             [
                 'limit' => 20,
-            ]
+            ],
         );
 
         $numpolls = $this->fetchTable('Polls')->find('all')->count();
@@ -83,7 +83,7 @@ class AdminController extends AppController
             'numcomments',
             'currentUserRole',
             'adminRole',
-            'polladmRole'
+            'polladmRole',
         ));
     }
 

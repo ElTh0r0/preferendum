@@ -30,12 +30,12 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
-    public const BACKENDROLES = [
+    public const array BACKENDROLES = [
         'admin',
         'polladmin',
         'viewer',
     ];
-    public const POLLPWROLE = 'pollpw';
+    public const string POLLPWROLE = 'pollpw';
 
     /**
      * Initialization hook method.

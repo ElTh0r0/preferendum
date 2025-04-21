@@ -41,7 +41,7 @@ use Cake\Core\Configure;
         echo $this->Form->postLink(
             __('Edit'),
             ['action' => 'edit', $backuser['id']],
-            ['style' => 'font-size: 0.8em;']
+            ['style' => 'font-size: 0.8em;'],
         );
         echo '</td>';
 
@@ -53,8 +53,8 @@ use Cake\Core\Configure;
                 [
                     'escape' => false,
                     'confirm' => __('Are you sure to delete user {0}?', h($backuser['name'])),
-                    'style' => 'font-size: 0.8em;'
-                ]
+                    'style' => 'font-size: 0.8em;',
+                ],
             );
             echo '</td>';
         } else {

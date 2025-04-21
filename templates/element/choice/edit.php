@@ -55,7 +55,7 @@ function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
         maxInp.value = currentChoiceMax;
     }
 }',
-    ['block' => true]
+    ['block' => true],
 ); ?>
 
 <!-- TABLE HEADER / Swap choices -->
@@ -69,21 +69,21 @@ if ($numChoices > 1) {
         if ($i === 0) {
             echo $this->Form->postLink(
                 '>',
-                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1]
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1],
             );
         } elseif ($i === $numChoices - 1) {
             echo $this->Form->postLink(
                 '<',
-                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i]
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i],
             );
         } else {
             echo $this->Form->postLink(
                 '<',
-                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i]
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i],
             ) . '&nbsp;';
             echo $this->Form->postLink(
                 '>',
-                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1]
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1],
             );
         }
         echo '</td>';
@@ -123,7 +123,7 @@ if ($numChoices > 1) {
                         'class' => 'icon-button date-delete',
                         'confirm' => __('Are you sure to delete option {0}?', h($choice->option)),
                         'escape' => false,
-                    ]
+                    ],
                 );
             }
             ?>
@@ -139,7 +139,7 @@ if ($numChoices > 1) {
                     [
                         'type' => 'post',
                         'url' => ['controller' => 'Choices', 'action' => 'addedit', $poll->id, $adminid],
-                    ]
+                    ],
                 );
                 echo $this->Form->control(
                     'choice',
@@ -150,7 +150,7 @@ if ($numChoices > 1) {
                         'class' => 'dateInput field-long datepicker-here',
                         'required' => true,
                         'placeholder' => __('New option'),
-                    ]
+                    ],
                 );
                 if ($poll->limitentry) {
                     echo $this->Form->control(
@@ -163,7 +163,7 @@ if ($numChoices > 1) {
                             'value' => '0',
                             'min' => 0,
                             'max' => 99,
-                        ]
+                        ],
                     );
                 }
                 echo $this->Form->hidden(
@@ -171,7 +171,7 @@ if ($numChoices > 1) {
                     [
                         'id' => 'changechoiceid',
                         'value' => '',
-                    ]
+                    ],
                 );
                 echo $this->Form->button(__('Save'));
                 echo $this->Form->end();

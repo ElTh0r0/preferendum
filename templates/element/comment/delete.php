@@ -32,7 +32,7 @@
                                 'class' => 'icon-button comment-delete',
                                 'confirm' => __('Are you sure to delete comment by {0}?', h($com->name)),
                                 'escape' => false,
-                            ]
+                            ],
                         ); ?></div>
                 </div>
                 <div class="comment-text"><?php echo nl2br(h($com->text)) ?></div>
