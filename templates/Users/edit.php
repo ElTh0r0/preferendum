@@ -29,7 +29,7 @@
         echo '<br>';
         echo '<hr>';
 
-        echo $this->Form->postLink(
+        echo $this->Html->link(
             '&larr; ' . __('Back to user creation'),
             ['action' => 'management'],
             ['escape' => false]

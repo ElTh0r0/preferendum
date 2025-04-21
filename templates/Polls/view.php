@@ -46,6 +46,35 @@ $this->Html->scriptEnd();
 </div>
 
 <div id="poll-container">
+    <?php if ($poll->locked == 0) {
+        if (isset($userpw) && $poll->editentry == 1) { // Edit entry
+            $edituser = '';
+            $editinfo = '';
+            if (in_array($userpw, $usermap_pw)) {
+                $edituser = array_search($userpw, $usermap_pw);
+                $editinfo = $usermap_info[$edituser];
+            }
+
+            echo $this->Form->create(
+                $newentry,
+                [
+                    'type' => 'post',
+                    'id' => 'entry_form',
+                    'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid],
+                ]
+            );
+        } else { // New entry
+            echo $this->Form->create(
+                $newentry,
+                [
+                    'type' => 'post',
+                    'id' => 'entry_form',
+                    'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id],
+                ]
+            );
+        }
+    } ?>
+
     <table class="schedule">
         <?php echo $this->element('choice/list'); ?>
         <?php if ($poll->hidevotes == 0) {
@@ -57,13 +86,11 @@ $this->Html->scriptEnd();
 
         <!-- NEW ENTRY FORM ROW -->
         <?php if ($poll->locked == 0) {
-            echo '<tr class="schedule-new valign-middle">';
             if (isset($userpw) && $poll->editentry == 1) {
                 echo $this->element('entry/edit');
             } else {
                 echo $this->element('entry/new');
             }
-            echo '</tr>';
 
             echo '<tr class="table-spacer-row table-spacer-row-big">
             <td colspan="' . (count($pollchoices) + 2) . '"></td></tr>';
@@ -79,6 +106,10 @@ $this->Html->scriptEnd();
             }
         } ?>
     </table>
+
+    <?php if ($poll->locked == 0) {
+        echo $this->Form->end();
+    } ?>
 </div>
 
 <?php if (

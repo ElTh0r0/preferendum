@@ -55,18 +55,18 @@ foreach ($pollentries as $name => $entry) {
     }
     echo $this->Form->postLink(
         '',
-        ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],
+        ['controller' => 'Polls', 'action' => 'edit', $poll->id, $adminid, $usermap_pw[$name]],
         [
-            'class' => 'icon-button schedule-delete',
-            'confirm' => __('Are you sure to delete entry by {0}?', h($name)),
+            'class' => 'icon-button entry-edit',
             'escape' => false,
         ]
     );
     echo $this->Form->postLink(
         '',
-        ['controller' => 'Polls', 'action' => 'edit', $poll->id, $adminid, $usermap_pw[$name]],
+        ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],
         [
-            'class' => 'icon-button entry-edit',
+            'class' => 'icon-button schedule-delete',
+            'confirm' => __('Are you sure to delete entry by {0}?', h($name)),
             'escape' => false,
         ]
     );
@@ -75,8 +75,6 @@ foreach ($pollentries as $name => $entry) {
 }
 
 if (in_array($userpw, $usermap_pw)) {
-    echo '<tr class="schedule-new valign-middle">';
     echo $this->element('entry/edit');
-    echo '</tr>';
 }
 ?>

@@ -55,6 +55,26 @@ $this->Html->scriptEnd();
     <div class="center-box">
         <h1><?php echo __('Edit entries') ?></h1>
     </div>
+    <?php
+    $edituser = '';
+    $editinfo = '';
+    if (in_array($userpw, $usermap_pw)) {
+        $edituser = array_search($userpw, $usermap_pw);
+        $editinfo = $usermap_info[$edituser];
+    }
+
+    if (!empty($edituser)) {
+        echo $this->Form->create(
+            $newentry,
+            [
+                'type' => 'post',
+                'id' => 'entry_form',
+                'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid],
+            ]
+        );
+    }
+    ?>
+
     <table class="schedule">
         <?php
         echo $this->element('choice/edit');
@@ -70,6 +90,11 @@ $this->Html->scriptEnd();
         }
         ?>
     </table>
+
+    <?php
+    if (!empty($edituser)) {
+        echo $this->Form->end();
+    } ?>
 </div>
 
 <?php if (

@@ -29,13 +29,7 @@ if (
     $adminid = null;
 }
 
-echo $this->Form->create(
-    $newentry,
-    [
-        'type' => 'post',
-        'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid],
-    ]
-);
+echo '<tr class="schedule-new valign-middle">';
 
 if ($poll->anonymous) {
     $editrow = array_search($userpw, array_values($usermap_pw)) + 1;
@@ -46,6 +40,7 @@ if ($poll->anonymous) {
         'name',
         [
             'id' => 'name-input',
+            'form' => 'entry_form',
             'required' => 'true',
             'maxlength' => '32',
             'placeholder' => __('Your name?'),
@@ -103,6 +98,7 @@ for ($i = 0; $i < $numChoices; $i++) {
         'va',
         [
             'name' => 'values[]',
+            'form' => 'entry_form',
             'value' => $val,
             'class' => 'entry-value',
         ]
@@ -111,6 +107,7 @@ for ($i = 0; $i < $numChoices; $i++) {
         'op',
         [
             'name' => 'choices[]',
+            'form' => 'entry_form',
             'value' => $entry,
             'class' => 'entry-date',
         ]
@@ -119,8 +116,9 @@ for ($i = 0; $i < $numChoices; $i++) {
 }
 
 echo '<td class="schedule-submit">';
-echo $this->Form->button(__('Save'));
+echo $this->Form->button(__('Save'), ['form' => 'entry_form']);
 echo '</td>';
+echo '</tr>';
 
 if ($poll->userinfo == 1) {
     echo '<tr><td class="schedule-name-input">';
@@ -128,6 +126,7 @@ if ($poll->userinfo == 1) {
         'userdetails',
         [
             'id' => 'info-input',
+            'form' => 'entry_form',
             'maxlength' => '50',
             'placeholder' => __('Optional: Contact info'),
             'default' => $editinfo,
@@ -135,4 +134,3 @@ if ($poll->userinfo == 1) {
     );
     echo '</td><td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
 }
-echo $this->Form->end();

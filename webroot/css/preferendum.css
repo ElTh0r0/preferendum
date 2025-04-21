@@ -550,6 +550,18 @@ tr.schedule-results td.top {
     background-color: var(--color-feedback-positive);
 }
 
+button.entry-copy-link-user {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-copy.png)
+        no-repeat;
+    background-position: center center;
+    border-top-right-radius: var(--border-radius-big);
+    border-bottom-right-radius: var(--border-radius-big);
+    padding: 6px 15px 6px 15px !important;
+}
+
 button.entry-copy-link {
     width: 24px;
     height: 24px;
@@ -560,6 +572,8 @@ button.entry-copy-link {
     border-top-right-radius: var(--border-radius-big);
     border-bottom-right-radius: var(--border-radius-big);
     padding: 6px 15px 6px 15px !important;
+    float: left;
+    margin-right: 5px;
 }
 
 button.entry-email-link {
@@ -607,14 +621,13 @@ table.schedule button.copy-fail:hover {
 
 a.entry-edit {
     background-image: url(../img/icon-pen.png);
-    float: right;
-    margin-left: 5px;
+    float: left;
+    margin-right: 5px;
 }
 
 a.schedule-delete {
     background-image: url(../img/icon-delete.png);
-    float: right;
-    margin-left: 5px;
+    float: left;
 }
 
 table.schedule.mini td.schedule-delete {

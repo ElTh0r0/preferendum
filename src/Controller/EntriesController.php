@@ -161,7 +161,7 @@ class EntriesController extends AppController
                                 '<br><input type="text" id="user-edit-url" title="' .
                                 __('Copy the link and store it on your device!') .
                                 '" value="' . $link . $new_user->password . '" size="31" readonly> 
-                                <button type="button" class="copy-trigger entry-copy-link" 
+                                <button type="button" class="copy-trigger entry-copy-link-user" 
                                 data-clipboard-target="#user-edit-url" title="' .
                                 __('Copy link to clipboard!') . '"></button>' . $sendLink,
                             [
