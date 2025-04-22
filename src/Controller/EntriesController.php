@@ -256,6 +256,12 @@ class EntriesController extends AppController
                         $dbentry = $this->fetchTable('Entries')->findByChoiceId($editentry['choices'][$i])
                             ->where(['user_id' => $userid])->firstOrFail();
 
+                        // Decrease already_yes if old entry was already yes/maybe before max_entries check
+                        // Otherwise changing an existing entry would reset yes/maybe selection if max_entries is reached
+                        if ($dbentry['value'] == 1 || $dbentry['value'] == 2) {
+                            $already_yes[$editentry['choices'][$i]] -= 1;
+                        }
+
                         if (
                             $poll->limitentry &&
                             count($max_entries) == $editEntryNumChoices &&
