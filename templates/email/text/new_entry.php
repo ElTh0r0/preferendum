@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 echo __('Entry in poll "{0}"', h($title)) . "\r\n\r\n";
