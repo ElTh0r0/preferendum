@@ -42,7 +42,7 @@ use Cake\Core\Configure;
 <body>
     <noscript>
         <div id="noscript">
-            <img src="img/logo.png" alt="">
+            <img src="img/logo.svg" alt="">
             <span><?php echo __('Please enable JavaScript in your browser and reload this page.') ?></span>
         </div>
     </noscript>
