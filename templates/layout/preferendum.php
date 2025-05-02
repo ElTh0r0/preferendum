@@ -16,7 +16,7 @@ use Cake\Core\Configure;
 ?>
 
 <!DOCTYPE html>
-<html lang="<?php echo str_replace('_', '-', Configure::read('App.defaultLocale')) ?>" data-theme="light">
+<html lang=<?php echo '"' . str_replace('_', '-', Configure::read('App.defaultLocale')) . '" data-theme="' . Configure::read('preferendum.defaultTheme') . '"' ?>>
 
 <head>
     <?php echo $this->Html->charset() ?>

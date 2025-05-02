@@ -117,6 +117,8 @@ return [
         // https://github.com/ElTh0r0/preferendum/wiki/3.2-Cronjob
         'deleteInactivePollsAfter' => 0,
 
+        // Default theme ('light' or 'dark')
+        'defaultTheme' => 'light',
         // Enable switching light/dark theme
         'toggleTheme' => true,
 

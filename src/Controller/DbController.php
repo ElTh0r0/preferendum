@@ -28,7 +28,7 @@ class DbController extends AppController
 
     public function install(): void
     {
-        echo '<!DOCTYPE html><html lang="en" data-theme="light">
+        echo '<!DOCTYPE html><html lang="en" data-theme="' . Configure::read('preferendum.defaultTheme') . '">
         <head><meta charset="utf-8"><title>PREFERendum database setup</title>
         <link rel="stylesheet" href="../css/preferendum.css"></head>
         <body><p>Starting <strong>PREFERendum</strong> database setup...</p>';
@@ -57,7 +57,7 @@ class DbController extends AppController
 
     public function update(?string $version = null): void
     {
-        echo '<!DOCTYPE html><html lang="en" data-theme="light">
+        echo '<!DOCTYPE html><html lang="en" data-theme="' . Configure::read('preferendum.defaultTheme') . '">
         <head><meta charset="utf-8"><title>PREFERendum database update</title>';
         if (!isset($version) || empty($version)) {
             echo '<link rel="stylesheet" href="../css/preferendum.css">';
