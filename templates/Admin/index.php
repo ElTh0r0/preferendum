@@ -384,7 +384,7 @@ use Cake\Core\Configure;
         } else {
             ?>
             <tr>
-                <?php echo '<td height="24" colspan="' . $allcols . '">' .
+                <?php echo '<td colspan="' . $allcols . '">' .
                     __('No polls found in database!') . '</td>'; ?>
             </tr>
         <?php } ?>
