@@ -80,7 +80,7 @@ class DbController extends AppController
             }
 
             echo '<p><br>Select update:</p><ul>
-            <li><u><a href="update/06-07">Version 0.6.x -> 0.7.x</li></u></a>
+            <li><u><a href="update/06-07">Version 0.6.x -> 0.7.x</a></u></li>
             </ul>';
         } else {
             if (strcmp('06-07', $version) == 0) {
