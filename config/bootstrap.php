@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -45,11 +44,11 @@ use Cake\Mailer\Mailer;
 use Cake\Mailer\TransportFactory;
 use Cake\Routing\Router;
 use Cake\Utility\Security;
+use function Cake\Core\env;
 
 /*
  * Load global functions for collections, translations, debugging etc.
  */
-
 require CAKE . 'functions.php';
 
 /*
