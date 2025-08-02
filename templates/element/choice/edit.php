@@ -28,11 +28,13 @@ use Cake\Core\Configure;
         y.innerText = "-";
         z.value = "";
         z.placeholder = "' . __('New option') . '";
+        z.required = true;
     } else {
         w.value = "";
         x.style.display = "none";
         y.innerText = "+";
         z.placeholder = "' . __('New option') . '";
+        z.required = false;
         if (maxInp) {
             maxInp.value = "0";
         }
@@ -147,7 +149,6 @@ if ($numChoices > 1) {
                         'minlength' => '1',
                         'maxlength' => '50',
                         'class' => 'dateInput field-long datepicker-here',
-                        'required' => true,
                         'placeholder' => __('New option'),
                     ],
                 );
