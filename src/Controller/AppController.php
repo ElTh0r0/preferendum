@@ -30,6 +30,7 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
+    // If changed, update in UsersTable.php findFilteredBackendUsers() as well
     public const array BACKENDROLES = [
         'admin',
         'polladmin',
