@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\Configure;
@@ -24,7 +23,7 @@ echo $this->Form->create(
     [
         'type' => 'post',
         'url' => ['action' => 'add'],
-    ]
+    ],
 );
 ?>
 <fieldset>
@@ -35,7 +34,7 @@ echo $this->Form->create(
             'required' => true,
             'label' => __('Name'),
             'autocomplete' => 'off',
-        ]
+        ],
     );
 
     if (Configure::read('preferendum.sendBackendUserPwReset')) {
@@ -44,7 +43,7 @@ echo $this->Form->create(
             [
                 'label' => __('Email'),
                 'autocomplete' => 'off',
-            ]
+            ],
         );
     }
 
@@ -57,7 +56,7 @@ echo $this->Form->create(
             'required' => true,
             'label' => __('Password'),
             'type' => 'password',
-        ]
+        ],
     );
     echo $this->Form->control(
         'confirmpassword',
@@ -65,7 +64,7 @@ echo $this->Form->create(
             'required' => true,
             'label' => __('Confirm password'),
             'type' => 'password',
-        ]
+        ],
     );
     ?>
 </fieldset>

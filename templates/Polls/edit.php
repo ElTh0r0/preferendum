@@ -10,7 +10,6 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\App;
@@ -19,6 +18,13 @@ use Cake\Core\Configure;
 
 <?php
 $this->assign('title', __('Edit poll') . ' - ' . $poll->title);
+
+if (
+    !isset($adminid) ||
+    (!strcmp($poll->adminid, $adminid) == 0)
+) {
+    $adminid = null;
+}
 
 echo $this->element('poll/datepicker');
 $this->Html->script('poll_create.js', ['block' => 'scriptBottom']);
@@ -55,6 +61,24 @@ $this->Html->scriptEnd();
     <div class="center-box">
         <h1><?php echo __('Edit entries') ?></h1>
     </div>
+    <?php
+    $edituser = '';
+    if (in_array($userpw, $usermap_pw)) {
+        $edituser = array_search($userpw, $usermap_pw);
+    }
+
+    if (!empty($edituser)) {
+        echo $this->Form->create(
+            $newentry,
+            [
+                'type' => 'post',
+                'id' => 'entry_form',
+                'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid],
+            ],
+        );
+    }
+    ?>
+
     <table class="schedule">
         <?php
         echo $this->element('choice/edit');
@@ -70,6 +94,11 @@ $this->Html->scriptEnd();
         }
         ?>
     </table>
+
+    <?php
+    if (!empty($edituser)) {
+        echo $this->Form->end();
+    } ?>
 </div>
 
 <?php if (

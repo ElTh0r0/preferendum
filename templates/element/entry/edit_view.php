@@ -10,7 +10,6 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 ?>
 
@@ -49,44 +48,32 @@ foreach ($pollentries as $name => $entry) {
     echo '<td>';
     if ($poll->editentry) {
         echo '<div style="position: absolute; left: -99999px;"><input type="text" id="entry-link-' . $cnt .
-            '" value="' . $link . $usermap_pw[$name] . '" readonly /></div>';
+            '" value="' . $link . $usermap_pw[$name] . '" readonly></div>';
         echo '<button type="button" class="copy-trigger entry-copy-link" data-clipboard-target="#entry-link-' . $cnt .
             '" title="' . __('Copy entry edit link to clipboard') . '"></button>';
-        echo ' ';
     }
     echo $this->Form->postLink(
-        $this->Form->button(
-            '',
-            [
-                'type' => 'button',
-                'class' => 'entry-edit',
-            ]
-        ),
+        '',
         ['controller' => 'Polls', 'action' => 'edit', $poll->id, $adminid, $usermap_pw[$name]],
-        ['escape' => false]
+        [
+            'class' => 'icon-button entry-edit',
+            'escape' => false,
+        ],
     );
-    echo ' ';
     echo $this->Form->postLink(
-        $this->Form->button(
-            '',
-            [
-                'type' => 'button',
-                'class' => 'schedule-delete',
-            ]
-        ),
+        '',
         ['controller' => 'Users', 'action' => 'deleteUserAndPollEntries', $poll->id, $adminid, $usermap[$name]],
-        ['escape' => false, 'confirm' => __('Are you sure to delete entry by {0}?', h($name))]
+        [
+            'class' => 'icon-button schedule-delete',
+            'confirm' => __('Are you sure to delete entry by {0}?', h($name)),
+            'escape' => false,
+        ],
     );
     echo '</td>';
-
     echo '</tr>';
 }
 
 if (in_array($userpw, $usermap_pw)) {
-    echo '<tr class="schedule-new valign-middle">';
     echo $this->element('entry/edit');
-    echo '</tr>';
-
-    echo '<tr class="table-spacer-row table-spacer-row-big"><td></td></tr>';
 }
 ?>

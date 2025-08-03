@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 declare(strict_types=1);
@@ -24,12 +23,12 @@ use Cake\Datasource\ConnectionManager;
 
 class DbController extends AppController
 {
-    private const DEFAULT_ADMIN_USER = 'admin';
-    private const DEFAULT_ADMIN_PW = 'admin';
+    private const string DEFAULT_ADMIN_USER = 'admin';
+    private const string DEFAULT_ADMIN_PW = 'admin';
 
     public function install(): void
     {
-        echo '<!DOCTYPE html><html lang="en" data-theme="light">
+        echo '<!DOCTYPE html><html lang="en" data-theme="' . Configure::read('preferendum.defaultTheme') . '">
         <head><meta charset="utf-8"><title>PREFERendum database setup</title>
         <link rel="stylesheet" href="../css/preferendum.css"></head>
         <body><p>Starting <strong>PREFERendum</strong> database setup...</p>';
@@ -58,7 +57,7 @@ class DbController extends AppController
 
     public function update(?string $version = null): void
     {
-        echo '<!DOCTYPE html><html lang="en" data-theme="light">
+        echo '<!DOCTYPE html><html lang="en" data-theme="' . Configure::read('preferendum.defaultTheme') . '">
         <head><meta charset="utf-8"><title>PREFERendum database update</title>';
         if (!isset($version) || empty($version)) {
             echo '<link rel="stylesheet" href="../css/preferendum.css">';
@@ -81,7 +80,7 @@ class DbController extends AppController
             }
 
             echo '<p><br>Select update:</p><ul>
-            <li><u><a href="update/06-07">Version 0.6.x -> 0.7.x</li></u></a>
+            <li><u><a href="update/06-07">Version 0.6.x -> 0.7.x</a></u></li>
             </ul>';
         } else {
             if (strcmp('06-07', $version) == 0) {
@@ -121,11 +120,9 @@ class DbController extends AppController
 
         if (extension_loaded('openssl')) {
             echo '<li class="success">Your version of PHP has the openssl extension loaded.</li>';
-        } elseif (extension_loaded('mcrypt')) {
-            echo '<li class="success">Your version of PHP has the mcrypt extension loaded.</li>';
         } else {
             echo '<li class="fail"><strong>Problem:</strong> Your version of PHP does NOT have the 
-            openssl or mcrypt extension loaded.</li>';
+            openssl extension loaded.</li>';
             die;
         }
 
@@ -200,7 +197,7 @@ class DbController extends AppController
             if (method_exists($connectionError, 'getAttributes')) {
                 $attributes = $connectionError->getAttributes();
                 if (isset($errorMsg['message'])) {
-                    $errorMsg .= '<br />' . $attributes['message'];
+                    $errorMsg .= '<br>' . $attributes['message'];
                 }
             }
         }
@@ -209,7 +206,7 @@ class DbController extends AppController
             echo '<li class="success">Database connection successful</li>';
         } else {
             echo '<li class="fail"><strong>Problem:</strong> NOT able to connect to the 
-            database.<br />' . $errorMsg . '</li>';
+            database.<br>' . $errorMsg . '</li>';
             die;
         }
         echo '</ul>';
@@ -230,14 +227,14 @@ class DbController extends AppController
                 'SELECT IF( EXISTS(
                     SELECT *
                     FROM INFORMATION_SCHEMA.TABLES
-                    WHERE TABLE_SCHEMA = "' . $DbName . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";'
+                    WHERE TABLE_SCHEMA = "' . $DbName . '" AND TABLE_NAME = "polls"), 1, 0) as "exists";',
             )->fetchAll('assoc');
         } elseif (strcmp(strtolower($dbdriver), 'postgres') == 0) {
             $table = $connection->execute(
                 'SELECT EXISTS (
                     SELECT 1
                     FROM information_schema.tables
-                    WHERE table_catalog = \'' . $DbName . '\' AND TABLE_NAME = \'polls\') as exists;'
+                    WHERE table_catalog = \'' . $DbName . '\' AND TABLE_NAME = \'polls\') as exists;',
             )->fetchAll('assoc');
         } else {
             echo '<li class="fail"><strong>Problem:</strong> Invalid DB driver selected!</li>';

@@ -10,7 +10,6 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\Configure;
@@ -29,11 +28,13 @@ use Cake\Core\Configure;
         y.innerText = "-";
         z.value = "";
         z.placeholder = "' . __('New option') . '";
+        z.required = true;
     } else {
         w.value = "";
         x.style.display = "none";
         y.innerText = "+";
         z.placeholder = "' . __('New option') . '";
+        z.required = false;
         if (maxInp) {
             maxInp.value = "0";
         }
@@ -55,7 +56,7 @@ function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
         maxInp.value = currentChoiceMax;
     }
 }',
-    ['block' => true]
+    ['block' => true],
 ); ?>
 
 <!-- TABLE HEADER / Swap choices -->
@@ -69,26 +70,26 @@ if ($numChoices > 1) {
         if ($i === 0) {
             echo $this->Form->postLink(
                 '>',
-                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1]
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1],
             );
         } elseif ($i === $numChoices - 1) {
             echo $this->Form->postLink(
                 '<',
-                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i]
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i],
             );
         } else {
             echo $this->Form->postLink(
                 '<',
-                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i]
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i - 1, $i],
             ) . '&nbsp;';
             echo $this->Form->postLink(
                 '>',
-                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1]
+                ['controller' => 'Choices', 'action' => 'swap', $poll->id, $adminid, $i, $i + 1],
             );
         }
         echo '</td>';
     }
-    echo '<td></td>';
+    echo '<td class="schedule-blank"></td>';
     echo '</tr>';
 } ?>
 <!-- DATES -->
@@ -117,15 +118,13 @@ if ($numChoices > 1) {
                 $choice->id . ', \'' . h($choice->option) . '\', ' . $choice->max_entries . ')"></button>';
             if ($numChoices > 1) {
                 echo $this->Form->postLink(
-                    $this->Form->button(
-                        '',
-                        [
-                            'type' => 'button',
-                            'class' => 'date-delete',
-                        ]
-                    ),
+                    '',
                     ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->id],
-                    ['escape' => false, 'confirm' => __('Are you sure to delete option {0}?', h($choice->option))]
+                    [
+                        'class' => 'icon-button date-delete',
+                        'confirm' => __('Are you sure to delete option {0}?', h($choice->option)),
+                        'escape' => false,
+                    ],
                 );
             }
             ?>
@@ -141,7 +140,7 @@ if ($numChoices > 1) {
                     [
                         'type' => 'post',
                         'url' => ['controller' => 'Choices', 'action' => 'addedit', $poll->id, $adminid],
-                    ]
+                    ],
                 );
                 echo $this->Form->control(
                     'choice',
@@ -150,15 +149,13 @@ if ($numChoices > 1) {
                         'minlength' => '1',
                         'maxlength' => '50',
                         'class' => 'dateInput field-long datepicker-here',
-                        'required' => true,
                         'placeholder' => __('New option'),
-                    ]
+                    ],
                 );
                 if ($poll->limitentry) {
                     echo $this->Form->control(
                         'max_entries',
                         [
-                            'maxlength' => '3',
                             'class' => 'maxEntryInput',
                             'label' => false,
                             'style' => 'margin-top: 3px; height: 25px; width: 50px;',
@@ -166,7 +163,7 @@ if ($numChoices > 1) {
                             'value' => '0',
                             'min' => 0,
                             'max' => 99,
-                        ]
+                        ],
                     );
                 }
                 echo $this->Form->hidden(
@@ -174,7 +171,7 @@ if ($numChoices > 1) {
                     [
                         'id' => 'changechoiceid',
                         'value' => '',
-                    ]
+                    ],
                 );
                 echo $this->Form->button(__('Save'));
                 echo $this->Form->end();

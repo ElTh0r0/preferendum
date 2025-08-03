@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\Configure;
@@ -30,7 +29,7 @@ if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUser
         [
             'type' => 'post',
             'url' => ['action' => 'updateUser', $editUserId],
-        ]
+        ],
     );
 
     echo '<fieldset>';
@@ -42,7 +41,7 @@ if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUser
                 'label' => __('Name'),
                 'value' => $editUserName,
                 'autocomplete' => 'off',
-            ]
+            ],
         );
     }
 
@@ -53,7 +52,7 @@ if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUser
                 'label' => __('Email'),
                 'value' => $editEmail,
                 'autocomplete' => 'off',
-            ]
+            ],
         );
     }
 
@@ -62,7 +61,7 @@ if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUser
         echo $this->Form->select(
             'role',
             $allroles,
-            ['value' => array_search($editUserRole, $allroles), 'empty' => false, 'id' => 'selectrole']
+            ['value' => array_search($editUserRole, $allroles), 'empty' => false, 'id' => 'selectrole'],
         );
     }
     echo '</fieldset><br>';
@@ -77,7 +76,7 @@ if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUser
     [
         'type' => 'post',
         'url' => ['action' => 'updatePassword', $editUserId],
-    ]
+    ],
 );
 ?>
 <fieldset>
@@ -88,7 +87,7 @@ if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUser
             'required' => true,
             'label' => __('Password'),
             'type' => 'password',
-        ]
+        ],
     );
     echo $this->Form->control(
         'confirmpassword',
@@ -96,7 +95,7 @@ if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUser
             'required' => true,
             'label' => __('Confirm password'),
             'type' => 'password',
-        ]
+        ],
     );
     ?>
 </fieldset>

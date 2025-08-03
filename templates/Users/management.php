@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 ?>
 
@@ -25,8 +24,8 @@
     echo $this->Flash->render();
 
     echo $this->element('user/list');
-    echo '<br />';
-    echo '<hr />';
+    echo '<br>';
+    echo '<hr>';
     echo $this->element('user/create-form');
     ?>
 </div>

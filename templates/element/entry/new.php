@@ -10,18 +10,12 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 ?>
 
 <?php
-echo $this->Form->create(
-    $newentry,
-    [
-        'type' => 'post',
-        'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id],
-    ]
-);
+
+echo '<tr class="schedule-new valign-middle">';
 
 if ($poll->anonymous) {
     echo '<td class="schedule-blank"></td>';
@@ -31,11 +25,12 @@ if ($poll->anonymous) {
         'name',
         [
             'id' => 'name-input',
+            'form' => 'entry_form',
             'required' => 'true',
             'maxlength' => '32',
             'placeholder' => __('Your name?'),
             'autocomplete' => 'off',
-        ]
+        ],
     );
     echo '</td>';
 }
@@ -70,24 +65,27 @@ foreach ($pollchoices as $opt) {
         'va',
         [
             'name' => 'values[]',
+            'form' => 'entry_form',
             'value' => '0',
             'class' => 'entry-value',
-        ]
+        ],
     );
     echo $this->Form->hidden(
         'op',
         [
             'name' => 'choices[]',
+            'form' => 'entry_form',
             'value' => $opt->id,
             'class' => 'entry-date',
-        ]
+        ],
     );
     echo '</td>';
     $j++;
 }
 echo '<td class="schedule-submit">';
-echo $this->Form->button(__('Save'));
+echo $this->Form->button(__('Save'), ['form' => 'entry_form']);
 echo '</td>';
+echo '</tr>';
 
 if ($poll->userinfo == 1) {
     echo '<tr><td class="schedule-name-input">';
@@ -95,10 +93,10 @@ if ($poll->userinfo == 1) {
         'userdetails',
         [
             'id' => 'info-input',
+            'form' => 'entry_form',
             'maxlength' => '50',
             'placeholder' => __('Optional: Contact info'),
-        ]
+        ],
     );
-    echo '</td></tr>';
+    echo '</td><td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
 }
-echo $this->Form->end();

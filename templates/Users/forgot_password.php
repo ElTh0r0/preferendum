@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\Configure;
@@ -36,7 +35,7 @@ use Cake\Core\Configure;
         [
             'type' => 'post',
             'url' => ['action' => 'forgotPassword'],
-        ]
+        ],
     );
 
     echo '<fieldset>';
@@ -47,7 +46,7 @@ use Cake\Core\Configure;
             'label' => '',
             'value' => '',
             'autocomplete' => 'email',
-        ]
+        ],
     );
     echo '</fieldset><br>';
 

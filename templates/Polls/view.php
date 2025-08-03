@@ -10,19 +10,25 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\App;
 use Cake\Core\Configure;
 ?>
 
-<?php $this->assign('title', __('Poll') . ' - ' . $poll->title); ?>
-
-<?php $this->Html->script('poll_view.js', ['block' => 'scriptBottom']); ?>
-<?php $this->Html->script('clipboard.min.js', ['block' => true]); ?>
-
 <?php
+$this->assign('title', __('Poll') . ' - ' . $poll->title);
+
+if (
+    !isset($adminid) ||
+    (!strcmp($poll->adminid, $adminid) == 0)
+) {
+    $adminid = null;
+}
+
+$this->Html->script('poll_view.js', ['block' => 'scriptBottom']);
+$this->Html->script('clipboard.min.js', ['block' => true]);
+
 $this->Html->scriptStart(['block' => true]);
 echo 'var jswebroot = ' . json_encode($this->request->getAttributes()['webroot']) . ';';
 echo 'var jspollid = ' . json_encode($poll->id) . ';';
@@ -46,6 +52,33 @@ $this->Html->scriptEnd();
 </div>
 
 <div id="poll-container">
+    <?php if ($poll->locked == 0) {
+        if (isset($userpw) && $poll->editentry == 1) { // Edit entry
+            $edituser = '';
+            if (in_array($userpw, $usermap_pw)) {
+                $edituser = array_search($userpw, $usermap_pw);
+            }
+
+            echo $this->Form->create(
+                $newentry,
+                [
+                    'type' => 'post',
+                    'id' => 'entry_form',
+                    'url' => ['controller' => 'Entries', 'action' => 'edit', $poll->id, $usermap[$edituser], $userpw, $adminid],
+                ],
+            );
+        } else { // New entry
+            echo $this->Form->create(
+                $newentry,
+                [
+                    'type' => 'post',
+                    'id' => 'entry_form',
+                    'url' => ['controller' => 'Entries', 'action' => 'new', $poll->id],
+                ],
+            );
+        }
+    } ?>
+
     <table class="schedule">
         <?php echo $this->element('choice/list'); ?>
         <?php if ($poll->hidevotes == 0) {
@@ -53,20 +86,18 @@ $this->Html->scriptEnd();
         } ?>
 
         <!-- SPACER ROW -->
-        <?php echo '<tr class="table-spacer-row"><td colspan="' . (count($pollchoices) + 1) . '"></td></tr>'; ?>
+        <?php echo '<tr class="table-spacer-row"><td colspan="' . (count($pollchoices) + 2) . '"></td></tr>'; ?>
 
         <!-- NEW ENTRY FORM ROW -->
         <?php if ($poll->locked == 0) {
-            echo '<tr class="schedule-new valign-middle">';
             if (isset($userpw) && $poll->editentry == 1) {
                 echo $this->element('entry/edit');
             } else {
                 echo $this->element('entry/new');
             }
-            echo '</tr>';
 
             echo '<tr class="table-spacer-row table-spacer-row-big">
-            <td colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
+            <td colspan="' . (count($pollchoices) + 2) . '"></td></tr>';
         } ?>
 
         <!-- RESULTS -->
@@ -79,6 +110,10 @@ $this->Html->scriptEnd();
             }
         } ?>
     </table>
+
+    <?php if ($poll->locked == 0) {
+        echo $this->Form->end();
+    } ?>
 </div>
 
 <?php if (

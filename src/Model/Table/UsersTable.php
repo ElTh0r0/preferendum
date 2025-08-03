@@ -10,7 +10,6 @@
  * @copyright 2019-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 declare(strict_types=1);
@@ -68,12 +67,19 @@ class UsersTable extends Table
 
     public function findFilteredBackendUsers(Query $query): Query
     {
+        // See AppController.php: BACKENDROLES
+        $BACKENDROLES = [
+            'admin',
+            'polladmin',
+            'viewer',
+        ];
+
         // Pre-filter users at login and remove users without role (= poll users)
         // Otherwise there might be collisions with poll users with same name as backend user
         // See Application.php: 'finder' => 'filteredBackendUsers'
         return $query->find('all')
             ->select(['id', 'name', 'role', 'password'])
-            ->where(['role <>' => '']);
+            ->where(['role IN' => $BACKENDROLES]);
     }
 
     /**

@@ -57,10 +57,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         parent::bootstrap();
 
         if (PHP_SAPI !== 'cli') {
-            FactoryLocator::add(
-                'Table',
-                (new TableLocator())->allowFallbackClass(false)
-            );
+            // The bake plugin requires fallback table classes to work properly
+            FactoryLocator::add('Table', (new TableLocator())->allowFallbackClass(false));
         }
 
         // Load more plugins here
@@ -91,7 +89,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // See https://github.com/CakeDC/cakephp-cached-routing
             ->add(new RoutingMiddleware($this))
 
-            // add Authentication after RoutingMiddleware
+            // Add Authentication after RoutingMiddleware
             ->add(new AuthenticationMiddleware($this))
 
             // Parse various types of encoded request bodies so that they are
@@ -133,23 +131,24 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
         // Load the authenticators, you want session first
         $authenticationService->loadAuthenticator('Authentication.Session');
-        // Configure form data check to pick name and password
-        $authenticationService->loadAuthenticator('Authentication.Form', [
-            'fields' => $fields,
-            'loginUrl' => Router::url(),
-        ]);
 
-        // Load identifiers
+        // Configure form data check to pick name and password
         // Using custom finder to pre-filter users (remove poll users)
         // See UsersTable.php: findFilteredBackendUsers(...)
-        $authenticationService->loadIdentifier('Authentication.Password', [
+        $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
-            'resolver' => [
-                'className' => 'Authentication.Orm',
-                'userModel' => 'Users',
-                'finder' => 'filteredBackendUsers',
+            'loginUrl' => Router::url('/admin/login'),
+            'identifier' => [
+                'Authentication.Password' => [
+                    'fields' => $fields,
+                    'resolver' => [
+                        'className' => 'Authentication.Orm',
+                        'userModel' => 'Users',
+                        'finder' => 'filteredBackendUsers',
+                    ],
+                ],
             ],
-        ],);
+        ]);
 
         return $authenticationService;
     }

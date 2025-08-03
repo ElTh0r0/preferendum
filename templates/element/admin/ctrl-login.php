@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\Configure;
@@ -32,7 +31,7 @@ use Cake\Core\Configure;
                 'hidden' => isset($pollid),
                 'value' => $pollid ?? '', // same as: isset($pollid) ? $pollid : '',
                 'autocomplete' => 'username',
-            ]
+            ],
         );
         ?>
         <?php echo $this->Form->control(
@@ -42,7 +41,7 @@ use Cake\Core\Configure;
                 'label' => __('Password'),
                 'type' => 'password',
                 'autocomplete' => 'current-password',
-            ]
+            ],
         ); ?>
     </fieldset>
     <?php echo $this->Form->submit(__('Login')); ?>

@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 declare(strict_types=1);
@@ -64,7 +63,7 @@ class ChoicesController extends AppController
                                 'option' => trim($choicestring),
                                 'max_entries' => $choicemax,
                                 'sort' => $nextsort,
-                            ]
+                            ],
                         );
 
                         if ($this->Choices->save($dbchoice)) {
@@ -160,7 +159,7 @@ class ChoicesController extends AppController
     {
         $query = $this->Choices->find(
             'all',
-            conditions: ['poll_id' => $pollid, 'option' => $newchoice]
+            conditions: ['poll_id' => $pollid, 'option' => $newchoice],
         );
 
         return $query->all()->isEmpty(); // Check that choice with same name doesn't exist
@@ -172,7 +171,7 @@ class ChoicesController extends AppController
     {
         $query = $this->Choices->find(
             'all',
-            conditions: ['id' => $choiceid, 'poll_id' => $pollid]
+            conditions: ['id' => $choiceid, 'poll_id' => $pollid],
         );
 
         return !$query->all()->isEmpty();

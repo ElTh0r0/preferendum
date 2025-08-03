@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 declare(strict_types=1);
@@ -32,7 +31,7 @@ class UsersController extends AppController
         // Configure the login action to not require authentication, preventing
         // the infinite redirect loop issue
         $this->Authentication->allowUnauthenticated(
-            ['login', 'logout', 'forgotPassword', 'deleteUserAndPollEntries',]
+            ['login', 'logout', 'forgotPassword', 'deleteUserAndPollEntries',],
         );
     }
 
@@ -67,7 +66,7 @@ class UsersController extends AppController
 
         $backendusers = $this->Users->find(
             'all',
-            order: ['name' => 'ASC']
+            order: ['name' => 'ASC'],
         )->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
         $backendusers = $backendusers->all()->toArray();
 
@@ -172,7 +171,7 @@ class UsersController extends AppController
 
         if (isset($editUserId) && !empty($editUserId)) {
             $dbEditUser = $this->Users->find()->select(
-                ['name', 'role', 'info']
+                ['name', 'role', 'info'],
             )->where(['id' => $editUserId])->firstOrFail();
             $editUserName = $dbEditUser->name;
             $editUserRole = $dbEditUser->role;
@@ -191,7 +190,7 @@ class UsersController extends AppController
 
         $backendusers = $this->Users->find(
             'all',
-            order: ['name' => 'ASC']
+            order: ['name' => 'ASC'],
         )->select(['id', 'name', 'role', 'info'])->where(['role IN' => self::BACKENDROLES]);
         $backendusers = $backendusers->all()->toArray();
 
@@ -205,7 +204,7 @@ class UsersController extends AppController
             'editUserName',
             'editUserRole',
             'editEmail',
-            'user'
+            'user',
         ));
 
         return null;
@@ -434,7 +433,7 @@ class UsersController extends AppController
                                     'username' => $dbUser['name'],
                                     'loginurl' => $loginurl,
                                     'newpassword' => $newpassword,
-                                ]
+                                ],
                             )
                             ->deliver();
                     } else {
@@ -511,7 +510,7 @@ class UsersController extends AppController
     public function deleteUserAndPollEntries(
         ?string $pollid = null,
         ?string $adminid = null,
-        ?int $userid = null
+        ?int $userid = null,
     ): object {
         $this->request->allowMethod(['post', 'deleteUserAndPollEntries']);
 

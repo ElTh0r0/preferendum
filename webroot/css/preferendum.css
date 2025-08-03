@@ -122,6 +122,41 @@ a:focus {
     outline: none;
 }
 
+/* Links styled as button */
+a.button {
+    background-color: var(--color-background-secondary);
+    background-repeat: no-repeat;
+    background-position: 10px 45%;
+    border: none;
+    border-radius: var(--border-radius-small);
+    color: var(--color-font-secondary);
+    cursor: pointer;
+    font-size: 0.8rem;
+    margin: 0 0.5rem;
+    padding: 8px 15px 8px 36px;  
+}
+
+a.button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+/* Links styled as icon-buttons */
+a.icon-button {
+    background-color: var(--color-background-secondary);
+    background-position: center center;
+    background-repeat: no-repeat;
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    display: block;
+    height: 24px;
+    width: 24px;
+}
+
+a.icon-button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
 button::-moz-focus-inner {
     border: 0;
 }
@@ -134,10 +169,85 @@ em {
     opacity: 0.6;
 }
 
-/* DATEPICKER COLORS */
-
 .datepicker-container * {
     font-size: 16px;
+}
+
+/* ==== CONTROL-ELEMENTS ==== */
+
+#control-elements {
+    margin-bottom: 0.5rem;
+    text-align: right;
+    border-top: 1.2rem solid var(--color-background-comments);
+}
+
+#control-elements > div {
+    display: inline-block;
+    padding: 0 1.2rem 1.2rem 1.2rem;
+    border-bottom-left-radius: var(--border-radius-big);
+    background-color: var(--color-background-comments);
+}
+
+/* POLL EDIT control-elements */
+#control-elements a#ctrl-edit-poll {
+    background-image: url("../img/icon-pen.png");
+}
+
+#control-elements a#ctrl-view-poll {
+    background-image: url("../img/icon-eye.png");
+}
+
+#control-elements a#ctrl-lock-poll {
+    background-image: url("../img/icon-lock.png");
+}
+
+#control-elements a#ctrl-export-poll {
+    background-image: url("../img/icon-download.png");
+}
+
+#control-elements a#ctrl-delete-poll {
+    background-image: url("../img/icon-delete.png");
+}
+
+/* ADMIN control-elements */
+#control-elements a#ctrl-usermanagement {
+    background-image: url("../img/icon-user.png");
+}
+
+#control-elements a#ctrl-logout {
+    background-image: url("../img/icon-logout.png");
+}
+
+#control-elements a#ctrl-polls {
+    background-image: url("../img/icon-chart.png");
+}
+
+/* VIEW POLL Light/dark toggle and mini-view buttons*/
+#control-elements button {
+    margin: 0 0.5rem;
+    cursor: pointer;
+    background-color: var(--color-background-secondary);
+    background-repeat: no-repeat;
+    background-position: 10px 45%;
+    padding-left: 36px;
+}
+
+#control-elements button:hover {
+    background-color: var(--color-background-secondary-hover);
+}
+
+#control-elements button#ctrl-mini-view {
+    background-image: url("../img/icon-eye.png");
+}
+
+#control-elements button.themeToggle {
+    background-image: url(../img/icon-moon.png);
+    background-position: center center !important;
+    padding: 8px 12px 8px 12px !important;
+}
+
+#control-elements button.themeToggle--light {
+    background-image: url(../img/icon-sun.png);
 }
 
 /* ==== TO BE CATEGORIZED AND SORTED ==== */
@@ -292,62 +402,6 @@ p.details {
     vertical-align: middle;
 }
 
-#control-elements {
-    margin-bottom: 0.5rem;
-    text-align: right;
-    border-top: 1.2rem solid var(--color-background-comments);
-}
-
-#control-elements > div {
-    display: inline-block;
-    padding: 0 1.2rem 1.2rem 1.2rem;
-    border-bottom-left-radius: var(--border-radius-big);
-    background-color: var(--color-background-comments);
-}
-
-#control-elements button {
-    margin: 0 0.5rem;
-    cursor: pointer;
-    background-color: var(--color-background-secondary);
-    background-repeat: no-repeat;
-    background-position: 10px 45%;
-    padding-left: 36px;
-}
-
-#control-elements button:hover {
-    background-color: var(--color-background-secondary-hover);
-}
-
-#control-elements button#ctrl-mini-view {
-    background-image: url("../img/icon-eye.png");
-}
-
-#control-elements button#ctrl-edit-poll {
-    background-image: url("../img/icon-pen.png");
-}
-
-#control-elements button#ctrl-lock-poll {
-    background-image: url("../img/icon-lock.png");
-}
-
-#control-elements button#ctrl-export-poll {
-    background-image: url("../img/icon-download.png");
-}
-
-#control-elements button#ctrl-delete-poll {
-    background-image: url("../img/icon-delete.png");
-}
-
-#control-elements button.themeToggle {
-    background-image: url(../img/icon-moon.png);
-    background-position: center center !important;
-    padding: 8px 12px 8px 12px !important;
-}
-
-#control-elements button.themeToggle--light {
-    background-image: url(../img/icon-sun.png);
-}
-
 #poll-container {
     overflow-x: auto;
 }
@@ -434,14 +488,10 @@ td.schedule-header > div {
     margin: 5px 0;
 }
 
-td.schedule-header .date-delete {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: center center;
+td.schedule-header a.date-delete {
+    background-image: url(../img/icon-delete.png);
 }
+
 td.schedule-header .date-edit {
     width: 24px;
     height: 24px;
@@ -500,6 +550,18 @@ tr.schedule-results td.top {
     background-color: var(--color-feedback-positive);
 }
 
+button.entry-copy-link-user {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    background: var(--color-background-secondary) url(../img/icon-copy.png)
+        no-repeat;
+    background-position: center center;
+    border-top-right-radius: var(--border-radius-big);
+    border-bottom-right-radius: var(--border-radius-big);
+    padding: 6px 15px 6px 15px !important;
+}
+
 button.entry-copy-link {
     width: 24px;
     height: 24px;
@@ -510,6 +572,8 @@ button.entry-copy-link {
     border-top-right-radius: var(--border-radius-big);
     border-bottom-right-radius: var(--border-radius-big);
     padding: 6px 15px 6px 15px !important;
+    float: left;
+    margin-right: 5px;
 }
 
 button.entry-email-link {
@@ -555,26 +619,15 @@ table.schedule button.copy-fail:hover {
     background-color: var(--color-feedback-negative);
 }
 
-button.entry-edit {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-pen.png)
-        no-repeat;
-    background-position: center center;
-    border-top-right-radius: var(--border-radius-big);
-    border-bottom-right-radius: var(--border-radius-big);
+a.entry-edit {
+    background-image: url(../img/icon-pen.png);
+    float: left;
+    margin-right: 5px;
 }
 
-button.schedule-delete {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: center center;
-    border-top-right-radius: var(--border-radius-big);
-    border-bottom-right-radius: var(--border-radius-big);
+a.schedule-delete {
+    background-image: url(../img/icon-delete.png);
+    float: left;
 }
 
 table.schedule.mini td.schedule-delete {
@@ -804,28 +857,29 @@ input#choice[type="text"] {
     border-bottom: dotted 1px #ccc;
 }
 
+.comment-head {
+    display: block;
+    height: 24px;
+}
+
 .comment-name {
     font-weight: bold;
+    float: left;
 }
 
 .comment-date {
-    float: right;
     color: #666;
+    float: right;
 }
 
-.comment-delete {
-    background: url(../img/icon-delete.png) no-repeat;
-    background-position: center center;
-    background-origin: content-box;
-    cursor: pointer;
-    margin-top: 0.2em;
-    margin-bottom: -1em;
-    height: 24px;
-    width: 24px;
+a.comment-delete {
+    background-image: url(../img/icon-delete.png);
+    float: right;
+    margin-left: 5px;
 }
 
 .comment-text {
-    margin-top: 8px;
+    margin-top: 2px;
     line-height: 110%;
 }
 
@@ -990,6 +1044,8 @@ button[type="button"]:disabled {
 
 #search_clear {
     float:right;
+    margin: 0;
+    padding: 10px 15px 10px 15px;
 }
 
 #admin-page table {
@@ -999,101 +1055,49 @@ button[type="button"]:disabled {
     padding: 4px 4px;
 }
 
-#control-elements button#ctrl-usermanagement {
-    background-image: url("../img/icon-user.png");
-}
-
-#control-elements button#ctrl-logout {
-    background-image: url("../img/icon-logout.png");
-}
-
-#control-elements button#ctrl-polls {
-    background-image: url("../img/icon-chart.png");
-}
-
-button.admin-new-poll {
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-plus.png)
-        no-repeat;
-    background-position: 10px 45%;
+a#admin-new-poll {
+    background-image: url(../img/icon-plus.png);
     float: right;
-    padding-left: 36px;
-    margin-left: 10px;
+    margin-right: 0px;
 }
 
-button.admin-delinactive-polls {
-    cursor: pointer;
-    background: var(--color-feedback-negative) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: 10px 45%;
+a#admin-delinactive-polls {
+    background-color: var(--color-feedback-negative);
+    background-image: url(../img/icon-delete.png);
     float: right;
-    padding-left: 36px;
-    margin-left: 10px;
-}
-button.admin-delinactive-polls[type="button"]:hover {
-    background-color: var(--color-feedback-negative);
+    margin-right: 0px;
 }
 
-button.admin-delexpired-polls {
-    cursor: pointer;
-    background: var(--color-feedback-negative) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: 10px 45%;
+a#admin-delexpired-polls {
+    background-color: var(--color-feedback-negative);
+    background-image: url(../img/icon-delete.png);
     float: right;
-    padding-left: 36px;
-    margin-left: 10px;
+    margin-right: 0px;
 }
-button.admin-delexpired-polls[type="button"]:hover {
+
+a.admin-view-userinfo {
+    background-image: url(../img/icon-user-info2.png);
+}
+
+a.admin-view-poll {
+    background-image: url(../img/icon-eye.png);
+}
+
+a.admin-edit-poll {
+    background-image: url(../img/icon-pen.png);
+}
+
+a.admin-export-poll {
+    background-image: url(../img/icon-download.png);
+}
+
+a.admin-delete-poll {
     background-color: var(--color-feedback-negative);
+    background-image: url(../img/icon-delete.png);
 }
 
-button.admin-view-poll {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-eye.png)
-        no-repeat;
-    background-position: center center;
-}
-
-button.admin-edit-poll {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-pen.png)
-        no-repeat;
-    background-position: center center;
-}
-
-button.admin-export-poll {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-download.png)
-        no-repeat;
-    background-position: center center;
-}
-
-button.admin-delete-poll {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-feedback-negative) url(../img/icon-delete.png)
-        no-repeat;
-    background-position: center center;
-}
-
-button.admin-delete-poll[type="button"]:hover {
+a.admin-delete-poll:hover {
     background-color: var(--color-feedback-negative);
-}
-
-button.admin-view-userinfo {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    background: var(--color-background-secondary) url(../img/icon-user-info2.png)
-        no-repeat;
-    background-position: center center;
 }
 
 /* ==== User admin page ==== */

@@ -10,7 +10,6 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\Configure;
@@ -55,7 +54,7 @@ $this->Html->scriptEnd();
 
     $deleteInactive = Configure::read('preferendum.deleteInactivePollsAfter');
     if ($deleteInactive > 0) {
-        echo '<p><br /><span class="pale">';
+        echo '<p><br><span class="pale">';
         echo __('Attention! Inactive polls will be deleted automatically after {0} days!', $deleteInactive);
         echo '</span></p>';
     }

@@ -28,7 +28,7 @@
   - Define maximum number of entries per option
   - Protect poll by a password
 
-![Screenshot](https://github.com/ElTh0r0/preferendum/assets/26674558/8b45b2f3-7587-4784-8e7a-9255364492d1)
+![Screenshot](https://github.com/user-attachments/assets/3fba4492-2b74-4db9-b9f8-06aa0bfdfa0d)
 
 ## Requirements
 - PHP 8.1 or higher (including intl and mbstring extension)
@@ -76,7 +76,7 @@ If you want to work on the code, clone the repositiory and run `composer install
 If you just like PREFERendum as it is, let me know by donating this repo a star.
 
 ### Help translating
-New translations and corrections are highly welcome! You can either fork the source code from GitHub, make your changes and create a pull request or you can participate on Transifex: https://www.transifex.com/elth0r0/preferendum/
+New translations and corrections are highly welcome! You can either fork the source code from GitHub, make your changes and create a pull request or you can participate on Transifex: https://explore.transifex.com/elth0r0/preferendum/
 
 ## Attribution of used third-party software/media
 PREFERendum makes use of the following software/media and says **Thank you!** to:

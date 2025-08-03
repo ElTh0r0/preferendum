@@ -30,12 +30,13 @@ use Cake\Controller\Controller;
  */
 class AppController extends Controller
 {
-    public const BACKENDROLES = [
+    // If changed, update in UsersTable.php findFilteredBackendUsers() as well
+    public const array BACKENDROLES = [
         'admin',
         'polladmin',
         'viewer',
     ];
-    public const POLLPWROLE = 'pollpw';
+    public const string POLLPWROLE = 'pollpw';
 
     /**
      * Initialization hook method.

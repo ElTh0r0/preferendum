@@ -10,14 +10,13 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\Configure;
 ?>
 
 <!DOCTYPE html>
-<html lang="<?php echo str_replace('_', '-', Configure::read('App.defaultLocale')) ?>" data-theme="light">
+<html lang=<?php echo '"' . str_replace('_', '-', Configure::read('App.defaultLocale')) . '" data-theme="' . Configure::read('preferendum.defaultTheme') . '"' ?>>
 
 <head>
     <?php echo $this->Html->charset() ?>
@@ -27,23 +26,29 @@ use Cake\Core\Configure;
         <?php echo $this->fetch('title') ?>
     </title>
     <meta name="robots" content="noindex,nofollow">
-    <?php echo $this->Html->meta('icon') ?>
 
-    <?php echo $this->Html->css(['reset', 'preferendum']) ?>
-    <?php echo $this->Html->script('jquery-3.6.3.min.js', ['inline' => false]) ?>
-    <?php if (Configure::read('preferendum.toggleTheme')) {
+    <?php
+    echo $this->Html->meta('icon', '/favicon-48x48.png', ['type' => 'image/png', 'sizes' => '48x48']);
+    echo $this->Html->meta('icon', '/favicon-32x32.png', ['type' => 'image/png', 'sizes' => '32x32']);
+    echo $this->Html->meta('icon', '/favicon-16x16.png', ['type' => 'image/png', 'sizes' => '16x16']);
+    echo $this->Html->meta('icon', '/favicon.ico', ['type' => 'image/x-icon']);
+
+    echo $this->Html->css(['reset', 'preferendum']);
+    echo $this->Html->script('jquery-3.6.3.min.js', ['inline' => false]);
+    if (Configure::read('preferendum.toggleTheme')) {
         echo $this->Html->script('theme_toggle.js', ['block' => 'scriptBottom']);
-    } ?>
+    }
 
-    <?php echo $this->fetch('meta') ?>
-    <?php echo $this->fetch('css') ?>
-    <?php echo $this->fetch('script') ?>
+    echo $this->fetch('meta');
+    echo $this->fetch('css');
+    echo $this->fetch('script');
+    ?>
 </head>
 
 <body>
     <noscript>
         <div id="noscript">
-            <img src="img/logo.png" alt="">
+            <img src="img/logo.svg" alt="">
             <span><?php echo __('Please enable JavaScript in your browser and reload this page.') ?></span>
         </div>
     </noscript>

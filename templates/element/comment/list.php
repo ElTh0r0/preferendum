@@ -10,7 +10,6 @@
  * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 use Cake\Core\Configure;
@@ -24,9 +23,11 @@ use Cake\Core\Configure;
         foreach ($poll->comments as $com) {
     ?>
             <div class="comment-container">
-                <span class="comment-name"><?php echo h($com->name) ?></span>
-                <div class="comment-date">
-                    <?php echo $com->created->format(Configure::read('preferendum.dateformatComments')) ?>
+                <div class="comment-head">
+                    <div class="comment-name"><?php echo h($com->name) ?></div>
+                    <div class="comment-date">
+                        <?php echo $com->created->format(Configure::read('preferendum.dateformatComments')) ?>
+                    </div>
                 </div>
                 <div class="comment-text"><?php echo nl2br(h($com->text)) ?></div>
             </div>

@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 
 declare(strict_types=1);
@@ -25,7 +24,7 @@ use Cake\Mailer\Mailer;
 
 class PollsController extends AppController
 {
-    private const CSV_SEPARATOR = ',';
+    private const string CSV_SEPARATOR = ',';
 
     public function initialize(): void
     {
@@ -119,7 +118,7 @@ class PollsController extends AppController
                             'poll_id' => $newpoll->id,
                             'option' => trim($choices[$i]),
                             'sort' => $i + 1,
-                        ]
+                        ],
                     );
                     if (count($choices) == count($max_entries)) {
                         if (is_numeric($max_entries[$i])) {
@@ -149,7 +148,7 @@ class PollsController extends AppController
                                     'permanent' => true,
                                     'escape' => false,
                                 ],
-                            ]
+                            ],
                         );
                     } else {
                         $this->Flash->success(__('Your poll has been saved.'));
@@ -248,7 +247,7 @@ class PollsController extends AppController
             'userpw',
             'usermap_info',
             'newentry',
-            'newcomment'
+            'newcomment',
         ));
 
         return null;
@@ -315,7 +314,7 @@ class PollsController extends AppController
             'userpw',
             'usermap_info',
             'newchoice',
-            'newentry'
+            'newentry',
         ));
 
         return null;
@@ -336,9 +335,11 @@ class PollsController extends AppController
             $wasPwProtected = $poll->pwprotect;
             $dbadminid = $poll->adminid;
             if (strcmp($dbadminid, $adminid) == 0) {
-                $pollexp = $poll->expiry; // Store temporary to prevent manipulation
+                $pollexp = $poll->expiry; // Store temporary to prevent manipulation, if demo mode is enabled
                 $this->Polls->patchEntity($poll, $this->request->getData());
-                $poll->expiry = $pollexp;
+                if (Configure::read('preferendum.demoMode')) {
+                    $poll->expiry = $pollexp;
+                }
 
                 $pollpw = '';
                 if ($poll->pwprotect && isset($this->request->getData()['password'])) {
@@ -455,7 +456,7 @@ class PollsController extends AppController
                                 'pollname' => $pollname,
                                 'name' => $name,
                                 'link' => $link,
-                            ]
+                            ],
                         )
                         ->deliver();
 
@@ -794,7 +795,7 @@ class PollsController extends AppController
         string $title,
         string $pollid,
         string $adminid,
-        string $password
+        string $password,
     ): void {
         Configure::load('app_local');
         $from = Configure::read('Email.default.from');
@@ -815,7 +816,7 @@ class PollsController extends AppController
                         'title' => $title,
                         'link' => $adminlink,
                         'password' => $password,
-                    ]
+                    ],
                 )
                 ->deliver();
         }
@@ -831,7 +832,7 @@ class PollsController extends AppController
                     'title' => $title,
                     'link' => $publiclink,
                     'password' => $password,
-                ]
+                ],
             )
             ->deliver();
     }
@@ -910,7 +911,7 @@ class PollsController extends AppController
                 'name' => $pollid,
                 'role' => self::POLLPWROLE,
                 'password' => (new DefaultPasswordHasher())->hash(trim($pollpw)),
-            ]
+            ],
         );
 
         if ($this->fetchTable('Users')->save($dbpwuser)) {

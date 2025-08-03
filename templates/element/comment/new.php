@@ -10,7 +10,6 @@
  * @copyright 2020-present github.com/ElTh0r0
  * @license   MIT License (https://opensource.org/licenses/mit-license.php)
  * @link      https://github.com/ElTh0r0/preferendum
- * @version   0.8.0
  */
 ?>
 
@@ -26,7 +25,7 @@
         [
             'type' => 'post',
             'url' => ['controller' => 'Comments', 'action' => 'add', $poll->id],
-        ]
+        ],
     );
     echo $this->Form->control(
         'name',
@@ -38,7 +37,7 @@
             'type' => 'text',
             'label' => __('Your name') . ' *',
             'autocomplete' => 'off',
-        ]
+        ],
     );
     echo $this->Form->control(
         'text',
@@ -49,7 +48,7 @@
             'minlength' => '3',
             'maxlength' => '512',
             'label' => __('Your comment') . ' *',
-        ]
+        ],
     );
     echo '<div class="content-right">';
     echo $this->Form->button(__('Save'));
