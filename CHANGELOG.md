@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.8.1] (2025-08-03)
+
+- Bug fixes:
+  - Updating the expiry date
+  - Changing an existing entry with limited choices
+- Fix many HTML warnings
+- Update logo
+- Configurable default theme
+- Fixing CakePHP related deprecations
+- Update to latest CakePHP 5.2.x
+- Align with latest CakePHP app skeleton
+- phpcs code corrections
+
 ## [0.8.0] (2024-11-10)
 
 - Migrate from CakePHP 4.5 to 5.1
@@ -71,6 +84,7 @@
 - Initial pre-release
 
 
+[0.8.1]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.8.1
 [0.8.0]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.8.0
 [0.7.1]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.7.1
 [0.7.0]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.7.0
