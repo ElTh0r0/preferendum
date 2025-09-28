@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.8.2] (2025-09-28)
+
+- Bug fixes: Login for password protected polls
+- Update to latest CakePHP 5.2.x
+
 ## [0.8.1] (2025-08-03)
 
 - Bug fixes:
