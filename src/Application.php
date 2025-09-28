@@ -137,7 +137,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // See UsersTable.php: findFilteredBackendUsers(...)
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
-            'loginUrl' => Router::url('/admin/login'),
+            'urlChecker' => [
+                'useRegex' => true
+            ],
+            'loginUrl' => '#^.*/admin/login(/([a-zA-Z0-9]+/NA))?$#',
             'identifier' => [
                 'Authentication.Password' => [
                     'fields' => $fields,

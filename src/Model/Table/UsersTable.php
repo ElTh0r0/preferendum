@@ -72,6 +72,7 @@ class UsersTable extends Table
             'admin',
             'polladmin',
             'viewer',
+            'pollpw',  // Important: In addition to the backend users we must include pollpw!
         ];
 
         // Pre-filter users at login and remove users without role (= poll users)
