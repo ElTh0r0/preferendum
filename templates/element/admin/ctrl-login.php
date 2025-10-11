@@ -31,6 +31,7 @@ use Cake\Core\Configure;
                 'hidden' => isset($pollid),
                 'value' => $pollid ?? '', // same as: isset($pollid) ? $pollid : '',
                 'autocomplete' => 'username',
+                'autofocus' => !isset($pollid),
             ],
         );
         ?>
@@ -41,6 +42,7 @@ use Cake\Core\Configure;
                 'label' => __('Password'),
                 'type' => 'password',
                 'autocomplete' => 'current-password',
+                'autofocus' => isset($pollid),
             ],
         ); ?>
     </fieldset>

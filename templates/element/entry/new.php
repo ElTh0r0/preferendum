@@ -30,6 +30,7 @@ if ($poll->anonymous) {
             'maxlength' => '32',
             'placeholder' => __('Your name?'),
             'autocomplete' => 'off',
+            'autofocus' => true,
         ],
     );
     echo '</td>';

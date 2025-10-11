@@ -33,6 +33,7 @@ echo $this->Form->control(
         'required' => true,
         'label' => __('Title') . ' *',
         'placeholder' => __('Title for your poll'),
+        'autofocus' => true,
     ],
 );
 // Poll description

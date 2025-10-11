@@ -29,6 +29,7 @@ use Cake\Core\Configure;
         z.value = "";
         z.placeholder = "' . __('New option') . '";
         z.required = true;
+        z.focus();
     } else {
         w.value = "";
         x.style.display = "none";

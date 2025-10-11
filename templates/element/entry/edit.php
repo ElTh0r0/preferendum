@@ -38,6 +38,7 @@ if ($poll->anonymous) {
             'placeholder' => __('Your name?'),
             'default' => $edituser,
             'autocomplete' => 'off',
+            'autofocus' => true,
         ],
     );
     echo '</td>';

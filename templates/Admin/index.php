@@ -125,6 +125,7 @@ use Cake\Core\Configure;
                 'value' => $this->request->getQuery('search'),
                 'id' => 'search_input',
                 'placeholder' => __('Search poll or user'),
+                'autofocus' => true,
             ]);
             echo $this->Html->link(
                 __('Clear filter'),
