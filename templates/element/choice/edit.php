@@ -53,6 +53,7 @@ function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
     y.innerText = "-";
     z.value = currentChoiceText;
     z.placeholder = currentChoiceText;
+    z.focus();
     if (maxInp) {
         maxInp.value = currentChoiceMax;
     }
