@@ -65,7 +65,7 @@ class UsersTable extends Table
         }
     }
 
-    public function findFilteredBackendUsers(Query $query): Query
+    public function findFilteredBackendUsers(\Cake\ORM\Query\SelectQuery $query): \Cake\ORM\Query\SelectQuery
     {
         // See AppController.php: BACKENDROLES
         $BACKENDROLES = [

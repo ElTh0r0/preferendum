@@ -31,7 +31,7 @@
 ![Screenshot](https://github.com/user-attachments/assets/3fba4492-2b74-4db9-b9f8-06aa0bfdfa0d)
 
 ## Requirements
-- PHP 8.1 or higher (including intl and mbstring extension)
+- PHP 8.2 or higher (including intl and mbstring extension)
 - One of the following databases:
   - MySql (5.7 or higher)
   - MariaDB (10.1 or higher)
