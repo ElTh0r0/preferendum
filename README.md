@@ -49,6 +49,7 @@
   - Download [Composer](https://getcomposer.org/download/)
   - Run `composer install --no-dev`. The install command will download all needed dependencies.
 - In `config/app_local.php` change the following entries:
+  - App\fullBaseUrl: Set base URL to use for absolute links (e.g. 'https://yourdomain.com')
   - Datasources\Default: Set host, driver ('**Mysql**' for MySql/MariaDB or '**Postgres**' for PostgreSQL) username, password, database according to your environment.
   - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).
 - In `config/preferendum_features.php` configure the features as needed.
