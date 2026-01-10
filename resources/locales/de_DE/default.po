@@ -895,7 +895,7 @@ msgstr "Soll Benutzer {0} wirklich gelöscht werden?"
 
 #: ./templates/email/text/new_backend_pw.php:15
 msgid "A password reset was requested for your account!"
-msgstr "Ein Passwort-Rücksetzung wurde für Deinen Account angefordert!"
+msgstr "Für Deinen Account wurde eine Passwort-Rücksetzung angefordert!"
 
 #: ./templates/email/text/new_backend_pw.php:16
 msgid "Account name:"
