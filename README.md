@@ -49,25 +49,25 @@
   - Download [Composer](https://getcomposer.org/download/)
   - Run `composer install --no-dev`. The install command will download all needed dependencies.
 - In `config/app_local.php` change the following entries:
-  - App\fullBaseUrl: Set base URL to use for absolute links (e.g. 'https://yourdomain.com')
+  - App\fullBaseUrl: Set base URL to use for absolute links (e.g. 'https://example.com')
   - Datasources\Default: Set host, driver ('**Mysql**' for MySql/MariaDB or '**Postgres**' for PostgreSQL) username, password, database according to your environment.
   - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).
 - In `config/preferendum_features.php` configure the features as needed.
 - Upload the `preferendum` directory to your web server (root-directory or somewhere else)
-- Access `<your installation folder>/Db/install` through your browser (e.g. `yourdomain.com/preferendum/Db/install`)
+- Access `<your installation folder>/Db/install` through your browser (e.g. `example.com/preferendum/Db/install`)
 - Delete `src/Controller/DbController.php` from your server
 - Enjoy!
 
 ## Update
 Starting with **v0.7.0** database update scripts had been added to PREFERendum, so that one can keep the existing database & data. But this feature can be only used, if the **old database is on v0.6.0** (or newer)!
 
-Access `<your installation folder>/Db/update` through your browser (e.g. `yourdomain.com/preferendum/Db/update`) and select from which to which version your PREFERendum database shall be updated.
+Access `<your installation folder>/Db/update` through your browser (e.g. `example.com/preferendum/Db/update`) and select from which to which version your PREFERendum database shall be updated.
 
 ## Configuration and customization
 You can turn on/off and configure all the available features in `config/preferendum_features.php`. For a full list of the options see the [Wiki](https://github.com/ElTh0r0/preferendum/wiki).
 
 ### Poll administration interface (off by default)
-If you want to use the optional admin interface (to view and delete any polls on your server via a web interface at `yourdomain.com/preferendum/admin`) you have to enable this in `config/preferendum_features.php` ('adminInterface')! See [Admin Interface](https://github.com/ElTh0r0/preferendum/wiki/6-Admin-interface) for more information.
+If you want to use the optional admin interface (to view and delete any polls on your server via a web interface at `example.com/preferendum/admin`) you have to enable this in `config/preferendum_features.php` ('adminInterface')! See [Admin Interface](https://github.com/ElTh0r0/preferendum/wiki/6-Admin-interface) for more information.
 
 ## Contribution
 This is my first project using [CakePHP](https://cakephp.org), so there might exist many code sections, which could be implemented much more elegant with the build-in CakePHP features. I'm open for any optimization, just send a (well documented) **pull request**! Same for suggestions for additional features or if you are running into problems setting up PREFERendum, please write an [issue](https://github.com/ElTh0r0/preferendum/issues).
