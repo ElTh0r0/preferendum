@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.9.0] (2026-xx-xx)
+## [0.9.0] (2026-03-01)
 
 - Migrate from CakePHP 5.2 to 5.3
   - New entry 'App\fullBaseUrl' required in `config/app_local.php` (compare with app_local.example.php)!
