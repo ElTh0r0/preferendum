@@ -87,6 +87,7 @@ if (Configure::read('preferendum.sendBackendUserPwReset') || strcmp($currentUser
             'required' => true,
             'label' => __('Password'),
             'type' => 'password',
+            'autofocus' => true,
         ],
     );
     echo $this->Form->control(

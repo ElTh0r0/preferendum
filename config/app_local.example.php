@@ -33,6 +33,20 @@ return [
     'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
 
     /*
+     * Configure basic information about the application.
+     *
+     * - fullBaseUrl - SECURITY: A base URL to use for absolute links.
+     *   IMPORTANT: This MUST be set in production to prevent Host Header Injection attacks
+     *   that can compromise password reset and other security-critical features.
+     *   Set this via APP_FULL_BASE_URL environment variable or directly in config.
+     *   Example: 'https://example.com'
+     *   When not set, the application will throw an exception in production mode.
+     */
+    'App' => [
+        'fullBaseUrl' => 'https://example.com',
+    ],
+
+    /*
      * Security and encryption configuration
      *
      * - salt - A random string used in security hashing methods.

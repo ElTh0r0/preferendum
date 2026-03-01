@@ -81,17 +81,17 @@ class CommentsTable extends Table
     public function afterSave(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // Update timestamp in polls table
-        $updatePollTimestamp = $this->Polls->get($entity->poll_id);
-        $this->Polls->touch($updatePollTimestamp);
-        $this->Polls->save($updatePollTimestamp);
+        $poll = $this->Polls->get($entity->poll_id);
+        $this->Polls->getBehavior('Timestamp')->touch($poll);
+        $this->Polls->save($poll);
     }
 
     public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
     {
         // Update timestamp in polls table
-        $updatePollTimestamp = $this->Polls->get($entity->poll_id);
-        $this->Polls->touch($updatePollTimestamp);
-        $this->Polls->save($updatePollTimestamp);
+        $poll = $this->Polls->get($entity->poll_id);
+        $this->Polls->getBehavior('Timestamp')->touch($poll);
+        $this->Polls->save($poll);
     }
 
     /**

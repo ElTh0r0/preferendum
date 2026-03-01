@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    $("#title").focus();
     $("#btnLess").css("cursor", "default");
 
     var datepickerOptions = {

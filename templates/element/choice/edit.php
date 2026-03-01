@@ -29,6 +29,7 @@ use Cake\Core\Configure;
         z.value = "";
         z.placeholder = "' . __('New option') . '";
         z.required = true;
+        z.focus();
     } else {
         w.value = "";
         x.style.display = "none";
@@ -52,6 +53,7 @@ function showEditChoice(currentChoiceId, currentChoiceText, currentChoiceMax) {
     y.innerText = "-";
     z.value = currentChoiceText;
     z.placeholder = currentChoiceText;
+    z.focus();
     if (maxInp) {
         maxInp.value = currentChoiceMax;
     }

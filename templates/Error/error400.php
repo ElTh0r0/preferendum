@@ -9,7 +9,7 @@
 use Cake\Core\Configure;
 
 if (Configure::read('debug')) :
-    $this->layout = 'dev_error';
+    $this->setLayout('dev_error');
 
     $this->assign('title', $message);
     $this->assign('templateName', 'error400.php');

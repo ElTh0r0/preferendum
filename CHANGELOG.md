@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.9.0] (2026-03-01)
+
+- Migrate from CakePHP 5.2 to 5.3
+  - New entry 'App\fullBaseUrl' required in `config/app_local.php` (compare with app_local.example.php)!
+- PHP 8.1 support was dropped; minimum PHP 8.2 required
+- Add autofocus option to input fields
+
 ## [0.8.2] (2025-09-28)
 
 - Bug fixes: Login for password protected polls
@@ -89,6 +96,8 @@
 - Initial pre-release
 
 
+[0.9.0]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.9.0
+[0.8.2]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.8.2
 [0.8.1]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.8.1
 [0.8.0]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.8.0
 [0.7.1]: https://github.com/ElTh0r0/preferendum/releases/tag/v0.7.1

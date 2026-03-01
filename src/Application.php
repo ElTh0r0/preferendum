@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -15,17 +14,18 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
-
 namespace App;
 
 use Authentication\AuthenticationService; // Authentication
 use Authentication\AuthenticationServiceInterface; // Authentication
 use Authentication\AuthenticationServiceProviderInterface; // Authentication
 use Authentication\Middleware\AuthenticationMiddleware; // Authentication
+use App\Middleware\HostHeaderMiddleware;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
+use Cake\Event\EventManagerInterface;
 use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
@@ -56,10 +56,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // Call parent to load bootstrap from files.
         parent::bootstrap();
 
-        if (PHP_SAPI !== 'cli') {
-            // The bake plugin requires fallback table classes to work properly
-            FactoryLocator::add('Table', (new TableLocator())->allowFallbackClass(false));
-        }
+        // By default, does not allow fallback classes.
+        FactoryLocator::add('Table', (new TableLocator())->allowFallbackClass(false));
 
         // Load more plugins here
         $this->addPlugin('Authentication');
@@ -77,6 +75,11 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // Catch any exceptions in the lower layers,
             // and make an error page/response
             ->add(new ErrorHandlerMiddleware(Configure::read('Error'), $this))
+
+            // Validate Host header to prevent Host Header Injection attacks.
+            // In production, ensures App.fullBaseUrl is configured and validates
+            // the incoming Host header against it.
+            ->add(new HostHeaderMiddleware())
 
             // Handle plugin/theme assets like CakePHP normally does.
             ->add(new AssetMiddleware([
@@ -113,7 +116,25 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
      * @return void
      * @link https://book.cakephp.org/5/en/development/dependency-injection.html#dependency-injection
      */
-    public function services(ContainerInterface $container): void {}
+    public function services(ContainerInterface $container): void
+    {
+        // Allow your Tables to be dependency injected
+        //$container->delegate(new \Cake\ORM\Locator\TableContainer());
+    }
+
+    /**
+     * Register custom event listeners here
+     *
+     * @param \Cake\Event\EventManagerInterface $eventManager
+     * @return \Cake\Event\EventManagerInterface
+     * @link https://book.cakephp.org/5/en/core-libraries/events.html#registering-listeners
+     */
+    public function events(EventManagerInterface $eventManager): EventManagerInterface
+    {
+        // $eventManager->on(new SomeCustomListenerClass());
+
+        return $eventManager;
+    }
 
     // =============== AUTHENTICATION =============== //
 

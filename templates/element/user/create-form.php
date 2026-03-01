@@ -34,6 +34,7 @@ echo $this->Form->create(
             'required' => true,
             'label' => __('Name'),
             'autocomplete' => 'off',
+            'autofocus' => true,
         ],
     );
 

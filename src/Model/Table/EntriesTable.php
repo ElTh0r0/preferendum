@@ -81,9 +81,9 @@ class EntriesTable extends Table
             ->firstOrFail();
 
         // Update timestamp in polls table
-        $updatePollTimestamp = $this->Choices->Polls->get($db->poll_id);
-        $this->Choices->Polls->touch($updatePollTimestamp);
-        $this->Choices->Polls->save($updatePollTimestamp);
+        $poll = $this->Choices->Polls->get($db->poll_id);
+        $this->Choices->Polls->getBehavior('Timestamp')->touch($poll);
+        $this->Choices->Polls->save($poll);
     }
 
     public function afterDelete(EventInterface $event, EntityInterface $entity, ArrayObject $options): void
@@ -94,9 +94,9 @@ class EntriesTable extends Table
             ->firstOrFail();
 
         // Update timestamp in polls table
-        $updatePollTimestamp = $this->Choices->Polls->get($db->poll_id);
-        $this->Choices->Polls->touch($updatePollTimestamp);
-        $this->Choices->Polls->save($updatePollTimestamp);
+        $poll = $this->Choices->Polls->get($db->poll_id);
+        $this->Choices->Polls->getBehavior('Timestamp')->touch($poll);
+        $this->Choices->Polls->save($poll);
     }
 
     /**
