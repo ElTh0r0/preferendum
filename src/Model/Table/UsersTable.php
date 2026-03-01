@@ -18,7 +18,7 @@ namespace App\Model\Table;
 
 use ArrayObject;
 use Cake\Event\EventInterface;
-use Cake\ORM\Query;
+use Cake\ORM\Query\SelectQuery;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -65,14 +65,14 @@ class UsersTable extends Table
         }
     }
 
-    public function findFilteredBackendUsers(\Cake\ORM\Query\SelectQuery $query): \Cake\ORM\Query\SelectQuery
+    public function findFilteredBackendUsers(SelectQuery $query): SelectQuery
     {
         // See AppController.php: BACKENDROLES
         $BACKENDROLES = [
             'admin',
             'polladmin',
             'viewer',
-            'pollpw',  // Important: In addition to the backend users we must include pollpw!
+            'pollpw', // Important: In addition to the backend users we must include pollpw!
         ];
 
         // Pre-filter users at login and remove users without role (= poll users)

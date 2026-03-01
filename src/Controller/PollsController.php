@@ -509,7 +509,7 @@ class PollsController extends AppController
 
                 ob_start();
                 $fp = fopen('php://output', 'w');
-                fputcsv($fp, $headerline, self::CSV_SEPARATOR, escape: "");
+                fputcsv($fp, $headerline, self::CSV_SEPARATOR, escape: '');
 
                 $dbentries = $this->getDbEntries($pollid);
                 $pollentries = [];
@@ -542,7 +542,7 @@ class PollsController extends AppController
                                 $csvline[] = __('maybe');
                         }
                     }
-                    fputcsv($fp, $csvline, self::CSV_SEPARATOR, escape: "");
+                    fputcsv($fp, $csvline, self::CSV_SEPARATOR, escape: '');
                 }
 
                 fclose($fp);
