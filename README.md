@@ -1,5 +1,6 @@
 # PREFERendum
 ## A flexible, self-hosted webapp for scheduling and polls
+Repository: https://codeberg.org/ElTh0r0/preferendum
 
 - Based on [sprudel](https://github.com/bkis/sprudel) and ported to [CakePHP](https://github.com/cakephp/cakephp)
 - Clean, intuitive interface
@@ -28,7 +29,7 @@
   - Define maximum number of entries per option
   - Protect poll by a password
 
-![Screenshot](https://github.com/user-attachments/assets/3fba4492-2b74-4db9-b9f8-06aa0bfdfa0d)
+![Screenshot](https://codeberg.org/ElTh0r0/preferendum/wiki/raw/img/screenshot.png)
 
 ## Requirements
 - PHP 8.2 or higher (including intl and mbstring extension)
@@ -40,7 +41,7 @@
 ## Installation
 - Create an empty MariaDB/MySql/PostgreSQL database on your server, note down the DB host address, user name and password
 - Install option #1:
-  - Download the latest PREFERendum release archive `preferendum_vX.X.X.zip` from [releases](https://github.com/ElTh0r0/preferendum/releases)
+  - Download the latest PREFERendum release archive `preferendum_vX.X.X.zip` from [releases](https://codeberg.org/ElTh0r0/preferendum/releases)
   - Extract the contents of the archive into a new directory (e.g. `preferendum` on your computer)
   - Take care of proper folder permissions, see [CakePHP permissions](https://book.cakephp.org/5/en/installation.html#permissions)
   - Copy `config/app_local.example.php` and rename it to `config/app_local.php`.
@@ -64,28 +65,28 @@ Starting with **v0.7.0** database update scripts had been added to PREFERendum, 
 Access `<your installation folder>/Db/update` through your browser (e.g. `example.com/preferendum/Db/update`) and select from which to which version your PREFERendum database shall be updated.
 
 ## Configuration and customization
-You can turn on/off and configure all the available features in `config/preferendum_features.php`. For a full list of the options see the [Wiki](https://github.com/ElTh0r0/preferendum/wiki).
+You can turn on/off and configure all the available features in `config/preferendum_features.php`. For a full list of the options see the [Wiki](https://codeberg.org/ElTh0r0/preferendum/wiki).
 
 ### Poll administration interface (off by default)
-If you want to use the optional admin interface (to view and delete any polls on your server via a web interface at `example.com/preferendum/admin`) you have to enable this in `config/preferendum_features.php` ('adminInterface')! See [Admin Interface](https://github.com/ElTh0r0/preferendum/wiki/6-Admin-interface) for more information.
+If you want to use the optional admin interface (to view and delete any polls on your server via a web interface at `example.com/preferendum/admin`) you have to enable this in `config/preferendum_features.php` ('adminInterface')! See [Admin Interface](https://codeberg.org/ElTh0r0/preferendum/wiki/6-Admin-interface) for more information.
 
 ## Contribution
-This is my first project using [CakePHP](https://cakephp.org), so there might exist many code sections, which could be implemented much more elegant with the build-in CakePHP features. I'm open for any optimization, just send a (well documented) **pull request**! Same for suggestions for additional features or if you are running into problems setting up PREFERendum, please write an [issue](https://github.com/ElTh0r0/preferendum/issues).
+This is my first project using [CakePHP](https://cakephp.org), so there might exist many code sections, which could be implemented much more elegant with the build-in CakePHP features. I'm open for any optimization, just send a (well documented) **pull request**! Same for suggestions for additional features or if you are running into problems setting up PREFERendum, please write an [issue](https://codeberg.org/ElTh0r0/preferendum/issues).
 
 If you want to work on the code, clone the repositiory and run `composer install`. This will download CakePHP library and dependencies.
 
 If you just like PREFERendum as it is, let me know by donating this repo a star.
 
 ### Help translating
-New translations and corrections are highly welcome! You can either fork the source code from GitHub, make your changes and create a pull request or you can participate on Transifex: https://explore.transifex.com/elth0r0/preferendum/
+New translations and corrections are highly welcome! You can either fork the source code, make your changes and then create a pull request or you can participate on [translate.codeberg.org](https://translate.codeberg.org/engage/preferendum/).
 
 ## Attribution of used third-party software/media
 PREFERendum makes use of the following software/media and says **Thank you!** to:
 
-- [/bkis/sprudel](https://github.com/bkis/sprudel)
+- [Sprudel](https://github.com/bkis/sprudel)
 - [CakePHP](https://cakephp.org)
-- [/fengyuanchen/datepicker](https://github.com/fengyuanchen/datepicker)
-- [/jquery/jquery](https://github.com/jquery/jquery)
-- [/zenorocha/clipboard.js](https://github.com/zenorocha/clipboard.js)
+- [Datepicker](https://github.com/fengyuanchen/datepicker)
+- [Jquery](https://github.com/jquery/jquery)
+- [Clipboard.js](https://github.com/zenorocha/clipboard.js)
 - [Icons from iconmonstr.com](http://www.iconmonstr.com)
 - [JS light/dark theme toggle](https://whitep4nth3r.com/blog/best-light-dark-mode-theme-toggle-javascript/)
