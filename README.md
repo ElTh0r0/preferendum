@@ -1,5 +1,6 @@
 # PREFERendum
 ## A flexible, self-hosted webapp for scheduling and polls
+Repository: https://codeberg.org/ElTh0r0/preferendum
 
 - Based on [sprudel](https://github.com/bkis/sprudel) and ported to [CakePHP](https://github.com/cakephp/cakephp)
 - Clean, intuitive interface
@@ -77,7 +78,7 @@ If you want to work on the code, clone the repositiory and run `composer install
 If you just like PREFERendum as it is, let me know by donating this repo a star.
 
 ### Help translating
-New translations and corrections are highly welcome! You can either fork the source code, make your changes and then create a pull request or you can participate on Transifex: https://explore.transifex.com/elth0r0/preferendum/
+New translations and corrections are highly welcome! You can either fork the source code, make your changes and then create a pull request or you can participate on [translate.codeberg.org](https://translate.codeberg.org/engage/preferendum/).
 
 ## Attribution of used third-party software/media
 PREFERendum makes use of the following software/media and says **Thank you!** to:
