@@ -43,14 +43,14 @@ Repository: https://codeberg.org/ElTh0r0/preferendum
 - Install option #1:
   - Download the latest PREFERendum release archive `preferendum_vX.X.X.zip` from [releases](https://codeberg.org/ElTh0r0/preferendum/releases)
   - Extract the contents of the archive into a new directory (e.g. `preferendum` on your computer)
-  - Take care of proper folder permissions, see [CakePHP permissions](https://book.cakephp.org/5/en/installation.html#permissions)
+  - Take care of proper folder permissions, see [CakePHP permissions](https://book.cakephp.org/5.x/installation.html#file-permissions)
   - Copy `config/app_local.example.php` and rename it to `config/app_local.php`.
 - Install option #2:
   - Download **source code** from latest release
   - Download [Composer](https://getcomposer.org/download/)
   - Run `composer install --no-dev`. The install command will download all needed dependencies.
 - In `config/app_local.php` change the following entries:
-  - App\fullBaseUrl: Set base URL to use for absolute links (e.g. 'https://example.com')
+  - App\fullBaseUrl: Set base URL to use for absolute links (e.g. `'https://example.com'`)
   - Datasources\Default: Set host, driver ('**Mysql**' for MySql/MariaDB or '**Postgres**' for PostgreSQL) username, password, database according to your environment.
   - Security\Salt: Replace \_\_SALT\_\_ with an arbitrary string (will be done automatically, if composer install method is used).
 - In `config/preferendum_features.php` configure the features as needed.

@@ -1,15 +1,14 @@
 <?php
 
 /**
- * PREFERendum (https://github.com/ElTh0r0/preferendum)
- * Copyright (c) github.com/ElTh0r0
+ * PREFERendum
  *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
+ * SPDX-FileCopyrightText: codeberg.org/ElTh0r0
+ * SPDX-License-Identifier: MIT
  *
- * @copyright 2020-present github.com/ElTh0r0
- * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/preferendum
+ * @copyright 2020-present codeberg.org/ElTh0r0
+ * @license   MIT License (https://opensource.org/license/MIT)
+ * @link      https://codeberg.org/ElTh0r0/preferendum
  */
 
 echo __('New comment in poll "{0}"', h($title)) . "\r\n\r\n";

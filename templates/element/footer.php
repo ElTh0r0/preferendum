@@ -1,15 +1,14 @@
 <?php
 
 /**
- * PREFERendum (https://github.com/ElTh0r0/preferendum)
- * Copyright (c) github.com/ElTh0r0, github.com/bkis
+ * PREFERendum
  *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
+ * SPDX-FileCopyrightText: codeberg.org/ElTh0r0, github.com/bkis
+ * SPDX-License-Identifier: MIT
  *
- * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
- * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/preferendum
+ * @copyright 2019-present codeberg.org/ElTh0r0, github.com/bkis
+ * @license   MIT License (https://opensource.org/license/MIT)
+ * @link      https://codeberg.org/ElTh0r0/preferendum
  */
 
 use Cake\Core\Configure;
@@ -18,9 +17,9 @@ use Cake\Core\Configure;
 <?php if (Configure::read('preferendum.footerLink')) { ?>
     <div id="footer">
         <em>PREFERendum</em> open source scheduling polls.
-        <a href="https://github.com/ElTh0r0/preferendum" target="_blank">
-            <em>Visit on GitHub</em>
-            <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/icon-github.png' ?> alt="">
+        <a href="https://codeberg.org/ElTh0r0/preferendum" target="_blank">
+            <em>Visit on Codeberg</em>
+            <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/icon-codeberg.png' ?> alt="">
         </a>
     </div>
 <?php } ?>
