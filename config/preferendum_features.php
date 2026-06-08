@@ -1,15 +1,14 @@
 <?php
 
 /**
- * PREFERendum (https://github.com/ElTh0r0/preferendum)
- * Copyright (c) github.com/ElTh0r0, github.com/bkis
+ * PREFERendum
  *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
+ * SPDX-FileCopyrightText: codeberg.org/ElTh0r0, github.com/bkis
+ * SPDX-License-Identifier: MIT
  *
- * @copyright 2019-present github.com/ElTh0r0, github.com/bkis
- * @license   MIT License (https://opensource.org/licenses/mit-license.php)
- * @link      https://github.com/ElTh0r0/preferendum
+ * @copyright 2019-present codeberg.org/ElTh0r0, github.com/bkis
+ * @license   MIT License (https://opensource.org/license/MIT)
+ * @link      https://codeberg.org/ElTh0r0/preferendum
  */
 
 /*
@@ -26,13 +25,13 @@ return [
 
     'preferendum' => [
         // Turn on(true)/off(false) admin interface
-        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/5-Admin-interface
+        // See wiki: https://codeberg.org/ElTh0r0/preferendum/wiki/6-Admin-interface
         'adminInterface' => false,
 
         // Turn on(true)/off(false) that backend users can request password reset by email
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
         // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
-        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/3.1-Email-setup
+        // See wiki: https://codeberg.org/ElTh0r0/preferendum/wiki/4.1-Email-setup
         'sendBackendUserPwReset' => false,
 
         // Turn on(true)/off(false) that only 'admin' or 'polladmin' users can create polls
@@ -51,7 +50,7 @@ return [
         // Turn on(true)/off(false) that users can send themselves their edit link by email
         // (This feature can only be used, if 'opt_AllowChangeEntry' is used.)
         // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
-        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/3.1-Email-setup
+        // See wiki: https://codeberg.org/ElTh0r0/preferendum/wiki/4.1-Email-setup
         'opt_SendChangeEntryLink' => false,
 
         // Turn on(true)/off(false) to allow comments for ALL polls.
@@ -76,7 +75,7 @@ return [
         // Send an email after new poll entry/comment or email with poll links after poll creation
         // After enabling this feature, it can be dis-/enabled for each poll separately and receiver can be defined.
         // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
-        // See wiki: https://github.com/ElTh0r0/preferendum/wiki/3.1-Email-setup
+        // See wiki: https://codeberg.org/ElTh0r0/preferendum/wiki/4.1-Email-setup
         'opt_SendEntryEmail' => false,
         'opt_SendCommentEmail' => false,
         'opt_SendPollCreationEmail' => false,
@@ -109,12 +108,12 @@ return [
 
         // Lifespan (in days) of expired polls (0 = disabled at all)
         // See wiki for further instructions if cronjob shall be used:
-        // https://github.com/ElTh0r0/preferendum/wiki/3.2-Cronjob
+        // https://codeberg.org/ElTh0r0/preferendum/wiki/4.2-Cronjob
         'deleteExpiredPollsAfter' => 0,
 
         // Lifespan (in days) of inactive polls (0 = disabled at all)
         // See wiki for further instructions if cronjob shall be used:
-        // https://github.com/ElTh0r0/preferendum/wiki/3.2-Cronjob
+        // https://codeberg.org/ElTh0r0/preferendum/wiki/4.2-Cronjob
         'deleteInactivePollsAfter' => 0,
 
         // Default theme ('light' or 'dark')
