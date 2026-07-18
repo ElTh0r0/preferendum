@@ -60,7 +60,12 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         FactoryLocator::add('Table', (new TableLocator())->allowFallbackClass(false));
 
         // Load more plugins here
-        $this->addPlugin('Authentication');
+        if (
+            Configure::read('preferendum.adminInterface') ||
+            Configure::read('preferendum.opt_PollPassword')
+        ) {
+            $this->addPlugin('Authentication');
+        }
         if (Configure::read('preferendum.altchaBotProtection')) {
             $this->addPlugin('Altcha');
         }
