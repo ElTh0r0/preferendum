@@ -28,6 +28,7 @@ Repository: https://codeberg.org/ElTh0r0/preferendum
   - Lock poll automatically at a certain date
   - Define maximum number of entries per option
   - Protect poll by a password
+  - **Bot protection** using [Altcha](https://altcha.org/) captcha, a privacy-first alternative to reCAPTCHA through [CakePHP Altcha plugin](https://github.com/azzmin/cakephp-altcha)
 
 ![Screenshot](https://codeberg.org/ElTh0r0/preferendum/wiki/raw/img/screenshot.png)
 
@@ -85,6 +86,7 @@ PREFERendum makes use of the following software/media and says **Thank you!** to
 
 - [Sprudel](https://github.com/bkis/sprudel)
 - [CakePHP](https://cakephp.org)
+- [CakePHP Altcha plugin](https://github.com/azzmin/cakephp-altcha)
 - [Datepicker](https://github.com/fengyuanchen/datepicker)
 - [Jquery](https://github.com/jquery/jquery)
 - [Clipboard.js](https://github.com/zenorocha/clipboard.js)

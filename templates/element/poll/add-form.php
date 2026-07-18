@@ -391,6 +391,14 @@ if ($prefconf['opt_PollExpirationAfter'] > 0 || $demoMode) {
     );
     echo '</li>';
 }
+
+// --------------------------------------------------------------
+// Altcha bot protection
+if ($prefconf['altchaBotProtection'] && !$prefconf['restrictPollCreation']) {
+    echo '<li>' . $this->Form->label(__('Bot protection')) . '</li>';
+    echo $this->Altcha->widget(['hideFooter' => true]);
+}
+
 // --------------------------------------------------------------
 echo '</ul>';
 

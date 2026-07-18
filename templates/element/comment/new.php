@@ -10,6 +10,8 @@
  * @license   MIT License (https://opensource.org/license/MIT)
  * @link      https://codeberg.org/ElTh0r0/preferendum
  */
+
+use Cake\Core\Configure;
 ?>
 
 <div class="center-box">
@@ -50,6 +52,9 @@
         ],
     );
     echo '<div class="content-right">';
+    if (Configure::read('preferendum.altchaBotProtection')) {
+        echo $this->Altcha->widget(['hideFooter' => true]);
+    }
     echo $this->Form->button(__('Save'));
     echo '</div>';
     echo $this->Form->end();

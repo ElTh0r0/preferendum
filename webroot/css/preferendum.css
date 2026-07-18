@@ -1170,3 +1170,21 @@ a.admin-delete-poll:hover {
     color: var(--color-font-flash-error);
     border-color: var(--color-border-flash-error);
 }
+
+/* ==== Altcha ==== */
+#form-new-poll .altcha {
+    max-width: 100%;
+    margin-bottom: 0.2rem;
+}
+
+.altcha-main {
+    padding: .2rem !important;
+}
+
+#comments-wrapper altcha-widget {
+    float: left;
+    margin-top: 0.2rem;
+}
+#comments-wrapper button {
+    margin-top: 0.2rem;
+}

@@ -46,7 +46,7 @@ $this->Html->scriptEnd();
 
 <div class="center-box">
     <?php
-    echo '<h1>' . __('Create a new poll ...') . '</h1>';
+    echo '<h1>' . __('Create a new poll …') . '</h1>';
     echo $this->Flash->render();
 
     echo $this->element('poll/add-form');

@@ -21,9 +21,25 @@ use Cake\Mailer\Mailer;
 
 class EntriesController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        if (Configure::read('preferendum.altchaBotProtection')) {
+            $this->loadComponent('Altcha.Altcha');
+            $this->viewBuilder()->addHelper('Altcha.Altcha');
+        }
+    }
+
     public function new(string $pollid): object
     {
         if ($this->request->is('post')) {
+            if (Configure::read('preferendum.altchaBotProtection')) {
+                if (!$this->Altcha->verify($this->request)) {
+                    $this->Flash->error(__('Please complete the verification.'));
+                    return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+                }
+            }
+
             $newentry = $this->request->getData();
             // debug($newentry);
             // die();
