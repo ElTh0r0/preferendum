@@ -61,7 +61,10 @@ class PollsController extends AppController
 
         $newpoll = $this->Polls->newEmptyEntity();
         if ($this->request->is('post') && $this->request->getData('choices') !== null) {
-            if (Configure::read('preferendum.altchaBotProtection')) {
+            if (
+                Configure::read('preferendum.altchaBotProtection') &&
+                !Configure::read('preferendum.restrictPollCreation')
+            ) {
                 if (!$this->Altcha->verify($this->request)) {
                     $this->Flash->error(__('Please complete the verification.'));
                     return null;
