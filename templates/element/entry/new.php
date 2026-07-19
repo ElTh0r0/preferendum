@@ -85,7 +85,7 @@ foreach ($pollchoices as $opt) {
     $j++;
 }
 echo '<td class="schedule-submit">';
-if (Configure::read('preferendum.altchaBotProtection')) {
+if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
     echo $this->Altcha->widget(['hideFooter' => true]);
 } else {
     echo $this->Form->button(__('Save'), ['form' => 'entry_form']);
@@ -104,7 +104,7 @@ if ($poll->userinfo == 1) {
             'placeholder' => __('Optional: Contact info'),
         ],
     );
-    if (Configure::read('preferendum.altchaBotProtection')) {
+    if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
         echo '</td><td class="schedule-blank" colspan="' . (count($pollchoices)) . '"></td>';
         echo '<td class="schedule-submit">';
         echo $this->Form->button(__('Save'), ['form' => 'entry_form']);
@@ -113,7 +113,7 @@ if ($poll->userinfo == 1) {
     } else {
         echo '</td><td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
     }
-} else if (Configure::read('preferendum.altchaBotProtection')) {
+} else if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
     echo '<tr>';
     echo '<td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td>';
     echo '<td class="schedule-submit">';

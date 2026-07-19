@@ -52,7 +52,7 @@ use Cake\Core\Configure;
         ],
     );
     echo '<div class="content-right">';
-    if (Configure::read('preferendum.altchaBotProtection')) {
+    if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
         echo $this->Altcha->widget(['hideFooter' => true]);
     }
     echo $this->Form->button(__('Save'));

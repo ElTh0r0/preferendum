@@ -32,17 +32,17 @@ class CommentsController extends AppController
     public function add(?string $pollid = null): object
     {
         if ($this->request->is('post') && isset($pollid) && !empty($pollid)) {
-            if (Configure::read('preferendum.altchaBotProtection')) {
+            $poll = $this->fetchTable('Polls')
+                ->findById($pollid)
+                ->select(['id', 'title', 'locked', 'email', 'emailcomment', 'comment', 'pwprotect'])
+                ->firstOrFail();
+
+            if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
                 if (!$this->Altcha->verify($this->request)) {
                     $this->Flash->error(__('Please complete the verification.'));
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
                 }
             }
-
-            $poll = $this->fetchTable('Polls')
-                ->findById($pollid)
-                ->select(['id', 'title', 'locked', 'email', 'emailcomment', 'comment'])
-                ->firstOrFail();
 
             if ((!Configure::read('preferendum.alwaysAllowComments') && !$poll->comment) || $poll->locked) {
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);

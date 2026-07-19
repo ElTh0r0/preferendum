@@ -33,7 +33,19 @@ class EntriesController extends AppController
     public function new(string $pollid): object
     {
         if ($this->request->is('post')) {
-            if (Configure::read('preferendum.altchaBotProtection')) {
+            $poll = $this->fetchTable('Polls')->findById($pollid)->select([
+                'title',
+                'locked',
+                'email',
+                'emailentry',
+                'userinfo',
+                'anonymous',
+                'editentry',
+                'limitentry',
+                'pwprotect',
+            ])->firstOrFail();
+
+            if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
                 if (!$this->Altcha->verify($this->request)) {
                     $this->Flash->error(__('Please complete the verification.'));
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
@@ -49,17 +61,6 @@ class EntriesController extends AppController
 
                 return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
             }
-
-            $poll = $this->fetchTable('Polls')->findById($pollid)->select([
-                'title',
-                'locked',
-                'email',
-                'emailentry',
-                'userinfo',
-                'anonymous',
-                'editentry',
-                'limitentry',
-            ])->firstOrFail();
 
             if ($poll->anonymous) {
                 // Temporary name; will be renamed to _UserID once user was saved
