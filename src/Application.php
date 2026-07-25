@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -14,6 +15,7 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
+
 namespace App;
 
 use Authentication\AuthenticationService; // Authentication
@@ -100,9 +102,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // See https://github.com/CakeDC/cakephp-cached-routing
             ->add(new RoutingMiddleware($this))
 
-            // Add Authentication after RoutingMiddleware
-            ->add(new AuthenticationMiddleware($this))
-
             // Parse various types of encoded request bodies so that they are
             // available as array through $request->getData()
             // https://book.cakephp.org/5/en/controllers/middleware.html#body-parser-middleware
@@ -113,6 +112,14 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
             ]));
+
+        if (
+            Configure::read('preferendum.adminInterface') ||
+            Configure::read('preferendum.opt_PollPassword')
+        ) {
+            // Add Authentication after RoutingMiddleware
+            $middlewareQueue->add(new AuthenticationMiddleware($this));
+        }
 
         return $middlewareQueue;
     }
