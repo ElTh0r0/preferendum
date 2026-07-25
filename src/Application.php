@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 /**
@@ -15,7 +14,6 @@ declare(strict_types=1);
  * @since     3.3.0
  * @license   https://opensource.org/licenses/mit-license.php MIT License
  */
-
 namespace App;
 
 use Authentication\AuthenticationService; // Authentication
@@ -59,7 +57,10 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         parent::bootstrap();
 
         // By default, does not allow fallback classes.
-        FactoryLocator::add('Table', (new TableLocator())->allowFallbackClass(false));
+        FactoryLocator::add(
+            'Table',
+            (new TableLocator())->allowFallbackClass(false),
+        );
 
         // Load more plugins here
         if (

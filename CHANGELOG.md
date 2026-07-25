@@ -5,7 +5,7 @@
 - Add optional bot protection captcha. It is used when adding a new poll, entry or comment and when requesting a new password.
   - New entry 'preferendum\altchaBotProtection' in `config/preferendum_features.php` (compare with default preferendum_features.php)!
   - New entry 'Altcha\jsUrl' in `config/app_local.php` (compare with app_local.example.php)!
-- Update to latest CakePHP 5.3.x
+- Migrate from CakePHP 5.3 to 5.4
 
 ## [0.9.0] (2026-03-01)
 
