@@ -112,7 +112,7 @@ return [
          */
         '_cake_translations_' => [
             'className' => FileEngine::class,
-            'prefix' => 'myapp_cake_translations_',
+            'prefix' => 'pref_cake_translations_',
             'path' => CACHE . 'persistent' . DS,
             'serialize' => true,
             'duration' => '+1 years',
@@ -127,11 +127,19 @@ return [
          */
         '_cake_model_' => [
             'className' => FileEngine::class,
-            'prefix' => 'myapp_cake_model_',
+            'prefix' => 'pref_cake_model_',
             'path' => CACHE . 'models' . DS,
             'serialize' => true,
             'duration' => '+1 years',
             'url' => env('CACHE_CAKEMODEL_URL', null),
+        ],
+
+        'pref_ratelimit' => [
+            'className' => 'File',
+            'path' => CACHE . 'persistent' . DS,
+            'duration' => '+1 hour',
+            'serialize' => true,
+            'prefix' => 'pref_ratelimit_',
         ],
     ],
 

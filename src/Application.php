@@ -29,6 +29,7 @@ use Cake\Event\EventManagerInterface;
 use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
+use Cake\Http\Middleware\RateLimitMiddleware; // Brute force protection
 use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
@@ -120,6 +121,64 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         ) {
             // Add Authentication after RoutingMiddleware
             $middlewareQueue->add(new AuthenticationMiddleware($this));
+        }
+
+        if (Configure::read('preferendum.bruteForceProtection')) {
+            // Admin/login
+            $middlewareQueue->add(new RateLimitMiddleware([
+                'limit' => 5,     // max. 5 tries
+                'window' => 600,  // in 10min
+                'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
+                'cache' => 'pref_ratelimit',
+                'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
+                'skipCheck' => function ($request) {
+                    return $request->getParam('controller') !== 'Admin'
+                        || $request->getParam('action') !== 'login';
+                },
+            ]));
+
+            // Password-reset request
+            $middlewareQueue->add(new RateLimitMiddleware([
+                'limit' => 5,      // max. 5 tries
+                'window' => 3600,  // in 1h
+                'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
+                'cache' => 'pref_ratelimit',
+                'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
+                'skipCheck' => function ($request) {
+                    return $request->getParam('controller') !== 'Users'
+                        || $request->getParam('action') !== 'forgotPassword';
+                },
+            ]));
+
+            // Polls view link
+            $middlewareQueue->add(new RateLimitMiddleware([
+                'limit' => 20,    // max. 20 tries
+                'window' => 300,  // in 5min
+                'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
+                'cache' => 'pref_ratelimit',
+                'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
+                'skipCheck' => function ($request) {
+                    return $request->getParam('controller') !== 'Polls'
+                        || $request->getParam('action') !== 'view';
+                },
+            ]));
+
+            // Polls edit link
+            $middlewareQueue->add(new RateLimitMiddleware([
+                'limit' => 10,     // max. 10 tries per ID
+                'window' => 1800,  // in 30min
+                'identifierCallback' => function ($request) {
+                    // ID from $params['pass'][0] holen
+                    $token = $request->getParam('pass')[0] ?? '';
+                    return 'magic_link_' . $token;
+                },
+                'cache' => 'pref_ratelimit',
+                'strategy' => RateLimitMiddleware::STRATEGY_FIXED_WINDOW,
+                'skipCheck' => function ($request) {
+                    return $request->getParam('controller') !== 'Polls'
+                        || $request->getParam('action') !== 'edit';
+                },
+            ]));
         }
 
         return $middlewareQueue;

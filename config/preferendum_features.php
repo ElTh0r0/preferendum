@@ -91,6 +91,9 @@ return [
         // If turned on, and you want to use the local shipped Altcha js file, please see the 'Altcha\jsUrl' in 'config/app_local.php'
         'altchaBotProtection' => false,
 
+        // Turn on(true)/off(false) brute force protection
+        'bruteForceProtection' => false,
+
         // Show vote result visualization. Current options:
         // 'trend': Showing kind of trend visualization weighting 'yes' and 'maybe'
         // 'simple': Just showing sum of 'yes' votes
