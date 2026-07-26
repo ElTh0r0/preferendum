@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2025-08-03 15:56+0000\n"
+"POT-Creation-Date: 2026-07-26 18:22+0200\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,360 +14,367 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: ./src/Controller/AdminController.php:51
-#: ./src/Controller/PollsController.php:51
-#: ./src/Controller/PollsController.php:262
+#: ./src/Controller/AdminController.php:50
+#: ./src/Controller/PollsController.php:55
+#: ./src/Controller/PollsController.php:277
 msgid "DEMO mode is enabled - some features may be limited!"
 msgstr ""
 
-#: ./src/Controller/AdminController.php:140
-#: ./src/Controller/AdminController.php:153
+#: ./src/Controller/AdminController.php:139
+#: ./src/Controller/AdminController.php:152
 msgid "Invalid user or password"
 msgstr ""
 
-#: ./src/Controller/AdminController.php:149
+#: ./src/Controller/AdminController.php:148
 msgid "Invalid poll password"
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:74
+#: ./src/Controller/ChoicesController.php:73
 msgid "Option has been saved."
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:81
+#: ./src/Controller/ChoicesController.php:80
 msgid "Option has NOT been saved!"
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:112
+#: ./src/Controller/ChoicesController.php:111
 msgid "Order has been updated."
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:120
+#: ./src/Controller/ChoicesController.php:119
 msgid "Order has NOT been updated!"
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:145
+#: ./src/Controller/ChoicesController.php:144
 msgid "Option has been deleted."
 msgstr ""
 
-#: ./src/Controller/ChoicesController.php:151
+#: ./src/Controller/ChoicesController.php:150
 msgid "Option has NOT been deleted!"
 msgstr ""
 
-#: ./src/Controller/CommentsController.php:45
+#: ./src/Controller/CommentsController.php:42
+#: ./src/Controller/EntriesController.php:50
+#: ./src/Controller/PollsController.php:69
+#: ./src/Controller/UsersController.php:411
+msgid "Please complete the verification."
+msgstr ""
+
+#: ./src/Controller/CommentsController.php:61
 msgid "The comment has been saved."
 msgstr ""
 
-#: ./src/Controller/CommentsController.php:50
+#: ./src/Controller/CommentsController.php:66
 msgid "Unable to save your comment."
 msgstr ""
 
-#: ./src/Controller/CommentsController.php:71
+#: ./src/Controller/CommentsController.php:87
 msgid "Comment has been deleted."
 msgstr ""
 
-#: ./src/Controller/CommentsController.php:77
+#: ./src/Controller/CommentsController.php:93
 msgid "Comment {0} has NOT been deleted!"
 msgstr ""
 
-#: ./src/Controller/CommentsController.php:96
-#: ./templates/email/text/new_comment.php:15
+#: ./src/Controller/CommentsController.php:112
+#: ./templates/email/text/new_comment.php:14
 msgid "New comment in poll \"{0}\""
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:33
-#: ./src/Controller/EntriesController.php:185
-#: ./src/Controller/EntriesController.php:200
-#: ./src/Controller/EntriesController.php:305
+#: ./src/Controller/EntriesController.php:61
+#: ./src/Controller/EntriesController.php:202
+#: ./src/Controller/EntriesController.php:217
+#: ./src/Controller/EntriesController.php:322
 msgid "Unable to save your entry."
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:141
+#: ./src/Controller/EntriesController.php:158
 msgid "Optionally, you can receive your personalised link by email:"
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:152
+#: ./src/Controller/EntriesController.php:169
 msgid "Email for receiving your personal link"
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:154
+#: ./src/Controller/EntriesController.php:171
 msgid "Send email"
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:158
+#: ./src/Controller/EntriesController.php:175
 msgid "Your entry has been saved, but please note: If you want to edit your entry, you must \n                            keep this personalised link."
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:161
+#: ./src/Controller/EntriesController.php:178
 msgid "Copy the link and store it on your device!"
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:165
-#: ./templates/element/header.php:37
-#: ./templates/element/header.php:44
-#: ./templates/element/header.php:51
+#: ./src/Controller/EntriesController.php:182
+#: ./templates/element/header.php:36
+#: ./templates/element/header.php:43
+#: ./templates/element/header.php:50
 msgid "Copy link to clipboard!"
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:175
+#: ./src/Controller/EntriesController.php:192
 msgid "Your entry has been saved!"
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:413
+#: ./src/Controller/EntriesController.php:430
 msgid "New entry in poll \"{0}\""
 msgstr ""
 
-#: ./src/Controller/EntriesController.php:415
+#: ./src/Controller/EntriesController.php:432
 msgid "Updated entry in poll \"{0}\""
 msgstr ""
 
-#: ./src/Controller/PollsController.php:39
+#: ./src/Controller/PollsController.php:38
 msgid "File \"src/Controller/DbController.php\" should be removed!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:143
-#: ./src/Controller/PollsController.php:154
+#: ./src/Controller/PollsController.php:158
+#: ./src/Controller/PollsController.php:169
 msgid "Your poll has been saved."
 msgstr ""
 
-#: ./src/Controller/PollsController.php:144
+#: ./src/Controller/PollsController.php:159
 msgid "Please login with your chosen password!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:170
+#: ./src/Controller/PollsController.php:185
 msgid "Unable to add your poll."
 msgstr ""
 
-#: ./src/Controller/PollsController.php:207
+#: ./src/Controller/PollsController.php:222
 msgid "This poll is locked - it is not possible to insert new entries or comments!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:215
+#: ./src/Controller/PollsController.php:230
 msgid "Only poll admin can see votes and comments!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:296
+#: ./src/Controller/PollsController.php:311
 msgid "This poll is locked!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:374
+#: ./src/Controller/PollsController.php:389
 msgid "Your poll has been updated."
 msgstr ""
 
-#: ./src/Controller/PollsController.php:379
+#: ./src/Controller/PollsController.php:394
 msgid "Unable to update your poll."
 msgstr ""
 
-#: ./src/Controller/PollsController.php:410
+#: ./src/Controller/PollsController.php:425
 msgid "Poll has been unlocked"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:417
+#: ./src/Controller/PollsController.php:432
 msgid "Poll lock has NOT been changed!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:448
+#: ./src/Controller/PollsController.php:463
 msgid "Your personal link for poll \"{0}\""
 msgstr ""
 
-#: ./src/Controller/PollsController.php:463
+#: ./src/Controller/PollsController.php:478
 msgid "Email with personal link was sent to \"{0}\""
 msgstr ""
 
-#: ./src/Controller/PollsController.php:469
+#: ./src/Controller/PollsController.php:484
 msgid "Email could not be sent!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:499
-#: ./templates/element/choice/edit.php:103
-#: ./templates/element/choice/edit.php:111
-#: ./templates/element/choice/list.php:24
-#: ./templates/element/choice/list.php:32
+#: ./src/Controller/PollsController.php:514
+#: ./templates/element/choice/edit.php:104
+#: ./templates/element/choice/edit.php:112
+#: ./templates/element/choice/list.php:23
+#: ./templates/element/choice/list.php:31
 msgid " - {0} pers."
 msgstr ""
 
-#: ./src/Controller/PollsController.php:506
+#: ./src/Controller/PollsController.php:521
 msgid "Contact info"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:508
-#: ./templates/Admin/userinfo.php:22
-#: ./templates/element/admin/ctrl-login.php:30
-#: ./templates/element/user/create-form.php:35
-#: ./templates/element/user/edit-form.php:41
-#: ./templates/element/user/list.php:27
+#: ./src/Controller/PollsController.php:523
+#: ./templates/Admin/userinfo.php:21
+#: ./templates/element/admin/ctrl-login.php:29
+#: ./templates/element/user/create-form.php:34
+#: ./templates/element/user/edit-form.php:40
+#: ./templates/element/user/list.php:26
 msgid "Name"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:536
+#: ./src/Controller/PollsController.php:551
 msgid "no"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:539
+#: ./src/Controller/PollsController.php:554
 msgid "yes"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:542
+#: ./src/Controller/PollsController.php:557
 msgid "maybe"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:572
+#: ./src/Controller/PollsController.php:587
 msgid "Poll {0} has been deleted."
 msgstr ""
 
-#: ./src/Controller/PollsController.php:582
+#: ./src/Controller/PollsController.php:597
 msgid "Poll {0} has NOT been deleted!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:663
+#: ./src/Controller/PollsController.php:678
 msgid "Inactive poll {0} has been deleted."
 msgstr ""
 
-#: ./src/Controller/PollsController.php:667
+#: ./src/Controller/PollsController.php:682
 msgid "Inactive poll {0} could NOT be deleted!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:707
+#: ./src/Controller/PollsController.php:722
 msgid "Expired poll {0} has been deleted."
 msgstr ""
 
-#: ./src/Controller/PollsController.php:711
+#: ./src/Controller/PollsController.php:726
 msgid "Expired poll {0} could NOT be deleted!"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:808
+#: ./src/Controller/PollsController.php:823
 msgid "New poll \"{0}\" - ADMIN link"
 msgstr ""
 
-#: ./src/Controller/PollsController.php:824
+#: ./src/Controller/PollsController.php:839
 msgid "New poll \"{0}\" - USER link"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:96
+#: ./src/Controller/UsersController.php:100
 msgid "DEMO MODE enabled! User creation not possible!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:116
-#: ./src/Controller/UsersController.php:278
+#: ./src/Controller/UsersController.php:120
+#: ./src/Controller/UsersController.php:282
 msgid "User with this name already exists!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:126
-#: ./src/Controller/UsersController.php:260
+#: ./src/Controller/UsersController.php:130
+#: ./src/Controller/UsersController.php:264
 msgid "User with this email already exists!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:137
+#: ./src/Controller/UsersController.php:141
 msgid "Unable to add the user - password / confirmation not correct!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:143
+#: ./src/Controller/UsersController.php:147
 msgid "The user has been created."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:147
+#: ./src/Controller/UsersController.php:151
 msgid "Unable to add the user!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:186
+#: ./src/Controller/UsersController.php:190
 msgid "Invalid action - something went wrong!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:221
+#: ./src/Controller/UsersController.php:225
 msgid "DEMO MODE enabled! Editing users is not possible!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:293
+#: ./src/Controller/UsersController.php:297
 msgid "User not updated - at least one administrator required!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:302
+#: ./src/Controller/UsersController.php:306
 msgid "The user has been updated."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:306
+#: ./src/Controller/UsersController.php:310
 msgid "Unable to update the user."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:320
+#: ./src/Controller/UsersController.php:324
 msgid "DEMO MODE enabled! Changing the password not possible!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:350
+#: ./src/Controller/UsersController.php:354
 msgid "Unable to update the password / confirmation not correct."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:359
+#: ./src/Controller/UsersController.php:363
 msgid "The password has been updated."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:363
+#: ./src/Controller/UsersController.php:367
 msgid "Unable to save the new password!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:378
+#: ./src/Controller/UsersController.php:382
 msgid "DEMO MODE enabled! User deletion is not possible!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:389
+#: ./src/Controller/UsersController.php:393
 msgid "User has been deleted."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:395
+#: ./src/Controller/UsersController.php:399
 msgid "User {0} has NOT been deleted!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:425
-#: ./templates/Users/forgot_password.php:30
+#: ./src/Controller/UsersController.php:437
+#: ./templates/Users/forgot_password.php:29
 msgid "Password reset"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:440
+#: ./src/Controller/UsersController.php:452
 msgid "Something went wrong!"
 msgstr ""
 
-#: ./src/Controller/UsersController.php:444
+#: ./src/Controller/UsersController.php:456
 msgid "If a user is registered with this email address, a new password will be sent."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:528
+#: ./src/Controller/UsersController.php:540
 msgid "Entry has been deleted."
 msgstr ""
 
-#: ./src/Controller/UsersController.php:534
+#: ./src/Controller/UsersController.php:546
 msgid "Entry has NOT been deleted!"
 msgstr ""
 
-#: ./templates/Admin/index.php:18
-#: ./templates/Admin/login.php:15
-#: ./templates/element/admin/ctrl-logout.php:46
+#: ./templates/Admin/index.php:17
+#: ./templates/Admin/login.php:14
+#: ./templates/element/admin/ctrl-logout.php:45
 msgid "Poll administration"
 msgstr ""
 
-#: ./templates/Admin/index.php:68
+#: ./templates/Admin/index.php:67
 msgid "Total polls"
 msgstr ""
 
-#: ./templates/Admin/index.php:78
+#: ./templates/Admin/index.php:77
 msgid "Expired"
 msgstr ""
 
-#: ./templates/Admin/index.php:83
+#: ./templates/Admin/index.php:82
 msgid "Are you sure to delete expired polls (expired since >{0} days)?"
 msgstr ""
 
-#: ./templates/Admin/index.php:93
+#: ./templates/Admin/index.php:92
 msgid "Inactive"
 msgstr ""
 
-#: ./templates/Admin/index.php:98
+#: ./templates/Admin/index.php:97
 msgid "Are you sure to delete inactive poll (inactive since >{0} days)?"
 msgstr ""
 
-#: ./templates/Admin/index.php:107
+#: ./templates/Admin/index.php:106
 msgid "New poll"
 msgstr ""
 
-#: ./templates/Admin/index.php:127
+#: ./templates/Admin/index.php:126
 msgid "Search poll or user"
 msgstr ""
 
@@ -384,8 +391,8 @@ msgid "Filtered polls"
 msgstr ""
 
 #: ./templates/Admin/index.php:159
-#: ./templates/element/poll/add-form.php:34
-#: ./templates/element/poll/edit-form.php:36
+#: ./templates/element/poll/add-form.php:33
+#: ./templates/element/poll/edit-form.php:35
 msgid "Title"
 msgstr ""
 
@@ -404,8 +411,8 @@ msgid "Votes"
 msgstr ""
 
 #: ./templates/Admin/index.php:182
-#: ./templates/element/comment/list.php:19
-#: ./templates/element/comment/new.php:19
+#: ./templates/element/comment/list.php:18
+#: ./templates/element/comment/new.php:20
 msgid "Comments"
 msgstr ""
 
@@ -461,27 +468,27 @@ msgstr ""
 msgid "No polls found in database!"
 msgstr ""
 
-#: ./templates/Admin/login.php:27
+#: ./templates/Admin/login.php:26
 msgid "This poll is password protected!"
 msgstr ""
 
-#: ./templates/Admin/login.php:28
+#: ./templates/Admin/login.php:27
 msgid "Please enter the password and press \"Login\"."
 msgstr ""
 
-#: ./templates/Admin/userinfo.php:15
+#: ./templates/Admin/userinfo.php:14
 msgid "User info"
 msgstr ""
 
-#: ./templates/Admin/userinfo.php:20
+#: ./templates/Admin/userinfo.php:19
 msgid "User info for poll"
 msgstr ""
 
-#: ./templates/Admin/userinfo.php:22
+#: ./templates/Admin/userinfo.php:21
 msgid "Info"
 msgstr ""
 
-#: ./templates/Admin/userinfo.php:27
+#: ./templates/Admin/userinfo.php:26
 msgid "No user information available for this poll!"
 msgstr ""
 
@@ -503,82 +510,83 @@ msgstr ""
 msgid "An internal error has occurred"
 msgstr ""
 
-#: ./templates/Polls/add.php:19
-#: ./templates/element/poll/add-form.php:398
+#: ./templates/Polls/add.php:18
+#: ./templates/element/poll/add-form.php:406
 msgid "Create poll"
 msgstr ""
 
-#: ./templates/Polls/add.php:50
-#: ./templates/element/header.php:61
-msgid "Create a new poll ..."
+#: ./templates/Polls/add.php:49
+msgid "Create a new poll …"
 msgstr ""
 
-#: ./templates/Polls/add.php:58
+#: ./templates/Polls/add.php:57
 msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
 msgstr ""
 
-#: ./templates/Polls/edit.php:20
-#: ./templates/Polls/edit.php:53
+#: ./templates/Polls/edit.php:19
+#: ./templates/Polls/edit.php:52
 msgid "Edit poll"
+msgstr ""
+
+#: ./templates/Polls/edit.php:38
+#: ./templates/Polls/view.php:37
+#: ./templates/element/entry/edit.php:69
+#: ./templates/element/entry/new.php:57
+#: ./templates/element/poll/result-trend.php:19
+#: ./templates/email/text/new_entry.php:21
+msgid "No"
 msgstr ""
 
 #: ./templates/Polls/edit.php:39
 #: ./templates/Polls/view.php:38
-#: ./templates/element/entry/edit.php:69
-#: ./templates/element/entry/new.php:55
-#: ./templates/element/poll/result-trend.php:20
-#: ./templates/email/text/new_entry.php:22
-msgid "No"
+#: ./templates/element/entry/edit.php:73
+#: ./templates/element/poll/result-simple.php:17
+#: ./templates/element/poll/result-simple2.php:17
+#: ./templates/element/poll/result-trend.php:17
+#: ./templates/email/text/new_entry.php:23
+msgid "Yes"
 msgstr ""
 
 #: ./templates/Polls/edit.php:40
 #: ./templates/Polls/view.php:39
-#: ./templates/element/entry/edit.php:73
-#: ./templates/element/poll/result-simple.php:18
-#: ./templates/element/poll/result-trend.php:18
-#: ./templates/email/text/new_entry.php:24
-msgid "Yes"
-msgstr ""
-
-#: ./templates/Polls/edit.php:41
-#: ./templates/Polls/view.php:40
 #: ./templates/element/entry/edit.php:65
 #: ./templates/element/entry/edit.php:77
-#: ./templates/element/poll/result-trend.php:19
-#: ./templates/email/text/new_entry.php:20
+#: ./templates/element/poll/result-simple2.php:18
+#: ./templates/element/poll/result-trend.php:18
+#: ./templates/email/text/new_entry.php:19
 msgid "Maybe"
 msgstr ""
 
-#: ./templates/Polls/edit.php:62
+#: ./templates/Polls/edit.php:61
 msgid "Edit entries"
 msgstr ""
 
-#: ./templates/Polls/view.php:20
+#: ./templates/Polls/view.php:19
 msgid "Poll"
 msgstr ""
 
-#: ./templates/Polls/view.php:36
-#: ./templates/element/poll/ctrl.php:20
+#: ./templates/Polls/view.php:35
+#: ./templates/element/poll/ctrl.php:19
 msgid "Mini View"
 msgstr ""
 
-#: ./templates/Polls/view.php:37
+#: ./templates/Polls/view.php:36
 msgid "Normal View"
 msgstr ""
 
-#: ./templates/Users/edit.php:32
+#: ./templates/Users/edit.php:31
 msgid "Back to user creation"
 msgstr ""
 
-#: ./templates/Users/forgot_password.php:31
+#: ./templates/Users/forgot_password.php:30
 msgid "Enter your email address and we'll send you a new password for your account:"
 msgstr ""
 
-#: ./templates/Users/forgot_password.php:53
+#: ./templates/Users/forgot_password.php:56
 msgid "Send new password"
 msgstr ""
 
-#: ./templates/Users/forgot_password.php:58
+#: ./templates/Users/forgot_password.php:61
 msgid "Back to login"
 msgstr ""
 
@@ -586,137 +594,143 @@ msgstr ""
 #: ./templates/element/poll/add-form.php:233
 #: ./templates/element/poll/edit-form.php:152
 #: ./templates/element/user/create-form.php:57
-#: ./templates/element/user/edit-form.php:88
+#: ./templates/element/user/edit-form.php:87
 msgid "Password"
 msgstr ""
 
-#: ./templates/element/admin/ctrl-login.php:47
+#: ./templates/element/admin/ctrl-login.php:48
 msgid "Login"
 msgstr ""
 
-#: ./templates/element/admin/ctrl-login.php:53
+#: ./templates/element/admin/ctrl-login.php:54
 msgid "Forgot password"
 msgstr ""
 
-#: ./templates/element/admin/ctrl-logout.php:25
-#: ./templates/element/user/edit-form.php:19
-#: ./templates/element/user/edit-form.php:68
+#: ./templates/element/admin/ctrl-logout.php:24
+#: ./templates/element/user/edit-form.php:18
+#: ./templates/element/user/edit-form.php:67
 msgid "Update user"
 msgstr ""
 
-#: ./templates/element/admin/ctrl-logout.php:35
+#: ./templates/element/admin/ctrl-logout.php:34
 msgid "User management"
 msgstr ""
 
-#: ./templates/element/admin/ctrl-logout.php:56
-#: ./templates/element/poll/ctrl-edit.php:68
-#: ./templates/element/poll/ctrl.php:37
+#: ./templates/element/admin/ctrl-logout.php:55
+#: ./templates/element/poll/ctrl-edit.php:67
+#: ./templates/element/poll/ctrl.php:36
 msgid "Logout"
 msgstr ""
 
-#: ./templates/element/choice/edit.php:30
+#: ./templates/element/choice/edit.php:29
 #: ./templates/element/choice/edit.php:36
-#: ./templates/element/choice/edit.php:152
+#: ./templates/element/choice/edit.php:153
 msgid "New option"
 msgstr ""
 
-#: ./templates/element/choice/edit.php:125
+#: ./templates/element/choice/edit.php:126
 msgid "Are you sure to delete option {0}?"
 msgstr ""
 
-#: ./templates/element/choice/edit.php:176
-#: ./templates/element/comment/new.php:54
+#: ./templates/element/choice/edit.php:177
+#: ./templates/element/comment/new.php:58
 #: ./templates/element/entry/edit.php:111
-#: ./templates/element/entry/new.php:86
+#: ./templates/element/entry/new.php:91
+#: ./templates/element/entry/new.php:110
+#: ./templates/element/entry/new.php:120
 msgid "Save"
 msgstr ""
 
-#: ./templates/element/comment/delete.php:17
+#: ./templates/element/comment/delete.php:16
 msgid "Delete comments"
 msgstr ""
 
-#: ./templates/element/comment/delete.php:32
+#: ./templates/element/comment/delete.php:31
 msgid "Are you sure to delete comment by {0}?"
 msgstr ""
 
-#: ./templates/element/comment/delete.php:42
-#: ./templates/element/comment/list.php:37
+#: ./templates/element/comment/delete.php:41
+#: ./templates/element/comment/list.php:36
 msgid "No comments, yet."
 msgstr ""
 
-#: ./templates/element/comment/new.php:20
+#: ./templates/element/comment/new.php:21
 msgid "Comments will only be visible for the poll admin!"
 msgstr ""
 
-#: ./templates/element/comment/new.php:38
+#: ./templates/element/comment/new.php:39
 msgid "Your name"
 msgstr ""
 
-#: ./templates/element/comment/new.php:50
+#: ./templates/element/comment/new.php:51
 msgid "Your comment"
 msgstr ""
 
-#: ./templates/element/entry/edit.php:28
+#: ./templates/element/entry/edit.php:27
 msgid "Edit entry"
 msgstr ""
 
-#: ./templates/element/entry/edit.php:38
-#: ./templates/element/entry/new.php:31
+#: ./templates/element/entry/edit.php:37
+#: ./templates/element/entry/new.php:32
 msgid "Your name?"
 msgstr ""
 
 #: ./templates/element/entry/edit.php:85
-#: ./templates/element/entry/new.php:59
+#: ./templates/element/entry/new.php:61
 msgid "Max. reached!"
 msgstr ""
 
 #: ./templates/element/entry/edit.php:123
-#: ./templates/element/entry/new.php:98
+#: ./templates/element/entry/new.php:104
 msgid "Optional: Contact info"
 msgstr ""
 
-#: ./templates/element/entry/edit_view.php:53
+#: ./templates/element/entry/edit_view.php:52
 msgid "Copy entry edit link to clipboard"
 msgstr ""
 
-#: ./templates/element/entry/edit_view.php:68
+#: ./templates/element/entry/edit_view.php:67
 msgid "Are you sure to delete entry by {0}?"
 msgstr ""
 
-#: ./templates/element/header.php:24
+#: ./templates/element/header.php:23
 msgid "Administration"
 msgstr ""
 
-#: ./templates/element/header.php:27
-#: ./templates/layout/preferendum.php:25
+#: ./templates/element/header.php:26
+#: ./templates/layout/preferendum.php:24
 msgid "PREFERendum"
 msgstr ""
 
-#: ./templates/element/header.php:28
+#: ./templates/element/header.php:27
 msgid "scheduling polls"
 msgstr ""
 
-#: ./templates/element/header.php:35
-#: ./templates/element/header.php:42
+#: ./templates/element/header.php:34
+#: ./templates/element/header.php:41
 msgid "Public link"
 msgstr ""
 
-#: ./templates/element/header.php:36
-#: ./templates/element/header.php:38
+#: ./templates/element/header.php:35
+#: ./templates/element/header.php:37
 msgid "Give this public link to the participants of your poll!"
 msgstr ""
 
-#: ./templates/element/header.php:49
+#: ./templates/element/header.php:48
 msgid "Admin link"
 msgstr ""
 
-#: ./templates/element/header.php:50
-#: ./templates/element/header.php:52
+#: ./templates/element/header.php:49
+#: ./templates/element/header.php:51
 msgid "Save this admin link, you need it to manage your poll!"
 msgstr ""
 
-#: ./templates/element/poll/add-form.php:35
-#: ./templates/element/poll/edit-form.php:37
+#: ./templates/element/header.php:60
+msgid "Create a new poll ..."
+msgstr ""
+
+#: ./templates/element/poll/add-form.php:34
+#: ./templates/element/poll/edit-form.php:36
 msgid "Title for your poll"
 msgstr ""
 
@@ -784,8 +798,8 @@ msgstr ""
 #: ./templates/element/poll/add-form.php:267
 #: ./templates/element/poll/edit-form.php:186
 #: ./templates/element/user/create-form.php:44
-#: ./templates/element/user/edit-form.php:52
-#: ./templates/element/user/list.php:29
+#: ./templates/element/user/edit-form.php:51
+#: ./templates/element/user/list.php:28
 msgid "Email"
 msgstr ""
 
@@ -817,29 +831,33 @@ msgstr ""
 msgid "Poll is automatically locked on expiry date"
 msgstr ""
 
-#: ./templates/element/poll/ctrl-edit.php:21
+#: ./templates/element/poll/add-form.php:398
+msgid "Bot protection"
+msgstr ""
+
+#: ./templates/element/poll/ctrl-edit.php:20
 msgid "View Poll"
 msgstr ""
 
-#: ./templates/element/poll/ctrl-edit.php:32
+#: ./templates/element/poll/ctrl-edit.php:31
 msgid "Un-/Lock"
 msgstr ""
 
-#: ./templates/element/poll/ctrl-edit.php:44
+#: ./templates/element/poll/ctrl-edit.php:43
 msgid "CSV export"
 msgstr ""
 
-#: ./templates/element/poll/ctrl-edit.php:56
-#: ./templates/element/user/list.php:50
+#: ./templates/element/poll/ctrl-edit.php:55
+#: ./templates/element/user/list.php:49
 msgid "Delete"
 msgstr ""
 
-#: ./templates/element/poll/ctrl-edit.php:61
+#: ./templates/element/poll/ctrl-edit.php:60
 msgid "Are you sure to delete this poll?"
 msgstr ""
 
-#: ./templates/element/poll/ctrl.php:26
-#: ./templates/element/user/list.php:41
+#: ./templates/element/poll/ctrl.php:25
+#: ./templates/element/user/list.php:40
 msgid "Edit"
 msgstr ""
 
@@ -851,13 +869,13 @@ msgstr ""
 msgid "Save changes"
 msgstr ""
 
-#: ./templates/element/user/create-form.php:19
+#: ./templates/element/user/create-form.php:18
 msgid "Create user"
 msgstr ""
 
 #: ./templates/element/user/create-form.php:50
-#: ./templates/element/user/edit-form.php:60
-#: ./templates/element/user/list.php:27
+#: ./templates/element/user/edit-form.php:59
+#: ./templates/element/user/list.php:26
 msgid "Role"
 msgstr ""
 
@@ -874,94 +892,94 @@ msgstr ""
 msgid "Change password"
 msgstr ""
 
-#: ./templates/element/user/list.php:18
+#: ./templates/element/user/list.php:17
 msgid "Available users"
 msgstr ""
 
-#: ./templates/element/user/list.php:54
+#: ./templates/element/user/list.php:53
 msgid "Are you sure to delete user {0}?"
 msgstr ""
 
-#: ./templates/email/text/new_backend_pw.php:15
+#: ./templates/email/text/new_backend_pw.php:14
 msgid "A password reset was requested for your account!"
 msgstr ""
 
-#: ./templates/email/text/new_backend_pw.php:16
+#: ./templates/email/text/new_backend_pw.php:15
 msgid "Account name:"
 msgstr ""
 
-#: ./templates/email/text/new_backend_pw.php:17
+#: ./templates/email/text/new_backend_pw.php:16
 msgid "New password:"
 msgstr ""
 
-#: ./templates/email/text/new_backend_pw.php:18
+#: ./templates/email/text/new_backend_pw.php:17
 msgid "Please change your password after the first login."
 msgstr ""
 
-#: ./templates/email/text/new_comment.php:16
-#: ./templates/email/text/new_entry.php:16
+#: ./templates/email/text/new_comment.php:15
+#: ./templates/email/text/new_entry.php:15
 msgid "From:"
 msgstr ""
 
-#: ./templates/email/text/new_comment.php:17
+#: ./templates/email/text/new_comment.php:16
 msgid "Text:"
 msgstr ""
 
-#: ./templates/email/text/new_comment.php:19
-#: ./templates/email/text/new_entry.php:30
+#: ./templates/email/text/new_comment.php:18
+#: ./templates/email/text/new_entry.php:29
 msgid "Link:"
 msgstr ""
 
-#: ./templates/email/text/new_entry.php:15
+#: ./templates/email/text/new_entry.php:14
 msgid "Entry in poll \"{0}\""
 msgstr ""
 
-#: ./templates/email/text/new_entry.php:17
+#: ./templates/email/text/new_entry.php:16
 msgid "Options:"
 msgstr ""
 
-#: ./templates/email/text/new_poll_admin.php:15
-#: ./templates/email/text/new_poll_user.php:15
+#: ./templates/email/text/new_poll_admin.php:14
+#: ./templates/email/text/new_poll_user.php:14
 msgid "New poll \"{0}\" created"
 msgstr ""
 
-#: ./templates/email/text/new_poll_admin.php:16
+#: ./templates/email/text/new_poll_admin.php:15
 msgid "This message should NOT be sent to the poll users. It contains your administration link!"
 msgstr ""
 
-#: ./templates/email/text/new_poll_admin.php:18
+#: ./templates/email/text/new_poll_admin.php:17
 msgid "ADMIN link:"
 msgstr ""
 
-#: ./templates/email/text/new_poll_admin.php:22
+#: ./templates/email/text/new_poll_admin.php:21
 msgid "Poll password:"
 msgstr ""
 
-#: ./templates/email/text/new_poll_user.php:16
+#: ./templates/email/text/new_poll_user.php:15
 msgid "This email can be forwarded to any user who shall participated the poll!"
 msgstr ""
 
-#: ./templates/email/text/new_poll_user.php:18
+#: ./templates/email/text/new_poll_user.php:17
 msgid "USER link:"
 msgstr ""
 
-#: ./templates/email/text/new_poll_user.php:22
+#: ./templates/email/text/new_poll_user.php:21
 msgid "For accessing the poll, following password is required:"
 msgstr ""
 
-#: ./templates/email/text/personal_link.php:15
+#: ./templates/email/text/personal_link.php:14
 msgid "Hello {0},"
 msgstr ""
 
-#: ./templates/email/text/personal_link.php:16
+#: ./templates/email/text/personal_link.php:15
 msgid "You have made an entry in poll \"{0}\""
 msgstr ""
 
-#: ./templates/email/text/personal_link.php:17
+#: ./templates/email/text/personal_link.php:16
 msgid "You can edit your entry using the following link:"
 msgstr ""
 
-#: ./templates/layout/preferendum.php:52
+#: ./templates/layout/preferendum.php:51
 msgid "Please enable JavaScript in your browser and reload this page."
 msgstr ""
 
