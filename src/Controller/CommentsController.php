@@ -40,6 +40,7 @@ class CommentsController extends AppController
             if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
                 if (!$this->Altcha->verify($this->request)) {
                     $this->Flash->error(__('Please complete the verification.'));
+
                     return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
                 }
             }

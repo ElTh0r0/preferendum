@@ -16,11 +16,11 @@ declare(strict_types=1);
  */
 namespace App;
 
+use App\Middleware\HostHeaderMiddleware;
 use Authentication\AuthenticationService; // Authentication
 use Authentication\AuthenticationServiceInterface; // Authentication
 use Authentication\AuthenticationServiceProviderInterface; // Authentication
 use Authentication\Middleware\AuthenticationMiddleware; // Authentication
-use App\Middleware\HostHeaderMiddleware;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
@@ -126,8 +126,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         if (Configure::read('preferendum.bruteForceProtection')) {
             // Admin/login
             $middlewareQueue->add(new RateLimitMiddleware([
-                'limit' => 5,     // max. 5 tries
-                'window' => 600,  // in 10min
+                'limit' => 5, // max. 5 tries
+                'window' => 600, // in 10min
                 'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
                 'cache' => 'pref_ratelimit',
                 'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
@@ -139,8 +139,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
             // Password-reset request
             $middlewareQueue->add(new RateLimitMiddleware([
-                'limit' => 5,      // max. 5 tries
-                'window' => 3600,  // in 1h
+                'limit' => 5, // max. 5 tries
+                'window' => 3600, // in 1h
                 'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
                 'cache' => 'pref_ratelimit',
                 'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
@@ -152,8 +152,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
             // Polls view link
             $middlewareQueue->add(new RateLimitMiddleware([
-                'limit' => 20,    // max. 20 tries
-                'window' => 300,  // in 5min
+                'limit' => 20, // max. 20 tries
+                'window' => 300, // in 5min
                 'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
                 'cache' => 'pref_ratelimit',
                 'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
@@ -165,11 +165,12 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
             // Polls edit link
             $middlewareQueue->add(new RateLimitMiddleware([
-                'limit' => 10,     // max. 10 tries per ID
-                'window' => 1800,  // in 30min
+                'limit' => 10, // max. 10 tries per ID
+                'window' => 1800, // in 30min
                 'identifierCallback' => function ($request) {
                     // ID from $params['pass'][0] holen
                     $token = $request->getParam('pass')[0] ?? '';
+
                     return 'magic_link_' . $token;
                 },
                 'cache' => 'pref_ratelimit',
@@ -234,7 +235,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
             'urlChecker' => [
-                'useRegex' => true
+                'useRegex' => true,
             ],
             'loginUrl' => '#^.*/admin/login(/([a-zA-Z0-9]+/NA))?$#',
             'identifier' => [

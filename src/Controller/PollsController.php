@@ -67,6 +67,7 @@ class PollsController extends AppController
             ) {
                 if (!$this->Altcha->verify($this->request)) {
                     $this->Flash->error(__('Please complete the verification.'));
+
                     return null;
                 }
             }

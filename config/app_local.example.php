@@ -114,7 +114,7 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            // Use 'Smtp' (together with host, username, password) 
+            // Use 'Smtp' (together with host, username, password)
             // or 'Mail' (using PHP mail() function)
             'className' => 'Smtp',
             'host' => 'localhost',

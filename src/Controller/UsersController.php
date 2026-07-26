@@ -409,6 +409,7 @@ class UsersController extends AppController
             if (Configure::read('preferendum.altchaBotProtection')) {
                 if (!$this->Altcha->verify($this->request)) {
                     $this->Flash->error(__('Please complete the verification.'));
+
                     return;
                 }
             }
