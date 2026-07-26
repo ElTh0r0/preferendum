@@ -114,10 +114,11 @@ return [
      */
     'EmailTransport' => [
         'default' => [
-            // Use 'Smtp' (together with host, username, password) or 'Mail' (using PHP mail() function)
+            // Use 'Smtp' (together with host, username, password)
+            // or 'Mail' (using PHP mail() function)
             'className' => 'Smtp',
             'host' => 'localhost',
-            'port' => 587, // Could also be 465 or 25; check with your email provider.
+            'port' => 587, // It could also be 465 or 25; check with your email provider.
             'username' => null,
             'password' => null,
             'client' => null,
@@ -132,4 +133,17 @@ return [
             'from' => 'you@localhost',
         ],
     ],
+
+    /*
+     * Altcha bot protection
+     * If 'altchaBotProtection' is enabled in preferendum_features.php, you can
+     * use the local altcha.i18n.min.js file (shipped with PREFERendum) instead
+     * of embedding altcha.js from jsDelivr. To use the local js file, uncomment
+     * the section below and provide the URL to your PREFERendum js folder.
+     */
+    /*
+    'Altcha' => [
+        'jsUrl' => 'https://example.com/js/altcha.i18n.min.js',
+    ],
+    */
 ];

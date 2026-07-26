@@ -30,7 +30,7 @@ return [
 
         // Turn on(true)/off(false) that backend users can request password reset by email
         // (This feature can only be used, if 'adminInterface' is enabled, too.)
-        // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
+        // Remark: "EmailTransport" has to be configured in 'config/app_local.php' to be able to use it!
         // See wiki: https://codeberg.org/ElTh0r0/preferendum/wiki/4.1-Email-setup
         'sendBackendUserPwReset' => false,
 
@@ -49,7 +49,7 @@ return [
 
         // Turn on(true)/off(false) that users can send themselves their edit link by email
         // (This feature can only be used, if 'opt_AllowChangeEntry' is used.)
-        // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
+        // Remark: "EmailTransport" has to be configured in 'config/app_local.php' to be able to use it!
         // See wiki: https://codeberg.org/ElTh0r0/preferendum/wiki/4.1-Email-setup
         'opt_SendChangeEntryLink' => false,
 
@@ -74,7 +74,7 @@ return [
 
         // Send an email after new poll entry/comment or email with poll links after poll creation
         // After enabling this feature, it can be dis-/enabled for each poll separately and receiver can be defined.
-        // Remark: "EmailTransport" has to be configured in app_local.php to be able to use it!
+        // Remark: "EmailTransport" has to be configured in 'config/app_local.php' to be able to use it!
         // See wiki: https://codeberg.org/ElTh0r0/preferendum/wiki/4.1-Email-setup
         'opt_SendEntryEmail' => false,
         'opt_SendCommentEmail' => false,
@@ -86,6 +86,13 @@ return [
 
         // Optionally define maximum number of entries per option
         'opt_MaxEntriesPerOption' => false,
+
+        // Turn on(true)/off(false) bot protection using Altcha captcha
+        // If turned on, and you want to use the local shipped Altcha js file, please see the 'Altcha\jsUrl' in 'config/app_local.php'
+        'altchaBotProtection' => false,
+
+        // Turn on(true)/off(false) brute force protection
+        'bruteForceProtection' => false,
 
         // Show vote result visualization. Current options:
         // 'trend': Showing kind of trend visualization weighting 'yes' and 'maybe'
@@ -124,7 +131,7 @@ return [
         // Header Logo (set to true if you want to show header logo, false otherwise)
         'headerLogo' => true,
         // Footer Text and Link
-        // (Insert false if you want to remove the GitHub footer link.
+        // (Insert false if you want to remove the Codeberg footer link.
         // Hot tipp of the week: Consider being nice and leaving it there!)
         'footerLink' => true,
     ],

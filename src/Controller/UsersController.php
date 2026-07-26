@@ -44,6 +44,11 @@ class UsersController extends AppController
 
         // Add this line to check authentication result and lock your site
         $this->loadComponent('Authentication.Authentication');
+
+        if (Configure::read('preferendum.altchaBotProtection')) {
+            $this->loadComponent('Altcha.Altcha');
+            $this->viewBuilder()->addHelper('Altcha.Altcha');
+        }
     }
 
     //------------------------------------------------------------------------
@@ -401,6 +406,14 @@ class UsersController extends AppController
     public function forgotPassword(): void
     {
         if ($this->request->is('post')) {
+            if (Configure::read('preferendum.altchaBotProtection')) {
+                if (!$this->Altcha->verify($this->request)) {
+                    $this->Flash->error(__('Please complete the verification.'));
+
+                    return;
+                }
+            }
+
             $user = $this->request->getData();
             $user['email'] = trim($user['email']);
             if (filter_var($user['email'], FILTER_VALIDATE_EMAIL)) {

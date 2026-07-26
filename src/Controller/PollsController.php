@@ -37,6 +37,11 @@ class PollsController extends AppController
         ) {
             $this->Flash->error(__('File "src/Controller/DbController.php" should be removed!'));
         }
+
+        if (Configure::read('preferendum.altchaBotProtection')) {
+            $this->loadComponent('Altcha.Altcha');
+            $this->viewBuilder()->addHelper('Altcha.Altcha');
+        }
     }
 
     //------------------------------------------------------------------------
@@ -56,6 +61,17 @@ class PollsController extends AppController
 
         $newpoll = $this->Polls->newEmptyEntity();
         if ($this->request->is('post') && $this->request->getData('choices') !== null) {
+            if (
+                Configure::read('preferendum.altchaBotProtection') &&
+                !Configure::read('preferendum.restrictPollCreation')
+            ) {
+                if (!$this->Altcha->verify($this->request)) {
+                    $this->Flash->error(__('Please complete the verification.'));
+
+                    return null;
+                }
+            }
+
             $newpoll = $this->Polls->patchEntity($newpoll, $this->request->getData());
 
             // Some checks to prevent manipulating disabled input fields through browser tools

@@ -47,8 +47,12 @@ use Cake\Core\Configure;
             'autocomplete' => 'email',
         ],
     );
-    echo '</fieldset><br>';
+    echo '</fieldset>';
 
+    if (Configure::read('preferendum.altchaBotProtection')) {
+        echo $this->Altcha->widget(['hideFooter' => true]);
+    }
+    echo '<br>';
     echo $this->Form->button(__('Send new password'));
     echo $this->Form->end();
 

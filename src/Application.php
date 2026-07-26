@@ -16,11 +16,11 @@ declare(strict_types=1);
  */
 namespace App;
 
+use App\Middleware\HostHeaderMiddleware;
 use Authentication\AuthenticationService; // Authentication
 use Authentication\AuthenticationServiceInterface; // Authentication
 use Authentication\AuthenticationServiceProviderInterface; // Authentication
 use Authentication\Middleware\AuthenticationMiddleware; // Authentication
-use App\Middleware\HostHeaderMiddleware;
 use Cake\Core\Configure;
 use Cake\Core\ContainerInterface;
 use Cake\Datasource\FactoryLocator;
@@ -29,6 +29,7 @@ use Cake\Event\EventManagerInterface;
 use Cake\Http\BaseApplication;
 use Cake\Http\Middleware\BodyParserMiddleware;
 use Cake\Http\Middleware\CsrfProtectionMiddleware;
+use Cake\Http\Middleware\RateLimitMiddleware; // Brute force protection
 use Cake\Http\MiddlewareQueue;
 use Cake\ORM\Locator\TableLocator;
 use Cake\Routing\Middleware\AssetMiddleware;
@@ -57,10 +58,21 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         parent::bootstrap();
 
         // By default, does not allow fallback classes.
-        FactoryLocator::add('Table', (new TableLocator())->allowFallbackClass(false));
+        FactoryLocator::add(
+            'Table',
+            (new TableLocator())->allowFallbackClass(false),
+        );
 
         // Load more plugins here
-        $this->addPlugin('Authentication');
+        if (
+            Configure::read('preferendum.adminInterface') ||
+            Configure::read('preferendum.opt_PollPassword')
+        ) {
+            $this->addPlugin('Authentication');
+        }
+        if (Configure::read('preferendum.altchaBotProtection')) {
+            $this->addPlugin('Altcha');
+        }
     }
 
     /**
@@ -92,9 +104,6 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             // See https://github.com/CakeDC/cakephp-cached-routing
             ->add(new RoutingMiddleware($this))
 
-            // Add Authentication after RoutingMiddleware
-            ->add(new AuthenticationMiddleware($this))
-
             // Parse various types of encoded request bodies so that they are
             // available as array through $request->getData()
             // https://book.cakephp.org/5/en/controllers/middleware.html#body-parser-middleware
@@ -105,6 +114,73 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ->add(new CsrfProtectionMiddleware([
                 'httponly' => true,
             ]));
+
+        if (
+            Configure::read('preferendum.adminInterface') ||
+            Configure::read('preferendum.opt_PollPassword')
+        ) {
+            // Add Authentication after RoutingMiddleware
+            $middlewareQueue->add(new AuthenticationMiddleware($this));
+        }
+
+        if (Configure::read('preferendum.bruteForceProtection')) {
+            // Admin/login
+            $middlewareQueue->add(new RateLimitMiddleware([
+                'limit' => 5, // max. 5 tries
+                'window' => 600, // in 10min
+                'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
+                'cache' => 'pref_ratelimit',
+                'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
+                'skipCheck' => function ($request) {
+                    return $request->getParam('controller') !== 'Admin'
+                        || $request->getParam('action') !== 'login';
+                },
+            ]));
+
+            // Password-reset request
+            $middlewareQueue->add(new RateLimitMiddleware([
+                'limit' => 5, // max. 5 tries
+                'window' => 3600, // in 1h
+                'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
+                'cache' => 'pref_ratelimit',
+                'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
+                'skipCheck' => function ($request) {
+                    return $request->getParam('controller') !== 'Users'
+                        || $request->getParam('action') !== 'forgotPassword';
+                },
+            ]));
+
+            // Polls view link
+            $middlewareQueue->add(new RateLimitMiddleware([
+                'limit' => 20, // max. 20 tries
+                'window' => 300, // in 5min
+                'identifier' => RateLimitMiddleware::IDENTIFIER_IP,
+                'cache' => 'pref_ratelimit',
+                'strategy' => RateLimitMiddleware::STRATEGY_SLIDING_WINDOW,
+                'skipCheck' => function ($request) {
+                    return $request->getParam('controller') !== 'Polls'
+                        || $request->getParam('action') !== 'view';
+                },
+            ]));
+
+            // Polls edit link
+            $middlewareQueue->add(new RateLimitMiddleware([
+                'limit' => 10, // max. 10 tries per ID
+                'window' => 1800, // in 30min
+                'identifierCallback' => function ($request) {
+                    // ID from $params['pass'][0] holen
+                    $token = $request->getParam('pass')[0] ?? '';
+
+                    return 'magic_link_' . $token;
+                },
+                'cache' => 'pref_ratelimit',
+                'strategy' => RateLimitMiddleware::STRATEGY_FIXED_WINDOW,
+                'skipCheck' => function ($request) {
+                    return $request->getParam('controller') !== 'Polls'
+                        || $request->getParam('action') !== 'edit';
+                },
+            ]));
+        }
 
         return $middlewareQueue;
     }
@@ -159,7 +235,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         $authenticationService->loadAuthenticator('Authentication.Form', [
             'fields' => $fields,
             'urlChecker' => [
-                'useRegex' => true
+                'useRegex' => true,
             ],
             'loginUrl' => '#^.*/admin/login(/([a-zA-Z0-9]+/NA))?$#',
             'identifier' => [

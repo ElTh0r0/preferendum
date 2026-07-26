@@ -10,6 +10,8 @@
  * @license   MIT License (https://opensource.org/license/MIT)
  * @link      https://codeberg.org/ElTh0r0/preferendum
  */
+
+use Cake\Core\Configure;
 ?>
 
 <?php
@@ -83,7 +85,11 @@ foreach ($pollchoices as $opt) {
     $j++;
 }
 echo '<td class="schedule-submit">';
-echo $this->Form->button(__('Save'), ['form' => 'entry_form']);
+if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
+    echo $this->Altcha->widget(['hideFooter' => true]);
+} else {
+    echo $this->Form->button(__('Save'), ['form' => 'entry_form']);
+}
 echo '</td>';
 echo '</tr>';
 
@@ -98,5 +104,19 @@ if ($poll->userinfo == 1) {
             'placeholder' => __('Optional: Contact info'),
         ],
     );
-    echo '</td><td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
+    if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
+        echo '</td><td class="schedule-blank" colspan="' . count($pollchoices) . '"></td>';
+        echo '<td class="schedule-submit">';
+        echo $this->Form->button(__('Save'), ['form' => 'entry_form']);
+        echo '</td>';
+        echo '</tr>';
+    } else {
+        echo '</td><td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td></tr>';
+    }
+} elseif (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
+    echo '<tr>';
+    echo '<td class="schedule-blank" colspan="' . (count($pollchoices) + 1) . '"></td>';
+    echo '<td class="schedule-submit">';
+    echo $this->Form->button(__('Save'), ['form' => 'entry_form']);
+    echo '</td>';
 }

@@ -21,19 +21,18 @@ use Cake\Mailer\Mailer;
 
 class EntriesController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        if (Configure::read('preferendum.altchaBotProtection')) {
+            $this->loadComponent('Altcha.Altcha');
+            $this->viewBuilder()->addHelper('Altcha.Altcha');
+        }
+    }
+
     public function new(string $pollid): object
     {
         if ($this->request->is('post')) {
-            $newentry = $this->request->getData();
-            // debug($newentry);
-            // die();
-
-            if (!$this->isValidEntry($pollid, $newentry)) {
-                $this->Flash->error(__('Unable to save your entry.'));
-
-                return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
-            }
-
             $poll = $this->fetchTable('Polls')->findById($pollid)->select([
                 'title',
                 'locked',
@@ -43,7 +42,26 @@ class EntriesController extends AppController
                 'anonymous',
                 'editentry',
                 'limitentry',
+                'pwprotect',
             ])->firstOrFail();
+
+            if (Configure::read('preferendum.altchaBotProtection') && $poll->pwprotect == 0) {
+                if (!$this->Altcha->verify($this->request)) {
+                    $this->Flash->error(__('Please complete the verification.'));
+
+                    return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+                }
+            }
+
+            $newentry = $this->request->getData();
+            // debug($newentry);
+            // die();
+
+            if (!$this->isValidEntry($pollid, $newentry)) {
+                $this->Flash->error(__('Unable to save your entry.'));
+
+                return $this->redirect(['controller' => 'Polls', 'action' => 'view', $pollid]);
+            }
 
             if ($poll->anonymous) {
                 // Temporary name; will be renamed to _UserID once user was saved
