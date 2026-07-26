@@ -29,6 +29,7 @@ Repository: https://codeberg.org/ElTh0r0/preferendum
   - Define maximum number of entries per option
   - Protect poll by a password
   - **Bot protection** using [Altcha](https://altcha.org/) captcha, a privacy-first alternative to reCAPTCHA through [CakePHP Altcha plugin](https://github.com/azzmin/cakephp-altcha)
+  - Brute force protection
 
 ![Screenshot](https://codeberg.org/ElTh0r0/preferendum/wiki/raw/img/screenshot.png)
 

@@ -1,11 +1,12 @@
 # Changelog
 
-## [0.10.0] (2026-xx-xx)
+## [0.10.0] (2026-07-26)
 
 - Add optional bot protection captcha. It is used when adding a new poll, entry or comment and when requesting a new password.
   - New entry 'preferendum\altchaBotProtection' in `config/preferendum_features.php` (compare with default preferendum_features.php)!
   - New entry 'Altcha\jsUrl' in `config/app_local.php` (compare with app_local.example.php)!
 - Add optional CakePHP RateLimitMiddleware as brute force protection
+  - New entry 'preferendum\bruteForceProtection' in `config/preferendum_features.php` (compare with default preferendum_features.php)!
 - Migrate from CakePHP 5.3 to 5.4
 
 ## [0.9.0] (2026-03-01)
