@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2026-07-26 18:22+0200\n"
-"PO-Revision-Date: 2026-06-07 18:11+0000\n"
+"PO-Revision-Date: 2026-07-26 17:53+0000\n"
 "Last-Translator: ElTh0r0 <elth0r0@noreply.codeberg.org>\n"
 "Language-Team: German <https://translate.codeberg.org/projects/preferendum/"
 "translations/de/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 2026.5\n"
+"X-Generator: Weblate 2026.6.1\n"
 
 #: src/Controller/AdminController.php:50 src/Controller/PollsController.php:55
 #: src/Controller/PollsController.php:277
@@ -62,7 +62,7 @@ msgstr "Option konnte NICHT gelöscht werden!"
 #: src/Controller/EntriesController.php:50
 #: src/Controller/PollsController.php:69 src/Controller/UsersController.php:411
 msgid "Please complete the verification."
-msgstr ""
+msgstr "Bitte schließen Sie die Verifizierung ab."
 
 #: src/Controller/CommentsController.php:61
 msgid "The comment has been saved."
@@ -527,10 +527,8 @@ msgid "Create poll"
 msgstr "Umfrage erstellen"
 
 #: templates/Polls/add.php:49
-#, fuzzy
-#| msgid "Create a new poll ..."
 msgid "Create a new poll …"
-msgstr "Erstelle eine neue Umfrage ..."
+msgstr "Erstelle eine neue Umfrage …"
 
 #: templates/Polls/add.php:57
 msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
@@ -725,7 +723,7 @@ msgstr ""
 
 #: templates/element/header.php:60
 msgid "Create a new poll ..."
-msgstr "Erstelle eine neue Umfrage ..."
+msgstr "Erstelle eine neue Umfrage …"
 
 #: templates/element/poll/add-form.php:34
 #: templates/element/poll/edit-form.php:36
@@ -836,7 +834,7 @@ msgstr "Die Umfrage wird bei Erreichen des Ablaufdatums automatisch gesperrt"
 
 #: templates/element/poll/add-form.php:398
 msgid "Bot protection"
-msgstr ""
+msgstr "Bot-Schutz"
 
 #: templates/element/poll/ctrl-edit.php:20
 msgid "View Poll"
