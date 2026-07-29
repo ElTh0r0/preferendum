@@ -57,7 +57,7 @@ use Cake\Core\Configure;
 
     <?php if (Configure::read('preferendum.headerLogo')) { ?>
         <div id="logo">
-            <a href="<?php echo $this->request->getAttributes()['webroot'] ?>" title="<?php echo __('Create a new poll ...') ?>">
+            <a href="<?php echo $this->request->getAttributes()['webroot'] ?>" title="<?php echo __('Create a new poll …') ?>">
                 <img src=<?php echo $this->request->getAttributes()['webroot'] . 'img/logo.svg' ?> alt="">
             </a>
         </div>
