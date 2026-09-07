@@ -26,7 +26,6 @@ if (
 }
 
 $this->Html->script('poll_create.js', ['block' => 'scriptBottom']);
-$this->Html->script('poll_options.js', ['block' => 'scriptBottom']);
 $this->Html->script('poll_view.js', ['block' => 'scriptBottom']);
 $this->Html->script('clipboard.min.js', ['block' => true]);
 

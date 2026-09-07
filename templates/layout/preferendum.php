@@ -33,7 +33,6 @@ use Cake\Core\Configure;
     echo $this->Html->meta('icon', '/favicon.ico', ['type' => 'image/x-icon']);
 
     echo $this->Html->css(['reset', 'preferendum']);
-    echo $this->Html->script('jquery-3.6.3.min.js', ['inline' => false]);
     if (Configure::read('preferendum.toggleTheme')) {
         echo $this->Html->script('theme_toggle.js', ['block' => 'scriptBottom']);
     }
