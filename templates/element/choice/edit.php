@@ -93,7 +93,7 @@ if ($numChoices > 1) {
     echo '<td class="schedule-blank"></td>';
     echo '</tr>';
 } ?>
-<!-- DATES -->
+<!-- CHOICES -->
 <tr>
     <td class="schedule-blank"></td>
     <?php foreach ($pollchoices as $choice) : ?>
@@ -115,14 +115,14 @@ if ($numChoices > 1) {
                 </div>
             </div>
             <?php
-            echo '<button type="button" class="date-edit" onclick="showEditChoice(' .
+            echo '<button type="button" class="choice-edit" onclick="showEditChoice(' .
                 $choice->id . ', \'' . h($choice->option) . '\', ' . $choice->max_entries . ')"></button>';
             if ($numChoices > 1) {
                 echo $this->Form->postLink(
                     '',
                     ['controller' => 'Choices', 'action' => 'delete', $poll->id, $adminid, $choice->id],
                     [
-                        'class' => 'icon-button date-delete',
+                        'class' => 'icon-button choice-delete',
                         'confirm' => __('Are you sure to delete option {0}?', h($choice->option)),
                         'escape' => false,
                     ],
@@ -149,7 +149,7 @@ if ($numChoices > 1) {
                         'label' => '',
                         'minlength' => '1',
                         'maxlength' => '50',
-                        'class' => 'dateInput field-long datepicker-here',
+                        'class' => 'choiceInput field-long',
                         'placeholder' => __('New option'),
                     ],
                 );

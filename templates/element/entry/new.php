@@ -78,7 +78,7 @@ foreach ($pollchoices as $opt) {
             'name' => 'choices[]',
             'form' => 'entry_form',
             'value' => $opt->id,
-            'class' => 'entry-date',
+            'class' => 'entry-choice',
         ],
     );
     echo '</td>';

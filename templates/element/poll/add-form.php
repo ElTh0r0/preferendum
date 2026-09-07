@@ -63,10 +63,10 @@ echo $this->Form->control(
     [
         'name' => 'choices[]',
         'maxlength' => '50',
-        'class' => 'dateInput field-long datepicker-here',
+        'class' => 'choiceInput field-long',
         'required' => true,
         'label' => __('Options') . ' *',
-        'placeholder' => __('Type whatever you want or pick a date!'),
+        'placeholder' => __('Insert your option!'),
         'style' => 'margin-bottom: 8px;' . $inputstyle,
     ],
 );

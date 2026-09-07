@@ -169,10 +169,6 @@ em {
     opacity: 0.6;
 }
 
-.datepicker-container * {
-    font-size: 16px;
-}
-
 /* ==== CONTROL-ELEMENTS ==== */
 
 #control-elements {
@@ -489,11 +485,11 @@ td.schedule-header>div {
     margin: 5px 0;
 }
 
-td.schedule-header a.date-delete {
+td.schedule-header a.choice-delete {
     background-image: url(../img/icon-delete.png);
 }
 
-td.schedule-header .date-edit {
+td.schedule-header .choice-edit {
     width: 24px;
     height: 24px;
     cursor: pointer;
@@ -781,15 +777,6 @@ input#choice[type="text"] {
 
 .content-centered {
     text-align: center;
-}
-
-.btnFormDate {
-    cursor: pointer;
-    margin-right: 5px;
-}
-
-#btnDate {
-    margin-left: 16px;
 }
 
 .success {

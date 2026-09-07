@@ -25,7 +25,6 @@ if (
     $adminid = null;
 }
 
-echo $this->element('poll/datepicker');
 $this->Html->script('poll_create.js', ['block' => 'scriptBottom']);
 $this->Html->script('poll_options.js', ['block' => 'scriptBottom']);
 $this->Html->script('poll_view.js', ['block' => 'scriptBottom']);

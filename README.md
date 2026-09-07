@@ -6,7 +6,7 @@ Repository: https://codeberg.org/ElTh0r0/preferendum
 - Clean, intuitive interface
 - `yes`/`no`/`maybe` options
 - Answer trend **visualization**
-- Free entry of arbitrary **answer options or dates** (using the built-in date picker)
+- Free entry of arbitrary **choice options**
 - Unique public links for sharing a poll
 - One-click **clipboard copy** of the poll URL
 - **Comments** section in every poll
@@ -88,7 +88,6 @@ PREFERendum makes use of the following software/media and says **Thank you!** to
 - [Sprudel](https://github.com/bkis/sprudel)
 - [CakePHP](https://cakephp.org)
 - [CakePHP Altcha plugin](https://github.com/azzmin/cakephp-altcha)
-- [Datepicker](https://github.com/fengyuanchen/datepicker)
 - [Jquery](https://github.com/jquery/jquery)
 - [Clipboard.js](https://github.com/zenorocha/clipboard.js)
 - [Icons from iconmonstr.com](http://www.iconmonstr.com)

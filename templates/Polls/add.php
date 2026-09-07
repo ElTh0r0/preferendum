@@ -19,7 +19,6 @@ $this->assign('title', __('Create poll'));
 
 $this->Html->script('poll_create.js', ['block' => 'scriptBottom']);
 $this->Html->script('poll_options.js', ['block' => 'scriptBottom']);
-echo $this->element('poll/datepicker');
 
 $this->Html->scriptStart(['block' => true]);
 // Maximum number of options

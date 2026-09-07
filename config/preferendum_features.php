@@ -106,9 +106,6 @@ return [
         // Maximum number of options / dates per poll
         'maxPollOptions' => 30,
 
-        // Datepicker date format (e.g. 'yyyy-mm-dd' or 'dd.mm.yyyy')
-        'datepickerFormat' => 'yyyy-mm-dd',
-
         // Date format for viewing comments (e.g. 'Y-m-d h:i a' or 'd.m.Y H:i')
         // See: https://www.php.net/manual/en/datetime.format.php
         'dateformatComments' => 'Y-m-d h:i a',

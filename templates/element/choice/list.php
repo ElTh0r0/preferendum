@@ -12,7 +12,7 @@
  */
 ?>
 
-<!-- TABLE HEADER / DATES -->
+<!-- TABLE HEADER / CHOICES -->
 <tr>
     <td class="schedule-blank"></td>
     <?php foreach ($pollchoices as $choice) : ?>

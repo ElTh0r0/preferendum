@@ -101,7 +101,7 @@ for ($i = 0; $i < $numChoices; $i++) {
             'name' => 'choices[]',
             'form' => 'entry_form',
             'value' => $entry,
-            'class' => 'entry-date',
+            'class' => 'entry-choice',
         ],
     );
     echo '</td>';
