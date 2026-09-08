@@ -26,7 +26,6 @@ if (
 }
 
 $this->Html->script('poll_view.js', ['block' => 'scriptBottom']);
-$this->Html->script('clipboard.min.js', ['block' => true]);
 
 $this->Html->scriptStart(['block' => true]);
 echo 'var jswebroot = ' . json_encode($this->request->getAttributes()['webroot']) . ';';

@@ -88,6 +88,5 @@ PREFERendum makes use of the following software/media and says **Thank you!** to
 - [Sprudel](https://github.com/bkis/sprudel)
 - [CakePHP](https://cakephp.org)
 - [CakePHP Altcha plugin](https://github.com/azzmin/cakephp-altcha)
-- [Clipboard.js](https://github.com/zenorocha/clipboard.js)
 - [Icons from iconmonstr.com](http://www.iconmonstr.com)
 - [JS light/dark theme toggle](https://whitep4nth3r.com/blog/best-light-dark-mode-theme-toggle-javascript/)

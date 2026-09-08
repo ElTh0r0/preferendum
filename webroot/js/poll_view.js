@@ -13,24 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         adminUrlField.value = pollUrl + "/" + jsadminid;
     }
 
-    // url clipboard copy feature
-    var clipboard = new ClipboardJS(".copy-trigger");
-    clipboard.on("success", function (e) {
-        var trigger = e.trigger;
-        trigger.classList.add("copy-success");
-        setTimeout(function () {
-            trigger.classList.remove("copy-success");
-        }, 600);
-    });
-    clipboard.on("error", function (e) {
-        alert("Error copying URL. Please copy it manually!");
-        var trigger = e.trigger;
-        trigger.classList.add("copy-fail");
-        setTimeout(function () {
-            trigger.classList.remove("copy-fail");
-        }, 2000);
-    });
-
     // iterate options on click (ugly, but works for now)
     var newEntryBoxes = document.querySelectorAll(".new-entry-box");
     newEntryBoxes.forEach(function (box) {
@@ -74,4 +56,72 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+});
+
+// url clipboard copy feature
+async function copyToClipboard(text) {
+    // Modern Clipboard API (requires HTTPS or localhost)
+    if (navigator.clipboard && window.isSecureContext) {
+        try {
+            await navigator.clipboard.writeText(text);
+            return true;
+        } catch (e) {
+            //console.warn("navigator.clipboard.writeText() failed!");
+        }
+    }
+
+    // Fallback using execCommand (deprecated)
+    try {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+
+        const copySuccess = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        if (copySuccess) {
+            return true;
+        }
+    } catch (e) {
+        //console.warn("document.execCommand('copy') failed!");
+    }
+
+    return false;
+}
+
+// Find all buttons with data-clipboard-target
+const buttons = document.querySelectorAll("[data-clipboard-target]");
+buttons.forEach((button) => {
+    button.addEventListener("click", async () => {
+        const targetSelector = button.getAttribute("data-clipboard-target");
+        const targetElement = document.querySelector(targetSelector);
+        if (!targetElement) {
+            console.warn("Target element not found: " + targetSelector);
+            button.classList.add("copy-fail");
+            setTimeout(() => {
+                button.classList.remove("copy-fail");
+            }, 2000);
+            return;
+        }
+
+        const text = "value" in targetElement ? targetElement.value : targetElement.textContent;
+        const ok = await copyToClipboard(text);
+        if (ok) {
+            //console.log("Copy to clipboard successful!");
+            button.classList.add("copy-success");
+            setTimeout(() => {
+                button.classList.remove("copy-success");
+            }, 600);
+        } else {
+            //console.warn("Copy to clipboard failed!");
+            button.classList.add("copy-fail");
+            setTimeout(() => {
+                button.classList.remove("copy-fail");
+            }, 2000);
+        }
+    });
 });
