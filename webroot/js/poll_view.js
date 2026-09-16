@@ -100,7 +100,7 @@ buttons.forEach((button) => {
         const targetSelector = button.getAttribute("data-clipboard-target");
         const targetElement = document.querySelector(targetSelector);
         if (!targetElement) {
-            console.warn("Target element not found: " + targetSelector);
+            console.warn("Target element not found: " + targetElement);
             button.classList.add("copy-fail");
             setTimeout(() => {
                 button.classList.remove("copy-fail");
@@ -111,13 +111,11 @@ buttons.forEach((button) => {
         const text = "value" in targetElement ? targetElement.value : targetElement.textContent;
         const ok = await copyToClipboard(text);
         if (ok) {
-            //console.log("Copy to clipboard successful!");
             button.classList.add("copy-success");
             setTimeout(() => {
                 button.classList.remove("copy-success");
             }, 600);
         } else {
-            //console.warn("Copy to clipboard failed!");
             button.classList.add("copy-fail");
             setTimeout(() => {
                 button.classList.remove("copy-fail");
