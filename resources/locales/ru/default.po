@@ -1,0 +1,1022 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2026-07-26 18:22+0200\n"
+"PO-Revision-Date: 2026-09-14 21:26+0000\n"
+"Last-Translator: Xapitonov <xapitonov@noreply.codeberg.org>\n"
+"Language-Team: Russian <https://translate.codeberg.org/projects/preferendum/"
+"translations/ru/>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Language: ru\n"
+"X-Generator: Weblate 2026.8.1\n"
+
+#: ./src/Controller/AdminController.php:50
+#: ./src/Controller/PollsController.php:55
+#: ./src/Controller/PollsController.php:277
+msgid "DEMO mode is enabled - some features may be limited!"
+msgstr "ДЕМО-режим включён — некоторые функции могут быть ограничены!"
+
+#: ./src/Controller/AdminController.php:139
+#: ./src/Controller/AdminController.php:152
+msgid "Invalid user or password"
+msgstr "Неверное имя пользователя или пароль"
+
+#: ./src/Controller/AdminController.php:148
+msgid "Invalid poll password"
+msgstr "Неверный пароль для голосования"
+
+#: ./src/Controller/ChoicesController.php:73
+msgid "Option has been saved."
+msgstr "Вариант сохранён."
+
+#: ./src/Controller/ChoicesController.php:80
+msgid "Option has NOT been saved!"
+msgstr "Вариант НЕ сохранён!"
+
+#: ./src/Controller/ChoicesController.php:111
+msgid "Order has been updated."
+msgstr "Порядок обновлён."
+
+#: ./src/Controller/ChoicesController.php:119
+msgid "Order has NOT been updated!"
+msgstr "Порядок НЕ обновлён!"
+
+#: ./src/Controller/ChoicesController.php:144
+msgid "Option has been deleted."
+msgstr "Вариант удалён."
+
+#: ./src/Controller/ChoicesController.php:150
+msgid "Option has NOT been deleted!"
+msgstr "Вариант НЕ удалён!"
+
+#: ./src/Controller/CommentsController.php:42
+#: ./src/Controller/EntriesController.php:50
+#: ./src/Controller/PollsController.php:69
+#: ./src/Controller/UsersController.php:411
+msgid "Please complete the verification."
+msgstr "Пожалуйста, пройдите проверку."
+
+#: ./src/Controller/CommentsController.php:61
+msgid "The comment has been saved."
+msgstr "Комментарий сохранён."
+
+#: ./src/Controller/CommentsController.php:66
+msgid "Unable to save your comment."
+msgstr "Не удалось сохранить комментарий."
+
+#: ./src/Controller/CommentsController.php:87
+msgid "Comment has been deleted."
+msgstr "Комментарий удалён."
+
+#: ./src/Controller/CommentsController.php:93
+msgid "Comment {0} has NOT been deleted!"
+msgstr "Комментарий {0} НЕ удалён!"
+
+#: ./src/Controller/CommentsController.php:112
+#: ./templates/email/text/new_comment.php:14
+msgid "New comment in poll \"{0}\""
+msgstr "Новый комментарий в голосовании \"{0}\""
+
+#: ./src/Controller/EntriesController.php:61
+#: ./src/Controller/EntriesController.php:202
+#: ./src/Controller/EntriesController.php:217
+#: ./src/Controller/EntriesController.php:322
+msgid "Unable to save your entry."
+msgstr "Не удалось сохранить вашу запись."
+
+#: ./src/Controller/EntriesController.php:158
+msgid "Optionally, you can receive your personalised link by email:"
+msgstr ""
+"При желании вы можете получить персональную ссылку по электронной почте:"
+
+#: ./src/Controller/EntriesController.php:169
+msgid "Email for receiving your personal link"
+msgstr "Электронная почта для получения персональной ссылки"
+
+#: ./src/Controller/EntriesController.php:171
+msgid "Send email"
+msgstr "Отправить письмо"
+
+#: ./src/Controller/EntriesController.php:175
+msgid "Your entry has been saved, but please note: If you want to edit your entry, you must \n                            keep this personalised link."
+msgstr ""
+"Ваша запись сохранена, но обратите внимание: если вы захотите изменить её, "
+"вам нужно \n"
+"                  сохранить эту персональную ссылку."
+
+#: ./src/Controller/EntriesController.php:178
+msgid "Copy the link and store it on your device!"
+msgstr "Скопируйте ссылку и сохраните её на своём устройстве!"
+
+#: ./src/Controller/EntriesController.php:182
+#: ./templates/element/header.php:36
+#: ./templates/element/header.php:43
+#: ./templates/element/header.php:50
+msgid "Copy link to clipboard!"
+msgstr "Скопировать ссылку в буфер обмена!"
+
+#: ./src/Controller/EntriesController.php:192
+msgid "Your entry has been saved!"
+msgstr "Ваша запись сохранена!"
+
+#: ./src/Controller/EntriesController.php:430
+msgid "New entry in poll \"{0}\""
+msgstr "Новая запись в голосовании \"{0}\""
+
+#: ./src/Controller/EntriesController.php:432
+msgid "Updated entry in poll \"{0}\""
+msgstr "Обновлённая запись в голосовании \"{0}\""
+
+#: ./src/Controller/PollsController.php:38
+msgid "File \"src/Controller/DbController.php\" should be removed!"
+msgstr "Файл \"src/Controller/DbController.php\" необходимо удалить!"
+
+#: ./src/Controller/PollsController.php:158
+#: ./src/Controller/PollsController.php:169
+msgid "Your poll has been saved."
+msgstr "Ваше голосование сохранено."
+
+#: ./src/Controller/PollsController.php:159
+msgid "Please login with your chosen password!"
+msgstr "Выполните вход, используя выбранный пароль!"
+
+#: ./src/Controller/PollsController.php:185
+msgid "Unable to add your poll."
+msgstr "Не удалось добавить ваше голосование."
+
+#: ./src/Controller/PollsController.php:222
+msgid "This poll is locked - it is not possible to insert new entries or comments!"
+msgstr ""
+"Это голосование заблокировано — добавление новых записей и комментариев "
+"невозможно!"
+
+#: ./src/Controller/PollsController.php:230
+msgid "Only poll admin can see votes and comments!"
+msgstr "Только администратор голосования может видеть голоса и комментарии!"
+
+#: ./src/Controller/PollsController.php:311
+msgid "This poll is locked!"
+msgstr "Это голосование заблокировано!"
+
+#: ./src/Controller/PollsController.php:389
+msgid "Your poll has been updated."
+msgstr "Ваше голосование обновлено."
+
+#: ./src/Controller/PollsController.php:394
+msgid "Unable to update your poll."
+msgstr "Не удалось обновить ваше голосование."
+
+#: ./src/Controller/PollsController.php:425
+msgid "Poll has been unlocked"
+msgstr "Голосование разблокировано"
+
+#: ./src/Controller/PollsController.php:432
+msgid "Poll lock has NOT been changed!"
+msgstr "Состояние блокировки голосования НЕ изменено!"
+
+#: ./src/Controller/PollsController.php:463
+msgid "Your personal link for poll \"{0}\""
+msgstr "Ваша персональная ссылка на голосование \"{0}\""
+
+#: ./src/Controller/PollsController.php:478
+msgid "Email with personal link was sent to \"{0}\""
+msgstr "Письмо с персональной ссылкой отправлено на адрес \"{0}\""
+
+#: ./src/Controller/PollsController.php:484
+msgid "Email could not be sent!"
+msgstr "Не удалось отправить письмо!"
+
+#: ./src/Controller/PollsController.php:514
+#: ./templates/element/choice/edit.php:104
+#: ./templates/element/choice/edit.php:112
+#: ./templates/element/choice/list.php:23
+#: ./templates/element/choice/list.php:31
+msgid " - {0} pers."
+msgstr " - {0} чел."
+
+#: ./src/Controller/PollsController.php:521
+msgid "Contact info"
+msgstr "Контактная информация"
+
+#: ./src/Controller/PollsController.php:523
+#: ./templates/Admin/userinfo.php:21
+#: ./templates/element/admin/ctrl-login.php:29
+#: ./templates/element/user/create-form.php:34
+#: ./templates/element/user/edit-form.php:40
+#: ./templates/element/user/list.php:26
+msgid "Name"
+msgstr "Имя"
+
+#: ./src/Controller/PollsController.php:551
+msgid "no"
+msgstr "нет"
+
+#: ./src/Controller/PollsController.php:554
+msgid "yes"
+msgstr "да"
+
+#: ./src/Controller/PollsController.php:557
+msgid "maybe"
+msgstr "возможно"
+
+#: ./src/Controller/PollsController.php:587
+msgid "Poll {0} has been deleted."
+msgstr "Голосование {0} удалено."
+
+#: ./src/Controller/PollsController.php:597
+msgid "Poll {0} has NOT been deleted!"
+msgstr "Голосование {0} НЕ удалено!"
+
+#: ./src/Controller/PollsController.php:678
+msgid "Inactive poll {0} has been deleted."
+msgstr "Неактивное голосование {0} удалено."
+
+#: ./src/Controller/PollsController.php:682
+msgid "Inactive poll {0} could NOT be deleted!"
+msgstr "Неактивное голосование {0} НЕ удалось удалить!"
+
+#: ./src/Controller/PollsController.php:722
+msgid "Expired poll {0} has been deleted."
+msgstr "Просроченное голосование {0} удалено."
+
+#: ./src/Controller/PollsController.php:726
+msgid "Expired poll {0} could NOT be deleted!"
+msgstr "Просроченное голосование {0} НЕ удалось удалить!"
+
+#: ./src/Controller/PollsController.php:823
+msgid "New poll \"{0}\" - ADMIN link"
+msgstr "Новое голосование \"{0}\" — ссылка АДМИНИСТРАТОРА"
+
+#: ./src/Controller/PollsController.php:839
+msgid "New poll \"{0}\" - USER link"
+msgstr "Новое голосование \"{0}\" — ссылка ПОЛЬЗОВАТЕЛЯ"
+
+#: ./src/Controller/UsersController.php:100
+msgid "DEMO MODE enabled! User creation not possible!"
+msgstr "ДЕМО-РЕЖИМ включён! Создание пользователей невозможно!"
+
+#: ./src/Controller/UsersController.php:120
+#: ./src/Controller/UsersController.php:282
+msgid "User with this name already exists!"
+msgstr "Пользователь с таким именем уже существует!"
+
+#: ./src/Controller/UsersController.php:130
+#: ./src/Controller/UsersController.php:264
+msgid "User with this email already exists!"
+msgstr "Пользователь с таким адресом электронной почты уже существует!"
+
+#: ./src/Controller/UsersController.php:141
+msgid "Unable to add the user - password / confirmation not correct!"
+msgstr ""
+"Не удалось добавить пользователя — пароль и подтверждение пароля не "
+"совпадают!"
+
+#: ./src/Controller/UsersController.php:147
+msgid "The user has been created."
+msgstr "Пользователь создан."
+
+#: ./src/Controller/UsersController.php:151
+msgid "Unable to add the user!"
+msgstr "Не удалось добавить пользователя!"
+
+#: ./src/Controller/UsersController.php:190
+msgid "Invalid action - something went wrong!"
+msgstr "Недопустимое действие — что-то пошло не так!"
+
+#: ./src/Controller/UsersController.php:225
+msgid "DEMO MODE enabled! Editing users is not possible!"
+msgstr "ДЕМО-РЕЖИМ включён! Редактирование пользователей невозможно!"
+
+#: ./src/Controller/UsersController.php:297
+msgid "User not updated - at least one administrator required!"
+msgstr ""
+"Пользователь не обновлён — должен быть зарегистрирован хотя бы один "
+"администратор!"
+
+#: ./src/Controller/UsersController.php:306
+msgid "The user has been updated."
+msgstr "Пользователь обновлён."
+
+#: ./src/Controller/UsersController.php:310
+msgid "Unable to update the user."
+msgstr "Не удалось обновить пользователя."
+
+#: ./src/Controller/UsersController.php:324
+msgid "DEMO MODE enabled! Changing the password not possible!"
+msgstr "ДЕМО-РЕЖИМ включён! Изменение пароля невозможно!"
+
+#: ./src/Controller/UsersController.php:354
+msgid "Unable to update the password / confirmation not correct."
+msgstr ""
+"Не удалось обновить пароль — пароль и подтверждение пароля не совпадают."
+
+#: ./src/Controller/UsersController.php:363
+msgid "The password has been updated."
+msgstr "Пароль обновлён."
+
+#: ./src/Controller/UsersController.php:367
+msgid "Unable to save the new password!"
+msgstr "Не удалось сохранить новый пароль!"
+
+#: ./src/Controller/UsersController.php:382
+msgid "DEMO MODE enabled! User deletion is not possible!"
+msgstr "ДЕМО-РЕЖИМ включён! Удаление пользователей невозможно!"
+
+#: ./src/Controller/UsersController.php:393
+msgid "User has been deleted."
+msgstr "Пользователь удалён."
+
+#: ./src/Controller/UsersController.php:399
+msgid "User {0} has NOT been deleted!"
+msgstr "Пользователь {0} НЕ удалён!"
+
+#: ./src/Controller/UsersController.php:437
+#: ./templates/Users/forgot_password.php:29
+msgid "Password reset"
+msgstr "Сброс пароля"
+
+#: ./src/Controller/UsersController.php:452
+msgid "Something went wrong!"
+msgstr "Что-то пошло не так!"
+
+#: ./src/Controller/UsersController.php:456
+msgid "If a user is registered with this email address, a new password will be sent."
+msgstr ""
+"Если пользователь зарегистрирован с этим адресом электронной почты, ему "
+"будет отправлен новый пароль."
+
+#: ./src/Controller/UsersController.php:540
+msgid "Entry has been deleted."
+msgstr "Запись удалена."
+
+#: ./src/Controller/UsersController.php:546
+msgid "Entry has NOT been deleted!"
+msgstr "Запись НЕ удалена!"
+
+#: ./templates/Admin/index.php:17
+#: ./templates/Admin/login.php:14
+#: ./templates/element/admin/ctrl-logout.php:45
+msgid "Poll administration"
+msgstr "Управление голосованиями"
+
+#: ./templates/Admin/index.php:67
+msgid "Total polls"
+msgstr "Всего голосований"
+
+#: ./templates/Admin/index.php:77
+msgid "Expired"
+msgstr "Просроченные"
+
+#: ./templates/Admin/index.php:82
+msgid "Are you sure to delete expired polls (expired since >{0} days)?"
+msgstr ""
+"Вы уверены, что хотите удалить просроченные голосования (просроченные более "
+"{0} дней назад)?"
+
+#: ./templates/Admin/index.php:92
+msgid "Inactive"
+msgstr "Неактивные"
+
+#: ./templates/Admin/index.php:97
+msgid "Are you sure to delete inactive poll (inactive since >{0} days)?"
+msgstr ""
+"Вы уверены, что хотите удалить неактивные голосования (неактивные более {0} "
+"дней)?"
+
+#: ./templates/Admin/index.php:106
+msgid "New poll"
+msgstr "Новое голосование"
+
+#: ./templates/Admin/index.php:126
+msgid "Search poll or user"
+msgstr "Поиск голосования или пользователя"
+
+#: ./templates/Admin/index.php:130
+msgid "Clear filter"
+msgstr "Очистить фильтр"
+
+#: ./templates/Admin/index.php:138
+msgid "Search"
+msgstr "Поиск"
+
+#: ./templates/Admin/index.php:146
+msgid "Filtered polls"
+msgstr "Отфильтрованные голосования"
+
+#: ./templates/Admin/index.php:159
+#: ./templates/element/poll/add-form.php:33
+#: ./templates/element/poll/edit-form.php:35
+msgid "Title"
+msgstr "Название"
+
+#: ./templates/Admin/index.php:160
+msgid "Last change"
+msgstr "Последнее изменение"
+
+#: ./templates/Admin/index.php:161
+#: ./templates/element/poll/add-form.php:359
+#: ./templates/element/poll/edit-form.php:276
+msgid "Expiry date"
+msgstr "Срок действия"
+
+#: ./templates/Admin/index.php:176
+msgid "Votes"
+msgstr "Голоса"
+
+#: ./templates/Admin/index.php:182
+#: ./templates/element/comment/list.php:18
+#: ./templates/element/comment/new.php:20
+msgid "Comments"
+msgstr "Комментарии"
+
+#: ./templates/Admin/index.php:209
+msgid "Poll not protected by admin link"
+msgstr "Голосование не защищено ссылкой администратора"
+
+#: ./templates/Admin/index.php:213
+msgid "Email after new comment/entry"
+msgstr "Отправлять письмо после нового комментария/записи"
+
+#: ./templates/Admin/index.php:215
+msgid "Email after new entry"
+msgstr "Отправлять письмо после новой записи"
+
+#: ./templates/Admin/index.php:217
+msgid "Email after new comment"
+msgstr "Отправлять письмо после нового комментария"
+
+#: ./templates/Admin/index.php:222
+msgid "Collect user info"
+msgstr "Собирать информацию о пользователях"
+
+#: ./templates/Admin/index.php:229
+msgid "No comments allowed"
+msgstr "Комментарии запрещены"
+
+#: ./templates/Admin/index.php:232
+msgid "Poll votes hidden"
+msgstr "Голоса в голосовании скрыты"
+
+#: ./templates/Admin/index.php:235
+msgid "Users can modify their entry"
+msgstr "Пользователи могут изменять свои записи"
+
+#: ./templates/Admin/index.php:238
+msgid "Poll is password protected"
+msgstr "Голосование защищено паролем"
+
+#: ./templates/Admin/index.php:241
+msgid "Poll is anonymously"
+msgstr "Голосование анонимное"
+
+#: ./templates/Admin/index.php:244
+msgid "Poll locked"
+msgstr "Голосование заблокировано"
+
+#: ./templates/Admin/index.php:370
+msgid "Are you sure to delete poll {0}?"
+msgstr "Вы уверены, что хотите удалить голосование {0}?"
+
+#: ./templates/Admin/index.php:388
+msgid "No polls found in database!"
+msgstr "В базе данных не найдено голосований!"
+
+#: ./templates/Admin/login.php:26
+msgid "This poll is password protected!"
+msgstr "Это голосование защищено паролем!"
+
+#: ./templates/Admin/login.php:27
+msgid "Please enter the password and press \"Login\"."
+msgstr "Введите пароль и нажмите \"Войти\"."
+
+#: ./templates/Admin/userinfo.php:14
+msgid "User info"
+msgstr "Информация о пользователе"
+
+#: ./templates/Admin/userinfo.php:19
+msgid "User info for poll"
+msgstr "Информация о пользователе для голосования"
+
+#: ./templates/Admin/userinfo.php:21
+msgid "Info"
+msgstr "Информация"
+
+#: ./templates/Admin/userinfo.php:26
+msgid "No user information available for this poll!"
+msgstr "Для этого голосования нет доступной информации о пользователях!"
+
+#: ./templates/Error/error400.php:27
+#: ./templates/Error/error500.php:37
+msgid "Error"
+msgstr "Ошибка"
+
+#: ./templates/Error/error400.php:28
+msgid "The requested address {0} was not found on this server."
+msgstr "Запрошенный адрес {0} не найден на этом сервере."
+
+#: ./templates/Error/error400.php:30
+#: ./templates/Error/error500.php:40
+msgid "Back"
+msgstr "Назад"
+
+#: ./templates/Error/error500.php:35
+msgid "An internal error has occurred"
+msgstr "Произошла внутренняя ошибка"
+
+#: ./templates/Polls/add.php:18
+#: ./templates/element/poll/add-form.php:406
+msgid "Create poll"
+msgstr "Создать голосование"
+
+#: ./templates/Polls/add.php:49
+msgid "Create a new poll …"
+msgstr "Создать новое голосование …"
+
+#: ./templates/Polls/add.php:57
+msgid "Attention! Inactive polls will be deleted automatically after {0} days!"
+msgstr ""
+"Внимание! Неактивные голосования будут автоматически удалены через {0} дней!"
+
+#: ./templates/Polls/edit.php:19
+#: ./templates/Polls/edit.php:52
+msgid "Edit poll"
+msgstr "Редактировать голосование"
+
+#: ./templates/Polls/edit.php:38
+#: ./templates/Polls/view.php:37
+#: ./templates/element/entry/edit.php:69
+#: ./templates/element/entry/new.php:57
+#: ./templates/element/poll/result-trend.php:19
+#: ./templates/email/text/new_entry.php:21
+msgid "No"
+msgstr "Нет"
+
+#: ./templates/Polls/edit.php:39
+#: ./templates/Polls/view.php:38
+#: ./templates/element/entry/edit.php:73
+#: ./templates/element/poll/result-simple.php:17
+#: ./templates/element/poll/result-simple2.php:17
+#: ./templates/element/poll/result-trend.php:17
+#: ./templates/email/text/new_entry.php:23
+msgid "Yes"
+msgstr "Да"
+
+#: ./templates/Polls/edit.php:40
+#: ./templates/Polls/view.php:39
+#: ./templates/element/entry/edit.php:65
+#: ./templates/element/entry/edit.php:77
+#: ./templates/element/poll/result-simple2.php:18
+#: ./templates/element/poll/result-trend.php:18
+#: ./templates/email/text/new_entry.php:19
+msgid "Maybe"
+msgstr "Возможно"
+
+#: ./templates/Polls/edit.php:61
+msgid "Edit entries"
+msgstr "Редактировать записи"
+
+#: ./templates/Polls/view.php:19
+msgid "Poll"
+msgstr "Голосование"
+
+#: ./templates/Polls/view.php:35
+#: ./templates/element/poll/ctrl.php:19
+msgid "Mini View"
+msgstr "Компактный вид"
+
+#: ./templates/Polls/view.php:36
+msgid "Normal View"
+msgstr "Обычный вид"
+
+#: ./templates/Users/edit.php:31
+msgid "Back to user creation"
+msgstr "Вернуться к созданию пользователя"
+
+#: ./templates/Users/forgot_password.php:30
+msgid "Enter your email address and we'll send you a new password for your account:"
+msgstr ""
+"Введите адрес электронной почты, и мы отправим вам новый пароль для вашей "
+"учётной записи:"
+
+#: ./templates/Users/forgot_password.php:56
+msgid "Send new password"
+msgstr "Отправить новый пароль"
+
+#: ./templates/Users/forgot_password.php:61
+msgid "Back to login"
+msgstr "Вернуться ко входу"
+
+#: ./templates/element/admin/ctrl-login.php:41
+#: ./templates/element/poll/add-form.php:233
+#: ./templates/element/poll/edit-form.php:152
+#: ./templates/element/user/create-form.php:57
+#: ./templates/element/user/edit-form.php:87
+msgid "Password"
+msgstr "Пароль"
+
+#: ./templates/element/admin/ctrl-login.php:48
+msgid "Login"
+msgstr "Войти"
+
+#: ./templates/element/admin/ctrl-login.php:54
+msgid "Forgot password"
+msgstr "Забыли пароль?"
+
+#: ./templates/element/admin/ctrl-logout.php:24
+#: ./templates/element/user/edit-form.php:18
+#: ./templates/element/user/edit-form.php:67
+msgid "Update user"
+msgstr "Обновить пользователя"
+
+#: ./templates/element/admin/ctrl-logout.php:34
+msgid "User management"
+msgstr "Управление пользователями"
+
+#: ./templates/element/admin/ctrl-logout.php:55
+#: ./templates/element/poll/ctrl-edit.php:67
+#: ./templates/element/poll/ctrl.php:36
+msgid "Logout"
+msgstr "Выйти"
+
+#: ./templates/element/choice/edit.php:29
+#: ./templates/element/choice/edit.php:36
+#: ./templates/element/choice/edit.php:153
+msgid "New option"
+msgstr "Новый вариант"
+
+#: ./templates/element/choice/edit.php:126
+msgid "Are you sure to delete option {0}?"
+msgstr "Вы уверены, что хотите удалить вариант {0}?"
+
+#: ./templates/element/choice/edit.php:177
+#: ./templates/element/comment/new.php:58
+#: ./templates/element/entry/edit.php:111
+#: ./templates/element/entry/new.php:91
+#: ./templates/element/entry/new.php:110
+#: ./templates/element/entry/new.php:120
+msgid "Save"
+msgstr "Сохранить"
+
+#: ./templates/element/comment/delete.php:16
+msgid "Delete comments"
+msgstr "Удалить комментарии"
+
+#: ./templates/element/comment/delete.php:31
+msgid "Are you sure to delete comment by {0}?"
+msgstr "Вы уверены, что хотите удалить комментарий пользователя {0}?"
+
+#: ./templates/element/comment/delete.php:41
+#: ./templates/element/comment/list.php:36
+msgid "No comments, yet."
+msgstr "Комментариев пока нет."
+
+#: ./templates/element/comment/new.php:21
+msgid "Comments will only be visible for the poll admin!"
+msgstr "Комментарии видны только администратору голосования!"
+
+#: ./templates/element/comment/new.php:39
+msgid "Your name"
+msgstr "Ваше имя"
+
+#: ./templates/element/comment/new.php:51
+msgid "Your comment"
+msgstr "Ваш комментарий"
+
+#: ./templates/element/entry/edit.php:27
+msgid "Edit entry"
+msgstr "Редактировать запись"
+
+#: ./templates/element/entry/edit.php:37
+#: ./templates/element/entry/new.php:32
+msgid "Your name?"
+msgstr "Ваше имя?"
+
+#: ./templates/element/entry/edit.php:85
+#: ./templates/element/entry/new.php:61
+msgid "Max. reached!"
+msgstr "Достигнут максимум!"
+
+#: ./templates/element/entry/edit.php:123
+#: ./templates/element/entry/new.php:104
+msgid "Optional: Contact info"
+msgstr "Необязательно: контактная информация"
+
+#: ./templates/element/entry/edit_view.php:52
+msgid "Copy entry edit link to clipboard"
+msgstr "Скопировать ссылку для редактирования записи в буфер обмена"
+
+#: ./templates/element/entry/edit_view.php:67
+msgid "Are you sure to delete entry by {0}?"
+msgstr "Вы уверены, что хотите удалить запись пользователя {0}?"
+
+#: ./templates/element/header.php:23
+msgid "Administration"
+msgstr "Администрирование"
+
+#: ./templates/element/header.php:26
+#: ./templates/layout/preferendum.php:24
+msgid "PREFERendum"
+msgstr "PREFERendum"
+
+#: ./templates/element/header.php:27
+msgid "scheduling polls"
+msgstr "планирование голосований"
+
+#: ./templates/element/header.php:34
+#: ./templates/element/header.php:41
+msgid "Public link"
+msgstr "Публичная ссылка"
+
+#: ./templates/element/header.php:35
+#: ./templates/element/header.php:37
+msgid "Give this public link to the participants of your poll!"
+msgstr "Передайте эту публичную ссылку участникам голосования!"
+
+#: ./templates/element/header.php:48
+msgid "Admin link"
+msgstr "Ссылка администратора"
+
+#: ./templates/element/header.php:49
+#: ./templates/element/header.php:51
+msgid "Save this admin link, you need it to manage your poll!"
+msgstr ""
+"Сохраните эту ссылку администратора — она понадобится для управления "
+"голосованием!"
+
+#: ./templates/element/header.php:60
+msgid "Create a new poll ..."
+msgstr "Создать новое голосование …"
+
+#: ./templates/element/poll/add-form.php:34
+#: ./templates/element/poll/edit-form.php:36
+msgid "Title for your poll"
+msgstr "Название голосования"
+
+#: ./templates/element/poll/add-form.php:44
+#: ./templates/element/poll/edit-form.php:46
+msgid "Description"
+msgstr "Описание"
+
+#: ./templates/element/poll/add-form.php:45
+#: ./templates/element/poll/edit-form.php:47
+msgid "Short description of what this poll is all about"
+msgstr "Краткое описание сути этого голосования"
+
+#: ./templates/element/poll/add-form.php:58
+#: ./templates/element/poll/edit-form.php:71
+msgid "Define max. number of entries/option (0 = unrestricted)"
+msgstr "Укажите максимальное количество записей/вариантов (0 = без ограничений)"
+
+#: ./templates/element/poll/add-form.php:68
+msgid "Options"
+msgstr "Варианты"
+
+#: ./templates/element/poll/add-form.php:69
+msgid "Type whatever you want or pick a date!"
+msgstr "Введите всё, что хотите, или выберите дату!"
+
+#: ./templates/element/poll/add-form.php:114
+#: ./templates/element/poll/edit-form.php:56
+msgid "Poll options"
+msgstr "Варианты голосования"
+
+#: ./templates/element/poll/add-form.php:134
+msgid "Edit/deleting poll/entries only with admin link"
+msgstr ""
+"Редактирование/удаление голосования и записей доступно только по ссылке "
+"администратора"
+
+#: ./templates/element/poll/add-form.php:153
+#: ./templates/element/poll/edit-form.php:88
+msgid "Hide poll votes for users (only admin can see the votes)"
+msgstr "Скрыть голоса от пользователей (голоса видит только администратор)"
+
+#: ./templates/element/poll/add-form.php:172
+#: ./templates/element/poll/edit-form.php:106
+msgid "Users can modify their entry with a personal link"
+msgstr "Пользователи могут изменять свои записи по персональной ссылке"
+
+#: ./templates/element/poll/add-form.php:191
+#: ./templates/element/poll/edit-form.php:126
+msgid "Collect user contact information"
+msgstr "Собирать контактную информацию пользователей"
+
+#: ./templates/element/poll/add-form.php:208
+msgid "Anonymous poll (no user name stored/shown)"
+msgstr ""
+"Анонимное голосование (имя пользователя не сохраняется и не отображается)"
+
+#: ./templates/element/poll/add-form.php:224
+#: ./templates/element/poll/edit-form.php:143
+msgid "Protect poll access with a password"
+msgstr "Защитить доступ к голосованию паролем"
+
+#: ./templates/element/poll/add-form.php:254
+#: ./templates/element/poll/edit-form.php:174
+msgid "Allow users to add a comment"
+msgstr "Разрешить пользователям добавлять комментарии"
+
+#: ./templates/element/poll/add-form.php:267
+#: ./templates/element/poll/edit-form.php:186
+#: ./templates/element/user/create-form.php:44
+#: ./templates/element/user/edit-form.php:51
+#: ./templates/element/user/list.php:28
+msgid "Email"
+msgstr "Электронная почта"
+
+#: ./templates/element/poll/add-form.php:287
+#: ./templates/element/poll/edit-form.php:208
+msgid "Receive email after new comment"
+msgstr "Получать письмо после добавления нового комментария"
+
+#: ./templates/element/poll/add-form.php:303
+#: ./templates/element/poll/edit-form.php:225
+msgid "Receive email after new entry"
+msgstr "Получать письмо после добавления новой записи"
+
+#: ./templates/element/poll/add-form.php:319
+msgid "Receive email after poll creation with poll links"
+msgstr "Получать письмо после создания голосования со ссылками на голосование"
+
+#: ./templates/element/poll/add-form.php:340
+msgid "Email for receiving entry/comment/poll links"
+msgstr ""
+"Адрес электронной почты для получения ссылок на записи/комментарии/"
+"голосование"
+
+#: ./templates/element/poll/add-form.php:346
+#: ./templates/element/poll/edit-form.php:251
+msgid "Attention: If no admin link is used, the email address is visible for everyone!"
+msgstr ""
+"Внимание: если ссылка администратора не используется, адрес электронной "
+"почты будет виден всем!"
+
+#: ./templates/element/poll/add-form.php:371
+#: ./templates/element/poll/edit-form.php:288
+msgid "Poll is automatically locked on expiry date"
+msgstr "Автоматически блокировать голосование по истечении срока действия"
+
+#: ./templates/element/poll/add-form.php:398
+msgid "Bot protection"
+msgstr "Защита от ботов"
+
+#: ./templates/element/poll/ctrl-edit.php:20
+msgid "View Poll"
+msgstr "Просмотреть голосование"
+
+#: ./templates/element/poll/ctrl-edit.php:31
+msgid "Un-/Lock"
+msgstr "Заблокировать/разблокировать"
+
+#: ./templates/element/poll/ctrl-edit.php:43
+msgid "CSV export"
+msgstr "Экспорт в CSV"
+
+#: ./templates/element/poll/ctrl-edit.php:55
+#: ./templates/element/user/list.php:49
+msgid "Delete"
+msgstr "Удалить"
+
+#: ./templates/element/poll/ctrl-edit.php:60
+msgid "Are you sure to delete this poll?"
+msgstr "Вы уверены, что хотите удалить это голосование?"
+
+#: ./templates/element/poll/ctrl.php:25
+#: ./templates/element/user/list.php:40
+msgid "Edit"
+msgstr "Редактировать"
+
+#: ./templates/element/poll/edit-form.php:245
+msgid "Email for receiving new entry/comment"
+msgstr ""
+"Адрес электронной почты для получения уведомлений о новых записях/"
+"комментариях"
+
+#: ./templates/element/poll/edit-form.php:309
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: ./templates/element/user/create-form.php:18
+msgid "Create user"
+msgstr "Создать пользователя"
+
+#: ./templates/element/user/create-form.php:50
+#: ./templates/element/user/edit-form.php:59
+#: ./templates/element/user/list.php:26
+msgid "Role"
+msgstr "Роль"
+
+#: ./templates/element/user/create-form.php:65
+#: ./templates/element/user/edit-form.php:96
+msgid "Confirm password"
+msgstr "Подтверждение пароля"
+
+#: ./templates/element/user/create-form.php:71
+msgid "Create"
+msgstr "Создать"
+
+#: ./templates/element/user/edit-form.php:102
+msgid "Change password"
+msgstr "Изменить пароль"
+
+#: ./templates/element/user/list.php:17
+msgid "Available users"
+msgstr "Доступные пользователи"
+
+#: ./templates/element/user/list.php:53
+msgid "Are you sure to delete user {0}?"
+msgstr "Вы уверены, что хотите удалить пользователя {0}?"
+
+#: ./templates/email/text/new_backend_pw.php:14
+msgid "A password reset was requested for your account!"
+msgstr "Для вашей учётной записи был запрошен сброс пароля!"
+
+#: ./templates/email/text/new_backend_pw.php:15
+msgid "Account name:"
+msgstr "Имя учётной записи:"
+
+#: ./templates/email/text/new_backend_pw.php:16
+msgid "New password:"
+msgstr "Новый пароль:"
+
+#: ./templates/email/text/new_backend_pw.php:17
+msgid "Please change your password after the first login."
+msgstr "Пожалуйста, измените пароль после первого входа."
+
+#: ./templates/email/text/new_comment.php:15
+#: ./templates/email/text/new_entry.php:15
+msgid "From:"
+msgstr "От:"
+
+#: ./templates/email/text/new_comment.php:16
+msgid "Text:"
+msgstr "Текст:"
+
+#: ./templates/email/text/new_comment.php:18
+#: ./templates/email/text/new_entry.php:29
+msgid "Link:"
+msgstr "Ссылка:"
+
+#: ./templates/email/text/new_entry.php:14
+msgid "Entry in poll \"{0}\""
+msgstr "Запись в голосовании \"{0}\""
+
+#: ./templates/email/text/new_entry.php:16
+msgid "Options:"
+msgstr "Варианты:"
+
+#: ./templates/email/text/new_poll_admin.php:14
+#: ./templates/email/text/new_poll_user.php:14
+msgid "New poll \"{0}\" created"
+msgstr "Создано новое голосование \"{0}\""
+
+#: ./templates/email/text/new_poll_admin.php:15
+msgid "This message should NOT be sent to the poll users. It contains your administration link!"
+msgstr ""
+"Это сообщение НЕ следует отправлять пользователям голосования. Оно содержит "
+"ссылку администратора!"
+
+#: ./templates/email/text/new_poll_admin.php:17
+msgid "ADMIN link:"
+msgstr "Ссылка АДМИНИСТРАТОРА:"
+
+#: ./templates/email/text/new_poll_admin.php:21
+msgid "Poll password:"
+msgstr "Пароль голосования:"
+
+#: ./templates/email/text/new_poll_user.php:15
+msgid "This email can be forwarded to any user who shall participated the poll!"
+msgstr ""
+"Это письмо можно переслать любому пользователю, который должен принять "
+"участие в голосовании!"
+
+#: ./templates/email/text/new_poll_user.php:17
+msgid "USER link:"
+msgstr "Ссылка ПОЛЬЗОВАТЕЛЯ:"
+
+#: ./templates/email/text/new_poll_user.php:21
+msgid "For accessing the poll, following password is required:"
+msgstr "Для доступа к голосованию требуется следующий пароль:"
+
+#: ./templates/email/text/personal_link.php:14
+msgid "Hello {0},"
+msgstr "Здравствуйте, {0}!"
+
+#: ./templates/email/text/personal_link.php:15
+msgid "You have made an entry in poll \"{0}\""
+msgstr "Вы добавили запись в голосовании \"{0}\""
+
+#: ./templates/email/text/personal_link.php:16
+msgid "You can edit your entry using the following link:"
+msgstr "Вы можете изменить свою запись по следующей ссылке:"
+
+#: ./templates/layout/preferendum.php:51
+msgid "Please enable JavaScript in your browser and reload this page."
+msgstr "Включите JavaScript в браузере и перезагрузите эту страницу."
