@@ -17,7 +17,7 @@
 
 return [
     'App' => [
-        // Available languages: 'en_US', 'de_DE'
+        // Available languages: 'en_US', 'de_DE', 'ru'
         'defaultLocale' => 'en_US',
         // Timezone (e.g. 'UTC', 'Europe/Berlin', ...)
         'defaultTimezone' => 'UTC',
